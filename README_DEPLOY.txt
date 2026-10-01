@@ -1,10 +1,21 @@
-JENIUS EDU - VERCEL + INVOICE
+JENIUS EDU - SUPABASE ONLINE
 
-1. Upload/deploy folder ini ke Vercel.
-2. File utama HARUS bernama index.html.
-3. Tidak perlu npm, build command, Vite, atau dist.
-4. Setelah Ready, buka domain .vercel.app.
+Versi ini menghubungkan panel ke Supabase:
+- Login admin via Supabase Auth
+- students -> tabel students
+- payments -> tabel payments
+- invoices -> tabel invoices
+- expenses -> tabel expenses
+- Invoice tetap dapat dicetak/disimpan PDF dan dikirim via WhatsApp
+- Jika ada data versi localStorage lama dan database masih kosong, data lama akan dimigrasikan satu kali setelah login.
 
-FITUR: data murid, pembayaran, pengeluaran, dashboard, pengingat WhatsApp, invoice otomatis setelah pembayaran ditandai LUNAS, cetak/simpan PDF dari dialog print browser, dan kirim invoice via WhatsApp.
+Vercel Environment Variables yang diperlukan:
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 
-CATATAN: versi deploy ini menyimpan data di browser (localStorage), sehingga belum sinkron antar perangkat. Database online + login admin memerlukan konfigurasi backend (mis. Supabase) yang belum bisa dibuat tanpa project/credential milik Anda.
+Jangan memasukkan secret/service_role key ke frontend.
+
+PENTING:
+1. Pastikan project Vercel terhubung ke repository yang berisi index.html dan folder api/.
+2. Setelah commit/deploy, login menggunakan akun admin yang dibuat di Supabase Authentication.
+3. Jika data lama tersimpan di browser yang sama, login pertama dapat memigrasikannya ke Supabase jika database masih kosong.
