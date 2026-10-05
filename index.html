@@ -73,7 +73,7 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
 <div class="tabs"><button class="on" data-t="m">Murid</button><button data-t="p">Pembayaran</button><button data-t="e">Pengeluaran</button></div>
 
 <div id="tm" class="card">
-  <h2>Tambah murid</h2>
+  <h2 id="mmTitle">Tambah murid</h2>
   <form id="fm">
     <label>Nama<input name="nama" required></label>
     <label>Jenjang<select name="jenjang"><option>SD</option><option>SMP</option><option>SMA</option></select></label>
@@ -81,7 +81,7 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
     <label>Orang tua<input name="ortu"></label>
     <label>No. WhatsApp<input name="hp" inputmode="tel" placeholder="08xxxxxxxxxx"></label>
     <label>Biaya per bulan (Rp)<input name="biaya" type="number" min="0" required></label>
-    <button class="pri">Simpan murid</button>
+    <button id="fmSubmit" class="pri">Simpan murid</button><button id="cancelEdit" type="button" hidden>Batal edit</button>
   </form>
   <div class="tw"><table><thead><tr><th>Nama</th><th>Jenjang</th><th>Kelas / mapel</th><th>Orang tua</th><th>WhatsApp</th><th>Biaya</th><th></th></tr></thead><tbody id="bm"></tbody></table></div>
 </div>
@@ -98,7 +98,6 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
   <label style="max-width:220px;margin-bottom:10px">Lihat bulan<input type="month" id="fb"></label>
   <div class="tw"><table><thead><tr><th>Murid</th><th>Bulan</th><th>Jumlah</th><th>Metode</th><th>Status</th><th></th></tr></thead><tbody id="bp"></tbody></table></div>
 </div>
-
 <div id="te" class="card" hidden>
   <h2>Catat pengeluaran</h2>
   <form id="fe">
@@ -197,15 +196,14 @@ async function showInv(x){
     INV.push(r.data)
   }
   var old=$("invoiceModal");if(old)old.remove();
-  var div=document.createElement("div");div.id="invoiceModal";div.className="invoice-modal";
-  div.innerHTML='<div class="invoice-box"><div class="invoice-head"><div><h1 style="margin:0">JENIUS EDU</h1><small>Pembayaran Bimbingan Belajar</small></div><div style="text-align:right"><b>INVOICE</b><br><span>'+esc(no)+'</span></div></div><div class="invoice-meta"><div><small>Nama Siswa</small><br><b>'+esc(m.nama||"-")+'</b></div><div><small>Tanggal Pembayaran</small><br><b>'+esc(tgl)+'</b></div><div><small>Jenjang / Kelas</small><br><b>'+esc((m.jenjang||"-")+" / "+(m.kelas||"-"))+'</b></div><div><small>Periode</small><br><b>'+esc(x.bulan||"-")+'</b></div><div><small>Metode Pembayaran</small><br><b>'+esc(x.metode||"-")+'</b></div><div><small>Status</small><br><span class="invoice-paid">LUNAS</span></div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><div style="display:flex;justify-content:space-between;gap:10px"><b>Pembayaran Bimbel Bulanan</b><b class="invoice-total">'+rp(x.jumlah)+'</b></div><p style="color:var(--muted);margin-top:18px">Terima kasih telah mempercayai Jenius Edu.</p><div class="invoice-actions"><button id="closeInv">Tutup</button><button id="printInv" class="pri">Cetak / Simpan PDF</button><a class="btn pri" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo "+(m.nama||"")+", berikut invoice pembayaran Jenius Edu "+no+" untuk periode "+(x.bulan||"")+" sebesar "+rp(x.jumlah)+". Status: LUNAS. Terima kasih.")+'">WhatsApp</a></div></div>';
+  var div=document.createElement("div");div.id="invoiceModal";div.className="invoice-modal";  div.innerHTML='<div class="invoice-box"><div class="invoice-head"><div><h1 style="margin:0">JENIUS EDU</h1><small>Pembayaran Bimbingan Belajar</small></div><div style="text-align:right"><b>INVOICE</b><br><span>'+esc(no)+'</span></div></div><div class="invoice-meta"><div><small>Nama Siswa</small><br><b>'+esc(m.nama||"-")+'</b></div><div><small>Tanggal Pembayaran</small><br><b>'+esc(tgl)+'</b></div><div><small>Jenjang / Kelas</small><br><b>'+esc((m.jenjang||"-")+" / "+(m.kelas||"-"))+'</b></div><div><small>Periode</small><br><b>'+esc(x.bulan||"-")+'</b></div><div><small>Metode Pembayaran</small><br><b>'+esc(x.metode||"-")+'</b></div><div><small>Status</small><br><span class="invoice-paid">LUNAS</span></div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><div style="display:flex;justify-content:space-between;gap:10px"><b>Pembayaran Bimbel Bulanan</b><b class="invoice-total">'+rp(x.jumlah)+'</b></div><p style="color:var(--muted);margin-top:18px">Terima kasih telah mempercayai Jenius Edu.</p><div class="invoice-actions"><button id="closeInv">Tutup</button><button id="printInv" class="pri">Cetak / Simpan PDF</button><a class="btn pri" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo "+(m.nama||"")+", berikut invoice pembayaran Jenius Edu "+no+" untuk periode "+(x.bulan||"")+" sebesar "+rp(x.jumlah)+". Status: LUNAS. Terima kasih.")+'">WhatsApp</a></div></div>';
   document.body.appendChild(div);$("closeInv").onclick=function(){div.remove()};$("printInv").onclick=function(){window.print()}
 }
 
 document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tabs button").forEach(function(x){x.classList.toggle("on",x===b)});["m","p","e"].forEach(function(k){$("t"+k).hidden=k!==b.dataset.t})}});
 
 function draw(){
-  $("bm").innerHTML=S.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada murid. Isi formulir di atas.</td></tr>';
+  $("bm").innerHTML=S.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-es="'+m.id+'">Edit</button> <button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada murid. Isi formulir di atas.</td></tr>';
   var keep=$("sel").value;$("sel").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+'</option>'}).join("");if(keep)$("sel").value=keep;
   var f=$("fb").value,L=P.filter(function(x){return x.bulan===f}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
@@ -218,8 +216,37 @@ function draw(){
 $("fb").onchange=draw;$("eb").onchange=draw;$("sel").onchange=function(){var m=stu($("sel").value);if(m)$("pj").value=m.biaya};
 function fd(f){var o={};new FormData(f).forEach(function(v,k){o[k]=v});return o}
 
+var editingStudentId=null;
+function startEditStudent(id){
+  var m=stu(id);if(!m)return;
+  editingStudentId=id;
+  $("mmTitle").textContent="Edit data murid";
+  $("fmSubmit").textContent="Simpan perubahan";
+  $("cancelEdit").hidden=false;
+  var f=$("fm");
+  f.nama.value=m.nama||"";f.jenjang.value=m.jenjang||"SD";f.kelas.value=m.kelas||"";
+  f.ortu.value=m.ortu||"";f.hp.value=m.hp||"";f.biaya.value=m.biaya||0;
+  f.scrollIntoView({behavior:"smooth",block:"start"});
+}
+function cancelEditStudent(){
+  editingStudentId=null;
+  $("fm").reset();
+  $("mmTitle").textContent="Tambah murid";
+  $("fmSubmit").textContent="Simpan murid";
+  $("cancelEdit").hidden=true;
+}
+$("cancelEdit").onclick=cancelEditStudent;
+
 $("fm").onsubmit=async function(e){
   e.preventDefault();var o=fd(e.target);
+  if(editingStudentId){
+    var r=await sb.from("students").update({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).eq("id",editingStudentId).select().single();
+    if(r.error){alert("Gagal memperbarui murid: "+r.error.message);return}
+    var i=S.findIndex(function(x){return x.id===editingStudentId});
+    if(i>=0)S[i]={id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)};
+    cancelEditStudent();draw();alert("Data murid berhasil diperbarui.");
+    return;
+  }
   var r=await sb.from("students").insert({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).select().single();
   if(r.error){alert("Gagal menyimpan murid: "+r.error.message);return}
   S.push({id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)});
@@ -244,6 +271,7 @@ $("fe").onsubmit=async function(e){
 
 document.addEventListener("click",async function(e){
   var t=e.target,id=t.dataset;
+  if(id.es){startEditStudent(id.es);return}
   if(id.ds&&confirm("Hapus murid ini?")){
     var r=await sb.from("students").delete().eq("id",id.ds);
     if(r.error){alert("Gagal menghapus murid: "+r.error.message);return}
@@ -297,8 +325,7 @@ $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
 
 async function startApp(session){
   if(!session){currentUser=null;$("app").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}
-  currentUser=session.user;$("loginScreen").style.display="none";$("app").style.display="block";
-  setSync("Memuat data...");
+  currentUser=session.user;$("loginScreen").style.display="none";$("app").style.display="block";  setSync("Memuat data...");
   try{
     await dbLoad();
     await migrateLocalIfEmpty();
