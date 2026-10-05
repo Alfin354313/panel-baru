@@ -2065,42 +2065,49 @@ $("adminModeBtn").onclick=function(){setLoginMode("admin")};$("guruModeBtn").onc
 $("loginForm").onsubmit=async function(e){
   e.preventDefault();
   var errBox=$("loginError"),btn=$("loginBtn");
-  btn.disabled=true;
-  btn.textContent="Memeriksa...";
-  errBox.style.display="block";
-  errBox.textContent="1. Tombol login aktif. Menyiapkan koneksi...";
+  btn.disabled=true;btn.textContent="Memeriksa...";errBox.style.display="block";
   try{
-    if(!sb)throw new Error("Koneksi Supabase belum siap. Refresh halaman dengan Ctrl+F5.");
+    if(!sb)throw new Error("Koneksi Supabase belum siap. Refresh dengan Ctrl+F5.");
     var email=$("loginEmail").value.trim(),password=$("loginPassword").value;
-    if(!email)throw new Error("Email wajib diisi.");
-    if(!password)throw new Error("Password wajib diisi.");
+    if(!email||!password)throw new Error("Email dan password wajib diisi.");
     errBox.textContent="2. Menghubungkan ke Supabase...";
     var r=await sb.auth.signInWithPassword({email:email,password:password});
     if(r.error)throw new Error(r.error.message||"Email atau password salah.");
-    if(!r.data||!r.data.user||!r.data.session)throw new Error("Supabase tidak mengembalikan sesi login.");
-    var u=r.data.user;
+    var u=r.data&&r.data.user,session=r.data&&r.data.session;
+    if(!u||!session)throw new Error("Supabase tidak mengembalikan session.");
     var role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
-    errBox.textContent="3. Login berhasil. Role akun: "+(role||"KOSONG")+" | Mode: "+loginRole;
-    if(role!==loginRole){
-      throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"kosong")+". Untuk Admin harus role=admin.");
+    errBox.textContent="3. Login berhasil. Role: "+(role||"KOSONG")+" | Mode: "+loginRole;
+    if(role!==loginRole)throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"KOSONG")+". Untuk Admin harus role=admin.");
+    errBox.textContent="4. Login berhasil, membuka panel...";
+    currentUser=u;currentRole=role;
+    $("loginScreen").style.display="none";
+    $("teacherApp").style.display="none";
+    $("app").style.display="block";
+    if(role==="admin"){
+      setSync("Memuat data...");
+      try{
+        await dbLoad();
+        draw();
+        setSync("Tersimpan online");
+      }catch(dbErr){
+        console.error("ADMIN LOAD:",dbErr);
+        setSync("Database belum siap");
+        alert("Panel Admin sudah dibuka. Data belum termuat: "+(dbErr.message||dbErr));
+      }
+    }else{
+      $("app").style.display="none";$("teacherApp").style.display="block";
+      try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();scheduleDateToday();$("teacherSync").textContent="Tersimpan online"}
+      catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Panel guru terbuka, tetapi data belum termuat: "+(err.message||err))}
     }
-    errBox.textContent="4. Login berhasil, sedang membuka panel...";
-    await startApp(r.data.session);
-    var verify=await sb.auth.getSession();
-    if(!verify.data||!verify.data.session)throw new Error("Session hilang setelah panel dibuka. Supabase tidak lagi memiliki session aktif.");
-    if(currentRole!=="admin"&&currentRole!=="guru")throw new Error("startApp selesai tetapi role tidak valid: "+(currentRole||"KOSONG"));
-    if(currentRole==="admin" && $("app").style.display!=="block")throw new Error("Role admin terbaca, tetapi elemen panel Admin tidak menjadi visible.");
     errBox.style.display="none";
   }catch(err){
     console.error("LOGIN ERROR:",err);
+    $("loginScreen").style.display="flex";$("app").style.display="none";$("teacherApp").style.display="none";
     errBox.textContent="❌ LOGIN GAGAL: "+(err&&err.message?err.message:String(err));
     errBox.style.display="block";
-    btn.disabled=false;
-    btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
-    return;
+  }finally{
+    btn.disabled=false;btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
   }
-  btn.disabled=false;
-  btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
 };$("exportAdminBtn").onclick=function(){exportAdminExcel()};
 $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
 $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
