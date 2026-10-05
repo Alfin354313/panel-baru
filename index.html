@@ -2082,7 +2082,6 @@ $("loginForm").onsubmit=async function(e){
     var role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
     errBox.textContent="3. Login berhasil. Role akun: "+(role||"KOSONG")+" | Mode: "+loginRole;
     if(role!==loginRole){
-      await sb.auth.signOut();
       throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"kosong")+". Untuk Admin harus role=admin.");
     }
     errBox.textContent="4. Login berhasil, sedang membuka panel...";
