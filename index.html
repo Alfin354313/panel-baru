@@ -1463,12 +1463,20 @@ window.jeniusLoginSubmit = async function(e){
       (session.user.user_metadata&&session.user.user_metadata.role)||""
     ).trim().toLowerCase();
 
+    /* Jika role JWT kosong, jangan langsung memantulkan pengguna ke login.
+       Tampilkan penyebabnya dengan jelas. */
+    if(!role){
+      throw new Error("Role akun belum diatur di Supabase. Atur app_metadata.role menjadi admin atau guru, lalu login kembali.");
+    }
+
     if(role!==mode){
-      throw new Error("Role akun tidak sesuai. Role akun: "+(role||"belum diatur")+" | Mode: "+mode);
+      throw new Error("Mode login tidak sesuai dengan role akun. Akun ini adalah "+role+", pilih mode "+role+".");
     }
 
     if(typeof window.startApp!=="function")throw new Error("Panel belum siap. Silakan coba lagi.");
 
+    /* Login berhasil. Buka panel hanya dari jalur ini.
+       Event SIGNED_IN di bawah akan diabaikan karena session ID sudah ditandai. */
     await window.startApp(session);
     err.style.display="none";
   }catch(error){
@@ -2270,6 +2278,9 @@ window.startApp=startApp;
         return;
       }
       if((event==="SIGNED_IN"||event==="TOKEN_REFRESHED")&&session&&session.user){
+        /* SIGNED_IN setelah klik login sudah ditangani oleh jeniusLoginSubmit.
+           TOKEN_REFRESHED hanya membuka kembali panel jika belum ada sesi ativa. */
+        if(event==="SIGNED_IN") return;
         if(lastStartedSessionId!==session.user.id){
           startApp(session).catch(function(err){
             console.error("AUTH START ERROR:",err);
