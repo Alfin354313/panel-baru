@@ -44,13 +44,13 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
 .login-card button{margin-top:16px;width:100%}
 .login-error{display:none;margin-top:12px;padding:10px;border-radius:10px;background:#fde8e8;color:#a93226}
 #logoutBtn{margin-left:8px}
-#syncStatus{font-size:.85rem;color:var(--muted);margin-left:8px}
+#syncStatus{font-size:.85rem;color:var(--muted);margin-left:8px}.login-roles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 4px}.login-roles button{margin:0;width:100%;font-size:.9rem}.login-roles button.active{background:var(--hl)}.teacher-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.teacher-head small{color:var(--muted)}.teacher-form textarea{font:inherit;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%;min-height:90px;resize:vertical}.teacher-form .full{grid-column:1/-1}
 </style>
 
 <div id="loginScreen">
   <form id="loginForm" class="login-card">
     <h1>JENIUS EDU</h1>
-    <p>Panel Pengelola — silakan masuk dengan akun admin.</p>
+    <p id="loginSubtitle">Panel Pengelola — silakan masuk dengan akun admin.</p><div class="login-roles"><button id="adminModeBtn" class="active" type="button">Login Admin</button><button id="guruModeBtn" type="button">Login Guru</button></div><input id="loginRole" type="hidden" value="admin">
     <label for="loginEmail">Email</label>
     <input id="loginEmail" type="email" autocomplete="username" required>
     <label for="loginPassword">Password</label>
@@ -112,7 +112,7 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
   <div class="tw"><table><thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jumlah</th><th></th></tr></thead><tbody id="be"></tbody></table></div>
 </div>
 </div>
-</div>
+</div><div id="teacherApp" style="display:none"><div class="card"><div class="teacher-head"><div><h1 style="margin:0">Panel Guru</h1><small>Catatan perkembangan belajar murid</small></div><span id="teacherSync" style="font-size:.85rem;color:var(--muted)">Memuat...</span></div><form id="teacherForm" class="teacher-form"><label>Nama Murid<select name="student_id" id="teacherStudent" required></select></label><label>Hari / Tanggal<input name="tanggal" id="teacherDate" type="date" required></label><label class="full">Materi<textarea name="materi" placeholder="Contoh: Pecahan dan operasi hitung" required></textarea></label><label>Metode<textarea name="metode" placeholder="Contoh: Penjelasan, latihan soal, diskusi" required></textarea></label><label>Catatan Kesulitan<textarea name="catatan_kesulitan" placeholder="Kesulitan yang dialami murid"></textarea></label><label class="full">Rencana Lanjutan<textarea name="rencana_lanjutan" placeholder="Rencana materi / latihan pada pertemuan berikutnya"></textarea></label><button class="pri" type="submit">Simpan Catatan</button></form></div><div class="card" style="margin-top:14px"><h2>Riwayat Catatan</h2><div class="tw"><table><thead><tr><th>Murid</th><th>Tanggal</th><th>Materi</th><th>Metode</th><th>Catatan Kesulitan</th><th>Rencana Lanjutan</th><th></th></tr></thead><tbody id="teacherNotesBody"></tbody></table></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 var $=function(i){return document.getElementById(i)};
@@ -121,8 +121,8 @@ var esc=function(t){var d=document.createElement("div");d.textContent=t==null?""
 var now=new Date(),thisM=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0"),todayISO=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayISO;
 
-var S=[],P=[],E=[],INV=[];
-var sb=null,currentUser=null;
+var S=[],P=[],E=[],INV=[],TN=[];
+var sb=null,currentUser=null,currentRole="",loginRole="admin";
 var localKey="jenius_edu_data_v3";
 
 function uid(p){return p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)}
@@ -157,6 +157,9 @@ async function dbLoad(){
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
   INV=d.data||[];
 }
+async function dbLoadTeacher(){var a=await sb.from("students").select("id,nama,jenjang,kelas").order("nama",{ascending:true});if(a.error)throw a.error;var b=await sb.from("teacher_notes").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});if(b.error)throw b.error;S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});TN=b.data||[];drawTeacher()}
+function drawTeacher(){$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>'}
+function teacherDateToday(){$("teacherDate").value=new Date(new Date().getTime()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10)}
 
 async function migrateLocalIfEmpty(){
   var raw=localStorage.getItem(localKey);
@@ -214,6 +217,7 @@ function draw(){
 }
 
 $("fb").onchange=draw;$("eb").onchange=draw;$("sel").onchange=function(){var m=stu($("sel").value);if(m)$("pj").value=m.biaya};
+$("teacherForm").onsubmit=async function(e){e.preventDefault();var o=fd(e.target);var r=await sb.from("teacher_notes").insert({teacher_id:currentUser.id,student_id:o.student_id,tanggal:o.tanggal,materi:o.materi,metode:o.metode,catatan_kesulitan:o.catatan_kesulitan||"",rencana_lanjutan:o.rencana_lanjutan||""}).select().single();if(r.error){alert("Gagal menyimpan catatan: "+r.error.message);return}TN.unshift(r.data);e.target.reset();teacherDateToday();drawTeacher();alert("Catatan pembelajaran berhasil disimpan.")};
 function fd(f){var o={};new FormData(f).forEach(function(v,k){o[k]=v});return o}
 
 var editingStudentId=null;
@@ -310,33 +314,14 @@ document.addEventListener("click",async function(e){
     }
   }
   if(id.iv){var x=P.find(function(q){return q.id===id.iv});if(x)await showInv(x)}
+  if(id.tn&&confirm("Hapus catatan pembelajaran ini?")){var r=await sb.from("teacher_notes").delete().eq("id",id.tn);if(r.error){alert("Gagal menghapus catatan: "+r.error.message);return}TN=TN.filter(function(x){return x.id!==id.tn});drawTeacher()}
 });
 
-$("loginForm").onsubmit=async function(e){
-  e.preventDefault();
-  $("loginError").style.display="none";$("loginBtn").disabled=true;$("loginBtn").textContent="Masuk...";
-  var r=await sb.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});
-  $("loginBtn").disabled=false;$("loginBtn").textContent="Masuk";
-  if(r.error){$("loginError").textContent=r.error.message;$("loginError").style.display="block";return}
-  await startApp(r.data.session)
-};
-
+function setLoginMode(role){loginRole=role;$("loginRole").value=role;$("adminModeBtn").classList.toggle("active",role==="admin");$("guruModeBtn").classList.toggle("active",role==="guru");$("loginSubtitle").textContent=role==="guru"?"Panel Guru — silakan masuk dengan akun guru.":"Panel Pengelola — silakan masuk dengan akun admin.";$("loginBtn").textContent=role==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";$("loginError").style.display="none"}
+$("adminModeBtn").onclick=function(){setLoginMode("admin")};$("guruModeBtn").onclick=function(){setLoginMode("guru")};
+$("loginForm").onsubmit=async function(e){e.preventDefault();$("loginError").style.display="none";$("loginBtn").disabled=true;$("loginBtn").textContent="Memeriksa...";var r=await sb.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});$("loginBtn").disabled=false;if(r.error){$("loginError").textContent=r.error.message;$("loginError").style.display="block";setLoginMode(loginRole);return}var role=(r.data.user&&r.data.user.app_metadata&&r.data.user.app_metadata.role)||"";if(role!==loginRole){await sb.auth.signOut();$("loginError").textContent=loginRole==="guru"?"Akun ini bukan akun Guru.":"Akun ini bukan akun Admin.";$("loginError").style.display="block";setLoginMode(loginRole);return}await startApp(r.data.session)};
 $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
-
-async function startApp(session){
-  if(!session){currentUser=null;$("app").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}
-  currentUser=session.user;$("loginScreen").style.display="none";$("app").style.display="block";  setSync("Memuat data...");
-  try{
-    await dbLoad();
-    await migrateLocalIfEmpty();
-    await dbLoad();
-    draw();
-    setSync("Tersimpan online");
-  }catch(err){
-    console.error(err);setSync("Gagal memuat");
-    alert("Gagal terhubung ke database: "+(err.message||err))
-  }
-}
+async function startApp(session){if(!session){currentUser=null;currentRole="";$("app").style.display="none";$("teacherApp").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}currentUser=session.user;currentRole=(session.user.app_metadata&&session.user.app_metadata.role)||"";$("loginScreen").style.display="none";if(currentRole==="guru"){$("app").style.display="none";$("teacherApp").style.display="block";$("teacherSync").textContent="Memuat...";try{await dbLoadTeacher();teacherDateToday();$("teacherSync").textContent="Tersimpan online"}catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Gagal memuat panel guru: "+(err.message||err))}return}if(currentRole==="admin"){$("teacherApp").style.display="none";$("app").style.display="block";setSync("Memuat data...");try{await dbLoad();await migrateLocalIfEmpty();await dbLoad();draw();setSync("Tersimpan online")}catch(err){console.error(err);setSync("Gagal memuat");alert("Gagal terhubung ke database: "+(err.message||err))}return}await sb.auth.signOut();$("loginScreen").style.display="flex";$("loginError").textContent="Akun belum memiliki role. Hubungi admin.";$("loginError").style.display="block"}
 
 (async function init(){
   try{
