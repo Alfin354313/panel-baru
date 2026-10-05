@@ -2067,27 +2067,35 @@ $("loginForm").onsubmit=async function(e){
   var errBox=$("loginError"),btn=$("loginBtn");
   errBox.style.display="none";errBox.textContent="";
   btn.disabled=true;btn.textContent="Memeriksa...";
+  var stage="memulai";
   try{
     if(!sb)throw new Error("Koneksi Supabase belum siap. Silakan refresh halaman.");
     var email=$("loginEmail").value.trim(),password=$("loginPassword").value;
     if(!email)throw new Error("Email wajib diisi.");
     if(!password)throw new Error("Password wajib diisi.");
-    var r=await sb.auth.signInWithPassword({email:email,password:password});
+    stage="menghubungkan ke Supabase";
+    var r=await Promise.race([
+      sb.auth.signInWithPassword({email:email,password:password}),
+      new Promise(function(_,reject){setTimeout(function(){reject(new Error("Koneksi login ke Supabase terlalu lama (>15 detik). Periksa koneksi internet dan konfigurasi Supabase."))},15000)})
+    ]);
     if(r.error)throw new Error(r.error.message||"Email atau password salah.");
     if(!r.data||!r.data.user||!r.data.session)throw new Error("Login berhasil tetapi sesi tidak terbentuk. Silakan coba lagi.");
     var u=r.data.user,role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
     if(role!==loginRole){
       await sb.auth.signOut();
-      throw new Error(loginRole==="guru"?"Akun ini bukan akun Guru.":"Akun ini bukan akun Admin.");
+      throw new Error(loginRole==="guru"?"Akun ini bukan akun Guru. Role akun terbaca: "+(role||"kosong"):"Akun ini bukan akun Admin. Role akun terbaca: "+(role||"kosong"));
     }
-    await startApp(r.data.session);
+    stage="memuat panel";
+    await Promise.race([
+      startApp(r.data.session),
+      new Promise(function(_,reject){setTimeout(function(){reject(new Error("Login berhasil, tetapi panel tidak selesai dimuat dalam 15 detik. Kemungkinan proses dbLoad/database Supabase macet."))},15000)})
+    ]);
     errBox.style.display="none";
   }catch(err){
     console.error("LOGIN ERROR:",err);
-    var msg="Login gagal: "+(err&&err.message?err.message:"Terjadi kesalahan saat login.");
+    var msg="Login gagal pada tahap "+stage+": "+(err&&err.message?err.message:"Terjadi kesalahan saat login.");
     errBox.textContent=msg;
     errBox.style.display="block";
-    errBox.scrollIntoView({behavior:"smooth",block:"center"});
     try{alert(msg)}catch(x){}
   }finally{
     btn.disabled=false;btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
