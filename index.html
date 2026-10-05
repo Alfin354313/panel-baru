@@ -1356,7 +1356,7 @@ $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayI
 
 var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],RPT=[],ADMIN_ATT=[],SAL=[],SALITEMS=[],TEACHERS=[];
 var editingSalaryId=null;
-var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null,editingReportId=null;
+var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null,editingReportId=null,lastStartedSessionId="";
 var localKey="jenius_edu_data_v3";
 
 function uid(p){return p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)}
@@ -2065,44 +2065,40 @@ $("adminModeBtn").onclick=function(){setLoginMode("admin")};$("guruModeBtn").onc
 $("loginForm").addEventListener("submit",async function(e){
   e.preventDefault();
   e.stopPropagation();
-  console.log("LOGIN HANDLER: submit tertangkap, tidak refresh");
-  e.preventDefault();
   var errBox=$("loginError"),btn=$("loginBtn");
-  btn.disabled=true;btn.textContent="Memeriksa...";errBox.style.display="block";
+  btn.disabled=true;
+  btn.textContent="Memeriksa...";
+  errBox.style.display="block";
+  errBox.textContent="Menghubungkan ke Supabase...";
   try{
-    if(!sb)throw new Error("Koneksi Supabase belum siap. Refresh dengan Ctrl+F5.");
+    if(!sb)throw new Error("Koneksi Supabase belum siap. Silakan refresh halaman.");
     var email=$("loginEmail").value.trim(),password=$("loginPassword").value;
     if(!email||!password)throw new Error("Email dan password wajib diisi.");
-    errBox.textContent="2. Menghubungkan ke Supabase...";
     var r=await sb.auth.signInWithPassword({email:email,password:password});
     if(r.error)throw new Error(r.error.message||"Email atau password salah.");
-    var u=r.data&&r.data.user,session=r.data&&r.data.session;
-    if(!u||!session)throw new Error("Supabase tidak mengembalikan session.");
-    var role=String((u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"").trim().toLowerCase();
-    var mode=String(loginRole||"").trim().toLowerCase();
-    errBox.textContent="3. Login berhasil. Role: "+(role||"KOSONG")+" | Mode: "+mode;
-    if(role!==mode)throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"KOSONG")+". Mode login: "+mode+".");
-    currentUser=u;currentRole=role;
-    errBox.textContent="4. Login berhasil. Membuka panel...";
-    $("loginScreen").style.display="none";
-    $("loginScreen").hidden=true;
-    $("teacherApp").style.display="none";
-    $("teacherApp").hidden=true;
-    $("app").style.display="block";
-    $("app").hidden=false;
-    document.body.classList.add("logged-in");
-    console.log("LOGIN PANEL TEST: app display =",$("app").style.display,"hidden =",$("app").hidden,"role =",currentRole);
-    errBox.style.display="none";
-    return;
+    var session=r.data&&r.data.session;
+    if(!session||!session.user)throw new Error("Login berhasil, tetapi session Supabase belum tersedia. Silakan coba lagi.");
+    var role=String((session.user.app_metadata&&session.user.app_metadata.role)||(session.user.user_metadata&&session.user.user_metadata.role)||"").trim().toLowerCase();
+    var mode=String(loginRole||"admin").trim().toLowerCase();
+    if(role!==mode)throw new Error("Role akun tidak sesuai. Akun ini memiliki role '"+(role||"belum diatur")+"' sedangkan mode yang dipilih '"+mode+"'.");
+    errBox.textContent="Login berhasil. Membuka panel...";
+    await startApp(session);
+    if(lastStartedSessionId===session.user.id){
+      errBox.style.display="none";
+    }
   }catch(err){
     console.error("LOGIN ERROR:",err);
-    $("loginScreen").hidden=false;$("loginScreen").style.display="flex";
-    $("app").hidden=true;$("app").style.display="none";
-    $("teacherApp").hidden=true;$("teacherApp").style.display="none";
+    $("loginScreen").hidden=false;
+    $("loginScreen").style.display="flex";
+    $("app").hidden=true;
+    $("app").style.display="none";
+    $("teacherApp").hidden=true;
+    $("teacherApp").style.display="none";
     errBox.textContent="❌ LOGIN GAGAL: "+(err&&err.message?err.message:String(err));
     errBox.style.display="block";
   }finally{
-    btn.disabled=false;btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
+    btn.disabled=false;
+    btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
   }
 });$("exportAdminBtn").onclick=function(){exportAdminExcel()};
 $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
@@ -2112,10 +2108,17 @@ $("scheduleCancel").onclick=function(){editingScheduleId=null;$("scheduleSubmit"
 $("teacherLogoutBtn").onclick=async function(){await sb.auth.signOut()};
 function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(function(p){p.hidden=p.id!==id});document.querySelectorAll("#teacherMenu button").forEach(function(b){b.classList.toggle("on",b.dataset.teacherPage===id)});window.scrollTo({top:0,behavior:"smooth"})}document.querySelectorAll("#teacherMenu button").forEach(function(b){b.onclick=function(){showTeacherPage(b.dataset.teacherPage)}});async function startApp(session){
   if(!session||!session.user){
-    currentUser=null;currentRole="";
-    $("app").style.display="none";$("teacherApp").style.display="none";$("loginScreen").style.display="flex";
-    setSync("Silakan masuk");return
+    currentUser=null;currentRole="";lastStartedSessionId="";
+    $("app").hidden=true;$("app").style.display="none";
+    $("teacherApp").hidden=true;$("teacherApp").style.display="none";
+    $("loginScreen").hidden=false;$("loginScreen").style.display="flex";
+    document.body.classList.remove("logged-in");
+    setSync("Silakan masuk");
+    return
   }
+  lastStartedSessionId=session.user.id;
+  currentUser=session.user;
+  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
   currentUser=session.user;
   currentRole=(currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"";
   if(currentRole!=="admin"&&currentRole!=="guru"){
@@ -2150,10 +2153,25 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
     sb=window.supabase.createClient(cfg.url,cfg.key);
     var r=await sb.auth.getSession();
     await startApp(r.data.session);
-    sb.auth.onAuthStateChange(function(event,session){console.log("AUTH EVENT:",event);if(event==="SIGNED_OUT"){console.error("SESSION SIGNED_OUT");$("loginError").textContent="⚠️ Session Supabase terputus (SIGNED_OUT).";$("loginError").style.display="block";startApp(null)}});
+    sb.auth.onAuthStateChange(function(event,session){
+      console.log("AUTH EVENT:",event);
+      if(event==="SIGNED_OUT"){
+        startApp(null);
+        return;
+      }
+      if((event==="SIGNED_IN"||event==="TOKEN_REFRESHED")&&session&&session.user){
+        if(lastStartedSessionId!==session.user.id){
+          startApp(session).catch(function(err){
+            console.error("AUTH START ERROR:",err);
+            $("loginError").textContent="❌ Gagal membuka panel: "+(err.message||err);
+            $("loginError").style.display="block";
+          });
+        }
+      }
+    });
   }catch(err){
-    console.error(err);
-    $("loginError").textContent=err.message||"Konfigurasi gagal";
+    console.error("INIT ERROR:",err);
+    $("loginError").textContent="❌ "+(err.message||"Konfigurasi gagal");
     $("loginError").style.display="block";
     $("loginBtn").disabled=true;
   }
