@@ -40,6 +40,44 @@ create trigger teacher_profiles_updated_at
 before update on public.teacher_profiles
 for each row execute function public.set_teacher_profiles_updated_at();
 
+create or replace function public.get_teacher_accounts()
+returns table (
+  id uuid,
+  email text,
+  nama text,
+  hp text,
+  mapel text,
+  status text,
+  catatan text
+)
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if (auth.jwt()->'app_metadata'->>'role') <> 'admin' then
+    raise exception 'Hanya admin yang dapat melihat data akun guru';
+  end if;
+
+  return query
+  select
+    u.id,
+    coalesce(u.email,'')::text,
+    coalesce(p.nama,'')::text,
+    coalesce(p.hp,'')::text,
+    coalesce(p.mapel,'')::text,
+    coalesce(p.status,'Aktif')::text,
+    coalesce(p.catatan,'')::text
+  from auth.users u
+  left join public.teacher_profiles p on p.id=u.id
+  where coalesce(u.raw_app_meta_data->>'role','')='guru'
+  order by coalesce(p.nama,''), u.email;
+end;
+$$;
+
+revoke all on function public.get_teacher_accounts() from public;
+grant execute on function public.get_teacher_accounts() to authenticated;
+
 create index if not exists teacher_profiles_status_idx
 on public.teacher_profiles (status);
 
