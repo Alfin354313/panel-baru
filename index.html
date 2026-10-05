@@ -108,7 +108,7 @@ form.login-card{display:block;width:min(430px,100%);background:var(--card);borde
     </div>
   </div>
   <div class="card dashboard-section">
-    <h2>Ringkasan 6 Bulan</h2>
+    <h2>Ringkasan 3 Bulan</h2>
     <div id="dashboardChart" class="chart-wrap"></div>
   </div>
   <div class="card dashboard-section">
@@ -288,7 +288,7 @@ function drawDashboard(){
 
   var months=[];
   var base=new Date(month+"-01T00:00:00");
-  for(var i=5;i>=0;i--){
+  for(var i=2;i>=0;i--){
     var d=new Date(base.getFullYear(),base.getMonth()-i,1);
     months.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));
   }
