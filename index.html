@@ -193,6 +193,95 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
     padding:14px;
   }
 }
+
+/* Dashboard Guru - polishing */
+#teacherApp .teacher-page{
+  background:transparent;
+}
+#teacherApp #teacherDashboardPage{
+  padding-top:24px;
+}
+#teacherApp #teacherDashboardPage .dashboard-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+#teacherApp #teacherDashboardPage .dashboard-card{
+  min-height:118px;
+  padding:18px;
+  border:1px solid var(--line);
+  box-shadow:0 8px 22px rgba(21,67,107,.06);
+}
+#teacherApp #teacherDashboardPage .dashboard-card small{
+  display:block;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+#teacherApp #teacherDashboardPage .dashboard-card b{
+  font-size:1.8rem;
+  line-height:1.2;
+  margin-top:10px;
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(1){
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(2){
+  background:linear-gradient(135deg,var(--card),#f4fbf7);
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(3){
+  background:linear-gradient(135deg,var(--card),#fff9ef);
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(4){
+  background:linear-gradient(135deg,var(--card),#f7f3ff);
+}
+#teacherApp #teacherDashboardPage .dashboard-section{
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(21,67,107,.05);
+}
+#teacherApp #teacherDashboardPage .dashboard-section h2{
+  margin-bottom:6px;
+}
+#teacherApp #teacherDashboardPage .dashboard-section p{
+  line-height:1.7;
+}
+#teacherApp #teacherDashboardPage .dashboard-section p:before{
+  content:"💡";
+  margin-right:7px;
+}
+#teacherApp .teacher-head{
+  position:relative;
+}
+#teacherApp .teacher-head:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:90px;
+  height:3px;
+  background:#1e6fb8;
+  border-radius:0 4px 4px 0;
+}
+@media(max-width:900px){
+  #teacherApp #teacherDashboardPage .dashboard-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(max-width:700px){
+  #teacherApp #teacherDashboardPage .dashboard-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  #teacherApp #teacherDashboardPage .dashboard-card{
+    min-height:105px;
+    padding:15px;
+  }
+  #teacherApp #teacherDashboardPage .dashboard-card b{
+    font-size:1.5rem;
+  }
+}
+@media(max-width:480px){
+  #teacherApp #teacherDashboardPage .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+}
 </style></style></head><body>
 <style>
 #loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--bg),#E7F2FC)}
