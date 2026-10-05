@@ -2062,13 +2062,49 @@ document.addEventListener("click",async function(e){
 
 function setLoginMode(role){loginRole=role;$("loginRole").value=role;$("adminModeBtn").classList.toggle("active",role==="admin");$("guruModeBtn").classList.toggle("active",role==="guru");$("loginSubtitle").textContent=role==="guru"?"Panel Guru — silakan masuk dengan akun guru.":"Panel Pengelola — silakan masuk dengan akun admin.";$("loginBtn").textContent=role==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";$("loginError").style.display="none"}
 $("adminModeBtn").onclick=function(){setLoginMode("admin")};$("guruModeBtn").onclick=function(){setLoginMode("guru")};$("loginPasswordToggle").onclick=function(){var p=$("loginPassword"),show=p.type==="password";p.type=show?"text":"password";this.textContent=show?"🙈":"👁";this.setAttribute("aria-label",show?"Sembunyikan password":"Tampilkan password")};
-$("loginForm").onsubmit=async function(e){e.preventDefault();$("loginError").style.display="none";$("loginBtn").disabled=true;$("loginBtn").textContent="Memeriksa...";try{var r=await sb.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(r.error){$("loginError").textContent=r.error.message;$("loginError").style.display="block";return}var u=r.data&&r.data.user? r.data.user : null;var role=(u&&u.app_metadata&&u.app_metadata.role)||(u&&u.user_metadata&&u.user_metadata.role)||"";if(role!==loginRole){await sb.auth.signOut();$("loginError").textContent=loginRole==="guru"?"Akun ini bukan akun Guru.":"Akun ini bukan akun Admin.";$("loginError").style.display="block";return}await startApp(r.data.session);$("loginError").style.display="none"}catch(err){console.error(err);$("loginError").textContent=err.message||"Login gagal. Silakan coba lagi.";$("loginError").style.display="block"}finally{$("loginBtn").disabled=false;$("loginBtn").textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin"}};$("exportAdminBtn").onclick=function(){exportAdminExcel()};
+$("loginForm").onsubmit=async function(e){
+  e.preventDefault();
+  var errBox=$("loginError"),btn=$("loginBtn");
+  btn.disabled=true;
+  btn.textContent="Memeriksa...";
+  errBox.style.display="block";
+  errBox.textContent="1. Tombol login aktif. Menyiapkan koneksi...";
+  try{
+    if(!sb)throw new Error("Koneksi Supabase belum siap. Refresh halaman dengan Ctrl+F5.");
+    var email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+    if(!email)throw new Error("Email wajib diisi.");
+    if(!password)throw new Error("Password wajib diisi.");
+    errBox.textContent="2. Menghubungkan ke Supabase...";
+    var r=await sb.auth.signInWithPassword({email:email,password:password});
+    if(r.error)throw new Error(r.error.message||"Email atau password salah.");
+    if(!r.data||!r.data.user||!r.data.session)throw new Error("Supabase tidak mengembalikan sesi login.");
+    var u=r.data.user;
+    var role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
+    errBox.textContent="3. Login berhasil. Role akun: "+(role||"KOSONG")+" | Mode: "+loginRole;
+    if(role!==loginRole){
+      await sb.auth.signOut();
+      throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"kosong")+". Untuk Admin harus role=admin.");
+    }
+    errBox.textContent="4. Login berhasil, sedang membuka panel...";
+    await startApp(r.data.session);
+    errBox.style.display="none";
+  }catch(err){
+    console.error("LOGIN ERROR:",err);
+    errBox.textContent="❌ LOGIN GAGAL: "+(err&&err.message?err.message:String(err));
+    errBox.style.display="block";
+    btn.disabled=false;
+    btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
+    return;
+  }
+  btn.disabled=false;
+  btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
+};$("exportAdminBtn").onclick=function(){exportAdminExcel()};
 $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
 $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
 $("scheduleForm").onsubmit=async function(e){e.preventDefault();if(!currentUser)return;var f=new FormData(e.target);var payload={teacher_id:currentUser.id,student_id:f.get("student_id"),tanggal:f.get("tanggal"),jam:f.get("jam"),mapel:f.get("mapel"),status:f.get("status")};var r=editingScheduleId?await sb.from("teacher_schedules").update(payload).eq("id",editingScheduleId).eq("teacher_id",currentUser.id):await sb.from("teacher_schedules").insert(payload);if(r.error){alert("Jadwal belum bisa disimpan. Pastikan tabel teacher_schedules sudah dibuat di Supabase.");return}editingScheduleId=null;$("scheduleSubmit").textContent="Simpan Jadwal";$("scheduleCancel").hidden=true;e.target.reset();scheduleDateToday();var q=await sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});SCH=q.data||[];drawSchedule()}
 $("scheduleCancel").onclick=function(){editingScheduleId=null;$("scheduleSubmit").textContent="Simpan Jadwal";$("scheduleCancel").hidden=true;$("scheduleForm").reset();scheduleDateToday()}
 $("teacherLogoutBtn").onclick=async function(){await sb.auth.signOut()};
-function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(function(p){p.hidden=p.id!==id});document.querySelectorAll("#teacherMenu button").forEach(function(b){b.classList.toggle("on",b.dataset.teacherPage===id)});window.scrollTo({top:0,behavior:"smooth"})}document.querySelectorAll("#teacherMenu button").forEach(function(b){b.onclick=function(){showTeacherPage(b.dataset.teacherPage)}});async function startApp(session){if(!session||!session.user){currentUser=null;currentRole="";$("app").style.display="none";$("teacherApp").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}currentUser=session.user;if(!currentUser.id)return;currentRole=(currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"";$("loginScreen").style.display="none";if(currentRole==="guru"){$("app").style.display="none";$("teacherApp").style.display="block";$("teacherSync").textContent="Memuat...";try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();scheduleDateToday();$("teacherSync").textContent="Tersimpan online"}catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Gagal memuat panel guru: "+(err.message||err))}return}if(currentRole==="admin"){$("teacherApp").style.display="none";$("app").style.display="block";setSync("Memuat data...");try{await dbLoad();await migrateLocalIfEmpty();await dbLoad();draw();setSync("Tersimpan online")}catch(err){console.error(err);setSync("Gagal memuat");alert("Gagal terhubung ke database: "+(err.message||err))}return}$("loginScreen").style.display="flex";$("app").style.display="none";$("teacherApp").style.display="none";$("loginError").textContent="LOGIN BERHASIL, tetapi app_metadata.role belum diset. Silakan tambahkan role admin/guru di Supabase Auth lalu login ulang.";$("loginError").style.display="block"}
+function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(function(p){p.hidden=p.id!==id});document.querySelectorAll("#teacherMenu button").forEach(function(b){b.classList.toggle("on",b.dataset.teacherPage===id)});window.scrollTo({top:0,behavior:"smooth"})}document.querySelectorAll("#teacherMenu button").forEach(function(b){b.onclick=function(){showTeacherPage(b.dataset.teacherPage)}});async function startApp(session){if(!session||!session.user){currentUser=null;currentRole="";$("app").style.display="none";$("teacherApp").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}currentUser=session.user;if(!currentUser.id)return;currentRole=(currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"";$("loginScreen").style.display="none";if(currentRole==="guru"){$("app").style.display="none";$("teacherApp").style.display="block";$("teacherSync").textContent="Memuat...";try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();scheduleDateToday();$("teacherSync").textContent="Tersimpan online"}catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Gagal memuat panel guru: "+(err.message||err))}return}if(currentRole==="admin"){$("teacherApp").style.display="none";$("app").style.display="block";setSync("Memuat data...");try{await dbLoad();await migrateLocalIfEmpty();await dbLoad();draw();setSync("Tersimpan online")}catch(err){console.error(err);setSync("Gagal memuat");alert("Gagal terhubung ke database: "+(err.message||err))}return}await sb.auth.signOut();$("loginScreen").style.display="flex";$("loginError").textContent="Akun belum memiliki role. Hubungi admin.";$("loginError").style.display="block"}
 
 (async function init(){
   try{
@@ -2077,11 +2113,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
     sb=window.supabase.createClient(cfg.url,cfg.key);
     var r=await sb.auth.getSession();
     await startApp(r.data.session);
-    sb.auth.onAuthStateChange(function(event,session){
-      if(event==="SIGNED_OUT"){
-        startApp(null);
-      }
-    });
+    sb.auth.onAuthStateChange(function(event,session){if(event==="SIGNED_OUT")startApp(null)});
   }catch(err){
     console.error(err);
     $("loginError").textContent=err.message||"Konfigurasi gagal";
