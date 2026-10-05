@@ -1474,21 +1474,25 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
 </style>
 
 <style id="admin-menu-top-layout">
-/* Menu utama admin mengikuti pola Panel Guru: horizontal di atas konten */
+/* Menu utama pengelola mengikuti persis pola Panel Guru: horizontal di atas konten */
 #app{
   display:block;
 }
 #app>.tabs.top-menu.admin-sidebar{
-  width:100%;
-  margin:0 0 14px;
-  padding:10px 12px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:var(--card);
-  box-shadow:0 10px 28px rgba(21,67,107,.05);
   position:relative;
   top:auto;
+  width:100%;
+  margin:0 0 14px;
+  padding:10px 14px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:var(--bg);
+  box-shadow:none;
   overflow-x:auto;
+}
+#app>.tabs.top-menu.admin-sidebar>.admin-sidebar-title{
+  display:none;
 }
 #app>.tabs.top-menu.admin-sidebar>.tabs{
   display:flex;
@@ -1500,18 +1504,6 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   min-width:0;
   flex-wrap:nowrap;
 }
-#app>.tabs.top-menu.admin-sidebar>.admin-sidebar-title{
-  display:none;
-}
-#app>.tabs.top-menu.admin-sidebar>.tabs{
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:8px;
-  width:max-content;
-  min-width:max-content;
-  flex-wrap:nowrap;
-}
 #app>.tabs.top-menu.admin-sidebar>.tabs>button,
 #app>.tabs.top-menu.admin-sidebar .admin-menu-group{
   flex:0 0 auto;
@@ -1520,15 +1512,15 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   width:auto;
   min-width:130px;
   text-align:center;
-  padding:9px 14px;
   border:1px solid transparent;
   border-radius:12px;
+  padding:9px 12px;
   background:transparent;
   color:var(--ink);
   margin:0;
 }
 #app>.tabs.top-menu.admin-sidebar>.tabs>button:hover{
-  background:var(--bg);
+  background:var(--card);
   border-color:var(--line);
   transform:translateY(-1px);
 }
@@ -1541,28 +1533,25 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   display:flex;
   align-items:center;
   gap:6px;
-  padding:0 4px;
-  border-left:1px solid var(--line);
+  padding:0;
+  border:0;
 }
 #app>.tabs.top-menu.admin-sidebar .admin-menu-label{
-  padding:0 6px;
-  white-space:nowrap;
-  font-size:.9rem;
-  font-weight:800;
+  display:none;
 }
 #app>.tabs.top-menu.admin-sidebar .admin-menu-group button{
   width:auto;
-  min-width:120px;
+  min-width:130px;
   text-align:center;
-  padding:9px 12px;
   border:1px solid transparent;
   border-radius:12px;
+  padding:9px 12px;
   background:transparent;
   color:var(--ink);
   margin:0;
 }
 #app>.tabs.top-menu.admin-sidebar .admin-menu-group button:hover{
-  background:var(--bg);
+  background:var(--card);
   border-color:var(--line);
 }
 #app>#dashboard,
@@ -1572,23 +1561,19 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   width:100%;
   min-width:0;
 }
-#app>#dashboard{padding-top:0}
-@media(max-width:760px){
+#app>#dashboard{
+  padding-top:0;
+}
+@media(max-width:700px){
   #app>.tabs.top-menu.admin-sidebar{
     padding:9px 10px;
   }
   #app>.tabs.top-menu.admin-sidebar>.tabs{
     min-width:max-content;
   }
-  #app>.tabs.top-menu.admin-sidebar .admin-menu-group{
-    padding:0 5px;
-  }
-  #app>.tabs.top-menu.admin-sidebar .admin-menu-label{
-    font-size:.85rem;
-  }
   #app>.tabs.top-menu.admin-sidebar>.tabs>button,
   #app>.tabs.top-menu.admin-sidebar .admin-menu-group button{
-    min-width:115px;
+    min-width:125px;
   }
 }
 </style>
