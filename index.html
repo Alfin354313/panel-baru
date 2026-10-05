@@ -904,7 +904,120 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
 #teacherReportPage .report-muted{color:var(--muted)}
 #teacherReportPage .report-meeting-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}.report-meeting-table{min-width:980px;font-size:.82rem}.report-meeting-table th{background:var(--bg);font-size:.75rem;text-transform:uppercase;letter-spacing:.02em}.report-meeting-table td{white-space:normal;vertical-align:top;line-height:1.45}.report-meeting-table small{color:var(--muted)}
 @media(max-width:700px){#teacherReportPage .report-form{grid-template-columns:1fr;margin-left:14px!important;margin-right:14px!important;padding:14px}#teacherReportPage .report-form .full{grid-column:auto}#teacherReportPage .report-preview{margin-left:14px;margin-right:14px;padding:15px}#teacherReportPage .report-kpis{grid-template-columns:1fr 1fr}#teacherReportPage .report-title{flex-direction:column}}
-</style><style id="admin-salary-styles">
+</style><style id="teacher-report-invoice-style">
+/* Laporan Guru mengikuti desain invoice Pembayaran */
+#teacherReportPage .report-preview{
+  margin:0 22px 22px;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card);
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+}
+#teacherReportPage .report-invoice{
+  max-width:760px;
+  margin:0 auto;
+}
+#teacherReportPage .report-invoice-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  border-bottom:2px solid var(--line);
+  padding-bottom:14px;
+  margin-bottom:18px;
+}
+#teacherReportPage .report-invoice-head h1{
+  margin:0;
+  font-size:1.45rem;
+  letter-spacing:.01em;
+}
+#teacherReportPage .report-invoice-head small{color:var(--muted)}
+#teacherReportPage .report-invoice-title{text-align:right}
+#teacherReportPage .report-invoice-title b{font-size:1.05rem}
+#teacherReportPage .report-invoice-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 18px;
+}
+#teacherReportPage .report-invoice-meta div{
+  padding:8px 0;
+  border-bottom:1px solid var(--line);
+}
+#teacherReportPage .report-invoice-meta small{color:var(--muted)}
+#teacherReportPage .report-invoice-status{
+  display:inline-block;
+  padding:5px 12px;
+  border-radius:999px;
+  background:#e7f2fc;
+  color:#1e6fb8;
+  font-weight:800;
+}
+#teacherReportPage .report-invoice-section{
+  margin-top:18px;
+}
+#teacherReportPage .report-invoice-section h3{
+  margin:0 0 9px;
+  font-size:.92rem;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+#teacherReportPage .report-invoice-total{
+  font-size:1.15rem;
+  font-weight:800;
+}
+#teacherReportPage .report-invoice-kpis{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+}
+#teacherReportPage .report-invoice-kpi{
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg);
+}
+#teacherReportPage .report-invoice-kpi small{display:block;color:var(--muted)}
+#teacherReportPage .report-invoice-kpi b{display:block;margin-top:2px;font-size:1.08rem}
+#teacherReportPage .report-invoice-table{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  font-size:.8rem;
+}
+#teacherReportPage .report-invoice-table th{
+  background:var(--bg);
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+#teacherReportPage .report-invoice-table td{
+  white-space:normal;
+  vertical-align:top;
+  line-height:1.4;
+}
+#teacherReportPage .report-invoice-note{
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg);
+  white-space:pre-line;
+}
+#teacherReportPage .report-invoice-footer{
+  margin-top:20px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.82rem;
+}
+@media(max-width:700px){
+  #teacherReportPage .report-preview{margin-left:14px;margin-right:14px;padding:15px}
+  #teacherReportPage .report-invoice-meta{grid-template-columns:1fr}
+  #teacherReportPage .report-invoice-kpis{grid-template-columns:repeat(2,1fr)}
+  #teacherReportPage .report-invoice-head{flex-direction:column}
+  #teacherReportPage .report-invoice-title{text-align:left}
+}
+</style></style><style id="admin-salary-styles">
 #salaryPage{border-radius:16px;box-shadow:0 10px 28px rgba(21,67,107,.05)}
 #salaryPage .salary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
 #salaryPage .salary-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
@@ -1636,7 +1749,53 @@ function reportMonthName(m){if(!m)return "";var p=String(m).split("-");var names
 function reportStats(studentId,month){var ar=ATT.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month});var notes=TN.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month});var q={Hadir:0,Izin:0,Sakit:0,"Tidak Hadir":0};ar.forEach(function(x){if(q[x.status]!==undefined)q[x.status]++});return {attendance:ar,notes:notes,counts:q,total:ar.length}}
 function drawReports(){var keep=$("reportStudent").value;$("reportStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep)$("reportStudent").value=keep;if(!$("reportMonth").value)$("reportMonth").value=thisM;var rows=RPT.map(function(x){var m=stu(x.student_id)||{};var st=reportStats(x.student_id,x.bulan);return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(reportMonthName(x.bulan))+'</td><td>'+st.counts.Hadir+' hadir / '+st.total+' pertemuan</td><td>'+esc((x.pencapaian||"Belum diisi").slice(0,70))+'</td><td><button class="sm" data-ereport="'+x.id+'">Lihat/Edit</button> <button class="sm" data-pdf-report="'+x.id+'">PDF</button> <button class="sm" data-share-report="'+x.id+'">WhatsApp</button> <button class="sm" data-dreport="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="5">Belum ada laporan bulanan.</td></tr>';$("teacherReportsBody").innerHTML=rows;refreshReportPreview()}
 function syncReportFields(){var sid=$("reportStudent").value,month=$("reportMonth").value,saved=RPT.find(function(x){return x.student_id===sid&&x.bulan===month});$("reportAchievement").value=saved?saved.pencapaian||"":"";$("reportNote").value=saved?saved.catatan||"":"";$("reportRecommendation").value=saved?saved.rekomendasi||"":"";$("reportSave").textContent=saved?"Simpan Perubahan":"Simpan Laporan";$("reportCancel").hidden=!saved}function reportMeetingRows(studentId,month){var byDate={};ATT.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month}).forEach(function(x){var k=String(x.tanggal||"");if(!byDate[k])byDate[k]={tanggal:k,status:"",catatanAbsensi:"",notes:[]};byDate[k].status=x.status||"";byDate[k].catatanAbsensi=x.catatan||""});TN.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month}).forEach(function(x){var k=String(x.tanggal||"");if(!byDate[k])byDate[k]={tanggal:k,status:"",catatanAbsensi:"",notes:[]};byDate[k].notes.push(x)});return Object.keys(byDate).sort().map(function(k){var r=byDate[k],n=r.notes||[];return {tanggal:r.tanggal,status:r.status||"Belum diisi",catatanAbsensi:r.catatanAbsensi||"",materi:n.map(function(x){return x.materi||""}).filter(Boolean).join(" / "),metode:n.map(function(x){return x.metode||""}).filter(Boolean).join(" / "),kesulitan:n.map(function(x){return x.catatan_kesulitan||""}).filter(Boolean).join(" / "),lanjutan:n.map(function(x){return x.rencana_lanjutan||""}).filter(Boolean).join(" / ")}})}
-function refreshReportPreview(){var sid=$("reportStudent").value,month=$("reportMonth").value;if(!sid||!month){$("reportPreview").innerHTML='<p class="report-muted" style="margin:0">Pilih murid dan bulan untuk melihat ringkasan laporan.</p>';return}var m=stu(sid)||{},st=reportStats(sid,month),rows=reportMeetingRows(sid,month),saved=RPT.find(function(x){return x.student_id===sid&&x.bulan===month});var attendRate=st.total?Math.round(st.counts.Hadir/st.total*100):0;var achievement=$("reportAchievement").value.trim()||((saved&&saved.pencapaian)||"Belum diisi.");var note=$("reportNote").value.trim()||((saved&&saved.catatan)||"Belum ada catatan tambahan.");var rec=$("reportRecommendation").value.trim()||((saved&&saved.rekomendasi)||"Belum ada rekomendasi.");var meetingHtml=rows.map(function(x,i){return '<tr><td>'+esc(String(i+1))+'</td><td>'+esc(x.tanggal)+'</td><td><b>'+esc(x.status)+'</b>'+(x.catatanAbsensi?'<br><small>'+esc(x.catatanAbsensi)+'</small>':'')+'</td><td>'+esc(x.materi||"-")+'</td><td>'+esc(x.metode||"-")+'</td><td>'+esc(x.kesulitan||"-")+'</td><td>'+esc(x.lanjutan||"-")+'</td></tr>'}).join("")||'<tr><td colspan="7" style="text-align:center;color:var(--muted)">Belum ada data pertemuan pada bulan ini.</td></tr>';$("reportPreview").innerHTML='<div class="report-title"><div><small class="report-muted">JENIUS EDU · LAPORAN PERKEMBANGAN</small><h2 style="margin:3px 0">'+esc(m.nama||"-")+'</h2><div class="report-muted">'+esc((m.jenjang||"")+" "+(m.kelas||""))+' · Periode '+esc(reportMonthName(month))+'</div></div><div style="text-align:right"><b>'+attendRate+'%</b><br><small class="report-muted">kehadiran</small></div></div><div class="report-kpis"><div class="report-kpi"><small>Total Pertemuan</small><b>'+rows.length+'</b></div><div class="report-kpi"><small>Hadir</small><b>'+st.counts.Hadir+'</b></div><div class="report-kpi"><small>Izin</small><b>'+st.counts.Izin+'</b></div><div class="report-kpi"><small>Sakit / Tidak Hadir</small><b>'+String(st.counts.Sakit+st.counts["Tidak Hadir"])+'</b></div></div><div class="report-block"><h3>📋 Detail Pertemuan</h3><div class="tw report-meeting-wrap"><table class="report-meeting-table"><thead><tr><th>No.</th><th>Tanggal</th><th>Absensi</th><th>Materi</th><th>Metode</th><th>Kesulitan</th><th>Rencana Lanjutan</th></tr></thead><tbody>'+meetingHtml+'</tbody></table></div></div><div class="report-block"><h3>⭐ Pencapaian / Perkembangan</h3><p>'+esc(achievement)+'</p></div><div class="report-block"><h3>📝 Catatan Guru</h3><p>'+esc(note)+'</p></div><div class="report-block"><h3>📌 Rekomendasi Bulan Berikutnya</h3><p>'+esc(rec)+'</p></div>'}
+function refreshReportPreview(){
+  var sid=$("reportStudent").value,month=$("reportMonth").value;
+  if(!sid||!month){
+    $("reportPreview").innerHTML='<p class="report-muted" style="margin:0">Pilih murid dan bulan untuk melihat laporan.</p>';
+    return
+  }
+  var m=stu(sid)||{},st=reportStats(sid,month),rows=reportMeetingRows(sid,month),saved=RPT.find(function(x){return x.student_id===sid&&x.bulan===month});
+  var attendRate=st.total?Math.round(st.counts.Hadir/st.total*100):0;
+  var achievement=$("reportAchievement").value.trim()||((saved&&saved.pencapaian)||"Belum diisi.");
+  var note=$("reportNote").value.trim()||((saved&&saved.catatan)||"Belum ada catatan tambahan.");
+  var rec=$("reportRecommendation").value.trim()||((saved&&saved.rekomendasi)||"Belum ada rekomendasi.");
+  var no="JE-RPT-"+String(month).replace("-","")+"-"+String(studentId).slice(0,8).toUpperCase();
+  var meetingHtml=rows.map(function(x,i){
+    return '<tr><td>'+esc(String(i+1))+'</td><td>'+esc(x.tanggal)+'</td><td><b>'+esc(x.status)+'</b>'+(x.catatanAbsensi?'<br><small>'+esc(x.catatanAbsensi)+'</small>':'')+'</td><td>'+esc(x.materi||"-")+'</td><td>'+esc(x.metode||"-")+'</td><td>'+esc(x.kesulitan||"-")+'</td><td>'+esc(x.lanjutan||"-")+'</td></tr>'
+  }).join("")||'<tr><td colspan="7" style="text-align:center;color:var(--muted)">Belum ada data pertemuan pada bulan ini.</td></tr>';
+  $("reportPreview").innerHTML=
+    '<div class="report-invoice">'+
+      '<div class="report-invoice-head">'+
+        '<div><h1>JENIUS EDU</h1><small>Laporan Perkembangan Siswa</small></div>'+
+        '<div class="report-invoice-title"><b>LAPORAN</b><br><span>'+esc(no)+'</span></div>'+
+      '</div>'+
+      '<div class="report-invoice-meta">'+
+        '<div><small>Nama Siswa</small><br><b>'+esc(m.nama||"-")+'</b></div>'+
+        '<div><small>Periode Laporan</small><br><b>'+esc(reportMonthName(month))+'</b></div>'+
+        '<div><small>Jenjang / Kelas</small><br><b>'+esc((m.jenjang||"-")+" / "+(m.kelas||"-"))+'</b></div>'+
+        '<div><small>Status Laporan</small><br><span class="report-invoice-status">'+(saved?"TERSIMPAN":"DRAFT")+'</span></div>'+
+      '</div>'+
+      '<div class="report-invoice-section"><h3>Rekap Kehadiran</h3>'+
+        '<div class="report-invoice-kpis">'+
+          '<div class="report-invoice-kpi"><small>Kehadiran</small><b>'+attendRate+'%</b></div>'+
+          '<div class="report-invoice-kpi"><small>Pertemuan</small><b>'+rows.length+'</b></div>'+
+          '<div class="report-invoice-kpi"><small>Hadir</small><b>'+st.counts.Hadir+'</b></div>'+
+          '<div class="report-invoice-kpi"><small>Izin</small><b>'+st.counts.Izin+'</b></div>'+
+          '<div class="report-invoice-kpi"><small>Sakit / Tidak Hadir</small><b>'+String(st.counts.Sakit+st.counts["Tidak Hadir"])+'</b></div>'+
+        '</div>'+
+      '</div>'+
+      '<hr style="border:0;border-top:1px solid var(--line);margin:18px 0">'+
+      '<div class="report-invoice-section"><h3>Detail Pertemuan · Absensi + Catatan Mengajar</h3>'+
+        '<div class="tw"><table class="report-invoice-table"><thead><tr><th>No.</th><th>Tanggal</th><th>Absensi</th><th>Materi</th><th>Metode</th><th>Kesulitan</th><th>Rencana Lanjutan</th></tr></thead><tbody>'+meetingHtml+'</tbody></table></div>'+
+      '</div>'+
+      '<div class="report-invoice-section"><h3>Pencapaian / Perkembangan</h3><div class="report-invoice-note">'+esc(achievement)+'</div></div>'+
+      '<div class="report-invoice-section"><h3>Catatan Guru</h3><div class="report-invoice-note">'+esc(note)+'</div></div>'+
+      '<div class="report-invoice-section"><h3>Rekomendasi Bulan Berikutnya</h3><div class="report-invoice-note">'+esc(rec)+'</div></div>'+
+      '<div style="display:flex;justify-content:space-between;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)"><b class="report-invoice-total">Jenius Edu</b><span class="report-muted">'+esc(reportMonthName(month))+'</span></div>'+
+      '<div class="report-invoice-footer">Dokumen laporan pembelajaran Jenius Edu · Data berasal dari absensi dan catatan mengajar guru.</div>'+
+    '</div>';
+}
 function startEditReport(id){var x=RPT.find(function(q){return q.id===id});if(!x)return;editingReportId=id;$("reportStudent").value=x.student_id;$("reportMonth").value=x.bulan;$("reportAchievement").value=x.pencapaian||"";$("reportNote").value=x.catatan||"";$("reportRecommendation").value=x.rekomendasi||"";$("reportSave").textContent="Simpan Perubahan";$("reportCancel").hidden=false;refreshReportPreview();$("reportForm").scrollIntoView({behavior:"smooth",block:"start"})}
 function cancelEditReport(){editingReportId=null;$("reportForm").reset();$("reportMonth").value=thisM;$("reportSave").textContent="Simpan Laporan";$("reportCancel").hidden=true;refreshReportPreview()}
 function reportData(studentId,month){var m=stu(studentId)||{},st=reportStats(studentId,month),saved=RPT.find(function(x){return x.student_id===studentId&&x.bulan===month});return {student:m,stats:st,achievement:$("reportAchievement").value.trim()||((saved&&saved.pencapaian)||"Belum diisi."),note:$("reportNote").value.trim()||((saved&&saved.catatan)||"Belum ada catatan tambahan."),recommendation:$("reportRecommendation").value.trim()||((saved&&saved.rekomendasi)||"Belum ada rekomendasi.")}}
