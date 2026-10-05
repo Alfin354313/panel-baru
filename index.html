@@ -1471,6 +1471,33 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
     padding:14px;
   }
 }
+<style id="admin-header-actions">
+/* Aksi Export dan Keluar berada di pojok kanan header Pengelola */
+#app>header>div:last-child{
+  margin-left:auto !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:flex-end !important;
+  gap:8px;
+  flex-wrap:nowrap !important;
+}
+#app>header #exportAdminBtn{
+  margin-left:0;
+}
+#app>header #logoutBtn{
+  margin-left:0;
+  border-color:var(--no);
+  color:var(--no);
+  font-weight:700;
+}
+@media(max-width:700px){
+  #app>header>div:last-child{
+    flex-wrap:wrap !important;
+    justify-content:flex-end !important;
+  }
+}
+</style>
+
 </style>
 
 <style id="admin-menu-top-layout">
