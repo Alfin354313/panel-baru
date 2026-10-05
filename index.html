@@ -1455,6 +1455,9 @@ window.jeniusLoginSubmit = async function(e){
     var session=result.data&&result.data.session;
     if(!session||!session.user)throw new Error("Session login belum tersedia.");
 
+    /* Tandai sesi lebih dulu agar event SIGNED_IN tidak menjalankan startApp dua kali. */
+    window.lastStartedSessionId=session.user.id;
+
     var role=String(
       (session.user.app_metadata&&session.user.app_metadata.role)||
       (session.user.user_metadata&&session.user.user_metadata.role)||""
@@ -2226,7 +2229,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   currentUser=session.user;
   currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
   currentUser=session.user;
-  currentRole=(currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"";
+  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
   if(currentRole!=="admin"&&currentRole!=="guru"){
     $("loginScreen").style.display="flex";$("app").style.display="none";$("teacherApp").style.display="none";
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
