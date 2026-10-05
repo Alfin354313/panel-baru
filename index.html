@@ -1537,7 +1537,8 @@ function drawSalary(){
   populateSalaryTeachers();
   var month=$("salaryMonth").value||thisM;
   $("salaryMonth").value=month;
-  if(!$("salaryFormMonth").value)$("salaryFormMonth").value=month;
+  $("salaryFormMonth").value=month;
+  updateSalaryMeeting();
   var monthRows=SAL.filter(function(x){return x.bulan===month});
   var total=monthRows.reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   var paid=monthRows.filter(function(x){return x.status==="Sudah Dibayar"}).reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
