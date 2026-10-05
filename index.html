@@ -2062,8 +2062,35 @@ document.addEventListener("click",async function(e){
 
 function setLoginMode(role){loginRole=role;$("loginRole").value=role;$("adminModeBtn").classList.toggle("active",role==="admin");$("guruModeBtn").classList.toggle("active",role==="guru");$("loginSubtitle").textContent=role==="guru"?"Panel Guru — silakan masuk dengan akun guru.":"Panel Pengelola — silakan masuk dengan akun admin.";$("loginBtn").textContent=role==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";$("loginError").style.display="none"}
 $("adminModeBtn").onclick=function(){setLoginMode("admin")};$("guruModeBtn").onclick=function(){setLoginMode("guru")};$("loginPasswordToggle").onclick=function(){var p=$("loginPassword"),show=p.type==="password";p.type=show?"text":"password";this.textContent=show?"🙈":"👁";this.setAttribute("aria-label",show?"Sembunyikan password":"Tampilkan password")};
-$("loginForm").onsubmit=async function(e){e.preventDefault();$("loginError").style.display="none";$("loginBtn").disabled=true;$("loginBtn").textContent="Memeriksa...";try{var r=await sb.auth.signInWithPassword({email:$("loginEmail").value.trim(),password:$("loginPassword").value});if(r.error){$("loginError").textContent=r.error.message;$("loginError").style.display="block";return}var u=r.data&&r.data.user? r.data.user : null;
-var role=(u&&u.app_metadata&&u.app_metadata.role)||(u&&u.user_metadata&&u.user_metadata.role)||"";if(role!==loginRole){await sb.auth.signOut();$("loginError").textContent=loginRole==="guru"?"Akun ini bukan akun Guru.":"Akun ini bukan akun Admin.";$("loginError").style.display="block";return}await startApp(r.data.session);$("loginError").style.display="none"}catch(err){console.error(err);$("loginError").textContent=err.message||"Login gagal. Silakan coba lagi.";$("loginError").style.display="block"}finally{$("loginBtn").disabled=false;$("loginBtn").textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin"}};
+$("loginForm").onsubmit=async function(e){
+  e.preventDefault();
+  var errBox=$("loginError"),btn=$("loginBtn");
+  errBox.style.display="none";errBox.textContent="";
+  btn.disabled=true;btn.textContent="Memeriksa...";
+  try{
+    if(!sb)throw new Error("Koneksi Supabase belum siap. Silakan refresh halaman.");
+    var email=$("loginEmail").value.trim(),password=$("loginPassword").value;
+    if(!email)throw new Error("Email wajib diisi.");
+    if(!password)throw new Error("Password wajib diisi.");
+    var r=await sb.auth.signInWithPassword({email:email,password:password});
+    if(r.error)throw new Error(r.error.message||"Email atau password salah.");
+    if(!r.data||!r.data.user||!r.data.session)throw new Error("Login berhasil tetapi sesi tidak terbentuk. Silakan coba lagi.");
+    var u=r.data.user,role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
+    if(role!==loginRole){
+      await sb.auth.signOut();
+      throw new Error(loginRole==="guru"?"Akun ini bukan akun Guru.":"Akun ini bukan akun Admin.");
+    }
+    await startApp(r.data.session);
+    errBox.style.display="none";
+  }catch(err){
+    console.error("LOGIN ERROR:",err);
+    errBox.textContent="Login gagal: "+(err&&err.message?err.message:"Terjadi kesalahan saat login.");
+    errBox.style.display="block";
+    errBox.scrollIntoView({behavior:"smooth",block:"center"});
+  }finally{
+    btn.disabled=false;btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
+  }
+};
 $("exportAdminBtn").onclick=function(){exportAdminExcel()};
 $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
 $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
