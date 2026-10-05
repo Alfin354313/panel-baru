@@ -2075,9 +2075,10 @@ $("loginForm").onsubmit=async function(e){
     if(r.error)throw new Error(r.error.message||"Email atau password salah.");
     var u=r.data&&r.data.user,session=r.data&&r.data.session;
     if(!u||!session)throw new Error("Supabase tidak mengembalikan session.");
-    var role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
-    errBox.textContent="3. Login berhasil. Role: "+(role||"KOSONG")+" | Mode: "+loginRole;
-    if(role!==loginRole)throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"KOSONG")+". Untuk Admin harus role=admin.");
+    var role=String((u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"").trim().toLowerCase();
+    var mode=String(loginRole||"").trim().toLowerCase();
+    errBox.textContent="3. Login berhasil. Role: "+(role||"KOSONG")+" | Mode: "+mode;
+    if(role!==mode)throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"KOSONG")+". Mode login: "+mode+".");
     errBox.textContent="4. Login berhasil, membuka panel...";
     currentUser=u;currentRole=role;
     $("loginScreen").style.display="none";
