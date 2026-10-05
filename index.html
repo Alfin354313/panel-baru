@@ -44,7 +44,156 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
 .top-menu{position:sticky;top:0;z-index:20;background:var(--bg);padding:8px 0 12px;margin:0 0 14px;border-bottom:1px solid var(--line)}
 .top-menu button{flex:1;min-width:130px;text-align:center}
 @media(max-width:700px){.top-menu{overflow-x:auto;justify-content:flex-start}.top-menu button{flex:0 0 auto;min-width:120px}}
-</style></head><body>
+<style>
+/* Jenius Edu - modern teacher dashboard */
+#teacherApp>.card{
+  padding:0;
+  overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:0 14px 40px rgba(21,67,107,.08);
+  display:grid;
+  grid-template-columns:220px minmax(0,1fr);
+  grid-template-rows:auto 1fr;
+  min-height:680px;
+}
+#teacherApp .teacher-head{
+  grid-column:1/-1;
+  margin:0;
+  padding:18px 22px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp .teacher-brand h1{font-size:1.35rem;letter-spacing:.01em}
+#teacherApp .teacher-brand small{display:block;margin-top:2px}
+#teacherApp .teacher-brand .dashboard-logo{width:50px;height:50px;flex-basis:50px;box-shadow:0 6px 18px rgba(21,67,107,.12)}
+#teacherApp .teacher-head>div:last-child{gap:6px}
+#teacherApp .teacher-head button{
+  border-width:1px;
+  background:var(--card);
+}
+#teacherApp .teacher-head #teacherLogoutBtn{
+  border-color:var(--no);
+  color:var(--no);
+}
+#teacherApp .teacher-head #exportTeacherBtn{
+  border-color:#1e6fb8;
+}
+#teacherApp .top-menu{
+  position:relative;
+  top:auto;
+  z-index:1;
+  grid-column:1;
+  grid-row:2;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:7px;
+  margin:0;
+  padding:18px 12px;
+  border:0;
+  border-right:1px solid var(--line);
+  background:var(--bg);
+}
+#teacherApp .top-menu button{
+  flex:none;
+  width:100%;
+  min-width:0;
+  text-align:left;
+  border:1px solid transparent;
+  border-radius:12px;
+  padding:11px 13px;
+  background:transparent;
+  color:var(--ink);
+  transition:.18s ease;
+}
+#teacherApp .top-menu button:hover{
+  background:var(--card);
+  border-color:var(--line);
+  transform:translateX(2px);
+}
+#teacherApp .top-menu button.on{
+  background:var(--hl);
+  border-color:#86c4ed;
+  box-shadow:0 5px 14px rgba(30,111,184,.12);
+}
+#teacherApp .teacher-page{
+  grid-column:2;
+  grid-row:2;
+  padding:22px;
+  min-width:0;
+}
+#teacherApp .teacher-page>.card,
+#teacherApp .teacher-page>.card+.card{
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(21,67,107,.05);
+}
+#teacherApp .teacher-page h2{
+  font-size:1.15rem;
+  letter-spacing:.01em;
+}
+#teacherApp .teacher-page .dashboard-grid{
+  gap:14px;
+}
+#teacherApp .teacher-page .dashboard-card{
+  border-radius:16px;
+  padding:17px;
+  position:relative;
+  overflow:hidden;
+}
+#teacherApp .teacher-page .dashboard-card:after{
+  content:"";
+  position:absolute;
+  width:54px;height:54px;
+  right:-18px;bottom:-18px;
+  border-radius:50%;
+  background:rgba(156,208,245,.25);
+}
+#teacherApp .teacher-page table th{
+  background:var(--bg);
+  font-size:.82rem;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+#teacherApp .teacher-page tbody tr:hover{
+  background:rgba(156,208,245,.10);
+}
+#teacherApp .teacher-form{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+}
+#teacherApp .teacher-form input,
+#teacherApp .teacher-form select,
+#teacherApp .teacher-form textarea{
+  background:var(--card);
+}
+@media(max-width:700px){
+  #teacherApp>.card{
+    display:block;
+    min-height:0;
+  }
+  #teacherApp .teacher-head{
+    padding:16px;
+  }
+  #teacherApp .top-menu{
+    flex-direction:row;
+    overflow-x:auto;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    padding:10px;
+  }
+  #teacherApp .top-menu button{
+    width:auto;
+    flex:0 0 auto;
+    min-width:150px;
+    text-align:center;
+  }
+  #teacherApp .teacher-page{
+    padding:14px;
+  }
+}
+</style></style></head><body>
 <style>
 #loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--bg),#E7F2FC)}
 form.login-card{display:block;width:min(430px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(21,67,107,.16)}
