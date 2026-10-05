@@ -2084,9 +2084,11 @@ $("loginForm").onsubmit=async function(e){
     errBox.style.display="none";
   }catch(err){
     console.error("LOGIN ERROR:",err);
-    errBox.textContent="Login gagal: "+(err&&err.message?err.message:"Terjadi kesalahan saat login.");
+    var msg="Login gagal: "+(err&&err.message?err.message:"Terjadi kesalahan saat login.");
+    errBox.textContent=msg;
     errBox.style.display="block";
     errBox.scrollIntoView({behavior:"smooth",block:"center"});
+    try{alert(msg)}catch(x){}
   }finally{
     btn.disabled=false;btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
   }
