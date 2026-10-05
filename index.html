@@ -1760,7 +1760,7 @@ function refreshReportPreview(){
   var achievement=$("reportAchievement").value.trim()||((saved&&saved.pencapaian)||"Belum diisi.");
   var note=$("reportNote").value.trim()||((saved&&saved.catatan)||"Belum ada catatan tambahan.");
   var rec=$("reportRecommendation").value.trim()||((saved&&saved.rekomendasi)||"Belum ada rekomendasi.");
-  var no="JE-RPT-"+String(month).replace("-","")+"-"+String(studentId).slice(0,8).toUpperCase();
+  var no="JE-RPT-"+String(month).replace("-","")+"-"+String(sid).slice(0,8).toUpperCase();
   var meetingHtml=rows.map(function(x,i){
     return '<tr><td>'+esc(String(i+1))+'</td><td>'+esc(x.tanggal)+'</td><td><b>'+esc(x.status)+'</b>'+(x.catatanAbsensi?'<br><small>'+esc(x.catatanAbsensi)+'</small>':'')+'</td><td>'+esc(x.materi||"-")+'</td><td>'+esc(x.metode||"-")+'</td><td>'+esc(x.kesulitan||"-")+'</td><td>'+esc(x.lanjutan||"-")+'</td></tr>'
   }).join("")||'<tr><td colspan="7" style="text-align:center;color:var(--muted)">Belum ada data pertemuan pada bulan ini.</td></tr>';
