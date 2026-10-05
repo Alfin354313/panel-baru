@@ -174,7 +174,20 @@ form.login-card{display:block;width:min(430px,100%);background:var(--card);borde
 <label>Status<select name="status" id="scheduleStatus"><option>Terjadwal</option><option>Selesai</option><option>Batal</option><option>Reschedule</option></select></label>
 <div class="teacher-form-actions full"><button id="scheduleSubmit" class="pri" type="submit">Simpan Jadwal</button><button id="scheduleCancel" type="button" hidden>Batal Edit</button></div>
 </form>
-<div class="tw"><table><thead><tr><th>Tanggal</th><th>Jam</th><th>Murid</th><th>Mata Pelajaran</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="scheduleBody"></tbody></table></div></div><form id="teacherForm" class="teacher-form"><label>Nama Murid<select name="student_id" id="teacherStudent" required></select></label><label>Hari / Tanggal<input name="tanggal" id="teacherDate" type="date" required></label><label class="full">Materi<textarea name="materi" placeholder="Contoh: Pecahan dan operasi hitung" required></textarea></label><label>Metode<textarea name="metode" placeholder="Contoh: Penjelasan, latihan soal, diskusi" required></textarea></label><label>Catatan Kesulitan<textarea name="catatan_kesulitan" placeholder="Kesulitan yang dialami murid"></textarea></label><label class="full">Rencana Lanjutan<textarea name="rencana_lanjutan" placeholder="Rencana materi / latihan pada pertemuan berikutnya"></textarea></label><div class="teacher-form-actions full"><button id="teacherSubmit" class="pri" type="submit">Simpan Catatan</button><button id="teacherCancel" type="button" hidden>Batal Edit</button></div></form></div><div class="card" style="margin-top:14px"><h2>Riwayat Catatan</h2><div class="tw"><table><thead><tr><th>Murid</th><th>Tanggal</th><th>Materi</th><th>Metode</th><th>Catatan Kesulitan</th><th>Rencana Lanjutan</th><th>Aksi</th></tr></thead><tbody id="teacherNotesBody"></tbody></table></div></div></div>
+<div class="tw"><table><thead><tr><th>Tanggal</th><th>Jam</th><th>Murid</th><th>Mata Pelajaran</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="scheduleBody"></tbody></table></div></div>
+<div class="card" style="margin-bottom:14px">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+    <h2 style="margin:0">Absensi Murid</h2><small id="attendanceSync" style="color:var(--muted)">Memuat...</small>
+  </div>
+  <form id="attendanceForm" class="teacher-form" style="margin-top:14px">
+    <label>Nama Murid<select name="student_id" id="attendanceStudent" required></select></label>
+    <label>Tanggal<input name="tanggal" id="attendanceDate" type="date" required></label>
+    <label>Status<select name="status" id="attendanceStatus"><option>Hadir</option><option>Izin</option><option>Sakit</option><option>Tidak Hadir</option></select></label>
+    <label class="full">Catatan<input name="catatan" id="attendanceNote" placeholder="Contoh: datang terlambat 10 menit"></label>
+    <div class="teacher-form-actions full"><button id="attendanceSubmit" class="pri" type="submit">Simpan Absensi</button><button id="attendanceCancel" type="button" hidden>Batal Edit</button></div>
+  </form>
+  <div class="tw"><table><thead><tr><th>Tanggal</th><th>Murid</th><th>Status</th><th>Catatan</th><th>Aksi</th></tr></thead><tbody id="attendanceBody"></tbody></table></div>
+</div><form id="teacherForm" class="teacher-form"><label>Nama Murid<select name="student_id" id="teacherStudent" required></select></label><label>Hari / Tanggal<input name="tanggal" id="teacherDate" type="date" required></label><label class="full">Materi<textarea name="materi" placeholder="Contoh: Pecahan dan operasi hitung" required></textarea></label><label>Metode<textarea name="metode" placeholder="Contoh: Penjelasan, latihan soal, diskusi" required></textarea></label><label>Catatan Kesulitan<textarea name="catatan_kesulitan" placeholder="Kesulitan yang dialami murid"></textarea></label><label class="full">Rencana Lanjutan<textarea name="rencana_lanjutan" placeholder="Rencana materi / latihan pada pertemuan berikutnya"></textarea></label><div class="teacher-form-actions full"><button id="teacherSubmit" class="pri" type="submit">Simpan Catatan</button><button id="teacherCancel" type="button" hidden>Batal Edit</button></div></form></div><div class="card" style="margin-top:14px"><h2>Riwayat Catatan</h2><div class="tw"><table><thead><tr><th>Murid</th><th>Tanggal</th><th>Materi</th><th>Metode</th><th>Catatan Kesulitan</th><th>Rencana Lanjutan</th><th>Aksi</th></tr></thead><tbody id="teacherNotesBody"></tbody></table></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 var $=function(i){return document.getElementById(i)};
@@ -183,8 +196,8 @@ var esc=function(t){var d=document.createElement("div");d.textContent=t==null?""
 var now=new Date(),thisM=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0"),todayISO=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayISO;$("dashboardMonth").value=thisM;
 
-var S=[],P=[],E=[],INV=[],TN=[],SCH=[];
-var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null;
+var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[];
+var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null;
 var localKey="jenius_edu_data_v3";
 
 function uid(p){return p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)}
@@ -219,8 +232,8 @@ async function dbLoad(){
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
   INV=d.data||[];
 }
-async function dbLoadTeacher(){var a=await sb.from("students").select("id,nama,jenjang,kelas").order("nama",{ascending:true});if(a.error)throw a.error;var b=await sb.from("teacher_notes").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});if(b.error)throw b.error;var q=await sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});if(q.error){console.warn("Jadwal belum tersedia:",q.error.message);SCH=[];$("scheduleSync").textContent="Tabel jadwal belum dibuat"}else{SCH=q.data||[];$("scheduleSync").textContent="Tersimpan di Supabase"}S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});TN=b.data||[];drawTeacher();drawSchedule()}
-function drawTeacher(){var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-etn="'+x.id+'">Edit</button> <button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>';
+async function dbLoadTeacher(){var a=await sb.from("students").select("id,nama,jenjang,kelas").order("nama",{ascending:true});if(a.error)throw a.error;var b=await sb.from("teacher_notes").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});if(b.error)throw b.error;var q=await sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});if(q.error){console.warn("Jadwal belum tersedia:",q.error.message);SCH=[];$("scheduleSync").textContent="Tabel jadwal belum dibuat"}else{SCH=q.data||[];$("scheduleSync").textContent="Tersimpan di Supabase"}var at=await sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});if(at.error){console.warn("Absensi belum tersedia:",at.error.message);ATT=[];$("attendanceSync").textContent="Tabel absensi belum dibuat"}else{ATT=at.data||[];$("attendanceSync").textContent="Tersimpan di Supabase"}S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});TN=b.data||[];drawTeacher();drawSchedule()}
+function drawTeacher(){drawAttendance();var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-etn="'+x.id+'">Edit</button> <button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>';
 var unique={};TN.forEach(function(x){if(x.student_id)unique[x.student_id]=true});
 var currentMonth=thisM, today=todayISO;
 $("gStudents").textContent=Object.keys(unique).length;
@@ -229,6 +242,50 @@ $("gTodayNotes").textContent=TN.filter(function(x){return x.tanggal===today}).le
 $("gTotalNotes").textContent=TN.length;
 var latest=TN.slice().sort(function(a,b){return String(b.tanggal||"").localeCompare(String(a.tanggal||""))}).slice(0,5);
 $("gLatestNotes").innerHTML=latest.map(function(x){var m=stu(x.student_id)||{};return '<div class="dashboard-alert"><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><br><small>'+esc(x.tanggal||"")+' · '+esc(x.materi||"")+'</small></div><span style="color:var(--muted)">'+esc(x.metode||"")+'</span></div>'}).join("")||'<p style="color:var(--muted);margin:0">Belum ada catatan pembelajaran.</p>';
+}
+function attendanceDateToday(){$("attendanceDate").value=todayISO}
+function drawAttendance(){
+  var keep=$("attendanceStudent").value;
+  $("attendanceStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';
+  if(keep) $("attendanceStudent").value=keep;
+  $("attendanceBody").innerHTML=ATT.map(function(x){
+    var m=stu(x.student_id)||{};
+    var cls=x.status==="Hadir"?"ok":(x.status==="Tidak Hadir"?"no":"");
+    return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td class="'+cls+'">'+esc(x.status||"")+'</td><td>'+esc(x.catatan||"")+'</td><td><button class="sm" data-eatt="'+x.id+'">Edit</button> <button class="sm" data-datt="'+x.id+'">Hapus</button></td></tr>';
+  }).join("")||'<tr><td colspan="5">Belum ada data absensi.</td></tr>';
+}
+function startEditAttendance(id){
+  var x=ATT.find(function(q){return q.id===id});if(!x)return;
+  editingAttendanceId=id;
+  $("attendanceStudent").value=x.student_id||"";
+  $("attendanceDate").value=x.tanggal||"";
+  $("attendanceStatus").value=x.status||"Hadir";
+  $("attendanceNote").value=x.catatan||"";
+  $("attendanceSubmit").textContent="Simpan Perubahan";
+  $("attendanceCancel").hidden=false;
+  $("attendanceForm").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function cancelEditAttendance(){
+  editingAttendanceId=null;
+  $("attendanceForm").reset();
+  attendanceDateToday();
+  $("attendanceStatus").value="Hadir";
+  $("attendanceSubmit").textContent="Simpan Absensi";
+  $("attendanceCancel").hidden=true;
+}
+$("attendanceCancel").onclick=cancelEditAttendance;
+$("attendanceForm").onsubmit=async function(e){
+  e.preventDefault();if(!currentUser)return;
+  var f=new FormData(e.target);
+  var payload={teacher_id:currentUser.id,student_id:f.get("student_id"),tanggal:f.get("tanggal"),status:f.get("status"),catatan:f.get("catatan")||""};
+  var r=editingAttendanceId
+    ? await sb.from("teacher_attendance").update(payload).eq("id",editingAttendanceId).eq("teacher_id",currentUser.id).select().single()
+    : await sb.from("teacher_attendance").insert(payload).select().single();
+  if(r.error){alert("Absensi belum bisa disimpan. Pastikan tabel teacher_attendance sudah dibuat di Supabase.");return}
+  if(editingAttendanceId){var i=ATT.findIndex(function(x){return x.id===editingAttendanceId});if(i>=0)ATT[i]=r.data}
+  else ATT.unshift(r.data);
+  var wasEdit=!!editingAttendanceId;cancelEditAttendance();drawAttendance();
+  alert(wasEdit?"Absensi berhasil diperbarui.":"Absensi berhasil disimpan.");
 }
 function drawSchedule(){var keep=$("scheduleStudent").value;$("scheduleStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep)$("scheduleStudent").value=keep;var rows=SCH.slice().sort(function(a,b){return String(a.tanggal||"").localeCompare(String(b.tanggal||""))||String(a.jam||"").localeCompare(String(b.jam||""))});$("scheduleBody").innerHTML=rows.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.jam||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.mapel||"")+'</td><td>'+esc(x.status||"")+'</td><td><button class="sm" data-esched="'+x.id+'">Edit</button> <button class="sm" data-dsched="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="6">Belum ada jadwal.</td></tr>'}
 function scheduleDateToday(){$("scheduleDate").value=todayISO}
@@ -455,6 +512,12 @@ document.addEventListener("click",async function(e){
     }
   }
   if(id.iv){var x=P.find(function(q){return q.id===id.iv});if(x)await showInv(x)}
+  if(id.eatt){startEditAttendance(id.eatt);return}
+  if(id.datt&&confirm("Hapus data absensi ini?")){
+    var ar=await sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
+    if(ar.error){alert("Gagal menghapus absensi: "+ar.error.message);return}
+    ATT=ATT.filter(function(x){return x.id!==id.datt});if(editingAttendanceId===id.datt)cancelEditAttendance();drawAttendance();return
+  }
   if(id.esched){var z=SCH.find(function(x){return x.id===id.esched});if(z){editingScheduleId=z.id;$("scheduleStudent").value=z.student_id;$("scheduleDate").value=z.tanggal;$("scheduleTime").value=z.jam;$("scheduleMapel").value=z.mapel;$("scheduleStatus").value=z.status;$("scheduleSubmit").textContent="Simpan Perubahan";$("scheduleCancel").hidden=false;window.scrollTo({top:$("scheduleForm").getBoundingClientRect().top+window.scrollY-80,behavior:"smooth"})}return}if(id.dsched){if(confirm("Hapus jadwal ini?")){var dr=await sb.from("teacher_schedules").delete().eq("id",id.dsched).eq("teacher_id",currentUser.id);if(dr.error)alert(dr.error.message);else{SCH=SCH.filter(function(x){return x.id!==id.dsched});drawSchedule()}}return}if(id.etn){startEditTeacher(id.etn);return}
   if(id.tn&&confirm("Hapus catatan pembelajaran ini?")){var r=await sb.from("teacher_notes").delete().eq("id",id.tn).eq("teacher_id",currentUser.id);if(r.error){alert("Gagal menghapus catatan: "+r.error.message);return}TN=TN.filter(function(x){return x.id!==id.tn});if(editingTeacherId===id.tn)cancelEditTeacher();drawTeacher();alert("Catatan pembelajaran berhasil dihapus.")}
 });
@@ -468,7 +531,7 @@ $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
 $("scheduleForm").onsubmit=async function(e){e.preventDefault();if(!currentUser)return;var f=new FormData(e.target);var payload={teacher_id:currentUser.id,student_id:f.get("student_id"),tanggal:f.get("tanggal"),jam:f.get("jam"),mapel:f.get("mapel"),status:f.get("status")};var r=editingScheduleId?await sb.from("teacher_schedules").update(payload).eq("id",editingScheduleId).eq("teacher_id",currentUser.id):await sb.from("teacher_schedules").insert(payload);if(r.error){alert("Jadwal belum bisa disimpan. Pastikan tabel teacher_schedules sudah dibuat di Supabase.");return}editingScheduleId=null;$("scheduleSubmit").textContent="Simpan Jadwal";$("scheduleCancel").hidden=true;e.target.reset();scheduleDateToday();var q=await sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});SCH=q.data||[];drawSchedule()}
 $("scheduleCancel").onclick=function(){editingScheduleId=null;$("scheduleSubmit").textContent="Simpan Jadwal";$("scheduleCancel").hidden=true;$("scheduleForm").reset();scheduleDateToday()}
 $("teacherLogoutBtn").onclick=async function(){await sb.auth.signOut()};
-async function startApp(session){if(!session){currentUser=null;currentRole="";$("app").style.display="none";$("teacherApp").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}currentUser=session.user;currentRole=(session.user.app_metadata&&session.user.app_metadata.role)||"";$("loginScreen").style.display="none";if(currentRole==="guru"){$("app").style.display="none";$("teacherApp").style.display="block";$("teacherSync").textContent="Memuat...";try{await dbLoadTeacher();teacherDateToday();$("teacherSync").textContent="Tersimpan online"}catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Gagal memuat panel guru: "+(err.message||err))}return}if(currentRole==="admin"){$("teacherApp").style.display="none";$("app").style.display="block";setSync("Memuat data...");try{await dbLoad();await migrateLocalIfEmpty();await dbLoad();draw();setSync("Tersimpan online")}catch(err){console.error(err);setSync("Gagal memuat");alert("Gagal terhubung ke database: "+(err.message||err))}return}await sb.auth.signOut();$("loginScreen").style.display="flex";$("loginError").textContent="Akun belum memiliki role. Hubungi admin.";$("loginError").style.display="block"}
+async function startApp(session){if(!session){currentUser=null;currentRole="";$("app").style.display="none";$("teacherApp").style.display="none";$("loginScreen").style.display="flex";setSync("Silakan masuk");return}currentUser=session.user;currentRole=(session.user.app_metadata&&session.user.app_metadata.role)||"";$("loginScreen").style.display="none";if(currentRole==="guru"){$("app").style.display="none";$("teacherApp").style.display="block";$("teacherSync").textContent="Memuat...";try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();scheduleDateToday();$("teacherSync").textContent="Tersimpan online"}catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Gagal memuat panel guru: "+(err.message||err))}return}if(currentRole==="admin"){$("teacherApp").style.display="none";$("app").style.display="block";setSync("Memuat data...");try{await dbLoad();await migrateLocalIfEmpty();await dbLoad();draw();setSync("Tersimpan online")}catch(err){console.error(err);setSync("Gagal memuat");alert("Gagal terhubung ke database: "+(err.message||err))}return}await sb.auth.signOut();$("loginScreen").style.display="flex";$("loginError").textContent="Akun belum memiliki role. Hubungi admin.";$("loginError").style.display="block"}
 
 (async function init(){
   try{
