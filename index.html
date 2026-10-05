@@ -2086,6 +2086,9 @@ $("loginForm").onsubmit=async function(e){
     }
     errBox.textContent="4. Login berhasil, sedang membuka panel...";
     await startApp(r.data.session);
+    var verify=await sb.auth.getSession();
+    if(!verify.data||!verify.data.session)throw new Error("Session hilang setelah panel dibuka. Supabase tidak lagi memiliki session aktif.");
+    if(currentRole!=="admin"&&currentRole!=="guru")throw new Error("startApp selesai tetapi role tidak valid: "+(currentRole||"KOSONG"));
     errBox.style.display="none";
   }catch(err){
     console.error("LOGIN ERROR:",err);
@@ -2112,7 +2115,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
     sb=window.supabase.createClient(cfg.url,cfg.key);
     var r=await sb.auth.getSession();
     await startApp(r.data.session);
-    sb.auth.onAuthStateChange(function(event,session){if(event==="SIGNED_OUT")startApp(null)});
+    sb.auth.onAuthStateChange(function(event,session){console.log("AUTH EVENT:",event);if(event==="SIGNED_OUT"){console.error("SESSION SIGNED_OUT");$("loginError").textContent="⚠️ Session Supabase terputus (SIGNED_OUT).";$("loginError").style.display="block";startApp(null)}});
   }catch(err){
     console.error(err);
     $("loginError").textContent=err.message||"Konfigurasi gagal";
