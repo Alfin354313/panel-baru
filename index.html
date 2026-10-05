@@ -2079,31 +2079,23 @@ $("loginForm").onsubmit=async function(e){
     var mode=String(loginRole||"").trim().toLowerCase();
     errBox.textContent="3. Login berhasil. Role: "+(role||"KOSONG")+" | Mode: "+mode;
     if(role!==mode)throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"KOSONG")+". Mode login: "+mode+".");
-    errBox.textContent="4. Login berhasil, membuka panel...";
     currentUser=u;currentRole=role;
+    errBox.textContent="4. Login berhasil. Membuka panel...";
     $("loginScreen").style.display="none";
+    $("loginScreen").hidden=true;
     $("teacherApp").style.display="none";
+    $("teacherApp").hidden=true;
     $("app").style.display="block";
-    if(role==="admin"){
-      setSync("Memuat data...");
-      try{
-        await dbLoad();
-        draw();
-        setSync("Tersimpan online");
-      }catch(dbErr){
-        console.error("ADMIN LOAD:",dbErr);
-        setSync("Database belum siap");
-        alert("Panel Admin sudah dibuka. Data belum termuat: "+(dbErr.message||dbErr));
-      }
-    }else{
-      $("app").style.display="none";$("teacherApp").style.display="block";
-      try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();scheduleDateToday();$("teacherSync").textContent="Tersimpan online"}
-      catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Panel guru terbuka, tetapi data belum termuat: "+(err.message||err))}
-    }
+    $("app").hidden=false;
+    document.body.classList.add("logged-in");
+    console.log("LOGIN PANEL TEST: app display =",$("app").style.display,"hidden =",$("app").hidden,"role =",currentRole);
     errBox.style.display="none";
+    return;
   }catch(err){
     console.error("LOGIN ERROR:",err);
-    $("loginScreen").style.display="flex";$("app").style.display="none";$("teacherApp").style.display="none";
+    $("loginScreen").hidden=false;$("loginScreen").style.display="flex";
+    $("app").hidden=true;$("app").style.display="none";
+    $("teacherApp").hidden=true;$("teacherApp").style.display="none";
     errBox.textContent="❌ LOGIN GAGAL: "+(err&&err.message?err.message:String(err));
     errBox.style.display="block";
   }finally{
