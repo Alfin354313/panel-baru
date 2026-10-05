@@ -838,7 +838,50 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
     padding:16px;
   }
 }
-</style></style></head><body>
+</style></style>
+<style id="admin-sidebar-compact">
+/* Compact admin sidebar: memberi ruang lebih besar untuk dashboard utama */
+#app{
+  grid-template-columns:190px minmax(0,1fr);
+  gap:0 12px;
+}
+#app>.tabs.top-menu{
+  padding:10px 8px;
+}
+#app>.admin-sidebar .admin-menu-group{
+  padding:8px 4px;
+}
+#app>.admin-sidebar button{
+  padding:8px 9px;
+  font-size:.9rem;
+}
+#app>.admin-sidebar .admin-menu-label{
+  font-size:.78rem;
+  margin:2px 4px 5px;
+}
+#app #dashboard{
+  min-width:0;
+}
+#app #dashboard .dashboard-grid{
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+}
+@media(max-width:900px){
+  #app{
+    grid-template-columns:180px minmax(0,1fr);
+    gap:0 10px;
+  }
+}
+@media(max-width:700px){
+  #app{
+    display:block;
+  }
+  #app>.tabs.top-menu{
+    width:100%;
+  }
+}
+</style>
+
+</head><body>
 <style>
 #loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--bg),#E7F2FC)}
 form.login-card{display:block;width:min(430px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(21,67,107,.16)}
