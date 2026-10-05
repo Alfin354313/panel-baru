@@ -1429,3 +1429,52 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   }
 })();
 </script></body></html>
+
+<style id="teacher-menu-top-layout">
+/* Menu utama guru dipindahkan ke atas agar tidak menutupi dashboard */
+#teacherApp>.card{
+  display:block;
+  min-height:0;
+}
+#teacherApp .teacher-head{
+  width:100%;
+}
+#teacherApp .top-menu{
+  position:relative;
+  top:auto;
+  z-index:1;
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  padding:10px 14px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:var(--bg);
+  overflow-x:auto;
+}
+#teacherApp .top-menu button{
+  width:auto;
+  flex:0 0 auto;
+  min-width:130px;
+  text-align:center;
+  padding:9px 12px;
+}
+#teacherApp .teacher-page{
+  width:100%;
+  padding:22px;
+}
+@media(max-width:700px){
+  #teacherApp .top-menu{
+    padding:9px 10px;
+  }
+  #teacherApp .top-menu button{
+    min-width:125px;
+  }
+  #teacherApp .teacher-page{
+    padding:14px;
+  }
+}
+</style>
