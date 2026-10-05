@@ -2079,17 +2079,13 @@ $("loginForm").onsubmit=async function(e){
     if(r.error)throw new Error(r.error.message||"Email atau password salah.");
     if(!r.data||!r.data.user||!r.data.session)throw new Error("Supabase tidak mengembalikan sesi login.");
     var u=r.data.user;
-    var appRole=(u.app_metadata&&u.app_metadata.role)||"";
-    var userRole=(u.user_metadata&&u.user_metadata.role)||"";
-    var role=appRole||userRole||"";
-    errBox.textContent="3. Login berhasil. app_metadata.role="+(appRole||"KOSONG")+" | user_metadata.role="+(userRole||"KOSONG")+" | Mode="+loginRole;
-    if(loginRole==="admin" && appRole!=="admin"){
-      throw new Error("LOGIN BERHASIL, tetapi akun belum memiliki app_metadata.role=admin. Role yang terbaca: app_metadata="+(appRole||"kosong")+", user_metadata="+(userRole||"kosong")+". Jangan logout dulu. Tambahkan role admin pada akun Supabase.");
+    var role=(u.app_metadata&&u.app_metadata.role)||(u.user_metadata&&u.user_metadata.role)||"";
+    errBox.textContent="3. Login berhasil. Role akun: "+(role||"KOSONG")+" | Mode: "+loginRole;
+    if(role!==loginRole){
+      await sb.auth.signOut();
+      throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"kosong")+". Untuk Admin harus role=admin.");
     }
-    if(loginRole==="guru" && appRole!=="guru"){
-      throw new Error("LOGIN BERHASIL, tetapi akun belum memiliki app_metadata.role=guru. Role yang terbaca: app_metadata="+(appRole||"kosong")+", user_metadata="+(userRole||"kosong")+".");
-    }
-    errBox.textContent="4. LOGIN BERHASIL. Role app_metadata sesuai. Membuka panel...";
+    errBox.textContent="4. Login berhasil. Membuka panel Admin...";
     await startApp(r.data.session);
     errBox.style.display="none";
   }catch(err){
