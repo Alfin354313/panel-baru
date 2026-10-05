@@ -1372,20 +1372,37 @@ function invoiceNo(x){
 function setSync(t){$("syncStatus").textContent=t}
 
 async function apiConfig(){
-  var r=await fetch("/api/config",{cache:"no-store"});
-  if(!r.ok)throw new Error("Konfigurasi Supabase belum tersedia di Vercel.");
-  return await r.json()
+  var r;
+  try{
+    r=await fetch("/api/config?ts="+Date.now(),{cache:"no-store"});
+  }catch(err){
+    throw new Error("Tidak dapat menghubungi API konfigurasi Vercel. Pastikan deployment sudah berhasil dan /api/config tersedia.");
+  }
+  if(!r.ok)throw new Error("Konfigurasi Supabase belum tersedia di Vercel (HTTP "+r.status+").");
+  var cfg=await r.json();
+  if(!cfg.url||!cfg.key)throw new Error("NEXT_PUBLIC_SUPABASE_URL atau NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY belum tersedia di Vercel.");
+  try{new URL(cfg.url)}catch(e){throw new Error("NEXT_PUBLIC_SUPABASE_URL tidak valid.");}
+  return cfg
 }
 
 async function dbLoad(){
-  var a=await sb.from("students").select("*").order("created_at",{ascending:true});
-  if(a.error)throw a.error;
-  var b=await sb.from("payments").select("*").order("created_at",{ascending:true});
-  if(b.error)throw b.error;
-  var c=await sb.from("expenses").select("*").order("created_at",{ascending:true});
-  if(c.error)throw c.error;
-  var d=await sb.from("invoices").select("*").order("created_at",{ascending:true});
-  if(d.error)throw d.error;
+  if(!sb)throw new Error("Koneksi Supabase belum siap.");
+  var a;
+  try{
+    a=await sb.from("students").select("*").order("created_at",{ascending:true});
+  }catch(err){
+    throw new Error("Gagal menghubungi Supabase saat membaca students: "+(err.message||"Failed to fetch")+". Periksa URL Supabase dan status project.");
+  }
+  if(a.error)throw new Error("Tabel students: "+a.error.message);
+  var b;
+  try{b=await sb.from("payments").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca payments: "+(err.message||"Failed to fetch"))}
+  if(b.error)throw new Error("Tabel payments: "+b.error.message);
+  var c;
+  try{c=await sb.from("expenses").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca expenses: "+(err.message||"Failed to fetch"))}
+  if(c.error)throw new Error("Tabel expenses: "+c.error.message);
+  var d;
+  try{d=await sb.from("invoices").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca invoices: "+(err.message||"Failed to fetch"))}
+  if(d.error)throw new Error("Tabel invoices: "+d.error.message);
   var at=await sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
   if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas,ortu:x.ortu,hp:x.hp,biaya:Number(x.biaya||0)}});
