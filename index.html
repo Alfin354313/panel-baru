@@ -2086,9 +2086,8 @@ $("loginForm").onsubmit=async function(e){
       throw new Error("Role akun tidak sesuai. Role terbaca: "+(role||"kosong")+". Untuk Admin harus role=admin.");
     }
     errBox.textContent="4. Login berhasil. Membuka panel Admin...";
-    // Supabase akan memicu event SIGNED_IN dan listener akan membuka panel.
-    // Jangan memanggil startApp() dua kali dari sini.
-    errBox.style.display="block";
+    await startApp(r.data.session);
+    errBox.style.display="none";
   }catch(err){
     console.error("LOGIN ERROR:",err);
     errBox.textContent="❌ LOGIN GAGAL: "+(err&&err.message?err.message:String(err));
@@ -2115,13 +2114,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
     var r=await sb.auth.getSession();
     await startApp(r.data.session);
     sb.auth.onAuthStateChange(function(event,session){
-      if(event==="SIGNED_IN"&&session){
-        startApp(session).catch(function(err){
-          console.error("START APP ERROR:",err);
-          $("loginError").textContent="❌ Gagal membuka panel: "+(err&&err.message?err.message:String(err));
-          $("loginError").style.display="block";
-        });
-      }else if(event==="SIGNED_OUT"){
+      if(event==="SIGNED_OUT"){
         startApp(null);
       }
     });
