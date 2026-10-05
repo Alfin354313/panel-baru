@@ -927,7 +927,20 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
   #salaryPage .salary-form .full{grid-column:auto}
   .salary-item{grid-template-columns:1fr}
 }
-</style></head><body>
+</style><style id="admin-teacher-master-styles">
+.teacher-master-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px}
+.teacher-master-head h2{margin:0 0 4px}
+.teacher-master-count{min-width:100px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);text-align:center}
+.teacher-master-count b{display:block;font-size:1.35rem}
+.teacher-master-count span{font-size:.82rem;color:var(--muted)}
+.teacher-master-info{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);margin-bottom:14px;color:var(--muted)}
+.teacher-master-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.teacher-master-form .full{grid-column:1/-1}
+.teacher-master-form textarea{min-height:80px;resize:vertical}
+.teacher-master-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:700px){.teacher-master-form{grid-template-columns:1fr}.teacher-master-form .full{grid-column:1}.teacher-master-head{align-items:flex-start;flex-direction:column}.teacher-master-count{width:100%;text-align:left}}
+</style>
+</head><body>
 <style>
 #loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--bg),#E7F2FC)}
 form.login-card{display:block;width:min(430px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(21,67,107,.16)}
@@ -979,6 +992,7 @@ form.login-card{display:block;width:min(430px,100%);background:var(--card);borde
     <div class="admin-menu-group"><button data-t="m">👨‍🎓 Murid</button></div>
     <div class="admin-menu-group"><button data-t="p">💰 Pembayaran</button></div>
     <div class="admin-menu-group"><button data-t="e">💸 Pengeluaran</button></div>
+    <div class="admin-menu-group"><button data-t="u">👨‍🏫 Data Guru</button></div>
     <div class="admin-menu-group"><button data-t="g">💵 Gaji Guru</button></div>
   </div>
 </aside><div id="dashboard">
@@ -1071,6 +1085,36 @@ form.login-card{display:block;width:min(430px,100%);background:var(--card);borde
   <div class="tw"><table><thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jumlah</th><th></th></tr></thead><tbody id="be"></tbody></table></div>
 </div>
 </div>
+<div id="teacherMasterPage" class="card" hidden>
+  <div class="teacher-master-head">
+    <div>
+      <h2>👨‍🏫 Data Guru</h2>
+      <small style="color:var(--muted)">Master data guru terhubung dengan akun login Guru. Tambahkan akun guru di Supabase Authentication, lalu kelola profilnya di sini.</small>
+    </div>
+    <div class="teacher-master-count"><b id="teacherMasterCount">0</b><span>Guru aktif</span></div>
+  </div>
+  <div class="teacher-master-info">
+    <b>Alur data:</b> akun Guru → Data Guru → Absensi → Gaji Guru → Laporan/Jadwal.
+  </div>
+  <form id="teacherMasterForm" class="teacher-master-form">
+    <label>Akun Guru<select id="teacherAccountId" name="id" required></select></label>
+    <label>Nama Guru<input id="teacherMasterName" name="nama" placeholder="Contoh: Budi Santoso" required></label>
+    <label>Email<input id="teacherMasterEmail" name="email" type="email" readonly></label>
+    <label>No. WhatsApp<input id="teacherMasterHp" name="hp" placeholder="08xxxxxxxxxx"></label>
+    <label>Mata Pelajaran<input id="teacherMasterMapel" name="mapel" placeholder="Contoh: Matematika"></label>
+    <label>Status<select id="teacherMasterStatus" name="status"><option>Aktif</option><option>Nonaktif</option></select></label>
+    <label class="full">Catatan<textarea id="teacherMasterNote" name="catatan" placeholder="Catatan guru"></textarea></label>
+    <div class="full teacher-master-actions">
+      <button class="pri" type="submit">💾 Simpan Data Guru</button>
+      <button type="button" id="teacherMasterReset">Reset</button>
+      <span id="teacherMasterSync" style="color:var(--muted)"></span>
+    </div>
+  </form>
+  <div style="margin-top:18px">
+    <h2>Daftar Guru</h2>
+    <div class="tw"><table><thead><tr><th>Nama</th><th>Email</th><th>No. HP</th><th>Mapel</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="teacherMasterBody"></tbody></table></div>
+  </div>
+</div>
 <div id="salaryPage" class="card" hidden>
   <div class="salary-head">
     <div><h2>💵 Sistem Gaji Guru</h2><small style="color:var(--muted)">Pertemuan otomatis dari absensi Panel Guru. Tarif awal Rp12.500/pertemuan + bonus Rp50.000.</small></div>
@@ -1123,7 +1167,7 @@ var esc=function(t){var d=document.createElement("div");d.textContent=t==null?""
 var now=new Date(),thisM=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0"),todayISO=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayISO;$("dashboardMonth").value=thisM;
 
-var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],RPT=[],ADMIN_ATT=[],SAL=[],SALITEMS=[];
+var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],RPT=[],ADMIN_ATT=[],SAL=[],SALITEMS=[],TEACHERS=[];
 var editingSalaryId=null;
 var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null,editingReportId=null;
 var localKey="jenius_edu_data_v3";
@@ -1165,6 +1209,8 @@ async function dbLoad(){
   if(sg.error){console.warn("Sistem gaji belum tersedia:",sg.error.message);SAL=[]}else SAL=sg.data||[];
   var si=await sb.from("teacher_salary_items").select("*").order("created_at",{ascending:true});
   if(si.error){console.warn("Komponen gaji belum tersedia:",si.error.message);SALITEMS=[]}else SALITEMS=si.data||[];
+  var ta=await sb.rpc("get_teacher_accounts");
+  if(ta.error){console.warn("Master data guru belum tersedia:",ta.error.message);TEACHERS=[];$("teacherMasterSync").textContent="Jalankan SQL teacher_profiles.sql di Supabase"}else{TEACHERS=ta.data||[];$("teacherMasterSync").textContent="Tersimpan online"}
 }
 async function dbLoadTeacher(){var a=await sb.from("students").select("id,nama,jenjang,kelas").order("nama",{ascending:true});if(a.error)throw a.error;var b=await sb.from("teacher_notes").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});if(b.error)throw b.error;var q=await sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});if(q.error){console.warn("Jadwal belum tersedia:",q.error.message);SCH=[];$("scheduleSync").textContent="Tabel jadwal belum dibuat"}else{SCH=q.data||[];$("scheduleSync").textContent="Tersimpan di Supabase"}var at=await sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});if(at.error){console.warn("Absensi belum tersedia:",at.error.message);ATT=[];$("attendanceSync").textContent="Tabel absensi belum dibuat"}else{ATT=at.data||[];$("attendanceSync").textContent="Tersimpan di Supabase"}var rr=await sb.from("teacher_reports").select("*").eq("teacher_id",currentUser.id).order("bulan",{ascending:false}).order("created_at",{ascending:false});if(rr.error){console.warn("Laporan guru belum tersedia:",rr.error.message);RPT=[];$("reportSync").textContent="Tabel laporan belum dibuat"}else{RPT=rr.data||[];$("reportSync").textContent="Tersimpan di Supabase"}S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});TN=b.data||[];drawTeacher();drawSchedule();drawReports()}
 function drawTeacher(){drawAttendance();var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-etn="'+x.id+'">Edit</button> <button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>';
@@ -1283,13 +1329,13 @@ async function showInv(x){
 document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
-    ["d","m","p","e","g"].forEach(function(k){
-      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):$("t"+k);
+    ["d","m","p","e","u","g"].forEach(function(k){
+      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):$("t"+k);
       if(el)el.hidden=k!==b.dataset.t;
     });
     if(b.dataset.focus){
       setTimeout(function(){
-        var target=b.dataset.t==="m"?$("fm"):b.dataset.t==="p"?$("bp"):b.dataset.t==="e"?$("be"):b.dataset.t==="g"?$("salaryForm"):null;
+        var target=b.dataset.t==="m"?$("fm"):b.dataset.t==="p"?$("bp"):b.dataset.t==="e"?$("be"):b.dataset.t==="u"?$("teacherMasterForm"):b.dataset.t==="g"?$("salaryForm"):null;
         if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
       },50);
     }
@@ -1373,12 +1419,64 @@ function draw(){
   $("be").innerHTML=EL.map(function(x){return '<tr><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket)+'</td><td>'+rp(x.jumlah)+'</td><td><button class="sm" data-er="'+x.id+'">Unduh Struk</button> <button class="sm" data-de="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="5">Belum ada pengeluaran untuk bulan ini.</td></tr>';
   $("bp").innerHTML=L.map(function(x){var m=stu(x.sid)||{};var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':' <a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td>'+esc(m.nama||"(dihapus)")+'</td><td>'+esc(x.bulan)+'</td><td>'+rp(x.jumlah)+'</td><td>'+esc(x.metode)+'</td><td class="'+(x.status==="Lunas"?"ok":"no")+'">'+x.status+'</td><td><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+' <button class="sm" data-dp="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="6">Belum ada catatan untuk bulan ini.</td></tr>';
   drawDashboard();
+  drawTeachers();
   drawSalary();
 }
 
 $("fb").onchange=draw;$("eb").onchange=draw;$("sel").onchange=function(){var m=stu($("sel").value);if(m)$("pj").value=m.biaya};
+function teacherAccountLabel(id){
+  var t=TEACHERS.find(function(x){return x.id===id})||{};
+  return (t.nama||"Belum diisi")+" — "+(t.email||String(id||"").slice(0,8));
+}
+function populateTeacherAccounts(){
+  var keep=$("teacherAccountId").value;
+  $("teacherAccountId").innerHTML=TEACHERS.map(function(x){
+    return '<option value="'+esc(x.id)+'">'+esc(teacherAccountLabel(x.id))+'</option>';
+  }).join("")||'<option value="">Belum ada akun Guru</option>';
+  if(keep&&TEACHERS.some(function(x){return x.id===keep}))$("teacherAccountId").value=keep;
+  else if(TEACHERS[0])$("teacherAccountId").value=TEACHERS[0].id;
+  syncTeacherMasterForm();
+}
+function syncTeacherMasterForm(){
+  var id=$("teacherAccountId").value,t=TEACHERS.find(function(x){return x.id===id})||{};
+  $("teacherMasterName").value=t.nama||"";
+  $("teacherMasterEmail").value=t.email||"";
+  $("teacherMasterHp").value=t.hp||"";
+  $("teacherMasterMapel").value=t.mapel||"";
+  $("teacherMasterStatus").value=t.status||"Aktif";
+  $("teacherMasterNote").value=t.catatan||"";
+}
+function drawTeachers(){
+  populateTeacherAccounts();
+  var active=TEACHERS.filter(function(x){return x.status!=="Nonaktif"}).length;
+  $("teacherMasterCount").textContent=active;
+  $("teacherMasterBody").innerHTML=TEACHERS.map(function(x){
+    return '<tr><td><b>'+esc(x.nama||"Belum diisi")+'</b></td><td>'+esc(x.email||"")+'</td><td>'+esc(x.hp||"-")+'</td><td>'+esc(x.mapel||"-")+'</td><td class="'+(x.status==="Aktif"?"ok":"no")+'">'+esc(x.status||"Aktif")+'</td><td><button class="sm" data-etm="'+x.id+'">Edit</button></td></tr>';
+  }).join("")||'<tr><td colspan="6">Belum ada akun Guru. Buat akun Guru di Supabase Authentication terlebih dahulu.</td></tr>';
+}
+$("teacherAccountId").onchange=syncTeacherMasterForm;
+$("teacherMasterReset").onclick=function(){syncTeacherMasterForm()};
+$("teacherMasterForm").onsubmit=async function(e){
+  e.preventDefault();
+  var id=$("teacherAccountId").value;
+  if(!id){alert("Belum ada akun Guru.");return}
+  var payload={id:id,nama:$("teacherMasterName").value.trim(),email:$("teacherMasterEmail").value.trim(),hp:$("teacherMasterHp").value.trim(),mapel:$("teacherMasterMapel").value.trim(),status:$("teacherMasterStatus").value,catatan:$("teacherMasterNote").value.trim()};
+  if(!payload.nama){alert("Nama guru wajib diisi.");return}
+  var r=await sb.from("teacher_profiles").upsert(payload,{onConflict:"id"}).select().single();
+  if(r.error){alert("Data guru belum bisa disimpan: "+r.error.message);return}
+  var i=TEACHERS.findIndex(function(x){return x.id===id});
+  if(i>=0)TEACHERS[i]=Object.assign({},TEACHERS[i],r.data);else TEACHERS.push(Object.assign({},r.data));
+  $("teacherMasterSync").textContent="Data guru tersimpan";
+  drawTeachers();drawSalary();
+  alert("Data guru berhasil disimpan.");
+};
+document.addEventListener("click",function(e){
+  var b=e.target.closest("[data-etm]");
+  if(b){$("teacherAccountId").value=b.getAttribute("data-etm");syncTeacherMasterForm();$("teacherMasterForm").scrollIntoView({behavior:"smooth",block:"start"})}
+});
 function salaryTeacherIds(){
   var ids={};
+  TEACHERS.filter(function(x){return x.status!=="Nonaktif"}).forEach(function(x){if(x.id)ids[x.id]=true});
   ADMIN_ATT.forEach(function(x){if(x.teacher_id)ids[x.teacher_id]=true});
   SAL.forEach(function(x){if(x.teacher_id)ids[x.teacher_id]=true});
   return Object.keys(ids);
@@ -1410,6 +1508,8 @@ function addSalaryItemRow(item){
   $("salaryItems").appendChild(row);
 }
 function salaryTeacherLabel(id){
+  var t=TEACHERS.find(function(x){return x.id===id});
+  if(t&&t.nama)return t.nama;
   var s=SAL.find(function(x){return x.teacher_id===id&&x.teacher_name});
   if(s)return s.teacher_name;
   return "Guru • "+String(id||"").slice(0,8);
