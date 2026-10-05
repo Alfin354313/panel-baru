@@ -1449,7 +1449,12 @@ window.jeniusLoginSubmit = async function(e){
       window.sb=window.supabase.createClient(cfg.url,cfg.key);
     }
 
-    var result=await window.sb.auth.signInWithPassword({email:email,password:password});
+    /* Jangan biarkan tombol berhenti di "Memeriksa..." selamanya. */
+    var loginPromise=window.sb.auth.signInWithPassword({email:email,password:password});
+    var timeoutPromise=new Promise(function(_,reject){
+      setTimeout(function(){reject(new Error("Login ke Supabase terlalu lama (lebih dari 15 detik). Periksa koneksi internet, URL Supabase, dan status project Supabase."));},15000);
+    });
+    var result=await Promise.race([loginPromise,timeoutPromise]);
     if(result.error)throw new Error(result.error.message||"Email atau password salah.");
 
     var session=result.data&&result.data.session;
@@ -1477,6 +1482,7 @@ window.jeniusLoginSubmit = async function(e){
 
     /* Login berhasil. Buka panel hanya dari jalur ini.
        Event SIGNED_IN di bawah akan diabaikan karena session ID sudah ditandai. */
+    err.textContent="Login berhasil. Membuka panel...";
     await window.startApp(session);
     err.style.display="none";
   }catch(error){
