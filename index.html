@@ -115,6 +115,16 @@ form.login-card{display:block;width:min(430px,100%);background:var(--card);borde
     <h2>Perlu Ditindaklanjuti</h2>
     <div id="dashboardUnpaid"></div>
   </div>
+  <div class="card dashboard-section">
+    <div class="dashboard-head"><h2>Rekap Absensi Murid</h2><small id="attendanceAdminSync" style="color:var(--muted)">Memuat...</small></div>
+    <div class="dashboard-grid">
+      <div class="card dashboard-card"><small>Hadir</small><b id="aHadir">0</b></div>
+      <div class="card dashboard-card"><small>Izin</small><b id="aIzin">0</b></div>
+      <div class="card dashboard-card"><small>Sakit</small><b id="aSakit">0</b></div>
+      <div class="card dashboard-card dashboard-warning"><small>Tidak Hadir</small><b id="aTidakHadir">0</b></div>
+    </div>
+    <div class="tw"><table><thead><tr><th>Murid</th><th>Hadir</th><th>Izin</th><th>Sakit</th><th>Tidak Hadir</th><th>Total</th></tr></thead><tbody id="attendanceAdminBody"></tbody></table></div>
+  </div>
 </div>
 
 
@@ -196,7 +206,7 @@ var esc=function(t){var d=document.createElement("div");d.textContent=t==null?""
 var now=new Date(),thisM=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0"),todayISO=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayISO;$("dashboardMonth").value=thisM;
 
-var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[];
+var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],ADMIN_ATT=[];
 var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null;
 var localKey="jenius_edu_data_v3";
 
@@ -227,6 +237,8 @@ async function dbLoad(){
   if(c.error)throw c.error;
   var d=await sb.from("invoices").select("*").order("created_at",{ascending:true});
   if(d.error)throw d.error;
+  var at=await sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
+  if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas,ortu:x.ortu,hp:x.hp,biaya:Number(x.biaya||0)}});
   P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
@@ -348,6 +360,22 @@ async function showInv(x){
 
 document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){document.querySelectorAll(".tabs button").forEach(function(x){x.classList.toggle("on",x===b)});["m","p","e"].forEach(function(k){$("t"+k).hidden=k!==b.dataset.t})}});
 
+function drawAdminAttendance(month){
+  var rows=ADMIN_ATT.filter(function(x){return String(x.tanggal||"").slice(0,7)===month});
+  var counts={};
+  rows.forEach(function(x){
+    if(!counts[x.student_id])counts[x.student_id]={Hadir:0,Izin:0,Sakit:0,"Tidak Hadir":0};
+    if(counts[x.student_id][x.status]!==undefined)counts[x.student_id][x.status]++;
+  });
+  $("aHadir").textContent=rows.filter(function(x){return x.status==="Hadir"}).length;
+  $("aIzin").textContent=rows.filter(function(x){return x.status==="Izin"}).length;
+  $("aSakit").textContent=rows.filter(function(x){return x.status==="Sakit"}).length;
+  $("aTidakHadir").textContent=rows.filter(function(x){return x.status==="Tidak Hadir"}).length;
+  $("attendanceAdminBody").innerHTML=Object.keys(counts).map(function(id){
+    var m=stu(id)||{},q=counts[id],total=q.Hadir+q.Izin+q.Sakit+q["Tidak Hadir"];
+    return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+q.Hadir+'</td><td>'+q.Izin+'</td><td>'+q.Sakit+'</td><td>'+q["Tidak Hadir"]+'</td><td><b>'+total+'</b></td></tr>';
+  }).join("")||'<tr><td colspan="6">Belum ada data absensi pada periode ini.</td></tr>';
+}
 function drawDashboard(){
   var month=$("dashboardMonth").value||thisM;
   var monthPayments=P.filter(function(x){return x.bulan===month});
@@ -369,6 +397,7 @@ function drawDashboard(){
   $("dBillCount").textContent=billCount;
   $("dPaidRate").textContent=paidRate+"%";
   $("dAverage").textContent=rp(average);
+  drawAdminAttendance(month);
 
   var months=[];
   var base=new Date(month+"-01T00:00:00");
