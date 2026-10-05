@@ -1441,15 +1441,15 @@ window.jeniusLoginSubmit = async function(e){
     if(!window.supabase)throw new Error("Library Supabase belum termuat.");
 
     if(!window.sb){
-      var cfg=await fetch("/api/config?ts="+Date.now(),{cache:"no-store"}).then(function(x){
-        if(!x.ok)throw new Error("Konfigurasi Supabase tidak tersedia (HTTP "+x.status+").");
-        return x.json();
-      });
-      if(!cfg.url||!cfg.key)throw new Error("Konfigurasi Supabase belum tersedia di Vercel.");
+      err.textContent="Menghubungkan ke server...";
+      var cfg=await apiConfig();
       window.sb=window.supabase.createClient(cfg.url,cfg.key);
     }
 
+    err.textContent="Menghubungkan ke Supabase...";
+
     /* Jangan biarkan tombol berhenti di "Memeriksa..." selamanya. */
+    err.textContent="Memeriksa akun...";
     var loginPromise=window.sb.auth.signInWithPassword({email:email,password:password});
     var timeoutPromise=new Promise(function(_,reject){
       setTimeout(function(){reject(new Error("Login ke Supabase terlalu lama (lebih dari 15 detik). Periksa koneksi internet, URL Supabase, dan status project Supabase."));},15000);
@@ -1533,11 +1533,16 @@ function invoiceNo(x){
 function setSync(t){$("syncStatus").textContent=t}
 
 async function apiConfig(){
+  var controller=new AbortController();
+  var timer=setTimeout(function(){controller.abort()},10000);
   var r;
   try{
-    r=await fetch("/api/config?ts="+Date.now(),{cache:"no-store"});
+    r=await fetch("/api/config?ts="+Date.now(),{cache:"no-store",signal:controller.signal});
   }catch(err){
-    throw new Error("Tidak dapat menghubungi API konfigurasi Vercel. Pastikan deployment sudah berhasil dan /api/config tersedia.");
+    if(err&&err.name==="AbortError")throw new Error("API konfigurasi Vercel tidak merespons dalam 10 detik.");
+    throw new Error("Tidak dapat menghubungi API konfigurasi Vercel. Pastikan deployment dan /api/config tersedia.");
+  }finally{
+    clearTimeout(timer);
   }
   if(!r.ok)throw new Error("Konfigurasi Supabase belum tersedia di Vercel (HTTP "+r.status+").");
   var cfg=await r.json();
