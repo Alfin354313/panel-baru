@@ -1557,6 +1557,22 @@ function editSalary(id){
   SALITEMS.filter(function(q){return q.salary_id===id}).forEach(addSalaryItemRow);
   $("salarySubmit").textContent="💾 Simpan Perubahan";$("salaryCancel").hidden=false;updateSalaryMeeting();$("salaryForm").scrollIntoView({behavior:"smooth",block:"start"});
 }
+function showSalarySlip(id){
+  var x=SAL.find(function(q){return q.id===id});
+  if(!x){alert("Data gaji tidak ditemukan.");return}
+  var it=salaryItemTotals(id),name=x.teacher_name||salaryTeacherLabel(x.teacher_id),period=reportMonthName(x.bulan)||x.bulan;
+  var old=$("salarySlipModal");if(old)old.remove();
+  var extra=it.items.filter(function(q){return q.tipe==="Tambahan"});
+  var cuts=it.items.filter(function(q){return q.tipe==="Potongan"});
+  var extraRows=extra.map(function(q){return '<div style="display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)"><span>'+esc(q.nama_item)+'</span><b>'+rp(q.nominal)+'</b></div>'}).join("");
+  var cutRows=cuts.map(function(q){return '<div style="display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)"><span>'+esc(q.nama_item)+'</span><b>-'+rp(q.nominal)+'</b></div>'}).join("");
+  var div=document.createElement("div");div.id="salarySlipModal";div.className="invoice-modal";
+  div.innerHTML='<div class="invoice-box"><div class="invoice-head"><div><h1 style="margin:0">JENIUS EDU</h1><small>Honor / Gaji Guru</small></div><div style="text-align:right"><b>SLIP GAJI</b><br><span>JE-SAL-'+esc(String(x.bulan||"").replace("-",""))+'-'+esc(String(x.teacher_id||"").slice(0,6).toUpperCase())+'</span></div></div><div class="invoice-meta"><div><small>Nama Guru</small><br><b>'+esc(name)+'</b></div><div><small>Periode</small><br><b>'+esc(period)+'</b></div><div><small>Jumlah Pertemuan</small><br><b>'+Number(x.jumlah_pertemuan||0)+' pertemuan</b></div><div><small>Tarif / Pertemuan</small><br><b>'+rp(x.tarif_pertemuan)+'</b></div><div><small>Tanggal Bayar</small><br><b>'+esc(x.tanggal_bayar||"-")+'</b></div><div><small>Status</small><br><span class="'+(x.status==="Sudah Dibayar"?"invoice-paid":"salary-status-unpaid")+'">'+esc(x.status||"Belum Dibayar")+'</span></div></div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0"><h3 style="margin:0 0 8px">Rincian Pendapatan</h3><div style="display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)"><span>Gaji Pertemuan</span><b>'+rp(x.total_pertemuan)+'</b></div><div style="display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)"><span>Bonus</span><b>'+rp(x.bonus)+'</b></div>'+extraRows+(cuts.length?'<h3 style="margin:18px 0 8px">Potongan</h3>'+cutRows:"")+'<div style="display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding:14px 0;border-top:2px solid var(--ink);font-size:1.25rem"><b>TOTAL DITERIMA</b><b class="invoice-total">'+rp(x.total_gaji)+'</b></div>'+(x.catatan?'<div style="margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:10px"><small>Catatan</small><p style="margin:5px 0 0">'+esc(x.catatan)+'</p></div>':"")+'<p style="color:var(--muted);margin-top:18px">Slip ini dibuat secara elektronik oleh Jenius Edu.</p><div class="invoice-actions"><button id="closeSalarySlip">Tutup</button><button id="printSalarySlip" class="pri">Cetak / Simpan PDF</button><button id="downloadSalarySlipBtn">Download PDF</button></div></div>';
+  document.body.appendChild(div);
+  $("closeSalarySlip").onclick=function(){div.remove()};
+  $("printSalarySlip").onclick=function(){window.print()};
+  $("downloadSalarySlipBtn").onclick=function(){downloadSalarySlip(id)};
+}
 function downloadSalarySlip(id){
   var x=SAL.find(function(q){return q.id===id});
   if(!x){alert("Data gaji tidak ditemukan.");return}
@@ -1701,7 +1717,7 @@ document.addEventListener("click",async function(e){
     P=P.filter(function(x){return x.id!==id.dp});INV=INV.filter(function(x){return x.payment_id!==id.dp});draw()
   }
   if(id.esal){editSalary(id.esal);return}
-  if(id.ssal){downloadSalarySlip(id.ssal);return}
+  if(id.ssal){showSalarySlip(id.ssal);return}
   if(id.psal){await markSalaryPaid(id.psal);return}
   if(id.dsal&&confirm("Hapus data gaji ini?")){var sr=await sb.from("teacher_salaries").delete().eq("id",id.dsal);if(sr.error){alert("Gagal menghapus gaji: "+sr.error.message);return}SAL=SAL.filter(function(x){return x.id!==id.dsal});SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==id.dsal});if(editingSalaryId===id.dsal)resetSalaryForm();drawSalary();return}
   if(id.er){downloadExpenseReceipt(id.er);return}
