@@ -282,6 +282,97 @@ th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white
     grid-template-columns:1fr;
   }
 }
+
+/* Jadwal Mengajar - polishing */
+#teacherApp #teacherSchedulePage>.card{
+  padding:0;
+  overflow:hidden;
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+}
+#teacherApp #teacherSchedulePage>.card>div:first-child{
+  padding:20px 22px 16px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp #teacherSchedulePage h2{
+  font-size:1.2rem;
+}
+#teacherApp #teacherSchedulePage #scheduleSync{
+  padding:6px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--card);
+}
+#teacherApp #teacherSchedulePage #scheduleForm{
+  margin:18px 22px 20px!important;
+  padding:18px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+#teacherApp #teacherSchedulePage #scheduleForm label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:700;
+  color:var(--ink);
+}
+#teacherApp #teacherSchedulePage #scheduleForm input,
+#teacherApp #teacherSchedulePage #scheduleForm select{
+  min-height:42px;
+  box-sizing:border-box;
+}
+#teacherApp #teacherSchedulePage #scheduleForm .full{
+  grid-column:1/-1;
+}
+#teacherApp #teacherSchedulePage .teacher-form-actions{
+  display:flex;
+  gap:9px;
+  align-items:center;
+}
+#teacherApp #teacherSchedulePage .tw{
+  margin:0;
+  padding:0 22px 22px;
+}
+#teacherApp #teacherSchedulePage table{
+  min-width:760px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+#teacherApp #teacherSchedulePage table th{
+  padding:12px 10px;
+}
+#teacherApp #teacherSchedulePage table td{
+  padding:12px 10px;
+}
+#teacherApp #teacherSchedulePage tbody tr{
+  transition:.15s ease;
+}
+#teacherApp #teacherSchedulePage tbody tr:hover{
+  transform:translateY(-1px);
+}
+@media(max-width:700px){
+  #teacherApp #teacherSchedulePage #scheduleForm{
+    grid-template-columns:1fr;
+    margin-left:14px!important;
+    margin-right:14px!important;
+    padding:14px;
+  }
+  #teacherApp #teacherSchedulePage #scheduleForm .full{
+    grid-column:auto;
+  }
+  #teacherApp #teacherSchedulePage .tw{
+    padding:0 14px 14px;
+  }
+  #teacherApp #teacherSchedulePage>.card>div:first-child{
+    padding:16px;
+  }
+}
 </style></style></head><body>
 <style>
 #loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--bg),#E7F2FC)}
