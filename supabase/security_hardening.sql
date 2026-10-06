@@ -24,9 +24,15 @@ $$;
 
 -- Never expose application tables to anonymous clients.
 -- Authenticated access is then controlled by RLS policies below.
-do $$
+--
+-- Existing permissive policies are removed for these security-sensitive
+-- tables before the replacement policies are created. PostgreSQL combines
+-- permissive policies with OR, so leaving an old broad policy in place could
+-- silently bypass the restrictions defined below.
+do $
 declare
   t text;
+  p record;
 begin
   foreach t in array array[
     'students','payments','expenses','invoices',
@@ -38,9 +44,18 @@ begin
       execute format('alter table public.%I enable row level security', t);
       execute format('revoke all on table public.%I from anon', t);
       execute format('revoke all on table public.%I from authenticated', t);
+
+      for p in
+        select policyname
+        from pg_policies
+        where schemaname = 'public'
+          and tablename = t
+      loop
+        execute format('drop policy if exists %I on public.%I', p.policyname, t);
+      end loop;
     end if;
   end loop;
-end $$;
+end $;
 
 -- Students: admin CRUD, guru read-only.
 do $$
