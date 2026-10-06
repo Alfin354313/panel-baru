@@ -78,7 +78,7 @@ async function startApp(session){
     $("app").hidden=true;$("app").style.display="none";
     $("teacherApp").hidden=true;$("teacherApp").style.display="none";
     $("loginScreen").hidden=false;$("loginScreen").style.display="flex";$("loginScreen").setAttribute("aria-hidden","false");
-    document.body.classList.remove("logged-in");
+    document.body.classList.remove("logged-in","role-admin","role-guru");
     setSync("Silakan masuk");
     return
   }
@@ -90,12 +90,14 @@ async function startApp(session){
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
   }
   $("loginScreen").style.display="none";$("loginScreen").hidden=true;$("loginScreen").setAttribute("aria-hidden","true");
-  /* Pastikan atribut hidden lama tidak membuat panel tetap putih/kosong setelah login ulang. */
-  $("app").hidden=false;
-  $("teacherApp").hidden=false;
+  document.body.classList.remove("role-admin","role-guru");
+  document.body.classList.add(currentRole==="guru"?"role-guru":"role-admin");
+  /* Reset kedua panel lebih dulu agar UI dari role/session sebelumnya tidak sempat terlihat. */
+  $("app").hidden=true;
+  $("app").style.display="none";
+  $("teacherApp").hidden=true;
+  $("teacherApp").style.display="none";
   if(currentRole==="guru"){
-    $("app").hidden=true;
-    $("app").style.display="none";
     $("teacherApp").hidden=false;
     $("teacherApp").style.display="block";
     $("teacherSync").textContent="Memuat...";
