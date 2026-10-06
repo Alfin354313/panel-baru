@@ -1418,3 +1418,5 @@ body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;
 @media(max-width:850px){#loginScreen{align-items:flex-start!important;padding:12px!important}.ref-login-shell{width:min(520px,100%);height:auto;min-height:0;grid-template-columns:1fr;border-radius:20px}.ref-login-story{min-height:315px;padding:22px 26px}.ref-story-copy{margin-top:20px}.ref-story-copy h1{font-size:1.7rem}.ref-illustration{position:absolute;right:10px;bottom:58px;transform:scale(.65);transform-origin:right bottom;opacity:.8}.ref-journey{margin-top:auto}.ref-location{margin-top:10px}.ref-login-panel{padding:28px 26px 34px}}
 @media(max-width:520px){#loginScreen{padding:8px!important}.ref-login-story{display:none}.ref-login-panel{padding:28px 20px 32px}.ref-login-shell{margin-top:3vh}.ref-logo span{width:54px;height:54px}.ref-login-panel .login-v5-card{width:100%!important}}
 
+
+/* Deployment refresh: Vercel Pro preview retry for PR #23. */
