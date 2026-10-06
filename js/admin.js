@@ -382,7 +382,7 @@ function drawTeachers(){
   $("teacherMasterCount").textContent=active;
   var tq=($("teacherSearch").value||"").toLowerCase(),ts=$("teacherStatusFilter").value;var visibleTeachers=TEACHERS.filter(function(x){return (!ts||x.status===ts)&&(!tq||[x.nama,x.email,x.mapel,x.hp].join(" ").toLowerCase().includes(tq))});
   $("teacherMasterBody").innerHTML=visibleTeachers.map(function(x){
-    return '<tr><td><b>'+esc(x.nama||"Belum diisi")+'</b></td><td>'+esc(x.email||"")+'</td><td>'+esc(x.hp||"-")+'</td><td>'+esc(x.mapel||"-")+'</td><td class="'+(x.status==="Aktif"?"ok":"no")+'">'+esc(x.status||"Aktif")+'</td><td><button class="sm" data-etm="'+x.id+'">Edit</button></td></tr>';
+    return '<tr><td><b>'+esc(x.nama||"Belum diisi")+'</b></td><td>'+esc(x.email||"")+'</td><td>'+esc(x.hp||"-")+'</td><td>'+esc(x.mapel||"-")+'</td><td class="'+(x.status==="Aktif"?"ok":"no")+'">'+esc(x.status||"Aktif")+'</td><td><button class="sm" data-teacher-profile="'+x.id+'">Detail</button> <button class="sm" data-etm="'+x.id+'">Edit</button></td></tr>';
   }).join("")||'<tr><td colspan="6">Belum ada akun Guru. Buat akun Guru di Supabase Authentication terlebih dahulu.</td></tr>';
 }
 $("teacherAccountId").onchange=syncTeacherMasterForm;
@@ -503,3 +503,22 @@ function openStudentProfile(id){
 }
 $("studentProfileBack").onclick=function(){$("studentProfilePage").hidden=true;$("tm").hidden=false;activeStudentProfileId=null};
 document.addEventListener("click",function(e){var b=e.target.closest("[data-profile]");if(b)openStudentProfile(b.dataset.profile)});
+
+var activeTeacherProfileId=null;
+function openTeacherProfile(id){
+  var g=TEACHERS.find(function(x){return x.id===id});if(!g)return;activeTeacherProfileId=id;
+  ["dashboard","tm","tp","te","teacherMasterPage","salaryPage","studentProfilePage"].forEach(function(pid){var el=$(pid);if(el)el.hidden=true});$("teacherProfilePage").hidden=false;
+  $("teacherProfileName").textContent=g.nama||"Guru";$("teacherProfileMeta").textContent=(g.mapel||"Mapel belum diisi")+" · "+(g.status||"Aktif")+" · "+(g.email||"-");
+  var schedules=SCH.filter(function(x){return x.teacher_id===id}).sort(function(x,y){return String(y.tanggal).localeCompare(String(x.tanggal))});
+  var attendance=ATT.filter(function(x){return x.teacher_id===id}),done=attendance.filter(function(x){return x.status==="Hadir"}).length;
+  var salaries=SAL.filter(function(x){return x.teacher_id===id}).sort(function(x,y){return String(y.periode||y.bulan||"").localeCompare(String(x.periode||x.bulan||""))});
+  var totalSalary=salaries.reduce(function(s,x){return s+Number(x.total||x.total_gaji||x.jumlah||0)},0);
+  var studentIds={};schedules.forEach(function(x){studentIds[x.student_id]=true});
+  $("teacherProfileSummary").innerHTML='<div><small>Murid ditangani</small><b>'+Object.keys(studentIds).length+'</b></div><div><small>Total jadwal</small><b>'+schedules.length+'</b></div><div><small>Kehadiran tercatat</small><b>'+done+' / '+attendance.length+'</b></div><div><small>Total gaji tercatat</small><b>'+rp(totalSalary)+'</b></div>';
+  $("teacherProfileSchedules").innerHTML=schedules.slice(0,7).map(function(x){var m=stu(x.student_id)||{};return '<div class="profile-text-row"><b>'+esc(x.tanggal||"-")+' · '+esc(x.jam||"")+'</b><small>'+esc(m.nama||"Murid")+' · '+esc(x.mapel||g.mapel||"-")+' · '+esc(x.status||"-")+'</small></div>'}).join("")||'<p class="profile-empty">Belum ada jadwal.</p>';
+  var ac={Hadir:0,Izin:0,Sakit:0,"Tidak Hadir":0};attendance.forEach(function(x){ac[x.status]=(ac[x.status]||0)+1});$("teacherProfileAttendance").innerHTML='<div class="attendance-mini"><span><b>'+ac.Hadir+'</b>Hadir</span><span><b>'+ac.Izin+'</b>Izin</span><span><b>'+ac.Sakit+'</b>Sakit</span><span><b>'+ac["Tidak Hadir"]+'</b>Tidak hadir</span></div>';
+  $("teacherProfileSalary").innerHTML=salaries.slice(0,7).map(function(x){var val=Number(x.total||x.total_gaji||x.jumlah||0);return '<div class="profile-row"><span>'+esc(x.periode||x.bulan||"-")+'</span><b>'+rp(val)+'</b><em class="'+((x.status||"").toLowerCase()==="lunas"?"ok":"no")+'">'+esc(x.status||"-")+'</em></div>'}).join("")||'<p class="profile-empty">Belum ada riwayat gaji.</p>';
+  $("teacherProfileNote").innerHTML='<div class="profile-contact"><span>📱 '+esc(g.hp||"-")+'</span><p>'+esc(g.catatan||"Belum ada catatan profil guru.")+'</p></div>';
+}
+$("teacherProfileBack").onclick=function(){$("teacherProfilePage").hidden=true;$("teacherMasterPage").hidden=false;activeTeacherProfileId=null};
+document.addEventListener("click",function(e){var b=e.target.closest("[data-teacher-profile]");if(b)openTeacherProfile(b.dataset.teacherProfile)});
