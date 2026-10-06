@@ -88,7 +88,17 @@ declare
   t text;
 begin
   foreach t in array array['teacher_notes','teacher_schedules','teacher_attendance','teacher_reports'] loop
-    if to_regclass('public.' || t) is not null then
+    -- Only create teacher-owned policies when the table actually has
+    -- the ownership column. Otherwise RLS remains enabled with no
+    -- authenticated policy, which is fail-closed rather than permissive.
+    if to_regclass('public.' || t) is not null
+       and exists (
+         select 1
+         from information_schema.columns
+         where table_schema = 'public'
+           and table_name = t
+           and column_name = 'teacher_id'
+       ) then
       execute format('grant select, insert, update, delete on public.%I to authenticated', t);
       execute format('drop policy if exists "guru_select_own" on public.%I', t);
       execute format('drop policy if exists "guru_insert_own" on public.%I', t);
