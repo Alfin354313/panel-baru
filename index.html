@@ -2295,8 +2295,6 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   lastStartedSessionId=session.user.id;
   currentUser=session.user;
   currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||"").trim().toLowerCase();
-  currentUser=session.user;
-  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||"").trim().toLowerCase();
   if(currentRole!=="admin"&&currentRole!=="guru"){
     $("loginScreen").style.display="flex";$("loginScreen").hidden=false;$("loginScreen").setAttribute("aria-hidden","false");$("app").style.display="none";$("teacherApp").style.display="none";
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
