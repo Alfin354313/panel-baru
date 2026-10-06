@@ -1420,3 +1420,7 @@ body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;
 
 
 /* Deployment refresh: Vercel Pro preview retry for PR #23. */
+
+/* Shared Jenius Edu logo asset */
+.ref-logo img{width:68px;height:68px;display:block;object-fit:contain;border-radius:50%;filter:drop-shadow(0 8px 18px rgba(21,67,107,.14))}
+.ref-logo span{display:none!important}
