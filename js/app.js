@@ -110,39 +110,8 @@ function drawAttendance(){
     return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td class="'+cls+'">'+esc(x.status||"")+'</td><td>'+esc(x.catatan||"")+'</td><td><button class="sm" data-eatt="'+x.id+'">Edit</button> <button class="sm" data-datt="'+x.id+'">Hapus</button></td></tr>';
   }).join("")||'<tr><td colspan="5">Belum ada data absensi.</td></tr>';
 }
-function startEditAttendance(id){
-  var x=ATT.find(function(q){return q.id===id});if(!x)return;
-  editingAttendanceId=id;
-  $("attendanceStudent").value=x.student_id||"";
-  $("attendanceDate").value=x.tanggal||"";
-  $("attendanceStatus").value=x.status||"Hadir";
-  $("attendanceNote").value=x.catatan||"";
-  $("attendanceSubmit").textContent="Simpan Perubahan";
-  $("attendanceCancel").hidden=false;
-  $("attendanceForm").scrollIntoView({behavior:"smooth",block:"start"});
-}
-function cancelEditAttendance(){
-  editingAttendanceId=null;
-  $("attendanceForm").reset();
-  attendanceDateToday();
-  $("attendanceStatus").value="Hadir";
-  $("attendanceSubmit").textContent="Simpan Absensi";
-  $("attendanceCancel").hidden=true;
-}
-$("attendanceCancel").onclick=cancelEditAttendance;
-$("attendanceForm").onsubmit=async function(e){
-  e.preventDefault();if(!currentUser)return;
-  var f=new FormData(e.target);
-  var payload={teacher_id:currentUser.id,student_id:f.get("student_id"),tanggal:f.get("tanggal"),status:f.get("status"),catatan:f.get("catatan")||""};
-  var r=editingAttendanceId
-    ? await sb.from("teacher_attendance").update(payload).eq("id",editingAttendanceId).eq("teacher_id",currentUser.id).select().single()
-    : await sb.from("teacher_attendance").insert(payload).select().single();
-  if(r.error){alert("Absensi belum bisa disimpan. Pastikan tabel teacher_attendance sudah dibuat di Supabase.");return}
-  if(editingAttendanceId){var i=ATT.findIndex(function(x){return x.id===editingAttendanceId});if(i>=0)ATT[i]=r.data}
-  else ATT.unshift(r.data);
-  var wasEdit=!!editingAttendanceId;cancelEditAttendance();drawAttendance();
-  alert(wasEdit?"Absensi berhasil diperbarui.":"Absensi berhasil disimpan.");
-}
+/* Teacher attendance edit/form handlers moved to ./teacher.js */
+
 function drawSchedule(){var keep=$("scheduleStudent").value;$("scheduleStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep)$("scheduleStudent").value=keep;var rows=SCH.slice().sort(function(a,b){return String(a.tanggal||"").localeCompare(String(b.tanggal||""))||String(a.jam||"").localeCompare(String(b.jam||""))});$("scheduleBody").innerHTML=rows.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.jam||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.mapel||"")+'</td><td>'+esc(x.status||"")+'</td><td><button class="sm" data-esched="'+x.id+'">Edit</button> <button class="sm" data-dsched="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="6">Belum ada jadwal.</td></tr>'}
 function scheduleDateToday(){$("scheduleDate").value=todayISO}
 function teacherDateToday(){$("teacherDate").value=new Date(new Date().getTime()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10)}
