@@ -29,7 +29,7 @@ $$;
 -- tables before the replacement policies are created. PostgreSQL combines
 -- permissive policies with OR, so leaving an old broad policy in place could
 -- silently bypass the restrictions defined below.
-do $
+do $security$
 declare
   t text;
   p record;
@@ -55,7 +55,7 @@ begin
       end loop;
     end if;
   end loop;
-end $;
+end $security$;
 
 -- Students: admin CRUD, guru read-only.
 do $$
