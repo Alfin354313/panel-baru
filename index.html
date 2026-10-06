@@ -1474,8 +1474,7 @@ window.jeniusLoginSubmit = async function(e){
     window.lastStartedSessionId=session.user.id;
 
     var role=String(
-      (session.user.app_metadata&&session.user.app_metadata.role)||
-      (session.user.user_metadata&&session.user.user_metadata.role)||""
+      (session.user.app_metadata&&session.user.app_metadata.role)||""
     ).trim().toLowerCase();
 
     /* Jika role JWT kosong, jangan langsung memantulkan pengguna ke login.
@@ -2259,7 +2258,7 @@ async function jeniusLoginSubmitV5(){
     if(r.error)throw r.error;
     var session=r.data&&r.data.session;
     if(!session||!session.user)throw new Error("Sesi login tidak terbentuk. Silakan coba lagi.");
-    var role=String((session.user.app_metadata&&session.user.app_metadata.role)||(session.user.user_metadata&&session.user.user_metadata.role)||"").trim().toLowerCase();
+    var role=String((session.user.app_metadata&&session.user.app_metadata.role)||"").trim().toLowerCase();
     if(role!==loginRole)throw new Error("Akun ini bukan akun "+(loginRole==="guru"?"Guru":"Admin")+". Pilih jenis akun yang sesuai.");
     await startApp(session);
   }catch(e){
@@ -2295,9 +2294,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   }
   lastStartedSessionId=session.user.id;
   currentUser=session.user;
-  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
-  currentUser=session.user;
-  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
+  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||"").trim().toLowerCase();
   if(currentRole!=="admin"&&currentRole!=="guru"){
     $("loginScreen").style.display="flex";$("loginScreen").hidden=false;$("loginScreen").setAttribute("aria-hidden","false");$("app").style.display="none";$("teacherApp").style.display="none";
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
