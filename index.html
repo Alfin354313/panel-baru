@@ -2178,7 +2178,7 @@ async function jeniusLoginSubmitV5(){
     if(r.error)throw r.error;
     var session=r.data&&r.data.session;
     if(!session||!session.user)throw new Error("Sesi login tidak terbentuk. Silakan coba lagi.");
-    var role=normalizeRole((session.user.app_metadata&&session.user.app_metadata.role)||(session.user.user_metadata&&session.user.user_metadata.role));
+    var role=normalizeRole(session.user.app_metadata&&session.user.app_metadata.role);
     if(!role){
       await sb.auth.signOut();
       throw new Error("Login berhasil, tetapi role akun belum diatur. Isi app_metadata.role dengan admin atau guru di Supabase.");
@@ -2224,7 +2224,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   }
   lastStartedSessionId=session.user.id;
   currentUser=session.user;
-  currentRole=normalizeRole((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role));
+  currentRole=normalizeRole(currentUser.app_metadata&&currentUser.app_metadata.role);
   if(currentRole!=="admin"&&currentRole!=="guru"){
     $("loginScreen").style.display="flex";$("loginScreen").hidden=false;$("loginScreen").setAttribute("aria-hidden","false");$("app").style.display="none";$("teacherApp").style.display="none";
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
@@ -2249,8 +2249,6 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   $("app").style.display="block";
   setSync("Memuat data...");
   try{
-    await dbLoad();
-    await migrateLocalIfEmpty();
     await dbLoad();
     draw();
     setSync("Tersimpan online")
