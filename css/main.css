@@ -1442,3 +1442,16 @@ body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;
   #teacherApp .top-menu{display:flex!important;overflow-x:auto!important;gap:8px!important}
   #teacherApp .top-menu button{flex:1 0 auto!important;white-space:nowrap!important}
 }
+
+/* Responsive workspace correction: wide desktop without horizontal page overflow */
+html,body{max-width:100%;overflow-x:hidden}
+@media(min-width:1000px){
+  #app,#teacherApp{width:calc(100% - 48px)!important;max-width:1240px!important;min-width:0!important;margin:24px auto!important;box-sizing:border-box!important}
+  #app>header,#teacherApp>.card:first-child,#app>.tabs.top-menu.admin-sidebar,#teacherApp .top-menu,#app>#dashboard,#app>#tm,#app>#tp,#app>#te,#teacherApp .teacher-page{max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+  #app>.tabs.top-menu.admin-sidebar>.tabs,#teacherApp .top-menu{display:flex!important;flex-wrap:wrap!important;overflow:visible!important}
+  #app>.tabs.top-menu.admin-sidebar>.tabs>button,#teacherApp .top-menu button{flex:1 1 150px!important;min-width:0!important;white-space:nowrap!important}
+  #app form{max-width:100%!important;min-width:0!important}
+  #app form>*{min-width:0!important}
+  #app .tw,#teacherApp .tw{max-width:100%!important;overflow-x:auto!important}
+}
+@media(min-width:1000px) and (max-width:1299px){#app,#teacherApp{width:calc(100% - 32px)!important;margin:16px auto!important}}
