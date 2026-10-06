@@ -315,7 +315,7 @@ function drawDashboard(){
 
   var months=[];
   var base=new Date(month+"-01T00:00:00");
-  for(var i=2;i>=0;i--){
+  for(var i=5;i>=0;i--){
     var d=new Date(base.getFullYear(),base.getMonth()-i,1);
     months.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));
   }
@@ -325,13 +325,9 @@ function drawDashboard(){
       E.filter(function(x){return String(x.tgl).slice(0,7)===m}).reduce(function(a,x){return a+Number(x.jumlah||0)},0)
     );
   }));
-  $("dashboardChart").innerHTML=months.map(function(m){
-    var inc=P.filter(function(x){return x.bulan===m&&x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0);
-    var exp=E.filter(function(x){return String(x.tgl).slice(0,7)===m}).reduce(function(a,x){return a+Number(x.jumlah||0)},0);
-    var pct=Math.max(2,Math.round(inc/max*100));
-    var label=m.slice(5)+"/"+m.slice(0,4);
-    return '<div class="chart-row"><span class="chart-label">'+label+'</span><div class="chart-track" title="Pendapatan '+rp(inc)+'"><div class="chart-bar" style="width:'+pct+'%"></div></div><span class="chart-value">'+rp(inc)+'</span></div><div class="chart-row"><span style="color:var(--muted)">Keluar</span><div class="chart-track" title="Pengeluaran '+rp(exp)+'"><div class="chart-bar" style="width:'+Math.max(2,Math.round(exp/max*100))+'%"></div></div><span class="chart-value">'+rp(exp)+'</span></div>';
-  }).join("");
+  var chartData=months.map(function(m){return {m:m,inc:P.filter(function(x){return x.bulan===m&&x.status==="Lunas"}).reduce(function(s,x){return s+Number(x.jumlah||0)},0),exp:E.filter(function(x){return String(x.tgl).slice(0,7)===m}).reduce(function(s,x){return s+Number(x.jumlah||0)},0)}});
+  $("dashboardChart").innerHTML='<div class="finance-chart-grid">'+chartData.map(function(q){var ih=Math.max(3,Math.round(q.inc/max*100)),eh=Math.max(3,Math.round(q.exp/max*100)),label=q.m.slice(5)+"/"+q.m.slice(2,4);return '<div class="finance-month"><div class="finance-bars"><div class="finance-bar income" style="height:'+ih+'%" title="Pendapatan '+rp(q.inc)+'"><span>'+rp(q.inc)+'</span></div><div class="finance-bar expense" style="height:'+eh+'%" title="Pengeluaran '+rp(q.exp)+'"><span>'+rp(q.exp)+'</span></div></div><b>'+label+'</b></div>'}).join("")+'</div>';
+
 
   var adminReminderItems=[];if(unpaidCount)adminReminderItems.push('<div class="reminder-item reminder-warn"><span>!</span><div><b>'+unpaidCount+' pembayaran belum lunas</b><small>Total '+rp(receivable)+' pada periode ini.</small></div></div>');var todaySchedules=(typeof SCH!=="undefined"?SCH:[]).filter(function(x){return x.tanggal===todayISO});if(todaySchedules.length)adminReminderItems.push('<div class="reminder-item"><span>▣</span><div><b>'+todaySchedules.length+' jadwal mengajar hari ini</b><small>Pantau aktivitas guru dan murid hari ini.</small></div></div>');$("adminReminderCount").textContent=adminReminderItems.length;$("adminBellDot").hidden=adminReminderItems.length===0;$("adminReminderSummary").innerHTML=adminReminderItems.join("")||'<div class="reminder-clear"><b>Semua aman</b><small>Tidak ada reminder penting untuk periode ini.</small></div>';
 
