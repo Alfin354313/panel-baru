@@ -1,0 +1,1389 @@
+/* Jenius Edu styles — extracted from index.html without intentional visual changes. */
+
+:root{--bg:#F2F7FC;--ink:#15436B;--muted:#476682;--card:#fff;--line:#D3E6F7;--hl:#9CD0F5;--ok:#17825a;--no:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B2238;--ink:#EAF4FF;--muted:#A9C4DE;--card:#12304F;--line:#24496E;--ok:#4cd3a0;--no:#ff8a7a}}
+:root[data-theme="dark"]{--bg:#0B2238;--ink:#EAF4FF;--muted:#A9C4DE;--card:#12304F;--line:#24496E;--ok:#4cd3a0;--no:#ff8a7a}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,"Segoe UI",sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:16px}header img{width:44px;height:44px;border-radius:50%}
+h1{font-size:1.3rem;margin:0}h2{font-size:1.1rem;margin:0 0 10px}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.stat b{display:block;font-size:1.35rem}.stat span{color:var(--muted);font-size:.9rem}
+.dashboard-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}.dashboard-head h2{margin:0}
+.dashboard-filter{width:auto;min-width:150px}.dashboard-grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:14px}.dashboard-card{min-height:96px}
+.dashboard-card b{display:block;font-size:1.3rem;margin-top:3px}.dashboard-card small{color:var(--muted)}
+.dashboard-positive b{color:var(--ok)}.dashboard-warning b{color:var(--no)}
+.dashboard-section{margin-top:14px}.chart-wrap{display:grid;gap:10px}.chart-row{display:grid;grid-template-columns:82px 1fr 92px;gap:8px;align-items:center;font-size:.85rem}.chart-track{height:12px;background:var(--bg);border-radius:999px;overflow:hidden;border:1px solid var(--line)}.chart-bar{height:100%;border-radius:999px;background:var(--hl);min-width:2px}.chart-label{font-weight:700}.chart-value{text-align:right;font-weight:700}
+.dashboard-alert{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}.dashboard-alert:last-child{margin-bottom:0}.dashboard-alert small{color:var(--muted)}
+@media(max-width:700px){.chart-row{grid-template-columns:70px 1fr 82px}.dashboard-filter{width:100%}}
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+button,.btn{font:inherit;font-weight:700;border:2px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer;text-decoration:none;display:inline-block}
+button.on,.pri{background:var(--hl);color:#15436B}
+button.sm,.sm{padding:4px 12px;font-size:.85rem;border-width:1px}
+:focus-visible{outline:3px solid #1E6FB8;outline-offset:2px}
+form{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));align-items:end;margin-bottom:14px}
+label{display:grid;gap:4px;font-weight:700;font-size:.9rem}
+input,select{font:inherit;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.ok{color:var(--ok);font-weight:700}.no{color:var(--no);font-weight:700}
+.msg{text-align:center;padding:60px 16px}[hidden]{display:none!important}
+
+.invoice-modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:99}
+.invoice-box{width:min(680px,100%);max-height:90vh;overflow:auto;background:var(--card);color:var(--ink);border-radius:16px;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.invoice-head{display:flex;justify-content:space-between;gap:16px;border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+.invoice-total{font-size:1.5rem;font-weight:800}.invoice-paid{display:inline-block;padding:5px 12px;border-radius:999px;background:#dff7eb;color:var(--ok);font-weight:800}
+.invoice-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.invoice-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}.invoice-meta div{padding:7px 0;border-bottom:1px solid var(--line)}
+@media print{body *{visibility:hidden!important}.invoice-modal,.invoice-modal *{visibility:visible!important}.invoice-modal{position:absolute;inset:0;background:#fff;padding:0}.invoice-box{box-shadow:none;max-height:none;width:100%;border-radius:0}.invoice-actions{display:none!important}}
+
+.top-menu{position:sticky;top:0;z-index:20;background:var(--bg);padding:8px 0 12px;margin:0 0 14px;border-bottom:1px solid var(--line)}
+.top-menu button{flex:1;min-width:130px;text-align:center}
+@media(max-width:700px){.top-menu{overflow-x:auto;justify-content:flex-start}.top-menu button{flex:0 0 auto;min-width:120px}}
+
+/* Jenius Edu - modern teacher dashboard */
+#teacherApp>.card{
+  padding:0;
+  overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:0 14px 40px rgba(21,67,107,.08);
+  display:grid;
+  grid-template-columns:230px minmax(0,1fr);
+  grid-template-rows:auto 1fr;
+  min-height:700px;
+}
+#teacherApp .teacher-head{
+  grid-column:1/-1;
+  margin:0;
+  padding:18px 22px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp .teacher-brand h1{font-size:1.35rem;letter-spacing:.01em}
+#teacherApp .teacher-brand small{display:block;margin-top:2px}
+#teacherApp .teacher-brand .dashboard-logo{width:50px;height:50px;flex-basis:50px;box-shadow:0 6px 18px rgba(21,67,107,.12)}
+#teacherApp .teacher-head>div:last-child{gap:6px}
+#teacherApp .teacher-head button{
+  border-width:1px;
+  background:var(--card);
+}
+#teacherApp .teacher-head #teacherLogoutBtn{
+  border-color:var(--no);
+  color:var(--no);
+}
+#teacherApp .teacher-head #exportTeacherBtn{
+  border-color:#1e6fb8;
+}
+#teacherApp .top-menu{
+  position:relative;
+  top:auto;
+  z-index:1;
+  grid-column:1;
+  grid-row:2;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:7px;
+  margin:0;
+  padding:18px 12px;
+  border:0;
+  border-right:1px solid var(--line);
+  background:var(--bg);
+}
+#teacherApp .top-menu button{
+  flex:none;
+  width:100%;
+  min-width:0;
+  text-align:left;
+  border:1px solid transparent;
+  border-radius:12px;
+  padding:11px 13px;
+  background:transparent;
+  color:var(--ink);
+  transition:.18s ease;
+}
+#teacherApp .top-menu button:hover{
+  background:var(--card);
+  border-color:var(--line);
+  transform:translateX(2px);
+}
+#teacherApp .top-menu button.on{
+  background:var(--hl);
+  border-color:#86c4ed;
+  box-shadow:0 5px 14px rgba(30,111,184,.12);
+}
+#teacherApp .teacher-page{
+  grid-column:2;
+  grid-row:2;
+  padding:22px;
+  min-width:0;
+}
+#teacherApp .teacher-page>.card,
+#teacherApp .teacher-page>.card+.card{
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(21,67,107,.05);
+}
+#teacherApp .teacher-page h2{
+  font-size:1.15rem;
+  letter-spacing:.01em;
+}
+#teacherApp .teacher-page .dashboard-grid{
+  gap:14px;
+}
+#teacherApp .teacher-page .dashboard-card{
+  border-radius:16px;
+  padding:17px;
+  position:relative;
+  overflow:hidden;
+}
+#teacherApp .teacher-page .dashboard-card:after{
+  content:"";
+  position:absolute;
+  width:54px;height:54px;
+  right:-18px;bottom:-18px;
+  border-radius:50%;
+  background:rgba(156,208,245,.25);
+}
+#teacherApp .teacher-page table th{
+  background:var(--bg);
+  font-size:.82rem;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+#teacherApp .teacher-page tbody tr:hover{
+  background:rgba(156,208,245,.10);
+}
+#teacherApp .teacher-form{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px;
+}
+#teacherApp .teacher-form input,
+#teacherApp .teacher-form select,
+#teacherApp .teacher-form textarea{
+  background:var(--card);
+}
+@media(max-width:700px){
+  #teacherApp>.card{
+    display:block;
+    min-height:0;
+  }
+  #teacherApp .teacher-head{
+    padding:16px;
+  }
+  #teacherApp .top-menu{
+    flex-direction:row;
+    overflow-x:auto;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+    padding:10px;
+  }
+  #teacherApp .top-menu button{
+    width:auto;
+    flex:0 0 auto;
+    min-width:150px;
+    text-align:center;
+  }
+  #teacherApp .teacher-page{
+    padding:14px;
+  }
+}
+
+/* Dashboard Guru - polishing */
+#teacherApp .teacher-page{
+  background:transparent;
+}
+#teacherApp #teacherDashboardPage{
+  padding-top:24px;
+}
+#teacherApp #teacherDashboardPage .dashboard-grid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+#teacherApp #teacherDashboardPage .dashboard-card{
+  min-height:118px;
+  padding:18px;
+  border:1px solid var(--line);
+  box-shadow:0 8px 22px rgba(21,67,107,.06);
+}
+#teacherApp #teacherDashboardPage .dashboard-card small{
+  display:block;
+  font-weight:700;
+  letter-spacing:.01em;
+}
+#teacherApp #teacherDashboardPage .dashboard-card b{
+  font-size:1.8rem;
+  line-height:1.2;
+  margin-top:10px;
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(1){
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(2){
+  background:linear-gradient(135deg,var(--card),#f4fbf7);
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(3){
+  background:linear-gradient(135deg,var(--card),#fff9ef);
+}
+#teacherApp #teacherDashboardPage .dashboard-card:nth-child(4){
+  background:linear-gradient(135deg,var(--card),#f7f3ff);
+}
+#teacherApp #teacherDashboardPage .dashboard-section{
+  padding:20px;
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(21,67,107,.05);
+}
+#teacherApp #teacherDashboardPage .dashboard-section h2{
+  margin-bottom:6px;
+}
+#teacherApp #teacherDashboardPage .dashboard-section p{
+  line-height:1.7;
+}
+#teacherApp #teacherDashboardPage .dashboard-section p:before{
+  content:"💡";
+  margin-right:7px;
+}
+#teacherApp .teacher-head{
+  position:relative;
+}
+#teacherApp .teacher-head:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:90px;
+  height:3px;
+  background:#1e6fb8;
+  border-radius:0 4px 4px 0;
+}
+@media(max-width:900px){
+  #teacherApp #teacherDashboardPage .dashboard-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media(max-width:700px){
+  #teacherApp #teacherDashboardPage .dashboard-grid{
+    grid-template-columns:1fr 1fr;
+  }
+  #teacherApp #teacherDashboardPage .dashboard-card{
+    min-height:105px;
+    padding:15px;
+  }
+  #teacherApp #teacherDashboardPage .dashboard-card b{
+    font-size:1.5rem;
+  }
+}
+@media(max-width:480px){
+  #teacherApp #teacherDashboardPage .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+/* Jadwal Mengajar - polishing */
+#teacherApp #teacherSchedulePage>.card{
+  padding:0;
+  overflow:hidden;
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+}
+#teacherApp #teacherSchedulePage>.card>div:first-child{
+  padding:20px 22px 16px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp #teacherSchedulePage h2{
+  font-size:1.2rem;
+}
+#teacherApp #teacherSchedulePage #scheduleSync{
+  padding:6px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--card);
+}
+#teacherApp #teacherSchedulePage #scheduleForm{
+  margin:18px 22px 20px!important;
+  padding:18px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+#teacherApp #teacherSchedulePage #scheduleForm label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:700;
+  color:var(--ink);
+}
+#teacherApp #teacherSchedulePage #scheduleForm input,
+#teacherApp #teacherSchedulePage #scheduleForm select{
+  min-height:42px;
+  box-sizing:border-box;
+}
+#teacherApp #teacherSchedulePage #scheduleForm .full{
+  grid-column:1/-1;
+}
+#teacherApp #teacherSchedulePage .teacher-form-actions{
+  display:flex;
+  gap:9px;
+  align-items:center;
+}
+#teacherApp #teacherSchedulePage .tw{
+  margin:0;
+  padding:0 22px 22px;
+}
+#teacherApp #teacherSchedulePage table{
+  min-width:760px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+#teacherApp #teacherSchedulePage table th{
+  padding:12px 10px;
+}
+#teacherApp #teacherSchedulePage table td{
+  padding:12px 10px;
+}
+#teacherApp #teacherSchedulePage tbody tr{
+  transition:.15s ease;
+}
+#teacherApp #teacherSchedulePage tbody tr:hover{
+  transform:translateY(-1px);
+}
+@media(max-width:700px){
+  #teacherApp #teacherSchedulePage #scheduleForm{
+    grid-template-columns:1fr;
+    margin-left:14px!important;
+    margin-right:14px!important;
+    padding:14px;
+  }
+  #teacherApp #teacherSchedulePage #scheduleForm .full{
+    grid-column:auto;
+  }
+  #teacherApp #teacherSchedulePage .tw{
+    padding:0 14px 14px;
+  }
+  #teacherApp #teacherSchedulePage>.card>div:first-child{
+    padding:16px;
+  }
+}
+
+/* Absensi Murid - polishing */
+#teacherApp #teacherAttendancePage>.card{
+  padding:0;
+  overflow:hidden;
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+}
+#teacherApp #teacherAttendancePage>.card>div:first-child{
+  padding:20px 22px 16px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+}
+#teacherApp #teacherAttendancePage h2{
+  font-size:1.2rem;
+}
+#teacherApp #teacherAttendancePage #attendanceSync{
+  padding:6px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--card);
+}
+#teacherApp #teacherAttendancePage #attendanceForm{
+  margin:18px 22px 20px!important;
+  padding:18px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+#teacherApp #teacherAttendancePage #attendanceForm label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:700;
+  color:var(--ink);
+}
+#teacherApp #teacherAttendancePage #attendanceForm input,
+#teacherApp #teacherAttendancePage #attendanceForm select{
+  min-height:42px;
+  box-sizing:border-box;
+}
+#teacherApp #teacherAttendancePage #attendanceForm .full{
+  grid-column:1/-1;
+}
+#teacherApp #teacherAttendancePage .teacher-form-actions{
+  display:flex;
+  gap:9px;
+  align-items:center;
+}
+#teacherApp #teacherAttendancePage .tw{
+  margin:0;
+  padding:0 22px 22px;
+}
+#teacherApp #teacherAttendancePage table{
+  min-width:700px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+#teacherApp #teacherAttendancePage table th{
+  padding:12px 10px;
+}
+#teacherApp #teacherAttendancePage table td{
+  padding:12px 10px;
+  vertical-align:middle;
+}
+#teacherApp #teacherAttendancePage tbody tr{
+  transition:.15s ease;
+}
+#teacherApp #teacherAttendancePage tbody tr:hover{
+  transform:translateY(-1px);
+}
+@media(max-width:700px){
+  #teacherApp #teacherAttendancePage #attendanceForm{
+    grid-template-columns:1fr;
+    margin-left:14px!important;
+    margin-right:14px!important;
+    padding:14px;
+  }
+  #teacherApp #teacherAttendancePage #attendanceForm .full{
+    grid-column:auto;
+  }
+  #teacherApp #teacherAttendancePage .tw{
+    padding:0 14px 14px;
+  }
+  #teacherApp #teacherAttendancePage>.card>div:first-child{
+    padding:16px;
+  }
+}
+
+/* Catatan Mengajar - polishing */
+#teacherApp #teacherNotesPage{
+  display:block;
+}
+#teacherApp #teacherNotesPage>.card{
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+}
+#teacherApp #teacherNotesPage>.card:first-child{
+  padding:20px 22px;
+}
+#teacherApp #teacherNotesPage>.card:first-child>h2,
+#teacherApp #teacherNotesPage>.card:last-child>h2{
+  font-size:1.2rem;
+  margin-bottom:12px;
+}
+#teacherApp #teacherNotesPage .card[style*="Catatan Terbaru"]{
+  border:1px solid var(--line);
+  border-radius:14px!important;
+  background:linear-gradient(135deg,var(--bg),#eef7ff)!important;
+  box-shadow:none;
+}
+#teacherApp #teacherNotesPage #gLatestNotes{
+  line-height:1.65;
+}
+#teacherApp #teacherNotesPage #teacherForm{
+  margin-top:14px;
+  padding:18px;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+#teacherApp #teacherNotesPage #teacherForm label{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:700;
+  color:var(--ink);
+}
+#teacherApp #teacherNotesPage #teacherForm input,
+#teacherApp #teacherNotesPage #teacherForm select,
+#teacherApp #teacherNotesPage #teacherForm textarea{
+  box-sizing:border-box;
+}
+#teacherApp #teacherNotesPage #teacherForm input,
+#teacherApp #teacherNotesPage #teacherForm select{
+  min-height:42px;
+}
+#teacherApp #teacherNotesPage #teacherForm textarea{
+  min-height:88px;
+  resize:vertical;
+}
+#teacherApp #teacherNotesPage #teacherForm .full{
+  grid-column:1/-1;
+}
+#teacherApp #teacherNotesPage .teacher-form-actions{
+  display:flex;
+  gap:9px;
+  align-items:center;
+}
+#teacherApp #teacherNotesPage>.card:last-child{
+  padding:20px 22px;
+}
+#teacherApp #teacherNotesPage>.card:last-child .tw{
+  margin:0;
+}
+#teacherApp #teacherNotesPage table{
+  min-width:980px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+}
+#teacherApp #teacherNotesPage table th{
+  padding:12px 10px;
+}
+#teacherApp #teacherNotesPage table td{
+  padding:12px 10px;
+  vertical-align:top;
+  line-height:1.5;
+}
+#teacherApp #teacherNotesPage tbody tr{
+  transition:.15s ease;
+}
+#teacherApp #teacherNotesPage tbody tr:hover{
+  transform:translateY(-1px);
+}
+@media(max-width:700px){
+  #teacherApp #teacherNotesPage>.card:first-child,
+  #teacherApp #teacherNotesPage>.card:last-child{
+    padding:16px;
+  }
+  #teacherApp #teacherNotesPage #teacherForm{
+    grid-template-columns:1fr;
+    padding:14px;
+  }
+  #teacherApp #teacherNotesPage #teacherForm .full{
+    grid-column:auto;
+  }
+}
+
+/* Panel Admin - polishing */
+#app{
+  display:grid;
+  grid-template-columns:220px minmax(0,1fr);
+  grid-template-rows:auto 1fr;
+  gap:0 18px;
+}
+#app>header{
+  grid-column:1/-1;
+  margin:0 0 16px;
+  padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+  position:relative;
+}
+#app>header:after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:90px;
+  height:3px;
+  background:#1e6fb8;
+  border-radius:0 4px 4px 0;
+}
+#app>header img{
+  width:50px;
+  height:50px;
+  box-shadow:0 6px 18px rgba(21,67,107,.12);
+}
+#app>header h1{
+  font-size:1.35rem;
+}
+#app>.tabs.top-menu{
+  grid-column:1;
+  grid-row:2;
+  margin:0;
+  padding:14px 10px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card);
+  box-shadow:0 10px 28px rgba(21,67,107,.05);
+  align-self:start;
+  position:sticky;
+  top:14px;
+}
+#app>.admin-sidebar .tabs{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+#app>.admin-sidebar button{
+  width:100%;
+  text-align:left;
+  border:1px solid transparent;
+  border-radius:10px;
+  padding:9px 12px;
+  background:transparent;
+  color:var(--ink);
+  transition:.18s ease;
+  margin:0;
+}
+#app>.admin-sidebar button:hover{
+  background:var(--bg);
+  border-color:var(--line);
+  transform:translateX(2px);
+}
+#app>.admin-sidebar button.on{
+  background:var(--hl);
+  border-color:#86c4ed;
+  box-shadow:0 5px 14px rgba(30,111,184,.12);
+}
+#app>.admin-sidebar-title{
+  padding:3px 10px 12px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:8px;
+}
+#app>.admin-sidebar-title span{
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.08em;
+  color:var(--muted);
+}
+#app>.admin-sidebar .admin-menu-group{
+  padding:7px 0 5px;
+  border-bottom:1px solid rgba(211,230,247,.7);
+}
+#app>.admin-sidebar .admin-menu-group:last-child{border-bottom:0}
+#app>.admin-sidebar .admin-menu-label{
+  padding:3px 10px 6px;
+  font-size:.84rem;
+  font-weight:800;
+  color:var(--ink);
+}
+#app>.admin-sidebar .admin-menu-group button{
+  padding-left:28px;
+  font-size:.9rem;
+}
+#app>#dashboard,
+#app>#tm,
+#app>#tp,
+#app>#te{
+  grid-column:2;
+  grid-row:2;
+  min-width:0;
+}
+#app>#dashboard .dashboard-section{
+  margin-top:0;
+  margin-bottom:14px;
+  border-radius:16px;
+  box-shadow:0 8px 24px rgba(21,67,107,.05);
+}
+#app>#dashboard .dashboard-card{
+  border-radius:14px;
+}
+#app>#tm,#app>#tp,#app>#te{
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(21,67,107,.05);
+}
+#app>#tm form,#app>#tp form,#app>#te form{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+}
+#app>#tm .tw,#app>#tp .tw,#app>#te .tw{
+  margin-top:16px;
+}
+@media(max-width:760px){
+  #app{
+    display:block;
+  }
+  #app>header{
+    margin-bottom:10px;
+  }
+  #app>.tabs.top-menu{
+    position:relative;
+    top:auto;
+    margin-bottom:14px;
+    padding:10px;
+    overflow-x:auto;
+  }
+  #app>.admin-sidebar .tabs{
+    flex-direction:row;
+    align-items:stretch;
+    overflow-x:auto;
+  }
+  #app>.admin-sidebar .admin-menu-group{
+    min-width:180px;
+    border-bottom:0;
+    border-right:1px solid var(--line);
+    padding:0 8px;
+  }
+  #app>.admin-sidebar .admin-menu-group:last-child{border-right:0}
+  #app>.admin-sidebar .admin-menu-label{white-space:nowrap}
+  #app>.admin-sidebar button{
+    width:auto;
+    min-width:150px;
+    white-space:nowrap;
+    text-align:center;
+  }
+  #app>#dashboard,
+  #app>#tm,
+  #app>#tp,
+  #app>#te{
+    min-width:0;
+  }
+}
+
+/* Admin Dashboard - main view */
+#app #dashboard{
+  padding-top:0;
+}
+#app .admin-dashboard-welcome{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:14px;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(135deg,var(--card),#eef7ff);
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+  position:relative;
+  overflow:hidden;
+}
+#app .admin-dashboard-welcome:after{
+  content:"";
+  position:absolute;
+  width:120px;
+  height:120px;
+  right:-38px;
+  bottom:-55px;
+  border-radius:50%;
+  background:rgba(156,208,245,.25);
+}
+#app .admin-dashboard-welcome small{
+  font-weight:800;
+  letter-spacing:.08em;
+  color:#1e6fb8;
+}
+#app .admin-dashboard-welcome h2{
+  margin:3px 0 3px;
+  font-size:1.45rem;
+}
+#app .admin-dashboard-welcome p{
+  margin:0;
+  color:var(--muted);
+}
+#app .admin-dashboard-period{
+  position:relative;
+  z-index:1;
+  min-width:145px;
+  padding:11px 14px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(255,255,255,.75);
+}
+#app .admin-dashboard-period span{
+  display:block;
+  color:var(--muted);
+  font-size:.78rem;
+}
+#app .admin-dashboard-period b{
+  display:block;
+  margin-top:2px;
+}
+#app #dashboard .dashboard-section{
+  padding:20px;
+}
+#app #dashboard .dashboard-head{
+  margin-bottom:14px;
+}
+#app #dashboard .dashboard-head h2{
+  font-size:1.2rem;
+}
+#app #dashboard .dashboard-grid{
+  gap:14px;
+}
+#app #dashboard .dashboard-card{
+  min-height:112px;
+  padding:17px;
+  border-radius:15px;
+  box-shadow:0 7px 20px rgba(21,67,107,.045);
+}
+#app #dashboard .dashboard-card b{
+  font-size:1.55rem;
+  margin-top:8px;
+}
+#app #dashboard .dashboard-section>.dashboard-grid:nth-of-type(2) .card{
+  min-height:92px;
+  border-radius:14px;
+}
+@media(max-width:700px){
+  #app .admin-dashboard-welcome{
+    align-items:flex-start;
+    flex-direction:column;
+    padding:17px;
+  }
+  #app .admin-dashboard-period{
+    width:100%;
+  }
+  #app #dashboard .dashboard-section{
+    padding:16px;
+  }
+}
+
+/* Split-screen login Jenius Edu */
+#loginScreen[hidden]{display:none!important}\n#loginScreen{min-height:100vh!important;padding:24px!important;background:linear-gradient(135deg,#eef7ff 0%,#f8fbfe 48%,#e8f3fc 100%)!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.login-shell{width:min(1080px,100%);height:min(650px,calc(100vh - 36px));min-height:0;display:grid;grid-template-columns:1.08fr .92fr;overflow:hidden;border:1px solid rgba(211,230,247,.9);border-radius:28px;background:#fff;box-shadow:0 28px 80px rgba(21,67,107,.16)}
+.login-story{position:relative;overflow:hidden;padding:30px 40px 24px;background:linear-gradient(145deg,#16466f 0%,#1d5a89 58%,#2c79a9 100%);color:#fff;display:flex;flex-direction:column}
+.story-brand{display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:800;letter-spacing:.14em}.story-mark{width:34px;height:34px;border:1px solid rgba(255,255,255,.45);border-radius:10px;display:grid;place-items:center;font-size:.7rem;letter-spacing:.05em}
+.story-copy{position:relative;z-index:2;margin-top:40px;max-width:480px}.story-badge{display:inline-block;padding:6px 10px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);border-radius:999px;font-size:.65rem;letter-spacing:.12em;font-weight:800}
+.story-copy h2{font-size:2.08rem;line-height:1.12;margin:16px 0 12px;letter-spacing:-.025em}.story-copy h2 strong{font-weight:800}.story-copy p{max-width:450px;margin:0;font-size:.9rem;line-height:1.7;color:rgba(255,255,255,.82)}
+.story-illustration{position:absolute;right:10px;bottom:104px;width:340px;height:215px;opacity:.98}.story-glow{position:absolute;width:260px;height:160px;right:20px;bottom:15px;border-radius:50%;background:rgba(255,255,255,.10);filter:blur(2px)}
+.story-board{position:absolute;right:64px;top:20px;width:142px;height:92px;border:7px solid #e8f4fb;border-radius:10px;background:#f7fbfe;color:#17466f;box-shadow:0 15px 30px rgba(4,35,61,.2);transform:rotate(2deg);padding:17px 14px}.story-board b{display:block;font-size:1rem;letter-spacing:.08em}.story-board small{font-size:.65rem;letter-spacing:.2em}.story-board i{position:absolute;right:12px;bottom:9px;font-style:normal;color:#6aa6cd}
+.story-desk{position:absolute;left:38px;right:20px;bottom:24px;height:18px;background:#d9edf8;border-radius:12px 12px 5px 5px;box-shadow:0 9px 0 rgba(5,39,65,.22)}
+.story-person{position:absolute;width:76px;height:115px;bottom:41px}.story-person:before{content:"";position:absolute;left:17px;top:0;width:42px;height:42px;border-radius:50%;background:#f3c7a7;box-shadow:inset -5px -3px 0 rgba(0,0,0,.06)}.story-person:after{content:"";position:absolute;left:9px;top:35px;width:58px;height:70px;border-radius:22px 22px 8px 8px;background:#e9f4fb}.story-person span{position:absolute;left:27px;top:-3px;width:24px;height:13px;border-radius:15px 15px 4px 4px;background:#173f63;z-index:2}.person-a{left:55px}.person-a:after{background:#f1f7fb}.person-b{left:220px;transform:scale(.86)}.person-b:after{background:#7fb8dc}
+.story-book{position:absolute;bottom:43px;width:52px;height:10px;border-radius:3px;transform:rotate(-6deg);box-shadow:0 4px 0 rgba(6,39,65,.16)}.book-a{left:142px;background:#f1c96b}.book-b{left:157px;bottom:55px;background:#e9a9a9;transform:rotate(7deg)}.book-c{left:175px;bottom:45px;background:#a7d5bc}
+.story-steps{position:relative;z-index:3;display:flex;gap:0;margin-top:auto;padding-top:4px}.story-steps:before{content:"";position:absolute;left:15px;right:15px;top:18px;height:1px;background:rgba(255,255,255,.25)}.story-steps div{position:relative;flex:1;padding:0 10px 0 0;background:transparent}.story-steps b{position:relative;z-index:2;display:grid;place-items:center;width:22px;height:22px;margin-bottom:8px;border-radius:50%;border:1px solid rgba(255,255,255,.42);background:#215f8e;font-size:.58rem;color:#fff}.story-steps span{display:block;font-size:.68rem;font-weight:650;line-height:1.3;color:rgba(255,255,255,.86);max-width:130px}.story-steps i{display:none}.story-footer{margin-top:12px;font-size:.68rem;color:rgba(255,255,255,.62);letter-spacing:.05em}
+.login-panel{display:flex;align-items:center;justify-content:center;padding:20px 30px;background:#fff}.login-panel .login-card{width:min(380px,100%)!important;padding:14px 20px!important;box-shadow:none!important;border:0!important;background:transparent!important}
+.login-panel .login-brand{margin-bottom:11px!important}.login-panel .login-logo{width:64px!important;height:64px!important}.login-panel .login-brand h1{font-size:1.35rem!important}.login-panel .login-brand p{font-size:.78rem!important}
+@media(min-width:851px) and (max-height:680px){#loginScreen{padding:12px!important}.login-shell{height:calc(100vh - 24px);border-radius:22px}.login-story{padding:22px 34px 18px}.story-copy{margin-top:28px}.story-copy h2{font-size:1.82rem}.story-copy p{font-size:.82rem;line-height:1.55}.story-illustration{bottom:92px;transform:scale(.88);transform-origin:right bottom}.story-footer{margin-top:8px;font-size:.62rem}.login-panel{padding:14px 24px}.login-panel .login-card{padding:8px 16px!important}}@media(max-width:850px){#loginScreen{align-items:flex-start!important;padding:16px 12px 28px!important;overflow-y:auto}.login-shell{grid-template-columns:1fr;max-width:500px;height:auto!important;min-height:0;margin:0 auto}.login-story{min-height:330px;padding:22px 28px 18px}.story-copy{margin-top:20px}.story-copy h2{font-size:1.65rem}.story-copy p{max-width:320px}.story-illustration{transform:scale(.64);transform-origin:right bottom;right:-40px;bottom:68px}.story-steps{max-width:100%}.story-footer{margin-top:8px}.login-panel{padding:16px 20px}}
+@media(max-width:520px){#loginScreen{padding:10px 10px 22px!important}.login-shell{border-radius:20px}.login-story{min-height:300px;padding:18px 20px 16px}.story-brand{font-size:.82rem}.story-mark{width:32px;height:32px}.story-copy{margin-top:16px}.story-copy p{font-size:.75rem;line-height:1.48;max-width:285px}.story-copy h2{font-size:1.42rem;line-height:1.12;margin:12px 0 9px}.story-illustration{opacity:.5;transform:scale(.5);right:-58px;bottom:62px}.story-steps{gap:4px}.story-steps div{padding:5px 4px}.story-steps span{font-size:.59rem}.story-footer{font-size:.6rem}.login-panel{padding:12px 10px}.login-panel .login-card{padding:8px 6px!important}}
+
+/* Compact admin sidebar: memberi ruang lebih besar untuk dashboard utama */
+#app{
+  grid-template-columns:190px minmax(0,1fr);
+  gap:0 12px;
+}
+#app>.tabs.top-menu{
+  padding:10px 8px;
+}
+#app>.admin-sidebar .admin-menu-group{
+  padding:8px 4px;
+}
+#app>.admin-sidebar button{
+  padding:8px 9px;
+  font-size:.9rem;
+}
+#app>.admin-sidebar .admin-menu-label{
+  font-size:.78rem;
+  margin:2px 4px 5px;
+}
+#app #dashboard{
+  min-width:0;
+}
+#app #dashboard .dashboard-grid{
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+}
+@media(max-width:900px){
+  #app{
+    grid-template-columns:180px minmax(0,1fr);
+    gap:0 10px;
+  }
+}
+@media(max-width:700px){
+  #app{
+    display:block;
+  }
+  #app>.tabs.top-menu{
+    width:100%;
+  }
+}
+
+#teacherReportPage>.card{border-radius:16px;box-shadow:0 10px 28px rgba(21,67,107,.06)}
+#teacherReportPage .report-head{padding:20px 22px 16px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,var(--card),#eef7ff)}
+#teacherReportPage .report-head h2{margin:0;font-size:1.2rem}
+#teacherReportPage .report-form{margin:18px 22px 20px;padding:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:14px}
+#teacherReportPage .report-form label{display:flex;flex-direction:column;gap:6px}
+#teacherReportPage .report-form textarea{font:inherit;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-height:90px;resize:vertical}
+#teacherReportPage .report-form .full{grid-column:1/-1}
+#teacherReportPage .report-actions{display:flex;gap:9px;flex-wrap:wrap}
+#teacherReportPage .report-preview{margin:0 22px 22px;padding:20px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
+#teacherReportPage .report-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:14px}
+#teacherReportPage .report-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+#teacherReportPage .report-kpi{padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+#teacherReportPage .report-kpi small{display:block;color:var(--muted)}
+#teacherReportPage .report-kpi b{display:block;font-size:1.25rem;margin-top:3px}
+#teacherReportPage .report-block{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px}
+#teacherReportPage .report-block h3{font-size:.98rem;margin:0 0 7px}
+#teacherReportPage .report-block p{margin:0;white-space:pre-line}
+#teacherReportPage .report-material{margin:0 0 7px;padding:9px 10px;border-radius:9px;background:var(--bg)}
+#teacherReportPage .report-material:last-child{margin-bottom:0}
+#teacherReportPage .report-muted{color:var(--muted)}
+#teacherReportPage .report-meeting-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}.report-meeting-table{min-width:980px;font-size:.82rem}.report-meeting-table th{background:var(--bg);font-size:.75rem;text-transform:uppercase;letter-spacing:.02em}.report-meeting-table td{white-space:normal;vertical-align:top;line-height:1.45}.report-meeting-table small{color:var(--muted)}
+@media(max-width:700px){#teacherReportPage .report-form{grid-template-columns:1fr;margin-left:14px!important;margin-right:14px!important;padding:14px}#teacherReportPage .report-form .full{grid-column:auto}#teacherReportPage .report-preview{margin-left:14px;margin-right:14px;padding:15px}#teacherReportPage .report-kpis{grid-template-columns:1fr 1fr}#teacherReportPage .report-title{flex-direction:column}}
+
+/* Laporan Guru mengikuti desain invoice Pembayaran */
+#teacherReportPage #reportPreview{display:none!important}
+#teacherReportPage .report-preview{
+  margin:0 22px 22px;
+  padding:24px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:var(--card);
+  box-shadow:0 10px 28px rgba(21,67,107,.06);
+}
+#teacherReportPage .report-invoice{
+  max-width:760px;
+  margin:0 auto;
+}
+#teacherReportPage .report-invoice-head{
+  display:flex;
+  justify-content:space-between;
+  gap:16px;
+  border-bottom:2px solid var(--line);
+  padding-bottom:14px;
+  margin-bottom:18px;
+}
+#teacherReportPage .report-invoice-head h1{
+  margin:0;
+  font-size:1.45rem;
+  letter-spacing:.01em;
+}
+#teacherReportPage .report-invoice-head small{color:var(--muted)}
+#teacherReportPage .report-invoice-title{text-align:right}
+#teacherReportPage .report-invoice-title b{font-size:1.05rem}
+#teacherReportPage .report-invoice-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 18px;
+}
+#teacherReportPage .report-invoice-meta div{
+  padding:8px 0;
+  border-bottom:1px solid var(--line);
+}
+#teacherReportPage .report-invoice-meta small{color:var(--muted)}
+#teacherReportPage .report-invoice-status{
+  display:inline-block;
+  padding:5px 12px;
+  border-radius:999px;
+  background:#e7f2fc;
+  color:#1e6fb8;
+  font-weight:800;
+}
+#teacherReportPage .report-invoice-section{
+  margin-top:18px;
+}
+#teacherReportPage .report-invoice-section h3{
+  margin:0 0 9px;
+  font-size:.92rem;
+  text-transform:uppercase;
+  letter-spacing:.03em;
+}
+#teacherReportPage .report-invoice-total{
+  font-size:1.15rem;
+  font-weight:800;
+}
+#teacherReportPage .report-invoice-kpis{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+}
+#teacherReportPage .report-invoice-kpi{
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg);
+}
+#teacherReportPage .report-invoice-kpi small{display:block;color:var(--muted)}
+#teacherReportPage .report-invoice-kpi b{display:block;margin-top:2px;font-size:1.08rem}
+#teacherReportPage .report-invoice-table{
+  width:100%;
+  border:1px solid var(--line);
+  border-radius:10px;
+  overflow:hidden;
+  font-size:.8rem;
+}
+#teacherReportPage .report-invoice-table th{
+  background:var(--bg);
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+#teacherReportPage .report-invoice-table td{
+  white-space:normal;
+  vertical-align:top;
+  line-height:1.4;
+}
+#teacherReportPage .report-invoice-note{
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--bg);
+  white-space:pre-line;
+}
+#teacherReportPage .report-invoice-footer{
+  margin-top:20px;
+  padding-top:12px;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:.82rem;
+}
+@media(max-width:700px){
+  #teacherReportPage .report-preview{margin-left:14px;margin-right:14px;padding:15px}
+  #teacherReportPage .report-invoice-meta{grid-template-columns:1fr}
+  #teacherReportPage .report-invoice-kpis{grid-template-columns:repeat(2,1fr)}
+  #teacherReportPage .report-invoice-head{flex-direction:column}
+  #teacherReportPage .report-invoice-title{text-align:left}
+}
+
+/* Laporan Guru - modal compact seperti invoice pembayaran */
+#reportModal .invoice-box{max-width:920px!important;padding:20px!important;font-size:.86rem}
+#reportModal .invoice-head{padding-bottom:10px!important;margin-bottom:12px!important}
+#reportModal .invoice-head h1{font-size:1.25rem!important}
+#reportModal .invoice-meta{gap:6px 14px!important}
+#reportModal .invoice-meta>div{padding:5px 0!important}
+#reportModal .report-invoice-kpis{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;margin-top:6px}
+#reportModal .report-invoice-kpi{padding:7px 8px!important;border-radius:8px!important}
+#reportModal .report-invoice-kpi small{font-size:.68rem!important}
+#reportModal .report-invoice-kpi b{font-size:.92rem!important}
+#reportModal h3{font-size:.78rem!important;margin-bottom:6px!important}
+#reportModal .report-invoice-table{font-size:.72rem!important}
+#reportModal .report-invoice-table th{font-size:.66rem!important;padding:6px!important}
+#reportModal .report-invoice-table td{padding:6px!important;line-height:1.3!important}
+#reportModal .report-invoice-note{padding:8px!important;line-height:1.4!important}
+#reportModal .report-section-tight{margin-top:12px!important}
+#reportModal .invoice-actions{margin-top:14px!important}
+@media(max-width:700px){#reportModal .report-invoice-kpis{grid-template-columns:repeat(2,1fr)!important}}
+.login-story:after{content:"";position:absolute;right:-90px;top:-90px;width:250px;height:250px;border:1px solid rgba(255,255,255,.09);border-radius:50%;box-shadow:0 0 0 35px rgba(255,255,255,.025),0 0 0 70px rgba(255,255,255,.018);pointer-events:none}.story-copy:after{content:"✦";position:absolute;right:15px;top:18px;font-size:2.2rem;color:rgba(255,255,255,.16);transform:rotate(12deg)}@media(max-width:520px){.story-steps span{font-size:.6rem}.story-steps div{padding-right:5px}.story-copy:after{display:none}}
+
+#salaryPage{border-radius:16px;box-shadow:0 10px 28px rgba(21,67,107,.05)}
+#salaryPage .salary-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+#salaryPage .salary-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}
+#salaryPage .salary-kpi{padding:16px;border:1px solid var(--line);border-radius:14px;background:linear-gradient(135deg,var(--card),#eef7ff)}
+#salaryPage .salary-kpi b{display:block;font-size:1.35rem;margin-top:4px}
+#salaryPage .salary-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px}
+#salaryPage .salary-form .full{grid-column:1/-1}
+#salaryPage .salary-form label{display:flex;flex-direction:column;gap:6px}
+#salaryPage .salary-form input,#salaryPage .salary-form select,#salaryPage .salary-form textarea{background:var(--card)}
+#salaryPage .salary-form textarea{min-height:70px;resize:vertical}
+#salaryItems{display:grid;gap:8px}
+.salary-item{display:grid;grid-template-columns:1.3fr .8fr .7fr auto;gap:8px;align-items:end;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+.salary-item button{padding:6px 10px}
+.salary-total{display:flex;justify-content:flex-end;gap:18px;align-items:center;padding-top:8px;font-size:1.05rem}
+.salary-total b{font-size:1.3rem}
+.salary-status-paid{color:var(--ok);font-weight:800}
+.salary-status-unpaid{color:var(--no);font-weight:800}
+@media(max-width:700px){
+  #salaryPage .salary-kpis{grid-template-columns:1fr}
+  #salaryPage .salary-form{grid-template-columns:1fr}
+  #salaryPage .salary-form .full{grid-column:auto}
+  .salary-item{grid-template-columns:1fr}
+}
+
+.teacher-master-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px}
+.teacher-master-head h2{margin:0 0 4px}
+.teacher-master-count{min-width:100px;padding:12px 16px;border:1px solid var(--line);border-radius:14px;background:var(--bg);text-align:center}
+.teacher-master-count b{display:block;font-size:1.35rem}
+.teacher-master-count span{font-size:.82rem;color:var(--muted)}
+.teacher-master-info{padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);margin-bottom:14px;color:var(--muted)}
+.teacher-master-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.teacher-master-form .full{grid-column:1/-1}
+.teacher-master-form textarea{min-height:80px;resize:vertical}
+.teacher-master-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+@media(max-width:700px){.teacher-master-form{grid-template-columns:1fr}.teacher-master-form .full{grid-column:1}.teacher-master-head{align-items:flex-start;flex-direction:column}.teacher-master-count{width:100%;text-align:left}}
+
+#loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--bg),#E7F2FC)}
+form.login-card{display:block;width:min(430px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(21,67,107,.16)}
+.login-brand{text-align:center;margin-bottom:20px}
+.login-logo{display:block;width:112px;height:112px;object-fit:contain;border-radius:50%;margin:0 auto 14px;box-shadow:0 8px 24px rgba(21,67,107,.16)}
+.login-card h1{margin:0 0 4px;color:var(--ink);font-size:1.5rem;letter-spacing:.08em}
+.login-card p{color:var(--muted);margin:0;font-size:.92rem}
+.login-card label{display:block;font-weight:700;margin:14px 0 6px}
+.login-card{width:min(420px,calc(100% - 28px))!important;padding:26px 28px 24px!important;border-radius:24px!important;box-shadow:0 24px 70px rgba(21,67,107,.16)!important;border:1px solid rgba(211,230,247,.95)!important}
+#loginScreen{min-height:100vh!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:28px 14px!important;background:radial-gradient(circle at 20% 15%,rgba(156,208,245,.38),transparent 34%),radial-gradient(circle at 85% 85%,rgba(21,67,107,.10),transparent 38%),var(--bg)!important}
+.login-brand{margin-bottom:18px!important}.login-logo{width:82px!important;height:82px!important;margin-bottom:10px!important;filter:drop-shadow(0 8px 12px rgba(21,67,107,.16))}
+.login-brand h1{font-size:1.55rem!important;letter-spacing:.16em!important;margin:0!important}.login-brand p{margin:6px 0 0!important;font-size:.86rem!important;color:var(--muted)}
+.login-roles{margin:8px 0 16px!important;padding:3px!important;border-radius:12px!important;background:#edf6fd!important}.login-roles button{padding:9px 10px!important;border-radius:9px!important;font-weight:700!important;color:var(--ink)!important;background:transparent!important}.login-roles button.active{background:var(--hl)!important;box-shadow:0 3px 10px rgba(21,67,107,.12)!important}
+.login-field{margin-top:11px}.login-field label{display:block;margin:0 0 6px!important;font-size:.82rem!important;font-weight:700!important}.login-input-wrap{position:relative}.login-input-wrap input{padding:11px 42px 11px 38px!important;margin:0!important}.login-input-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:.95rem;opacity:.7;pointer-events:none}.login-password-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);border:0;background:transparent!important;color:var(--muted);padding:5px!important;margin:0!important;cursor:pointer;font-size:1rem}.login-password-toggle:hover{color:var(--ink)}
+#loginBtn{margin-top:16px!important;border-radius:12px!important;padding:11px 16px!important;font-weight:800!important;letter-spacing:.01em}
+.login-helper{text-align:center;color:var(--muted);font-size:.72rem;margin:12px 0 0}.login-error{font-size:.82rem!important}
+@media(max-width:500px){.login-card{padding:22px 20px 20px!important}.login-logo{width:72px!important;height:72px!important}}
+.login-card input{display:block;width:100%;box-sizing:border-box;padding:12px 13px;border:2px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--ink)}
+.login-card input:focus{border-color:#1E6FB8}
+.login-card #loginBtn{margin-top:18px;width:100%;border:0;padding:12px 16px}
+.login-error{display:none;margin-top:12px;padding:10px;border-radius:10px;background:#fde8e8;color:#a93226}
+#logoutBtn{margin-left:8px}
+#syncStatus{font-size:.85rem;color:var(--muted);margin-left:8px}
+.login-roles{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:4px 0 18px;padding:4px;background:var(--bg);border:1px solid var(--line);border-radius:12px}
+.login-roles button{margin:0;width:100%;font-size:.9rem;border:0;padding:9px 10px}
+.login-roles button.active{background:var(--hl);box-shadow:0 2px 8px rgba(21,67,107,.12)}
+.teacher-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.teacher-brand{display:flex;align-items:center;gap:12px}.dashboard-logo{width:44px;height:44px;border-radius:50%;object-fit:contain;flex:0 0 44px}.teacher-head small{color:var(--muted)}.teacher-form textarea{font:inherit;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);width:100%;min-height:90px;resize:vertical}.teacher-form .full{grid-column:1/-1}.teacher-form-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.teacher-form-actions button{margin:0}.teacher-editing{border-color:#1E6FB8!important}@media(max-width:700px){.teacher-head{align-items:flex-start}.teacher-head>div:last-child{flex-direction:column;align-items:flex-end}.teacher-form{grid-template-columns:1fr}.teacher-form .full{grid-column:1}.teacher-form-actions button{flex:1;min-width:130px}}
+
+/* Jenius Edu - Login Baru v2 */
+#loginScreen{
+  position:fixed!important;
+  inset:0!important;
+  z-index:1000!important;
+  min-height:100vh!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:20px!important;
+  overflow:auto!important;
+  background:linear-gradient(135deg,#eef7ff 0%,#f8fbff 52%,#e7f2fb 100%)!important;
+}
+.je-login-card{
+  width:min(420px,100%);
+  background:#fff;
+  border:1px solid #d7e7f5;
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 24px 70px rgba(21,67,107,.15);
+}
+.je-login-brand{text-align:center;margin-bottom:22px}
+.je-login-logo{
+  width:64px;height:64px;margin:0 auto 12px;
+  border-radius:18px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#15436b,#2d80b7);
+  color:#fff;font-size:22px;font-weight:900;
+  letter-spacing:.04em;
+  box-shadow:0 10px 24px rgba(21,67,107,.18);
+}
+.je-login-brand h1{margin:0;font-size:1.45rem;color:#15436b}
+.je-login-brand p{margin:5px 0 0;color:#5d7890;font-size:.86rem}
+.je-login-modes{
+  display:grid;grid-template-columns:1fr 1fr;gap:6px;
+  padding:5px;margin-bottom:18px;
+  background:#edf6fd;border-radius:12px;
+}
+.je-login-modes button{
+  width:100%;border:0;border-radius:9px;padding:10px;
+  background:transparent;color:#15436b;font-weight:800;
+}
+.je-login-modes button.active{background:#9cd0f5}
+.je-login-field{margin-bottom:14px}
+.je-login-field label{display:block;margin-bottom:6px;font-size:.84rem;font-weight:800;color:#15436b}
+.je-login-field input{
+  width:100%;padding:12px 13px;
+  border:2px solid #d3e6f7;border-radius:11px;
+  background:#f7fbfe;color:#15436b;font:inherit;
+  outline:none;
+}
+.je-login-field input:focus{border-color:#1e6fb8;background:#fff}
+.je-password-wrap{position:relative}
+.je-password-wrap input{padding-right:48px}
+.je-password-toggle{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  border:0!important;background:transparent!important;
+  padding:6px!important;color:#476682;cursor:pointer;
+}
+#loginBtn{
+  width:100%!important;margin-top:4px!important;
+  border:0!important;border-radius:11px!important;
+  padding:12px 16px!important;
+  background:#9cd0f5!important;color:#15436b!important;
+  font-weight:900!important;
+}
+#loginBtn:disabled{opacity:.65;cursor:wait}
+#loginError{
+  display:none;margin-top:13px;padding:10px 12px;
+  border-radius:10px;background:#fff0f0;color:#a93226;
+  font-size:.82rem;
+}
+.je-login-help{text-align:center;margin:14px 0 0;color:#7890a5;font-size:.72rem}
+@media(max-width:480px){
+  #loginScreen{padding:12px!important;align-items:flex-start!important}
+  .je-login-card{margin-top:7vh;padding:24px 20px;border-radius:20px}
+}
+
+#loginScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#eaf5ff,#f7fbff);overflow:auto}
+.login-v5-card{width:min(420px,100%);background:#fff;border:1px solid #d3e6f7;border-radius:24px;padding:30px 26px;box-shadow:0 22px 70px rgba(21,67,107,.14)}
+.login-v5-brand{text-align:center;margin-bottom:24px}.login-v5-logo{width:72px;height:72px;border-radius:20px;object-fit:cover;box-shadow:0 10px 26px rgba(21,67,107,.14)}
+.login-v5-brand h1{margin:14px 0 3px;font-size:1.55rem;color:#15436b}.login-v5-brand p{margin:0;color:#6b8297;font-size:.88rem}
+.login-v5-badge{display:inline-block;margin-top:8px;padding:4px 9px;border-radius:999px;background:#eef7ff;color:#1e6fb8;font-size:.7rem;font-weight:800}
+.login-v5-modes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.login-v5-mode{border:1px solid #cfe1f1;border-radius:12px;padding:10px;background:#f8fbfe;color:#476682;font-weight:800;cursor:pointer}
+.login-v5-mode.active{background:#9cd0f5;border-color:#86c4ed;color:#15436b}
+.login-v5-field{display:block;margin-bottom:13px;color:#15436b;font-size:.85rem;font-weight:800}
+.login-v5-field input{margin-top:6px;min-height:46px;background:#f8fbfe;border:1px solid #cfe1f1;border-radius:12px;padding:11px 13px;outline:none}
+.login-v5-field input:focus{border-color:#1e6fb8;box-shadow:0 0 0 3px rgba(30,111,184,.12)}
+.login-v5-password{position:relative}.login-v5-password input{padding-right:48px}
+#loginPasswordToggleV5{position:absolute;right:7px;bottom:6px;border:0!important;padding:7px 9px!important;background:transparent!important;color:#476682!important;font-size:18px;cursor:pointer}
+#loginBtnV5{width:100%;min-height:48px;border:0!important;border-radius:12px!important;background:#1e6fb8!important;color:#fff!important;font-weight:900!important;margin-top:5px}
+#loginBtnV5:disabled{opacity:.65;cursor:wait}
+#loginErrorV5{display:none;margin-top:13px;padding:11px 12px;border-radius:12px;background:#fff0f0;color:#a93226;font-size:.82rem;line-height:1.5}
+.login-v5-status{text-align:center;margin-top:14px;color:#7890a5;font-size:.72rem}
+@media(max-width:480px){#loginScreen{align-items:flex-start;padding:12px}.login-v5-card{margin-top:6vh;padding:25px 19px;border-radius:20px}}
+
+body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;color:#15436B}h1{margin:0 0 4px;font-size:24px}h2{text-align:center;margin:30px 0 20px}.box{border:1px solid #ccc;border-radius:10px;padding:18px}.row{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:10px 0}.total{font-size:20px;font-weight:bold}.foot{margin-top:50px;display:flex;justify-content:space-between;text-align:center}.sig{width:180px;border-top:1px solid #777;padding-top:8px}@media print{body{margin:0}}
+
+/* Menu utama guru dipindahkan ke atas agar tidak menutupi dashboard */
+#teacherApp>.card{
+  display:block;
+  min-height:0;
+}
+#teacherApp .teacher-head{
+  width:100%;
+}
+#teacherApp .top-menu{
+  position:relative;
+  top:auto;
+  z-index:1;
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:8px;
+  margin:0;
+  padding:10px 14px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  background:var(--bg);
+  overflow-x:auto;
+}
+#teacherApp .top-menu button{
+  width:auto;
+  flex:0 0 auto;
+  min-width:130px;
+  text-align:center;
+  padding:9px 12px;
+}
+#teacherApp .teacher-page{
+  width:100%;
+  padding:22px;
+}
+@media(max-width:700px){
+  #teacherApp .top-menu{
+    padding:9px 10px;
+  }
+  #teacherApp .top-menu button{
+    min-width:125px;
+  }
+  #teacherApp .teacher-page{
+    padding:14px;
+  }
+}
+
+/* Aksi Export dan Keluar berada di pojok kanan header Pengelola */
+#app>header>div:last-child{
+  margin-left:auto !important;
+  display:flex !important;
+  align-items:center;
+  justify-content:flex-end !important;
+  gap:8px;
+  flex-wrap:nowrap !important;
+}
+#app>header #exportAdminBtn{
+  margin-left:0;
+}
+#app>header #logoutBtn{
+  margin-left:0;
+  border-color:var(--no);
+  color:var(--no);
+  font-weight:700;
+}
+@media(max-width:700px){
+  #app>header>div:last-child{
+    flex-wrap:wrap !important;
+    justify-content:flex-end !important;
+  }
+}
+
+/* Menu utama pengelola mengikuti persis pola Panel Guru: horizontal di atas konten */
+#app{
+  display:block;
+}
+#app>.tabs.top-menu.admin-sidebar{
+  position:relative;
+  top:auto;
+  width:100%;
+  margin:0 0 14px;
+  padding:10px 14px;
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:0;
+  background:var(--bg);
+  box-shadow:none;
+  overflow-x:auto;
+}
+#app>.tabs.top-menu.admin-sidebar>.admin-sidebar-title{
+  display:none;
+}
+#app>.tabs.top-menu.admin-sidebar>.tabs{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:flex-start;
+  gap:8px;
+  width:max-content;
+  min-width:0;
+  flex-wrap:nowrap;
+}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button,
+#app>.tabs.top-menu.admin-sidebar .admin-menu-group{
+  flex:0 0 auto;
+}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button{
+  width:auto;
+  min-width:130px;
+  text-align:center;
+  border:1px solid transparent;
+  border-radius:12px;
+  padding:9px 12px;
+  background:transparent;
+  color:var(--ink);
+  margin:0;
+}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button:hover{
+  background:var(--card);
+  border-color:var(--line);
+  transform:translateY(-1px);
+}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button.on{
+  background:var(--hl);
+  border-color:#86c4ed;
+  box-shadow:0 5px 14px rgba(30,111,184,.12);
+}
+#app>.tabs.top-menu.admin-sidebar .admin-menu-group{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0;
+  border:0;
+}
+#app>.tabs.top-menu.admin-sidebar .admin-menu-label{
+  display:none;
+}
+#app>.tabs.top-menu.admin-sidebar .admin-menu-group button{
+  width:auto;
+  min-width:130px;
+  text-align:center;
+  border:1px solid transparent;
+  border-radius:12px;
+  padding:9px 12px;
+  background:transparent;
+  color:var(--ink);
+  margin:0;
+}
+#app>.tabs.top-menu.admin-sidebar .admin-menu-group button:hover{
+  background:var(--card);
+  border-color:var(--line);
+}
+#app>#dashboard,
+#app>#tm,
+#app>#tp,
+#app>#te{
+  width:100%;
+  min-width:0;
+}
+#app>#dashboard{
+  padding-top:0;
+}
+@media(max-width:700px){
+  #app>.tabs.top-menu.admin-sidebar{
+    padding:9px 10px;
+  }
+  #app>.tabs.top-menu.admin-sidebar>.tabs{
+    min-width:max-content;
+  }
+  #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+  #app>.tabs.top-menu.admin-sidebar .admin-menu-group button{
+    min-width:125px;
+  }
+}
