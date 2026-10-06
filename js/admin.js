@@ -263,3 +263,12 @@ $("salaryForm").onsubmit=async function(e){
   if(items.length){var rows=items.map(function(x){return Object.assign({salary_id:q.data.id},x)}),ins=await sb.from("teacher_salary_items").insert(rows).select();if(ins.error){alert("Gaji tersimpan, tetapi komponen tambahan gagal disimpan: "+ins.error.message);return}SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==q.data.id}).concat(ins.data||[])}else SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==q.data.id});
   resetSalaryForm();drawSalary();alert(oldId?"Gaji berhasil diperbarui.":"Gaji berhasil disimpan.");
 };
+
+/* Admin salary delegated actions. */
+document.addEventListener("click",async function(e){
+  var id=e.target.dataset;
+  if(id.esal){editSalary(id.esal);return}
+  if(id.ssal){showSalarySlip(id.ssal);return}
+  if(id.psal){await markSalaryPaid(id.psal);return}
+  if(id.dsal&&confirm("Hapus data gaji ini?")){var sr=await sb.from("teacher_salaries").delete().eq("id",id.dsal);if(sr.error){alert("Gagal menghapus gaji: "+sr.error.message);return}SAL=SAL.filter(function(x){return x.id!==id.dsal});SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==id.dsal});if(editingSalaryId===id.dsal)resetSalaryForm();drawSalary();return}
+});
