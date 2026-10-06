@@ -4,9 +4,6 @@ $("teacherLogoutBtn").onclick=async function(){await window.sb.auth.signOut()};
 function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(function(p){p.hidden=p.id!==id});document.querySelectorAll("#teacherMenu button").forEach(function(b){b.classList.toggle("on",b.dataset.teacherPage===id)});window.scrollTo({top:0,behavior:"smooth"})}
 document.querySelectorAll("#teacherMenu button").forEach(function(b){b.onclick=function(){showTeacherPage(b.dataset.teacherPage)}});
 
-/* Teacher schedule form handlers. */
-$("scheduleForm").onsubmit=async function(e){e.preventDefault();if(!currentUser)return;var f=new FormData(e.target);var payload={teacher_id:currentUser.id,student_id:f.get("student_id"),tanggal:f.get("tanggal"),jam:f.get("jam"),mapel:f.get("mapel"),status:f.get("status")};var r=editingScheduleId?await window.sb.from("teacher_schedules").update(payload).eq("id",editingScheduleId).eq("teacher_id",currentUser.id):await window.sb.from("teacher_schedules").insert(payload);if(r.error){alert("Jadwal belum bisa disimpan. Pastikan tabel teacher_schedules sudah dibuat di Supabase.");return}editingScheduleId=null;$("scheduleSubmit").textContent="Simpan Jadwal";$("scheduleCancel").hidden=true;e.target.reset();scheduleDateToday();var q=await window.sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});SCH=q.data||[];drawSchedule()}
-$("scheduleCancel").onclick=function(){editingScheduleId=null;$("scheduleSubmit").textContent="Simpan Jadwal";$("scheduleCancel").hidden=true;$("scheduleForm").reset();scheduleDateToday()}
 
 /* Teacher attendance edit/form handlers. */
 function startEditAttendance(id){
@@ -63,14 +60,12 @@ async function dbLoadTeacher(){
   if(a.error)throw a.error;
   var b=await window.sb.from("teacher_notes").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
   if(b.error)throw b.error;
-  var q=await window.sb.from("teacher_schedules").select("*").order("tanggal",{ascending:true}).order("jam",{ascending:true});
-  if(q.error){console.warn("Jadwal belum tersedia:",q.error.message);SCH=[];$("scheduleSync").textContent="Tabel jadwal belum dibuat"}else{SCH=q.data||[];$("scheduleSync").textContent="Tersimpan di Supabase"}
   var at=await window.sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
   if(at.error){console.warn("Absensi belum tersedia:",at.error.message);ATT=[];$("attendanceSync").textContent="Tabel absensi belum dibuat"}else{ATT=at.data||[];$("attendanceSync").textContent="Tersimpan di Supabase"}
   var rr=await window.sb.from("teacher_reports").select("*").eq("teacher_id",teacherId).order("bulan",{ascending:false}).order("created_at",{ascending:false});
   if(rr.error){console.warn("Laporan guru belum tersedia:",rr.error.message);RPT=[];$("reportSync").textContent="Tabel laporan belum dibuat"}else{RPT=rr.data||[];$("reportSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});
-  TN=b.data||[];drawTeacher();drawSchedule();drawReports()
+  TN=b.data||[];drawTeacher();drawReports()
 }
 function drawTeacher(){drawAttendance();var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-etn="'+x.id+'">Edit</button> <button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>';
 var unique={};TN.forEach(function(x){if(x.student_id)unique[x.student_id]=true});
@@ -78,8 +73,8 @@ var currentMonth=thisM, today=todayISO;
 $("gStudents").textContent=Object.keys(unique).length;
 $("gMonthNotes").textContent=TN.filter(function(x){return String(x.tanggal||"").slice(0,7)===currentMonth}).length;
 $("gTodayNotes").textContent=TN.filter(function(x){return x.tanggal===today}).length;
-$("gTotalNotes").textContent=TN.length;var todaySchedules=SCH.filter(function(x){return x.tanggal===today}).sort(function(a,b){return String(a.jam||"").localeCompare(String(b.jam||""))});$("gTodayScheduleCount").textContent=todaySchedules.length+" jadwal";$("gTodaySchedule").innerHTML=todaySchedules.map(function(x){var m=stu(x.student_id)||{};return '<div class="teacher-agenda-item"><span class="teacher-agenda-time">'+esc(x.jam||"--:--")+'</span><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><small>'+esc(x.mapel||"Pelajaran belum diisi")+' · '+esc(x.status||"Terjadwal")+'</small></div></div>'}).join("")||'<div class="teacher-empty-state"><b>Tidak ada jadwal hari ini</b><small>Jadwal mengajar hari ini akan muncul di sini.</small></div>';
-var teacherReminders=[];var pendingToday=SCH.filter(function(x){return x.tanggal===today&&x.status!=="Selesai"});var attendedToday={};ATT.filter(function(x){return x.tanggal===today}).forEach(function(x){attendedToday[x.student_id]=true});var missingAttendance=SCH.filter(function(x){return x.tanggal===today&&x.status!=="Batal"&&!attendedToday[x.student_id]});if(pendingToday.length)teacherReminders.push('<div class="reminder-item"><span>▣</span><div><b>'+pendingToday.length+' jadwal hari ini</b><small>Cek jadwal dan status kegiatan mengajar.</small></div></div>');if(missingAttendance.length)teacherReminders.push('<div class="reminder-item reminder-warn"><span>!</span><div><b>'+missingAttendance.length+' absensi belum diisi</b><small>Lengkapi absensi murid setelah kegiatan belajar.</small></div></div>');$("teacherReminderCount").textContent=teacherReminders.length;$("teacherBellDot").hidden=teacherReminders.length===0;$("teacherReminderSummary").innerHTML=teacherReminders.join("")||'<div class="reminder-clear"><b>Semua selesai</b><small>Tidak ada reminder mengajar yang tertunda hari ini.</small></div>';
+$("gTotalNotes").textContent=TN.length;var teacherReminders=[];var attendedToday={};ATT.filter(function(x){return x.tanggal===today}).forEach(function(x){attendedToday[x.student_id]=true});
+$("teacherReminderCount").textContent=teacherReminders.length;$("teacherBellDot").hidden=teacherReminders.length===0;$("teacherReminderSummary").innerHTML='<div class="reminder-clear"><b>Semua selesai</b><small>Tidak ada reminder mengajar yang tertunda hari ini.</small></div>';
 var latest=TN.slice().sort(function(a,b){return String(b.tanggal||"").localeCompare(String(a.tanggal||""))}).slice(0,5);
 $("gLatestNotes").innerHTML=latest.map(function(x){var m=stu(x.student_id)||{};return '<div class="dashboard-alert"><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><br><small>'+esc(x.tanggal||"")+' · '+esc(x.materi||"")+'</small></div><span style="color:var(--muted)">'+esc(x.metode||"")+'</span></div>'}).join("")||'<p style="color:var(--muted);margin:0">Belum ada catatan pembelajaran.</p>';
 }
@@ -96,8 +91,6 @@ function drawAttendance(){
 }
 /* Teacher attendance edit/form handlers moved to ./teacher.js */
 
-function drawSchedule(){var keep=$("scheduleStudent").value;$("scheduleStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep)$("scheduleStudent").value=keep;var rows=SCH.slice().sort(function(a,b){return String(a.tanggal||"").localeCompare(String(b.tanggal||""))||String(a.jam||"").localeCompare(String(b.jam||""))});$("scheduleBody").innerHTML=rows.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.jam||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.mapel||"")+'</td><td>'+esc(x.status||"")+'</td><td><button class="sm" data-esched="'+x.id+'">Edit</button> <button class="sm" data-dsched="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="6">Belum ada jadwal.</td></tr>'}
-function scheduleDateToday(){$("scheduleDate").value=todayISO}
 function teacherDateToday(){$("teacherDate").value=new Date(new Date().getTime()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10)}
 
 /* Teacher report rendering, PDF export and sharing. */
@@ -203,8 +196,7 @@ document.addEventListener("click",async function(e){
     var ar=await window.sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
     if(ar.error){alert("Gagal menghapus absensi: "+ar.error.message);return}
     ATT=ATT.filter(function(x){return x.id!==id.datt});if(editingAttendanceId===id.datt)cancelEditAttendance();drawAttendance();return
-  }
-  if(id.esched){var z=SCH.find(function(x){return x.id===id.esched});if(z){editingScheduleId=z.id;$("scheduleStudent").value=z.student_id;$("scheduleDate").value=z.tanggal;$("scheduleTime").value=z.jam;$("scheduleMapel").value=z.mapel;$("scheduleStatus").value=z.status;$("scheduleSubmit").textContent="Simpan Perubahan";$("scheduleCancel").hidden=false;window.scrollTo({top:$("scheduleForm").getBoundingClientRect().top+window.scrollY-80,behavior:"smooth"})}return}if(id.dsched){if(confirm("Hapus jadwal ini?")){var dr=await window.sb.from("teacher_schedules").delete().eq("id",id.dsched).eq("teacher_id",currentUser.id);if(dr.error)alert(dr.error.message);else{SCH=SCH.filter(function(x){return x.id!==id.dsched});drawSchedule()}}return}if(id.etn){startEditTeacher(id.etn);return}
+  }if(id.etn){startEditTeacher(id.etn);return}
   if(id.ereport){showReport(id.ereport);return}if(id.pdfReport){var px=RPT.find(function(x){return x.id===id.pdfReport});if(px){var pf=downloadReportPdf(px.student_id,px.bulan);if(pf)savePdfBlob(pf)}return}if(id.shareReport){var sx=RPT.find(function(x){return x.id===id.shareReport});if(sx){shareReportWhatsApp(sx.student_id,sx.bulan)}return}if(id.dreport&&confirm("Hapus laporan bulanan ini?")){var rr=await window.sb.from("teacher_reports").delete().eq("id",id.dreport).eq("teacher_id",currentUser.id);if(rr.error){alert("Gagal menghapus laporan: "+rr.error.message);return}RPT=RPT.filter(function(x){return x.id!==id.dreport});if(editingReportId===id.dreport)cancelEditReport();drawReports();return}if(id.tn&&confirm("Hapus catatan pembelajaran ini?")){var r=await window.sb.from("teacher_notes").delete().eq("id",id.tn).eq("teacher_id",currentUser.id);if(r.error){alert("Gagal menghapus catatan: "+r.error.message);return}TN=TN.filter(function(x){return x.id!==id.tn});if(editingTeacherId===id.tn)cancelEditTeacher();drawTeacher();alert("Catatan pembelajaran berhasil dihapus.")}
 });
 
