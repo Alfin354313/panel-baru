@@ -296,10 +296,6 @@ function fd(f){var o={};new FormData(f).forEach(function(v,k){o[k]=v});return o}
 
 document.addEventListener("click",async function(e){
   var t=e.target,id=t.dataset;
-  if(id.esal){editSalary(id.esal);return}
-  if(id.ssal){showSalarySlip(id.ssal);return}
-  if(id.psal){await markSalaryPaid(id.psal);return}
-  if(id.dsal&&confirm("Hapus data gaji ini?")){var sr=await sb.from("teacher_salaries").delete().eq("id",id.dsal);if(sr.error){alert("Gagal menghapus gaji: "+sr.error.message);return}SAL=SAL.filter(function(x){return x.id!==id.dsal});SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==id.dsal});if(editingSalaryId===id.dsal)resetSalaryForm();drawSalary();return}
   if(id.eatt){startEditAttendance(id.eatt);return}
   if(id.datt&&confirm("Hapus data absensi ini?")){
     var ar=await sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
