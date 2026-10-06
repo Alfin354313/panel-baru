@@ -8,7 +8,7 @@ $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayI
 
 var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],RPT=[],ADMIN_ATT=[],SAL=[],SALITEMS=[],TEACHERS=[],AUDIT=[];
 var editingSalaryId=null;
-var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null,editingReportId=null,lastStartedSessionId="";
+window.sb=window.sb||null;var sb=window.sb,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null,editingReportId=null,lastStartedSessionId="";
 var localKey="jenius_edu_data_v3";
 
 function uid(p){return p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)}
@@ -122,7 +122,7 @@ window.startApp=startApp;
   try{
     var cfg=await apiConfig();
     if(!cfg.url||!cfg.key)throw new Error("SUPABASE_URL atau SUPABASE_PUBLISHABLE_KEY belum diatur di Vercel.");
-    sb=window.supabase.createClient(cfg.url,cfg.key);
+    sb=window.supabase.createClient(cfg.url,cfg.key);window.sb=sb;
     var r=await sb.auth.getSession();
     await startApp(r.data.session);
     sb.auth.onAuthStateChange(function(event,session){
