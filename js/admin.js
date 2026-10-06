@@ -340,7 +340,7 @@ function drawDashboard(){
 $("dashboardMonth").onchange=drawDashboard;
 
 function draw(){
-  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});$("bm").innerHTML=filteredStudents.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-es="'+m.id+'">Edit</button> <button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada murid. Isi formulir di atas.</td></tr>';
+  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});$("bm").innerHTML=filteredStudents.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-profile="'+m.id+'">Detail</button> <button class="sm" data-es="'+m.id+'">Edit</button> <button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada murid. Isi formulir di atas.</td></tr>';
   var keep=$("sel").value;$("sel").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+'</option>'}).join("");if(keep)$("sel").value=keep;
   var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return x.bulan===f&&(!ps||x.status===ps)&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
@@ -486,3 +486,20 @@ $("exportAdminBtn").onclick=function(){exportAdminExcel()};
 $("adminBell").onclick=function(e){e.stopPropagation();$("adminNotificationPanel").hidden=!$("adminNotificationPanel").hidden};document.addEventListener("click",function(e){if(!$("adminNotificationPanel").hidden&&!$("adminNotificationPanel").contains(e.target))$("adminNotificationPanel").hidden=true});
 
 ["studentSearch","paymentSearch","expenseSearch","teacherSearch"].forEach(function(id){$(id).oninput=draw});["studentLevelFilter","paymentStatusFilter","teacherStatusFilter"].forEach(function(id){$(id).onchange=draw});
+
+var activeStudentProfileId=null;
+function openStudentProfile(id){
+  var m=stu(id);if(!m)return;activeStudentProfileId=id;
+  ["dashboard","tm","tp","te","teacherMasterPage","salaryPage"].forEach(function(pid){var el=$(pid);if(el)el.hidden=true});
+  $("studentProfilePage").hidden=false;$("studentProfileName").textContent=m.nama||"-";$("studentProfileMeta").textContent=(m.jenjang||"-")+" · "+(m.kelas||"-")+" · Orang tua: "+(m.ortu||"-");
+  var pays=P.filter(function(x){return x.sid===id}).sort(function(x,y){return String(y.bulan).localeCompare(String(x.bulan))});
+  var paid=pays.filter(function(x){return x.status==="Lunas"}).reduce(function(s,x){return s+Number(x.jumlah||0)},0),due=pays.filter(function(x){return x.status!=="Lunas"}).reduce(function(s,x){return s+Number(x.jumlah||0)},0);
+  var att=ATT.filter(function(x){return x.student_id===id}),present=att.filter(function(x){return x.status==="Hadir"}).length;
+  $("studentProfileSummary").innerHTML='<div><small>Biaya / bulan</small><b>'+rp(m.biaya)+'</b></div><div><small>Total dibayar</small><b>'+rp(paid)+'</b></div><div><small>Belum lunas</small><b>'+rp(due)+'</b></div><div><small>Kehadiran</small><b>'+present+' / '+att.length+'</b></div>';
+  $("studentProfilePayments").innerHTML=pays.slice(0,8).map(function(x){return '<div class="profile-row"><span>'+esc(x.bulan||"-")+'</span><b>'+rp(x.jumlah)+'</b><em class="'+(x.status==="Lunas"?"ok":"no")+'">'+esc(x.status||"-")+'</em></div>'}).join("")||'<p class="profile-empty">Belum ada pembayaran.</p>';
+  var counts={Hadir:0,Izin:0,Sakit:0,"Tidak Hadir":0};att.forEach(function(x){counts[x.status]=(counts[x.status]||0)+1});$("studentProfileAttendance").innerHTML='<div class="attendance-mini"><span><b>'+counts.Hadir+'</b>Hadir</span><span><b>'+counts.Izin+'</b>Izin</span><span><b>'+counts.Sakit+'</b>Sakit</span><span><b>'+counts["Tidak Hadir"]+'</b>Tidak hadir</span></div>';
+  var notes=TN.filter(function(x){return x.student_id===id}).sort(function(x,y){return String(y.tanggal).localeCompare(String(x.tanggal))});$("studentProfileNotes").innerHTML=notes.slice(0,5).map(function(x){return '<div class="profile-text-row"><b>'+esc(x.tanggal||"-")+' · '+esc(x.mapel||"")+'</b><small>'+esc(x.catatan||x.materi||"-")+'</small></div>'}).join("")||'<p class="profile-empty">Belum ada catatan guru.</p>';
+  var reports=RPT.filter(function(x){return x.student_id===id}).sort(function(x,y){return String(y.created_at||y.tanggal||"").localeCompare(String(x.created_at||x.tanggal||""))});$("studentProfileReports").innerHTML=reports.slice(0,5).map(function(x){return '<div class="profile-text-row"><b>'+esc(x.periode||x.tanggal||"Laporan")+'</b><small>'+esc(x.catatan||x.evaluasi||x.perkembangan||"-")+'</small></div>'}).join("")||'<p class="profile-empty">Belum ada laporan perkembangan.</p>';
+}
+$("studentProfileBack").onclick=function(){$("studentProfilePage").hidden=true;$("tm").hidden=false;activeStudentProfileId=null};
+document.addEventListener("click",function(e){var b=e.target.closest("[data-profile]");if(b)openStudentProfile(b.dataset.profile)});
