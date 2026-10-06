@@ -1486,3 +1486,20 @@ html,body{max-width:100%;overflow-x:hidden}
 .kpi-icon{position:absolute;right:15px;top:15px;display:grid;place-items:center;width:31px;height:31px;border-radius:10px;background:#e8f4fd;color:#176aa7;font-size:.82rem;font-weight:950}.kpi-income .kpi-icon,.kpi-profit .kpi-icon,.kpi-paid .kpi-icon{background:#e7f7ef;color:#16835a}.kpi-receivable .kpi-icon,.kpi-unpaid .kpi-icon,.kpi-expense .kpi-icon{background:#fff0ed;color:#c34a38}
 #teacherDashboardPage>.dashboard-grid{gap:14px!important}#teacherDashboardPage .dashboard-card{min-height:118px!important}
 @media(max-width:700px){.dashboard-card{min-height:108px!important;padding:17px 15px!important}.dashboard-card b{font-size:1.35rem!important}.kpi-icon{width:28px;height:28px;right:12px;top:12px}}
+
+/* Stage 3 polish — forms, inputs and action buttons */
+#app form,#teacherApp form{gap:14px!important}
+#app form label,#teacherApp form label{color:#274f6e!important;font-size:.76rem!important;font-weight:800!important;letter-spacing:.005em}
+#app form input,#app form select,#app form textarea,#teacherApp form input,#teacherApp form select,#teacherApp form textarea{width:100%;box-sizing:border-box;min-height:46px;padding:11px 13px!important;border:1px solid #cbddeb!important;border-radius:11px!important;background:#f9fcff!important;color:#163f5f!important;font:inherit!important;outline:none!important;transition:border-color .16s ease,box-shadow .16s ease,background .16s ease!important}
+#app form textarea,#teacherApp form textarea{min-height:94px!important;line-height:1.5;resize:vertical}
+#app form input:hover,#app form select:hover,#app form textarea:hover,#teacherApp form input:hover,#teacherApp form select:hover,#teacherApp form textarea:hover{border-color:#a9cce5!important;background:#fff!important}
+#app form input:focus,#app form select:focus,#app form textarea:focus,#teacherApp form input:focus,#teacherApp form select:focus,#teacherApp form textarea:focus{border-color:#4b9bd2!important;background:#fff!important;box-shadow:0 0 0 3px rgba(75,155,210,.12)!important}
+#app form input::placeholder,#app form textarea::placeholder,#teacherApp form input::placeholder,#teacherApp form textarea::placeholder{color:#91a7b8!important}
+#app form button,#teacherApp form button{min-height:43px!important;padding:10px 16px!important;border-radius:11px!important;font-weight:850!important;box-shadow:none!important;transition:transform .15s ease,box-shadow .15s ease,background .15s ease!important}
+#app form button:not(.ghost):not(.danger),#teacherApp form button:not(.ghost):not(.danger){background:#1e6fb8!important;border-color:#1e6fb8!important;color:#fff!important}
+#app form button:not(.ghost):not(.danger):hover,#teacherApp form button:not(.ghost):not(.danger):hover{background:#185f9d!important;transform:translateY(-1px);box-shadow:0 6px 15px rgba(30,111,184,.16)!important}
+#app form button.ghost,#teacherApp form button.ghost,#app form [id*="cancel"],#teacherApp form [id*="Cancel"]{background:#fff!important;color:#315b79!important;border:1px solid #c7dcea!important}
+#app form button.danger,#teacherApp form button.danger{background:#fff2f0!important;color:#bd3b2c!important;border:1px solid #efc0ba!important}
+#app form .full,#teacherApp form .full{min-width:0!important}
+#app .card>form,#teacherApp .card>form{padding-top:2px}
+@media(max-width:700px){#app form,#teacherApp form{grid-template-columns:1fr!important;gap:11px!important}#app form .full,#teacherApp form .full{grid-column:1!important}#app form button,#teacherApp form button{width:100%}}
