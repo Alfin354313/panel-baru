@@ -24,14 +24,14 @@ $("cancelEdit").onclick=cancelEditStudent;
 $("fm").onsubmit=async function(e){
   e.preventDefault();var o=fd(e.target);
   if(editingStudentId){
-    var r=await window.window.sb.from("students").update({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).eq("id",editingStudentId).select().single();
+    var r=await window.sb.from("students").update({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).eq("id",editingStudentId).select().single();
     if(r.error){alert("Gagal memperbarui murid: "+r.error.message);return}
     var i=S.findIndex(function(x){return x.id===editingStudentId});
     if(i>=0)S[i]={id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)};
     cancelEditStudent();draw();alert("Data murid berhasil diperbarui.");
     return;
   }
-  var r=await window.window.sb.from("students").insert({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).select().single();
+  var r=await window.sb.from("students").insert({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).select().single();
   if(r.error){alert("Gagal menyimpan murid: "+r.error.message);return}
   S.push({id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)});auditLog("CREATE","Murid",r.data.id,"Menambahkan murid "+(r.data.nama||""));
   e.target.reset();draw();alert("Murid berhasil disimpan.")
@@ -40,7 +40,7 @@ $("fm").onsubmit=async function(e){
 /* Admin payment form handler. */
 $("fp").onsubmit=async function(e){
   e.preventDefault();var o=fd(e.target);
-  var r=await window.window.sb.from("payments").insert({student_id:o.sid,bulan:o.bulan,jumlah:Number(o.jumlah||0),metode:o.metode||"",status:"Belum"}).select().single();
+  var r=await window.sb.from("payments").insert({student_id:o.sid,bulan:o.bulan,jumlah:Number(o.jumlah||0),metode:o.metode||"",status:"Belum"}).select().single();
   if(r.error){alert("Gagal menyimpan pembayaran: "+r.error.message);return}
   P.push({id:r.data.id,sid:r.data.student_id,bulan:r.data.bulan,jumlah:Number(r.data.jumlah),metode:r.data.metode||"",status:r.data.status});
   $("fb").value=o.bulan;draw();alert("Pembayaran berhasil dicatat.")
@@ -49,7 +49,7 @@ $("fp").onsubmit=async function(e){
 /* Admin expense form handler. */
 $("fe").onsubmit=async function(e){
   e.preventDefault();var o=fd(e.target);
-  var r=await window.window.sb.from("expenses").insert({tanggal:o.tgl,kategori:o.kat||"",keterangan:o.ket||"",jumlah:Number(o.jumlah||0)}).select().single();
+  var r=await window.sb.from("expenses").insert({tanggal:o.tgl,kategori:o.kat||"",keterangan:o.ket||"",jumlah:Number(o.jumlah||0)}).select().single();
   if(r.error){alert("Gagal menyimpan pengeluaran: "+r.error.message);return}
   E.push({id:r.data.id,tgl:r.data.tanggal,kat:r.data.kategori||"",ket:r.data.keterangan||"",jumlah:Number(r.data.jumlah||0)});
   $("eb").value=String(o.tgl).slice(0,7);e.target.reset();$("et").value=todayISO;draw();alert("Pengeluaran berhasil dicatat.")
@@ -59,7 +59,7 @@ $("fe").onsubmit=async function(e){
 document.addEventListener("click",async function(e){
   var id=e.target.dataset;
   if(id.dp&&confirm("Hapus catatan pembayaran ini?")){
-    var r=await window.window.sb.from("payments").delete().eq("id",id.dp);
+    var r=await window.sb.from("payments").delete().eq("id",id.dp);
     if(r.error){alert("Gagal menghapus pembayaran: "+r.error.message);return}
     auditLog("DELETE","Pembayaran",id.dp,"Menghapus catatan pembayaran");P=P.filter(function(x){return x.id!==id.dp});INV=INV.filter(function(x){return x.payment_id!==id.dp});draw()
   }
@@ -68,18 +68,18 @@ document.addEventListener("click",async function(e){
     if(x){
       var newStatus=x.status==="Lunas"?"Belum":"Lunas";
       var payload={status:newStatus,tanggal_bayar:newStatus==="Lunas"?todayISO:null};
-      var r=await window.window.sb.from("payments").update(payload).eq("id",x.id);
+      var r=await window.sb.from("payments").update(payload).eq("id",x.id);
       if(r.error){alert("Gagal mengubah status: "+r.error.message);return}
       x.status=newStatus;auditLog("UPDATE","Pembayaran",x.id,"Mengubah status pembayaran menjadi "+newStatus);
       if(newStatus==="Lunas"){
         x.tglLunas=todayISO;
         var no=invoiceNo(x);
-        var ir=await window.window.sb.from("invoices").insert({payment_id:x.id,nomor_invoice:no,tanggal_invoice:todayISO,total:Number(x.jumlah||0),status:"LUNAS"}).select().single();
+        var ir=await window.sb.from("invoices").insert({payment_id:x.id,nomor_invoice:no,tanggal_invoice:todayISO,total:Number(x.jumlah||0),status:"LUNAS"}).select().single();
         if(ir.error){alert("Pembayaran sudah Lunas, tetapi invoice gagal disimpan: "+ir.error.message);return}
         INV.push(ir.data);draw();await showInv(x)
       }else{
         delete x.tglLunas;
-        var dr=await window.window.sb.from("invoices").delete().eq("payment_id",x.id);
+        var dr=await window.sb.from("invoices").delete().eq("payment_id",x.id);
         if(dr.error){alert("Status sudah diubah, tetapi invoice gagal dihapus: "+dr.error.message);return}
         INV=INV.filter(function(q){return q.payment_id!==x.id});draw()
       }
@@ -93,13 +93,13 @@ document.addEventListener("click",async function(e){
   var id=e.target.dataset;
   if(id.es){startEditStudent(id.es);return}
   if(id.ds&&confirm("Hapus murid ini?")){
-    var r=await window.window.sb.from("students").delete().eq("id",id.ds);
+    var r=await window.sb.from("students").delete().eq("id",id.ds);
     if(r.error){alert("Gagal menghapus murid: "+r.error.message);return}
     auditLog("DELETE","Murid",id.ds,"Menghapus data murid");S=S.filter(function(x){return x.id!==id.ds});P=P.filter(function(x){return x.sid!==id.ds});INV=INV.filter(function(x){var p=P.find(function(q){return q.id===x.payment_id});return !!p});draw()
   }
   if(id.er){downloadExpenseReceipt(id.er);return}
   if(id.de&&confirm("Hapus pengeluaran ini?")){
-    var r=await window.window.sb.from("expenses").delete().eq("id",id.de);
+    var r=await window.sb.from("expenses").delete().eq("id",id.de);
     if(r.error){alert("Gagal menghapus pengeluaran: "+r.error.message);return}
     auditLog("DELETE","Pengeluaran",id.de,"Menghapus catatan pengeluaran");E=E.filter(function(x){return x.id!==id.de});draw()
   }
@@ -240,7 +240,7 @@ function downloadSalarySlip(id){
 function markSalaryPaid(id){
   var x=SAL.find(function(q){return q.id===id});if(!x)return;
   var next=x.status==="Sudah Dibayar"?"Belum Dibayar":"Sudah Dibayar";
-  return window.window.sb.from("teacher_salaries").update({status:next,tanggal_bayar:next==="Sudah Dibayar"?todayISO:null}).eq("id",id).select().single().then(function(r){if(r.error){alert("Gagal mengubah status gaji: "+r.error.message);return}var i=SAL.findIndex(function(q){return q.id===id});if(i>=0)SAL[i]=r.data;drawSalary()});
+  return window.sb.from("teacher_salaries").update({status:next,tanggal_bayar:next==="Sudah Dibayar"?todayISO:null}).eq("id",id).select().single().then(function(r){if(r.error){alert("Gagal mengubah status gaji: "+r.error.message);return}var i=SAL.findIndex(function(q){return q.id===id});if(i>=0)SAL[i]=r.data;drawSalary()});
 }
 $("salaryMonth").onchange=function(){drawSalary()};
 $("salaryTeacher").onchange=function(){var x=SAL.find(function(q){return q.teacher_id===$("salaryTeacher").value&&q.bulan===$("salaryFormMonth").value});if(x&&!editingSalaryId)$("salaryTeacherName").value=x.teacher_name||"";updateSalaryMeeting()};
@@ -256,11 +256,11 @@ $("salaryForm").onsubmit=async function(e){
   var add=items.filter(function(x){return x.tipe==="Tambahan"}).reduce(function(a,x){return a+x.nominal},0),cut=items.filter(function(x){return x.tipe==="Potongan"}).reduce(function(a,x){return a+x.nominal},0),totalMeeting=meetings*rate,total=totalMeeting+bonus+add-cut;
   var payload={teacher_id:teacherId,teacher_name:$("salaryTeacherName").value.trim(),bulan:month,tarif_pertemuan:rate,jumlah_pertemuan:meetings,total_pertemuan:totalMeeting,bonus:bonus,total_tambahan:add,total_potongan:cut,total_gaji:total,catatan:$("salaryNote").value.trim()};
   var oldId=editingSalaryId;
-  var q=oldId?await window.window.sb.from("teacher_salaries").update(payload).eq("id",oldId).select().single():await window.window.sb.from("teacher_salaries").insert(payload).select().single();
+  var q=oldId?await window.sb.from("teacher_salaries").update(payload).eq("id",oldId).select().single():await window.sb.from("teacher_salaries").insert(payload).select().single();
   if(q.error){alert("Gaji belum bisa disimpan: "+q.error.message);return}
   if(oldId)SAL=SAL.map(function(x){return x.id===oldId?q.data:x});else SAL.unshift(q.data);
-  if(oldId){var del=await window.window.sb.from("teacher_salary_items").delete().eq("salary_id",oldId);if(del.error){alert("Gaji tersimpan, tetapi komponen lama gagal diperbarui: "+del.error.message);return}}
-  if(items.length){var rows=items.map(function(x){return Object.assign({salary_id:q.data.id},x)}),ins=await window.window.sb.from("teacher_salary_items").insert(rows).select();if(ins.error){alert("Gaji tersimpan, tetapi komponen tambahan gagal disimpan: "+ins.error.message);return}SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==q.data.id}).concat(ins.data||[])}else SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==q.data.id});
+  if(oldId){var del=await window.sb.from("teacher_salary_items").delete().eq("salary_id",oldId);if(del.error){alert("Gaji tersimpan, tetapi komponen lama gagal diperbarui: "+del.error.message);return}}
+  if(items.length){var rows=items.map(function(x){return Object.assign({salary_id:q.data.id},x)}),ins=await window.sb.from("teacher_salary_items").insert(rows).select();if(ins.error){alert("Gaji tersimpan, tetapi komponen tambahan gagal disimpan: "+ins.error.message);return}SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==q.data.id}).concat(ins.data||[])}else SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==q.data.id});
   resetSalaryForm();drawSalary();alert(oldId?"Gaji berhasil diperbarui.":"Gaji berhasil disimpan.");
 };
 
@@ -270,7 +270,7 @@ document.addEventListener("click",async function(e){
   if(id.esal){editSalary(id.esal);return}
   if(id.ssal){showSalarySlip(id.ssal);return}
   if(id.psal){await markSalaryPaid(id.psal);return}
-  if(id.dsal&&confirm("Hapus data gaji ini?")){var sr=await window.window.sb.from("teacher_salaries").delete().eq("id",id.dsal);if(sr.error){alert("Gagal menghapus gaji: "+sr.error.message);return}SAL=SAL.filter(function(x){return x.id!==id.dsal});SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==id.dsal});if(editingSalaryId===id.dsal)resetSalaryForm();drawSalary();return}
+  if(id.dsal&&confirm("Hapus data gaji ini?")){var sr=await window.sb.from("teacher_salaries").delete().eq("id",id.dsal);if(sr.error){alert("Gagal menghapus gaji: "+sr.error.message);return}SAL=SAL.filter(function(x){return x.id!==id.dsal});SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==id.dsal});if(editingSalaryId===id.dsal)resetSalaryForm();drawSalary();return}
 });
 
 /* Admin dashboard, rendering, and teacher master. */
@@ -393,7 +393,7 @@ $("teacherMasterForm").onsubmit=async function(e){
   if(!id){alert("Belum ada akun Guru.");return}
   var payload={id:id,nama:$("teacherMasterName").value.trim(),email:$("teacherMasterEmail").value.trim(),hp:$("teacherMasterHp").value.trim(),mapel:$("teacherMasterMapel").value.trim(),status:$("teacherMasterStatus").value,catatan:$("teacherMasterNote").value.trim()};
   if(!payload.nama){alert("Nama guru wajib diisi.");return}
-  var r=await window.window.sb.from("teacher_profiles").upsert(payload,{onConflict:"id"}).select().single();
+  var r=await window.sb.from("teacher_profiles").upsert(payload,{onConflict:"id"}).select().single();
   if(r.error){alert("Data guru belum bisa disimpan: "+r.error.message);return}
   var i=TEACHERS.findIndex(function(x){return x.id===id});
   auditLog("UPDATE","Guru",id,"Menyimpan profil guru "+payload.nama);if(i>=0)TEACHERS[i]=Object.assign({},TEACHERS[i],r.data);else TEACHERS.push(Object.assign({},r.data));
@@ -412,31 +412,31 @@ async function dbLoad(){
   if(!window.sb)throw new Error("Koneksi Supabase belum siap.");
   var a;
   try{
-    a=await window.window.sb.from("students").select("*").order("created_at",{ascending:true});
+    a=await window.sb.from("students").select("*").order("created_at",{ascending:true});
   }catch(err){
     throw new Error("Gagal menghubungi Supabase saat membaca students: "+(err.message||"Failed to fetch")+". Periksa URL Supabase dan status project.");
   }
   if(a.error)throw new Error("Tabel students: "+a.error.message);
   var b;
-  try{b=await window.window.sb.from("payments").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca payments: "+(err.message||"Failed to fetch"))}
+  try{b=await window.sb.from("payments").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca payments: "+(err.message||"Failed to fetch"))}
   if(b.error)throw new Error("Tabel payments: "+b.error.message);
   var c;
-  try{c=await window.window.sb.from("expenses").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca expenses: "+(err.message||"Failed to fetch"))}
+  try{c=await window.sb.from("expenses").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca expenses: "+(err.message||"Failed to fetch"))}
   if(c.error)throw new Error("Tabel expenses: "+c.error.message);
   var d;
-  try{d=await window.window.sb.from("invoices").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca invoices: "+(err.message||"Failed to fetch"))}
+  try{d=await window.sb.from("invoices").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca invoices: "+(err.message||"Failed to fetch"))}
   if(d.error)throw new Error("Tabel invoices: "+d.error.message);
-  var at=await window.window.sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
+  var at=await window.sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
   if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas,ortu:x.ortu,hp:x.hp,biaya:Number(x.biaya||0)}});
   P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
   INV=d.data||[];
-  var sg=await window.window.sb.from("teacher_salaries").select("*").order("bulan",{ascending:false}).order("created_at",{ascending:false});
+  var sg=await window.sb.from("teacher_salaries").select("*").order("bulan",{ascending:false}).order("created_at",{ascending:false});
   if(sg.error){console.warn("Sistem gaji belum tersedia:",sg.error.message);SAL=[]}else SAL=sg.data||[];
-  var si=await window.window.sb.from("teacher_salary_items").select("*").order("created_at",{ascending:true});
+  var si=await window.sb.from("teacher_salary_items").select("*").order("created_at",{ascending:true});
   if(si.error){console.warn("Komponen gaji belum tersedia:",si.error.message);SALITEMS=[]}else SALITEMS=si.data||[];
-  var ta=await window.window.sb.rpc("get_teacher_accounts");
+  var ta=await window.sb.rpc("get_teacher_accounts");
   if(ta.error){console.warn("Master data guru belum tersedia:",ta.error.message);TEACHERS=[];$("teacherMasterSync").textContent="Jalankan SQL teacher_profiles.sql di Supabase"}else{TEACHERS=ta.data||[];$("teacherMasterSync").textContent="Tersimpan online"}
 }
 
