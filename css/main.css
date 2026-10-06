@@ -1503,3 +1503,17 @@ html,body{max-width:100%;overflow-x:hidden}
 #app form .full,#teacherApp form .full{min-width:0!important}
 #app .card>form,#teacherApp .card>form{padding-top:2px}
 @media(max-width:700px){#app form,#teacherApp form{grid-template-columns:1fr!important;gap:11px!important}#app form .full,#teacherApp form .full{grid-column:1!important}#app form button,#teacherApp form button{width:100%}}
+
+/* Stage 4 polish — tables, status badges and row actions */
+#app .tw,#teacherApp .tw{border:1px solid #d6e5f1!important;border-radius:14px!important;background:#fff!important;box-shadow:0 5px 18px rgba(21,67,107,.035)!important;overflow-x:auto!important}
+#app table,#teacherApp table{width:100%;border-collapse:separate!important;border-spacing:0!important;background:#fff!important}
+#app th,#teacherApp th{padding:12px 13px!important;background:#eef7fd!important;color:#315b79!important;font-size:.72rem!important;font-weight:850!important;letter-spacing:.025em!important;text-transform:none!important;border-bottom:1px solid #d1e3f0!important;white-space:nowrap}
+#app td,#teacherApp td{padding:12px 13px!important;color:#294c66!important;font-size:.84rem!important;border-bottom:1px solid #edf2f6!important;vertical-align:middle!important}
+#app tbody tr:last-child td,#teacherApp tbody tr:last-child td{border-bottom:0!important}#app tbody tr,#teacherApp tbody tr{transition:background .14s ease!important}#app tbody tr:hover,#teacherApp tbody tr:hover{background:#f7fbfe!important}
+#app td button.sm,#teacherApp td button.sm{min-height:32px!important;padding:6px 10px!important;margin:2px!important;border-radius:9px!important;background:#fff!important;color:#245779!important;border:1px solid #c9deed!important;box-shadow:none!important;font-size:.74rem!important;font-weight:750!important}
+#app td button.sm:hover,#teacherApp td button.sm:hover{background:#eaf6fe!important;border-color:#9ec9e6!important}
+#app td button[data-dp],#app td button[data-de],#app td button[data-ds],#app td button[data-dsal],#teacherApp td button[data-datt],#teacherApp td button[data-dsched],#teacherApp td button[data-dnote],#teacherApp td button[data-dreport]{color:#b83d31!important;border-color:#efc5c0!important;background:#fff8f7!important}
+.invoice-paid,.salary-status-paid,.ok,.report-invoice-status{display:inline-flex!important;align-items:center!important;width:max-content;padding:5px 9px!important;border-radius:999px!important;background:#e8f7ef!important;color:#16784f!important;border:1px solid #c4ead6!important;font-size:.72rem!important;font-weight:850!important;line-height:1!important}
+.salary-status-unpaid,.no{display:inline-flex!important;align-items:center!important;width:max-content;padding:5px 9px!important;border-radius:999px!important;background:#fff0ed!important;color:#b94335!important;border:1px solid #f0c8c1!important;font-size:.72rem!important;font-weight:850!important;line-height:1!important}
+#app .tw:has(tbody:empty),#teacherApp .tw:has(tbody:empty){min-height:64px}
+@media(max-width:700px){#app th,#teacherApp th,#app td,#teacherApp td{padding:10px!important;font-size:.78rem!important}#app td button.sm,#teacherApp td button.sm{padding:6px 8px!important}}
