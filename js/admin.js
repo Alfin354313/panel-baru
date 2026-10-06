@@ -333,6 +333,8 @@ function drawDashboard(){
     return '<div class="chart-row"><span class="chart-label">'+label+'</span><div class="chart-track" title="Pendapatan '+rp(inc)+'"><div class="chart-bar" style="width:'+pct+'%"></div></div><span class="chart-value">'+rp(inc)+'</span></div><div class="chart-row"><span style="color:var(--muted)">Keluar</span><div class="chart-track" title="Pengeluaran '+rp(exp)+'"><div class="chart-bar" style="width:'+Math.max(2,Math.round(exp/max*100))+'%"></div></div><span class="chart-value">'+rp(exp)+'</span></div>';
   }).join("");
 
+  var adminReminderItems=[];if(unpaidCount)adminReminderItems.push('<div class="reminder-item reminder-warn"><span>!</span><div><b>'+unpaidCount+' pembayaran belum lunas</b><small>Total '+rp(receivable)+' pada periode ini.</small></div></div>');var todaySchedules=(typeof SCH!=="undefined"?SCH:[]).filter(function(x){return x.tanggal===todayISO});if(todaySchedules.length)adminReminderItems.push('<div class="reminder-item"><span>▣</span><div><b>'+todaySchedules.length+' jadwal mengajar hari ini</b><small>Pantau aktivitas guru dan murid hari ini.</small></div></div>');$("adminReminderCount").textContent=adminReminderItems.length;$("adminBellDot").hidden=adminReminderItems.length===0;$("adminReminderSummary").innerHTML=adminReminderItems.join("")||'<div class="reminder-clear"><b>Semua aman</b><small>Tidak ada reminder penting untuk periode ini.</small></div>';
+
   var unpaid=monthPayments.filter(function(x){return x.status!=="Lunas"}).sort(function(a,b){return Number(b.jumlah||0)-Number(a.jumlah||0)});
   $("dashboardUnpaid").innerHTML=unpaid.slice(0,8).map(function(x){
     var m=stu(x.sid)||{};
@@ -483,3 +485,5 @@ document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
   }
 });
 $("exportAdminBtn").onclick=function(){exportAdminExcel()};
+
+$("adminBell").onclick=function(e){e.stopPropagation();$("adminNotificationPanel").hidden=!$("adminNotificationPanel").hidden};document.addEventListener("click",function(e){if(!$("adminNotificationPanel").hidden&&!$("adminNotificationPanel").contains(e.target))$("adminNotificationPanel").hidden=true});
