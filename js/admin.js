@@ -33,7 +33,7 @@ $("fm").onsubmit=async function(e){
   }
   var r=await sb.from("students").insert({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).select().single();
   if(r.error){alert("Gagal menyimpan murid: "+r.error.message);return}
-  S.push({id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)});
+  S.push({id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)});auditLog("CREATE","Murid",r.data.id,"Menambahkan murid "+(r.data.nama||""));
   e.target.reset();draw();alert("Murid berhasil disimpan.")
 };
 
@@ -61,7 +61,7 @@ document.addEventListener("click",async function(e){
   if(id.dp&&confirm("Hapus catatan pembayaran ini?")){
     var r=await sb.from("payments").delete().eq("id",id.dp);
     if(r.error){alert("Gagal menghapus pembayaran: "+r.error.message);return}
-    P=P.filter(function(x){return x.id!==id.dp});INV=INV.filter(function(x){return x.payment_id!==id.dp});draw()
+    auditLog("DELETE","Pembayaran",id.dp,"Menghapus catatan pembayaran");P=P.filter(function(x){return x.id!==id.dp});INV=INV.filter(function(x){return x.payment_id!==id.dp});draw()
   }
   if(id.tp){
     var x=P.find(function(q){return q.id===id.tp});
@@ -70,7 +70,7 @@ document.addEventListener("click",async function(e){
       var payload={status:newStatus,tanggal_bayar:newStatus==="Lunas"?todayISO:null};
       var r=await sb.from("payments").update(payload).eq("id",x.id);
       if(r.error){alert("Gagal mengubah status: "+r.error.message);return}
-      x.status=newStatus;
+      x.status=newStatus;auditLog("UPDATE","Pembayaran",x.id,"Mengubah status pembayaran menjadi "+newStatus);
       if(newStatus==="Lunas"){
         x.tglLunas=todayISO;
         var no=invoiceNo(x);
@@ -95,13 +95,13 @@ document.addEventListener("click",async function(e){
   if(id.ds&&confirm("Hapus murid ini?")){
     var r=await sb.from("students").delete().eq("id",id.ds);
     if(r.error){alert("Gagal menghapus murid: "+r.error.message);return}
-    S=S.filter(function(x){return x.id!==id.ds});P=P.filter(function(x){return x.sid!==id.ds});INV=INV.filter(function(x){var p=P.find(function(q){return q.id===x.payment_id});return !!p});draw()
+    auditLog("DELETE","Murid",id.ds,"Menghapus data murid");S=S.filter(function(x){return x.id!==id.ds});P=P.filter(function(x){return x.sid!==id.ds});INV=INV.filter(function(x){var p=P.find(function(q){return q.id===x.payment_id});return !!p});draw()
   }
   if(id.er){downloadExpenseReceipt(id.er);return}
   if(id.de&&confirm("Hapus pengeluaran ini?")){
     var r=await sb.from("expenses").delete().eq("id",id.de);
     if(r.error){alert("Gagal menghapus pengeluaran: "+r.error.message);return}
-    E=E.filter(function(x){return x.id!==id.de});draw()
+    auditLog("DELETE","Pengeluaran",id.de,"Menghapus catatan pengeluaran");E=E.filter(function(x){return x.id!==id.de});draw()
   }
 });
 
@@ -396,7 +396,7 @@ $("teacherMasterForm").onsubmit=async function(e){
   var r=await sb.from("teacher_profiles").upsert(payload,{onConflict:"id"}).select().single();
   if(r.error){alert("Data guru belum bisa disimpan: "+r.error.message);return}
   var i=TEACHERS.findIndex(function(x){return x.id===id});
-  if(i>=0)TEACHERS[i]=Object.assign({},TEACHERS[i],r.data);else TEACHERS.push(Object.assign({},r.data));
+  auditLog("UPDATE","Guru",id,"Menyimpan profil guru "+payload.nama);if(i>=0)TEACHERS[i]=Object.assign({},TEACHERS[i],r.data);else TEACHERS.push(Object.assign({},r.data));
   $("teacherMasterSync").textContent="Data guru tersimpan";
   drawTeachers();drawSalary();
   alert("Data guru berhasil disimpan.");
@@ -477,8 +477,8 @@ function downloadInvoicePdf(x,no,tgl,m){
 document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
-    ["d","m","p","e","u","g","r"].forEach(function(k){
-      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):k==="r"?$("financialReportPage"):$("t"+k);
+    ["d","m","p","e","u","g","r","a"].forEach(function(k){
+      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):k==="r"?$("financialReportPage"):k==="a"?$("auditLogPage"):$("t"+k);
       if(el)el.hidden=k!==b.dataset.t;
     });
     if(b.dataset.focus){
@@ -549,3 +549,7 @@ $("financialReportMonth").value=thisM;$("financialReportMonth").onchange=drawFin
 document.querySelector('[data-t="r"]').addEventListener("click",drawFinancialReport);
 $("financialReportCsv").onclick=function(){var d=financialReportData(),rows=[["Periode","Jenis","Keterangan","Masuk","Keluar"]];d.paid.forEach(function(x){var m=stu(x.sid)||{};rows.push([x.bulan,"Pendapatan","Pembayaran "+(m.nama||"Murid"),Number(x.jumlah||0),0])});d.expenses.forEach(function(x){rows.push([x.tgl,"Pengeluaran",(x.kat||"")+" - "+(x.ket||""),0,Number(x.jumlah||0)])});rows.push(["","TOTAL","",d.income,d.expense],["","LABA/RUGI","",d.profit,""]);var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'}).join(",")}).join("\n"),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="Laporan-Keuangan-Jenius-Edu-"+d.month+".csv";link.click();setTimeout(function(){URL.revokeObjectURL(url)},500)};
 $("financialReportPdf").onclick=function(){var d=financialReportData();if(!window.jspdf||!window.jspdf.jsPDF){alert("Library PDF belum siap.");return}var doc=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),y=20;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.setFontSize(20);doc.text("JENIUS EDU",20,y);y+=8;doc.setFontSize(14);doc.text("LAPORAN KEUANGAN",20,y);y+=7;doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,115,130);doc.text("Periode: "+d.month,20,y);y+=12;[["Pendapatan",d.income],["Pengeluaran",d.expense],["Laba / Rugi",d.profit],["Piutang",d.unpaid]].forEach(function(r){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(r[0],20,y);doc.setFont("helvetica","bold");doc.text(rp(r[1]),190,y,{align:"right"});y+=8});y+=3;doc.setDrawColor(210,220,230);doc.line(20,y,190,y);y+=9;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.text("RINCIAN PENGELUARAN",20,y);y+=8;var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});Object.keys(cats).forEach(function(k){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(k,20,y);doc.setFont("helvetica","bold");doc.text(rp(cats[k]),190,y,{align:"right"});y+=7});doc.save("Laporan-Keuangan-Jenius-Edu-"+d.month+".pdf")};
+
+async function loadAuditLog(){var r=await sb.from("audit_logs").select("*").order("created_at",{ascending:false}).limit(300);if(r.error){$("auditLogBody").innerHTML='<tr><td colspan="5">Audit log belum tersedia. Jalankan SQL Tahap 8 di Supabase.</td></tr>';return}AUDIT=r.data||[];drawAuditLog()}
+function drawAuditLog(){var q=($("auditSearch").value||"").toLowerCase(),f=$("auditActionFilter").value,rows=AUDIT.filter(function(x){return (!f||x.action===f)&&(!q||[x.user_email,x.action,x.module,x.detail].join(" ").toLowerCase().includes(q))});$("auditLogBody").innerHTML=rows.map(function(x){var dt=x.created_at?new Date(x.created_at).toLocaleString("id-ID"):"-";return '<tr><td>'+esc(dt)+'</td><td>'+esc(x.user_email||"-")+'<br><small>'+esc(x.role||"")+'</small></td><td><span class="audit-action '+String(x.action||"").toLowerCase()+'">'+esc(x.action||"-")+'</span></td><td>'+esc(x.module||"-")+'</td><td>'+esc(x.detail||"-")+'</td></tr>'}).join("")||'<tr><td colspan="5">Belum ada aktivitas yang sesuai.</td></tr>'}
+$("refreshAuditLog").onclick=loadAuditLog;$("auditSearch").oninput=drawAuditLog;$("auditActionFilter").onchange=drawAuditLog;document.querySelector('[data-t="a"]').addEventListener("click",loadAuditLog);
