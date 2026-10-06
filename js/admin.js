@@ -477,8 +477,8 @@ function downloadInvoicePdf(x,no,tgl,m){
 document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
-    ["d","m","p","e","u","g"].forEach(function(k){
-      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):$("t"+k);
+    ["d","m","p","e","u","g","r"].forEach(function(k){
+      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):k==="r"?$("financialReportPage"):$("t"+k);
       if(el)el.hidden=k!==b.dataset.t;
     });
     if(b.dataset.focus){
@@ -530,3 +530,22 @@ function openTeacherProfile(id){
 }
 $("teacherProfileBack").onclick=function(){$("teacherProfilePage").hidden=true;$("teacherMasterPage").hidden=false;activeTeacherProfileId=null};
 document.addEventListener("click",function(e){var b=e.target.closest("[data-teacher-profile]");if(b)openTeacherProfile(b.dataset.teacherProfile)});
+
+function financialReportData(){
+  var month=$("financialReportMonth").value||thisM;
+  var paid=P.filter(function(x){return x.bulan===month&&x.status==="Lunas"}),expenses=E.filter(function(x){return String(x.tgl||"").slice(0,7)===month});
+  var income=paid.reduce(function(s,x){return s+Number(x.jumlah||0)},0),expense=expenses.reduce(function(s,x){return s+Number(x.jumlah||0)},0);
+  var unpaid=P.filter(function(x){return x.bulan===month&&x.status!=="Lunas"}).reduce(function(s,x){return s+Number(x.jumlah||0)},0);
+  return {month:month,paid:paid,expenses:expenses,income:income,expense:expense,profit:income-expense,unpaid:unpaid}
+}
+function drawFinancialReport(){
+  var d=financialReportData();$("financialReportKpi").innerHTML='<div><small>Pendapatan</small><b>'+rp(d.income)+'</b></div><div><small>Pengeluaran</small><b>'+rp(d.expense)+'</b></div><div><small>Laba / Rugi</small><b class="'+(d.profit>=0?"ok":"no")+'">'+rp(d.profit)+'</b></div><div><small>Piutang</small><b>'+rp(d.unpaid)+'</b></div>';
+  var margin=d.income?Math.round(d.profit/d.income*100):0;$("financialReportSummary").innerHTML='<div class="report-metric"><span>Transaksi lunas</span><b>'+d.paid.length+'</b></div><div class="report-metric"><span>Jumlah pengeluaran</span><b>'+d.expenses.length+'</b></div><div class="report-metric"><span>Margin bersih</span><b>'+margin+'%</b></div>';
+  var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});var sorted=Object.keys(cats).sort(function(x,y){return cats[y]-cats[x]});$("financialExpenseBreakdown").innerHTML=sorted.map(function(k){var pct=d.expense?Math.round(cats[k]/d.expense*100):0;return '<div class="expense-break"><div><span>'+esc(k)+'</span><b>'+rp(cats[k])+'</b></div><div><i style="width:'+pct+'%"></i></div><small>'+pct+'%</small></div>'}).join("")||'<p class="profile-empty">Belum ada pengeluaran pada periode ini.</p>';
+  var rows=d.paid.map(function(x){var m=stu(x.sid)||{};return {date:x.tglLunas||x.bulan,type:"Pendapatan",desc:"Pembayaran "+(m.nama||"Murid")+" · "+(x.metode||"-"),inc:Number(x.jumlah||0),out:0}}).concat(d.expenses.map(function(x){return {date:x.tgl,type:"Pengeluaran",desc:(x.kat||"-")+" · "+(x.ket||"-"),inc:0,out:Number(x.jumlah||0)}})).sort(function(x,y){return String(y.date).localeCompare(String(x.date))});
+  $("financialReportBody").innerHTML=rows.map(function(x){return '<tr><td>'+esc(x.date||"-")+'</td><td><span class="finance-type '+(x.inc?"income":"expense")+'">'+x.type+'</span></td><td>'+esc(x.desc)+'</td><td class="ok">'+(x.inc?rp(x.inc):"-")+'</td><td class="no">'+(x.out?rp(x.out):"-")+'</td></tr>'}).join("")||'<tr><td colspan="5">Belum ada transaksi pada periode ini.</td></tr>';
+}
+$("financialReportMonth").value=thisM;$("financialReportMonth").onchange=drawFinancialReport;
+document.querySelector('[data-t="r"]').addEventListener("click",drawFinancialReport);
+$("financialReportCsv").onclick=function(){var d=financialReportData(),rows=[["Periode","Jenis","Keterangan","Masuk","Keluar"]];d.paid.forEach(function(x){var m=stu(x.sid)||{};rows.push([x.bulan,"Pendapatan","Pembayaran "+(m.nama||"Murid"),Number(x.jumlah||0),0])});d.expenses.forEach(function(x){rows.push([x.tgl,"Pengeluaran",(x.kat||"")+" - "+(x.ket||""),0,Number(x.jumlah||0)])});rows.push(["","TOTAL","",d.income,d.expense],["","LABA/RUGI","",d.profit,""]);var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'}).join(",")}).join("\n"),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="Laporan-Keuangan-Jenius-Edu-"+d.month+".csv";link.click();setTimeout(function(){URL.revokeObjectURL(url)},500)};
+$("financialReportPdf").onclick=function(){var d=financialReportData();if(!window.jspdf||!window.jspdf.jsPDF){alert("Library PDF belum siap.");return}var doc=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),y=20;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.setFontSize(20);doc.text("JENIUS EDU",20,y);y+=8;doc.setFontSize(14);doc.text("LAPORAN KEUANGAN",20,y);y+=7;doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,115,130);doc.text("Periode: "+d.month,20,y);y+=12;[["Pendapatan",d.income],["Pengeluaran",d.expense],["Laba / Rugi",d.profit],["Piutang",d.unpaid]].forEach(function(r){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(r[0],20,y);doc.setFont("helvetica","bold");doc.text(rp(r[1]),190,y,{align:"right"});y+=8});y+=3;doc.setDrawColor(210,220,230);doc.line(20,y,190,y);y+=9;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.text("RINCIAN PENGELUARAN",20,y);y+=8;var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});Object.keys(cats).forEach(function(k){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(k,20,y);doc.setFont("helvetica","bold");doc.text(rp(cats[k]),190,y,{align:"right"});y+=7});doc.save("Laporan-Keuangan-Jenius-Edu-"+d.month+".pdf")};
