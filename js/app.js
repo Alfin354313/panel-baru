@@ -6,7 +6,7 @@ var esc=function(t){var d=document.createElement("div");d.textContent=t==null?""
 var now=new Date(),thisM=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0"),todayISO=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
 $("pb").value=thisM;$("fb").value=thisM;$("eb").value=thisM;$("et").value=todayISO;$("dashboardMonth").value=thisM;
 
-var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],RPT=[],ADMIN_ATT=[],SAL=[],SALITEMS=[],TEACHERS=[];
+var S=[],P=[],E=[],INV=[],TN=[],SCH=[],ATT=[],RPT=[],ADMIN_ATT=[],SAL=[],SALITEMS=[],TEACHERS=[],AUDIT=[];
 var editingSalaryId=null;
 var sb=null,currentUser=null,currentRole="",loginRole="admin",editingTeacherId=null,editingScheduleId=null,editingAttendanceId=null,editingReportId=null,lastStartedSessionId="";
 var localKey="jenius_edu_data_v3";
@@ -21,7 +21,7 @@ function invoiceNo(x){
   var count=P.filter(function(q){return q.status==="Lunas"&&q.id!==x.id}).length+1;
   return "INV-JE-"+d+"-"+String(count).padStart(3,"0")
 }
-function setSync(t){$("syncStatus").textContent=t}
+function setSync(t){$("syncStatus").textContent=t}\nasync function auditLog(action,module,recordId,detail){if(!sb||!currentUser)return;try{await sb.from("audit_logs").insert({user_id:currentUser.id,user_email:currentUser.email||"",role:currentRole||"",action:action,module:module,record_id:String(recordId||""),detail:String(detail||"")})}catch(e){console.warn("Audit log gagal dicatat",e)}}
 
 async function apiConfig(){
   var controller=new AbortController();
