@@ -46,53 +46,7 @@ async function apiConfig(){
 
 
 async function downloadExcel(filename,sheets){try{if(!window.XLSX){await new Promise(function(resolve,reject){var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";s.onload=resolve;s.onerror=function(){reject(new Error("Library Excel gagal dimuat. Periksa koneksi internet."))};document.head.appendChild(s)})}var wb=XLSX.utils.book_new();Object.keys(sheets).forEach(function(name){var rows=sheets[name];var ws=XLSX.utils.json_to_sheet(rows.length?rows:[{}]);XLSX.utils.book_append_sheet(wb,ws,name.slice(0,31))});XLSX.writeFile(wb,filename)}catch(err){alert(err.message||"Gagal membuat file Excel.")}}
-function exportTeacherExcel(){var notes=TN.map(function(x){var m=stu(x.student_id)||{};return {Nama_Murid:m.nama||"",Jenjang:m.jenjang||"",Kelas:m.kelas||"",Tanggal:x.tanggal||"",Materi:x.materi||"",Metode:x.metode||"",Catatan_Kesulitan:x.catatan_kesulitan||"",Rencana_Lanjutan:x.rencana_lanjutan||""}});downloadExcel("Jenius_Edu_Guru_"+todayISO+".xlsx",{"Catatan Pembelajaran":notes});}
-
-async function migrateLocalIfEmpty(){
-  var raw=localStorage.getItem(localKey);
-  if(!raw||S.length||P.length||E.length)return;
-  var old;try{old=JSON.parse(raw)}catch(e){return}
-  if(!old||(!old.students&&!old.payments&&!old.expenses))return;
-  setSync("Memindahkan data lama...");
-  var idMap={};
-  for(const m of (old.students||[])){
-    var r=await sb.from("students").insert({nama:m.nama,jenjang:m.jenjang,kelas:m.kelas,ortu:m.ortu,hp:m.hp,biaya:Number(m.biaya||0)}).select().single();
-    if(r.error)throw r.error;
-    idMap[m.id]=r.data.id;
-  }
-  for(const x of (old.payments||[])){
-    var pr=await sb.from("payments").insert({student_id:idMap[x.sid]||null,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",tanggal_bayar:x.tglLunas||null}).select().single();
-    if(pr.error)throw pr.error;
-    if(x.status==="Lunas"){
-      var no=x.invoiceNo||invoiceNo({id:pr.data.id,tglLunas:x.tglLunas,bulan:x.bulan});
-      var ir=await sb.from("invoices").insert({payment_id:pr.data.id,nomor_invoice:no,tanggal_invoice:x.tglLunas||todayISO,total:Number(x.jumlah||0),status:"LUNAS"});
-      if(ir.error)throw ir.error;
-    }
-  }
-  for(const x of (old.expenses||[])){
-    var er=await sb.from("expenses").insert({tanggal:x.tgl,kategori:x.kat||"",keterangan:x.ket||"",jumlah:Number(x.jumlah||0)});
-    if(er.error)throw er.error;
-  }
-  await dbLoad();
-  setSync("Data lama berhasil dipindahkan");
-}
-
-document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
-  b.onclick=function(){
-    document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
-    ["d","m","p","e","u","g"].forEach(function(k){
-      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):$("t"+k);
-      if(el)el.hidden=k!==b.dataset.t;
-    });
-    if(b.dataset.focus){
-      setTimeout(function(){
-        var target=b.dataset.t==="m"?$("fm"):b.dataset.t==="p"?$("bp"):b.dataset.t==="e"?$("be"):b.dataset.t==="u"?$("teacherMasterForm"):b.dataset.t==="g"?$("salaryForm"):null;
-        if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
-      },50);
-    }
-  }
-});
-
+/* Legacy automatic localStorage migration removed; Supabase is the source of truth. */
 /* Admin dashboard/rendering/master-guru moved to ./admin.js */
 /* Admin salary helpers/forms moved to ./admin.js */
 /* Teacher report rendering, PDF and sharing moved to ./teacher.js */
@@ -113,8 +67,6 @@ function fd(f){var o={};new FormData(f).forEach(function(v,k){o[k]=v});return o}
 
 /* Login UI/authentication handlers moved to ./auth.js */
 
-$("exportAdminBtn").onclick=function(){exportAdminExcel()};
-$("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
 $("logoutBtn").onclick=async function(){await sb.auth.signOut()};
 /* Teacher schedule form handlers moved to ./teacher.js */
 
