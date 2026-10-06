@@ -27,7 +27,13 @@ async function jeniusLoginSubmitV5(){
   try{
     var client=window.sb;
     if(!client){
-      var cfg=await apiConfig();
+      var controller=new AbortController();
+      var timer=setTimeout(function(){controller.abort()},10000);
+      var response;
+      try{response=await fetch("/api/config?ts="+Date.now(),{cache:"no-store",signal:controller.signal})}finally{clearTimeout(timer)}
+      if(!response.ok)throw new Error("Konfigurasi Supabase belum tersedia (HTTP "+response.status+").");
+      var cfg=await response.json();
+      if(!cfg.url||!cfg.key)throw new Error("Konfigurasi Supabase belum lengkap.");
       client=window.supabase.createClient(cfg.url,cfg.key);
       window.sb=client;
     }
