@@ -1455,3 +1455,9 @@ html,body{max-width:100%;overflow-x:hidden}
   #app .tw,#teacherApp .tw{max-width:100%!important;overflow-x:auto!important}
 }
 @media(min-width:1000px) and (max-width:1299px){#app,#teacherApp{width:calc(100% - 32px)!important;margin:16px auto!important}}
+
+/* Keep all six Admin navigation items aligned in one row on desktop. */
+@media(min-width:1000px){
+ #app>.tabs.top-menu.admin-sidebar>.tabs{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;align-items:stretch!important;gap:10px!important}
+ #app>.tabs.top-menu.admin-sidebar>.tabs>button{width:100%!important;min-width:0!important;max-width:none!important;white-space:nowrap!important;margin:0!important}
+}
