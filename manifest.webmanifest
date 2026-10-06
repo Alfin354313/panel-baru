@@ -1,0 +1,20 @@
+{
+  "name": "Jenius Edu — Panel Pengelola",
+  "short_name": "Jenius Edu",
+  "description": "Panel pengelolaan siswa, guru, pembayaran, laporan, dan aktivitas Jenius Edu.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f9fc",
+  "theme_color": "#174c71",
+  "lang": "id",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./assets/jenius-edu-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
