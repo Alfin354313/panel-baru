@@ -36,3 +36,12 @@ $("fm").onsubmit=async function(e){
   S.push({id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)});
   e.target.reset();draw();alert("Murid berhasil disimpan.")
 };
+
+/* Admin payment form handler. */
+$("fp").onsubmit=async function(e){
+  e.preventDefault();var o=fd(e.target);
+  var r=await sb.from("payments").insert({student_id:o.sid,bulan:o.bulan,jumlah:Number(o.jumlah||0),metode:o.metode||"",status:"Belum"}).select().single();
+  if(r.error){alert("Gagal menyimpan pembayaran: "+r.error.message);return}
+  P.push({id:r.data.id,sid:r.data.student_id,bulan:r.data.bulan,jumlah:Number(r.data.jumlah),metode:r.data.metode||"",status:r.data.status});
+  $("fb").value=o.bulan;draw();alert("Pembayaran berhasil dicatat.")
+};
