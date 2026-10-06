@@ -90,12 +90,12 @@ async function startApp(session){
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
   }
   $("loginScreen").style.display="none";$("loginScreen").hidden=true;$("loginScreen").setAttribute("aria-hidden","true");
-  /* Pastikan atribut hidden lama tidak membuat panel tetap putih/kosong setelah login ulang. */
-  $("app").hidden=false;
-  $("teacherApp").hidden=false;
+  /* Reset kedua panel lebih dulu agar UI dari role/session sebelumnya tidak sempat terlihat. */
+  $("app").hidden=true;
+  $("app").style.display="none";
+  $("teacherApp").hidden=true;
+  $("teacherApp").style.display="none";
   if(currentRole==="guru"){
-    $("app").hidden=true;
-    $("app").style.display="none";
     $("teacherApp").hidden=false;
     $("teacherApp").style.display="block";
     $("teacherSync").textContent="Memuat...";
