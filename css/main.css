@@ -1424,3 +1424,8 @@ body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;
 /* Shared Jenius Edu logo asset */
 .ref-logo img{width:68px;height:68px;display:block;object-fit:contain;border-radius:50%;filter:drop-shadow(0 8px 18px rgba(21,67,107,.14))}
 .ref-logo span{display:none!important}
+
+/* Logo refinement requested after Preview */
+.ref-brand-logo{width:44px;height:44px;display:block;object-fit:contain;border-radius:50%;filter:drop-shadow(0 5px 12px rgba(4,35,61,.22))}
+.ref-login-panel .ref-logo img{width:84px!important;height:84px!important}
+@media(max-width:520px){.ref-login-panel .ref-logo img{width:76px!important;height:76px!important}}
