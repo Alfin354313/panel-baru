@@ -1422,102 +1422,6 @@ form.login-card{display:block;width:min(430px,100%);background:var(--card);borde
 </div>
 <div class="card" style="margin-top:14px;padding:20px 22px"><h2>Riwayat Laporan</h2><div class="tw"><table><thead><tr><th>Murid</th><th>Periode</th><th>Kehadiran</th><th>Pencapaian</th><th>Aksi</th></tr></thead><tbody id="teacherReportsBody"></tbody></table></div></div>
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-/* Jenius Edu Login v2 - tanpa form/submit, sehingga klik masuk tidak dapat memicu refresh */
-window.jeniusLoginSubmit = async function(e){
-  if(e){e.preventDefault();e.stopPropagation();}
-  var btn=document.getElementById("loginBtn");
-  var err=document.getElementById("loginError");
-  var emailEl=document.getElementById("loginEmail");
-  var passEl=document.getElementById("loginPassword");
-  if(!btn||!err||!emailEl||!passEl)return false;
-
-  var email=(emailEl.value||"").trim();
-  var password=passEl.value||"";
-  var mode=(window.loginRole||"admin").toLowerCase();
-
-  if(!email||!password){
-    err.textContent="❌ Email dan password wajib diisi.";
-    err.style.display="block";
-    return false;
-  }
-
-  btn.disabled=true;
-  btn.textContent="Masuk (V4)...";
-  err.textContent="LOGIN V4 AKTIF — menghubungkan...";
-  err.style.display="block";
-
-  try{
-    if(!window.supabase)throw new Error("Library Supabase belum termuat.");
-
-    if(!window.sb){
-      err.textContent="Menghubungkan ke server...";
-      var cfg=await apiConfig();
-      window.sb=window.supabase.createClient(cfg.url,cfg.key);
-    }
-
-    err.textContent="Menghubungkan ke Supabase...";
-
-    /* Jangan biarkan tombol berhenti di "Memeriksa..." selamanya. */
-    err.textContent="Memeriksa akun...";
-    var loginPromise=window.sb.auth.signInWithPassword({email:email,password:password});
-    var timeoutPromise=new Promise(function(_,reject){
-      setTimeout(function(){reject(new Error("Login ke Supabase terlalu lama (lebih dari 15 detik). Periksa koneksi internet, URL Supabase, dan status project Supabase."));},15000);
-    });
-    var result=await Promise.race([loginPromise,timeoutPromise]);
-    if(result.error)throw new Error(result.error.message||"Email atau password salah.");
-
-    var session=result.data&&result.data.session;
-    if(!session||!session.user)throw new Error("Session login belum tersedia.");
-
-    /* Tandai sesi lebih dulu agar event SIGNED_IN tidak menjalankan startApp dua kali. */
-    window.lastStartedSessionId=session.user.id;
-
-    var role=String(
-      (session.user.app_metadata&&session.user.app_metadata.role)||
-      (session.user.user_metadata&&session.user.user_metadata.role)||""
-    ).trim().toLowerCase();
-
-    /* Jika role JWT kosong, jangan langsung memantulkan pengguna ke login.
-       Tampilkan penyebabnya dengan jelas. */
-    if(!role){
-      throw new Error("Role akun belum diatur di Supabase. Atur app_metadata.role menjadi admin atau guru, lalu login kembali.");
-    }
-
-    if(role!==mode){
-      throw new Error("Mode login tidak sesuai dengan role akun. Akun ini adalah "+role+", pilih mode "+role+".");
-    }
-
-    if(typeof window.startApp!=="function")throw new Error("Panel belum siap. Silakan coba lagi.");
-
-    /* Login berhasil. Buka panel hanya dari jalur ini.
-       Event SIGNED_IN di bawah akan diabaikan karena session ID sudah ditandai. */
-    err.textContent="Login berhasil. Membuka panel...";
-    await window.startApp(session);
-    err.style.display="none";
-  }catch(error){
-    console.error("LOGIN ERROR:",error);
-    err.textContent="❌ "+(error&&error.message?error.message:String(error));
-    err.style.display="block";
-  }finally{
-    btn.disabled=false;
-    btn.textContent=(window.loginRole||"admin")==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
-  }
-  return false;
-};
-
-(function(){
-  var btn=document.getElementById("loginBtn");
-  var pass=document.getElementById("loginPassword");
-  if(btn)btn.addEventListener("click",function(e){window.jeniusLoginSubmit(e);});
-  if(pass)pass.addEventListener("keydown",function(e){
-    if(e.key==="Enter"){
-      e.preventDefault();
-      if(btn)btn.click();
-    }
-  });
-})();
-</script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script><script>
 var $=function(i){return document.getElementById(i)};
 var rp=function(n){return "Rp"+Number(n||0).toLocaleString("id-ID")};
@@ -2246,29 +2150,54 @@ function setLoginMode(role){
   if(btn)btn.textContent=role==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
   if(err){err.style.display="none";err.textContent=""}
 }
+function normalizeRole(role){
+  role=String(role||"").trim().toLowerCase();
+  if(role==="teacher"||role==="guru")return "guru";
+  if(role==="administrator"||role==="pengelola"||role==="admin")return "admin";
+  return role;
+}
 async function jeniusLoginSubmitV5(){
   var emailEl=document.getElementById("loginEmailV5"),passEl=document.getElementById("loginPasswordV5"),btn=document.getElementById("loginBtnV5"),err=document.getElementById("loginErrorV5");
   if(!emailEl||!passEl||!btn||!err)return;
-  var email=emailEl.value.trim(),password=passEl.value;
+  var email=(emailEl.value||"").trim(),password=passEl.value||"";
   if(!email||!password){err.textContent="Email dan password wajib diisi.";err.style.display="block";return}
-  if(!sb){err.textContent="Koneksi login belum siap. Tunggu sebentar lalu coba lagi.";err.style.display="block";return}
+  if(!window.supabase){err.textContent="Library Supabase gagal dimuat. Muat ulang halaman lalu coba lagi.";err.style.display="block";return}
   btn.disabled=true;btn.textContent="Memeriksa...";
-  err.style.display="none";
+  err.textContent="Menghubungkan ke Supabase...";
+  err.style.display="block";
   try{
-    var r=await sb.auth.signInWithPassword({email:email,password:password});
+    if(!sb){
+      var cfg=await apiConfig();
+      sb=window.supabase.createClient(cfg.url,cfg.key);
+    }
+    var loginPromise=sb.auth.signInWithPassword({email:email,password:password});
+    var timeoutPromise=new Promise(function(_,reject){
+      setTimeout(function(){reject(new Error("Login ke Supabase terlalu lama. Periksa koneksi internet dan konfigurasi Supabase."));},15000);
+    });
+    var r=await Promise.race([loginPromise,timeoutPromise]);
     if(r.error)throw r.error;
     var session=r.data&&r.data.session;
     if(!session||!session.user)throw new Error("Sesi login tidak terbentuk. Silakan coba lagi.");
-    var role=String((session.user.app_metadata&&session.user.app_metadata.role)||(session.user.user_metadata&&session.user.user_metadata.role)||"").trim().toLowerCase();
-    if(role!==loginRole)throw new Error("Akun ini bukan akun "+(loginRole==="guru"?"Guru":"Admin")+". Pilih jenis akun yang sesuai.");
+    var role=normalizeRole((session.user.app_metadata&&session.user.app_metadata.role)||(session.user.user_metadata&&session.user.user_metadata.role));
+    if(!role){
+      await sb.auth.signOut();
+      throw new Error("Login berhasil, tetapi role akun belum diatur. Isi app_metadata.role dengan admin atau guru di Supabase.");
+    }
+    if(role!==loginRole){
+      await sb.auth.signOut();
+      throw new Error("Akun ini adalah "+(role==="guru"?"Guru":"Admin")+". Pilih jenis akun yang sesuai.");
+    }
+    err.textContent="Login berhasil. Membuka panel...";
+    lastStartedSessionId=session.user.id;
     await startApp(session);
+    err.style.display="none";
   }catch(e){
-    try{if(e&&/bukan akun/i.test(e.message||""))await sb.auth.signOut()}catch(_){}
-    err.textContent="❌ "+(e.message||"Login gagal. Periksa email dan password.");
+    console.error("LOGIN ERROR:",e);
+    err.textContent="❌ "+(e&&e.message?e.message:"Login gagal. Periksa email dan password.");
     err.style.display="block";
   }finally{
     btn.disabled=false;
-    setLoginMode(loginRole);
+    btn.textContent=loginRole==="guru"?"Masuk sebagai Guru":"Masuk sebagai Admin";
   }
 }
 document.getElementById("adminModeBtnV5").onclick=function(){setLoginMode("admin")};
@@ -2295,9 +2224,7 @@ function showTeacherPage(id){document.querySelectorAll(".teacher-page").forEach(
   }
   lastStartedSessionId=session.user.id;
   currentUser=session.user;
-  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
-  currentUser=session.user;
-  currentRole=String((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role)||"").trim().toLowerCase();
+  currentRole=normalizeRole((currentUser.app_metadata&&currentUser.app_metadata.role)||(currentUser.user_metadata&&currentUser.user_metadata.role));
   if(currentRole!=="admin"&&currentRole!=="guru"){
     $("loginScreen").style.display="flex";$("loginScreen").hidden=false;$("loginScreen").setAttribute("aria-hidden","false");$("app").style.display="none";$("teacherApp").style.display="none";
     throw new Error("Role akun tidak terbaca sebagai admin/guru. Role: "+(currentRole||"KOSONG"))
