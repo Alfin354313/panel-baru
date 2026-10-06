@@ -87,3 +87,20 @@ document.addEventListener("click",async function(e){
   }
   if(id.iv){var x=P.find(function(q){return q.id===id.iv});if(x)await showInv(x)}
 });
+
+/* Admin student and expense delegated actions. */
+document.addEventListener("click",async function(e){
+  var id=e.target.dataset;
+  if(id.es){startEditStudent(id.es);return}
+  if(id.ds&&confirm("Hapus murid ini?")){
+    var r=await sb.from("students").delete().eq("id",id.ds);
+    if(r.error){alert("Gagal menghapus murid: "+r.error.message);return}
+    S=S.filter(function(x){return x.id!==id.ds});P=P.filter(function(x){return x.sid!==id.ds});INV=INV.filter(function(x){var p=P.find(function(q){return q.id===x.payment_id});return !!p});draw()
+  }
+  if(id.er){downloadExpenseReceipt(id.er);return}
+  if(id.de&&confirm("Hapus pengeluaran ini?")){
+    var r=await sb.from("expenses").delete().eq("id",id.de);
+    if(r.error){alert("Gagal menghapus pengeluaran: "+r.error.message);return}
+    E=E.filter(function(x){return x.id!==id.de});draw()
+  }
+});
