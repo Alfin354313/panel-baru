@@ -458,11 +458,6 @@ document.addEventListener("click",async function(e){
     if(r.error){alert("Gagal menghapus murid: "+r.error.message);return}
     S=S.filter(function(x){return x.id!==id.ds});P=P.filter(function(x){return x.sid!==id.ds});INV=INV.filter(function(x){var p=P.find(function(q){return q.id===x.payment_id});return !!p});draw()
   }
-  if(id.dp&&confirm("Hapus catatan pembayaran ini?")){
-    var r=await sb.from("payments").delete().eq("id",id.dp);
-    if(r.error){alert("Gagal menghapus pembayaran: "+r.error.message);return}
-    P=P.filter(function(x){return x.id!==id.dp});INV=INV.filter(function(x){return x.payment_id!==id.dp});draw()
-  }
   if(id.esal){editSalary(id.esal);return}
   if(id.ssal){showSalarySlip(id.ssal);return}
   if(id.psal){await markSalaryPaid(id.psal);return}
@@ -473,29 +468,6 @@ document.addEventListener("click",async function(e){
     if(r.error){alert("Gagal menghapus pengeluaran: "+r.error.message);return}
     E=E.filter(function(x){return x.id!==id.de});draw()
   }
-  if(id.tp){
-    var x=P.find(function(q){return q.id===id.tp});
-    if(x){
-      var newStatus=x.status==="Lunas"?"Belum":"Lunas";
-      var payload={status:newStatus,tanggal_bayar:newStatus==="Lunas"?todayISO:null};
-      var r=await sb.from("payments").update(payload).eq("id",x.id);
-      if(r.error){alert("Gagal mengubah status: "+r.error.message);return}
-      x.status=newStatus;
-      if(newStatus==="Lunas"){
-        x.tglLunas=todayISO;
-        var no=invoiceNo(x);
-        var ir=await sb.from("invoices").insert({payment_id:x.id,nomor_invoice:no,tanggal_invoice:todayISO,total:Number(x.jumlah||0),status:"LUNAS"}).select().single();
-        if(ir.error){alert("Pembayaran sudah Lunas, tetapi invoice gagal disimpan: "+ir.error.message);return}
-        INV.push(ir.data);draw();await showInv(x)
-      }else{
-        delete x.tglLunas;
-        var dr=await sb.from("invoices").delete().eq("payment_id",x.id);
-        if(dr.error){alert("Status sudah diubah, tetapi invoice gagal dihapus: "+dr.error.message);return}
-        INV=INV.filter(function(q){return q.payment_id!==x.id});draw()
-      }
-    }
-  }
-  if(id.iv){var x=P.find(function(q){return q.id===id.iv});if(x)await showInv(x)}
   if(id.eatt){startEditAttendance(id.eatt);return}
   if(id.datt&&confirm("Hapus data absensi ini?")){
     var ar=await sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
