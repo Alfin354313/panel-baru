@@ -448,13 +448,7 @@ function fd(f){var o={};new FormData(f).forEach(function(v,k){o[k]=v});return o}
 
 /* Admin payment form handler moved to ./admin.js */
 
-$("fe").onsubmit=async function(e){
-  e.preventDefault();var o=fd(e.target);
-  var r=await sb.from("expenses").insert({tanggal:o.tgl,kategori:o.kat||"",keterangan:o.ket||"",jumlah:Number(o.jumlah||0)}).select().single();
-  if(r.error){alert("Gagal menyimpan pengeluaran: "+r.error.message);return}
-  E.push({id:r.data.id,tgl:r.data.tanggal,kat:r.data.kategori||"",ket:r.data.keterangan||"",jumlah:Number(r.data.jumlah||0)});
-  $("eb").value=String(o.tgl).slice(0,7);e.target.reset();$("et").value=todayISO;draw();alert("Pengeluaran berhasil dicatat.")
-};
+/* Admin expense form handler moved to ./admin.js */
 
 document.addEventListener("click",async function(e){
   var t=e.target,id=t.dataset;

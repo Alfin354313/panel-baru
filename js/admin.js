@@ -45,3 +45,12 @@ $("fp").onsubmit=async function(e){
   P.push({id:r.data.id,sid:r.data.student_id,bulan:r.data.bulan,jumlah:Number(r.data.jumlah),metode:r.data.metode||"",status:r.data.status});
   $("fb").value=o.bulan;draw();alert("Pembayaran berhasil dicatat.")
 };
+
+/* Admin expense form handler. */
+$("fe").onsubmit=async function(e){
+  e.preventDefault();var o=fd(e.target);
+  var r=await sb.from("expenses").insert({tanggal:o.tgl,kategori:o.kat||"",keterangan:o.ket||"",jumlah:Number(o.jumlah||0)}).select().single();
+  if(r.error){alert("Gagal menyimpan pengeluaran: "+r.error.message);return}
+  E.push({id:r.data.id,tgl:r.data.tanggal,kat:r.data.kategori||"",ket:r.data.keterangan||"",jumlah:Number(r.data.jumlah||0)});
+  $("eb").value=String(o.tgl).slice(0,7);e.target.reset();$("et").value=todayISO;draw();alert("Pengeluaran berhasil dicatat.")
+};
