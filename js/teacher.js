@@ -78,7 +78,7 @@ var currentMonth=thisM, today=todayISO;
 $("gStudents").textContent=Object.keys(unique).length;
 $("gMonthNotes").textContent=TN.filter(function(x){return String(x.tanggal||"").slice(0,7)===currentMonth}).length;
 $("gTodayNotes").textContent=TN.filter(function(x){return x.tanggal===today}).length;
-$("gTotalNotes").textContent=TN.length;
+$("gTotalNotes").textContent=TN.length;var todaySchedules=SCH.filter(function(x){return x.tanggal===today}).sort(function(a,b){return String(a.jam||"").localeCompare(String(b.jam||""))});$("gTodayScheduleCount").textContent=todaySchedules.length+" jadwal";$("gTodaySchedule").innerHTML=todaySchedules.map(function(x){var m=stu(x.student_id)||{};return '<div class="teacher-agenda-item"><span class="teacher-agenda-time">'+esc(x.jam||"--:--")+'</span><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><small>'+esc(x.mapel||"Pelajaran belum diisi")+' · '+esc(x.status||"Terjadwal")+'</small></div></div>'}).join("")||'<div class="teacher-empty-state"><b>Tidak ada jadwal hari ini</b><small>Jadwal mengajar hari ini akan muncul di sini.</small></div>';
 var latest=TN.slice().sort(function(a,b){return String(b.tanggal||"").localeCompare(String(a.tanggal||""))}).slice(0,5);
 $("gLatestNotes").innerHTML=latest.map(function(x){var m=stu(x.student_id)||{};return '<div class="dashboard-alert"><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><br><small>'+esc(x.tanggal||"")+' · '+esc(x.materi||"")+'</small></div><span style="color:var(--muted)">'+esc(x.metode||"")+'</span></div>'}).join("")||'<p style="color:var(--muted);margin:0">Belum ada catatan pembelajaran.</p>';
 }
@@ -210,3 +210,6 @@ document.addEventListener("click",async function(e){
 /* Teacher export. */
 function exportTeacherExcel(){var notes=TN.map(function(x){var m=stu(x.student_id)||{};return {Nama_Murid:m.nama||"",Jenjang:m.jenjang||"",Kelas:m.kelas||"",Tanggal:x.tanggal||"",Materi:x.materi||"",Metode:x.metode||"",Catatan_Kesulitan:x.catatan_kesulitan||"",Rencana_Lanjutan:x.rencana_lanjutan||""}});downloadExcel("Jenius_Edu_Guru_"+todayISO+".xlsx",{"Catatan Pembelajaran":notes});}
 $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
+
+/* Stage 5 dashboard quick actions */
+document.addEventListener("click",function(e){var b=e.target.closest("[data-quick-page]");if(!b)return;var id=b.getAttribute("data-quick-page"),menu=document.querySelector('#teacherMenu [data-teacher-page="'+id+'"]');if(menu)menu.click();});
