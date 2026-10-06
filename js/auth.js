@@ -56,7 +56,7 @@ async function jeniusLoginSubmitV5(){
     }
     err.textContent="Login berhasil. Membuka panel...";
     lastStartedSessionId=session.user.id;
-    await startApp(session);
+    if(typeof window.startApp!=="function"){throw new Error("Aplikasi utama belum siap. Muat ulang halaman setelah deployment selesai.");}\n    await window.startApp(session);
     err.style.display="none";
   }catch(e){
     console.error("LOGIN ERROR:",e);
