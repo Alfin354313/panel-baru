@@ -1562,3 +1562,7 @@ html{scroll-behavior:smooth}body{background:linear-gradient(180deg,#f5f9fc 0,#ed
 /* Invoice close control */
 .professional-invoice{position:relative}.invoice-close-x{position:absolute;z-index:5;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:50%;background:#fff;color:#174c71;font-size:1.35rem;line-height:1;box-shadow:0 2px 10px rgba(25,64,90,.16);cursor:pointer}.invoice-close-x:hover{background:#eef7fc}
 @media print{.invoice-close-x{display:none!important}}
+
+/* Feature 9 — loading skeleton & empty states */
+.skeleton-row td{padding:18px!important}.skeleton-line{height:12px;margin:9px 0;border-radius:999px;background:linear-gradient(90deg,#edf3f7 25%,#f8fbfd 50%,#edf3f7 75%);background-size:200% 100%;animation:jeniusSkeleton 1.25s infinite}.skeleton-line.w90{width:90%}.skeleton-line.w80{width:80%}.skeleton-line.w70{width:70%}@keyframes jeniusSkeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}.empty-state{display:flex;min-height:110px;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:18px;color:#7b909f;text-align:center}.empty-state-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#eef7fc;color:#4383ae;font-size:1.3rem}.empty-state b{color:#41647b;font-size:.82rem}.empty-state span{max-width:420px;font-size:.7rem;line-height:1.45}
+@media (prefers-reduced-motion:reduce){.skeleton-line{animation:none}}
