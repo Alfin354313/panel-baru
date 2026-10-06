@@ -452,22 +452,10 @@ function fd(f){var o={};new FormData(f).forEach(function(v,k){o[k]=v});return o}
 
 document.addEventListener("click",async function(e){
   var t=e.target,id=t.dataset;
-  if(id.es){startEditStudent(id.es);return}
-  if(id.ds&&confirm("Hapus murid ini?")){
-    var r=await sb.from("students").delete().eq("id",id.ds);
-    if(r.error){alert("Gagal menghapus murid: "+r.error.message);return}
-    S=S.filter(function(x){return x.id!==id.ds});P=P.filter(function(x){return x.sid!==id.ds});INV=INV.filter(function(x){var p=P.find(function(q){return q.id===x.payment_id});return !!p});draw()
-  }
   if(id.esal){editSalary(id.esal);return}
   if(id.ssal){showSalarySlip(id.ssal);return}
   if(id.psal){await markSalaryPaid(id.psal);return}
   if(id.dsal&&confirm("Hapus data gaji ini?")){var sr=await sb.from("teacher_salaries").delete().eq("id",id.dsal);if(sr.error){alert("Gagal menghapus gaji: "+sr.error.message);return}SAL=SAL.filter(function(x){return x.id!==id.dsal});SALITEMS=SALITEMS.filter(function(x){return x.salary_id!==id.dsal});if(editingSalaryId===id.dsal)resetSalaryForm();drawSalary();return}
-  if(id.er){downloadExpenseReceipt(id.er);return}
-  if(id.de&&confirm("Hapus pengeluaran ini?")){
-    var r=await sb.from("expenses").delete().eq("id",id.de);
-    if(r.error){alert("Gagal menghapus pengeluaran: "+r.error.message);return}
-    E=E.filter(function(x){return x.id!==id.de});draw()
-  }
   if(id.eatt){startEditAttendance(id.eatt);return}
   if(id.datt&&confirm("Hapus data absensi ini?")){
     var ar=await sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
