@@ -340,12 +340,12 @@ function drawDashboard(){
 $("dashboardMonth").onchange=drawDashboard;
 
 function draw(){
-  $("bm").innerHTML=S.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-es="'+m.id+'">Edit</button> <button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada murid. Isi formulir di atas.</td></tr>';
+  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});$("bm").innerHTML=filteredStudents.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-es="'+m.id+'">Edit</button> <button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada murid. Isi formulir di atas.</td></tr>';
   var keep=$("sel").value;$("sel").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+'</option>'}).join("");if(keep)$("sel").value=keep;
-  var f=$("fb").value,L=P.filter(function(x){return x.bulan===f}),tm=P.filter(function(x){return x.bulan===thisM});
+  var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return x.bulan===f&&(!ps||x.status===ps)&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
   /* Statistik utama sekarang ditampilkan oleh Dashboard Utama. */
-  var ef=$("eb").value,EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef}).sort(function(a,b){return a.tgl<b.tgl?1:-1});$("et2").textContent="Total pengeluaran bulan ini: "+rp(EL.reduce(function(a,x){return a+Number(x.jumlah)},0));
+  var ef=$("eb").value,eq=($("expenseSearch").value||"").toLowerCase(),EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef&&(!eq||[x.kat,x.ket].join(" ").toLowerCase().includes(eq))}).sort(function(a,b){return a.tgl<b.tgl?1:-1});$("et2").textContent="Total pengeluaran bulan ini: "+rp(EL.reduce(function(a,x){return a+Number(x.jumlah)},0));
   $("be").innerHTML=EL.map(function(x){return '<tr><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket)+'</td><td>'+rp(x.jumlah)+'</td><td><button class="sm" data-er="'+x.id+'">Unduh Struk</button> <button class="sm" data-de="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="5">Belum ada pengeluaran untuk bulan ini.</td></tr>';
   $("bp").innerHTML=L.map(function(x){var m=stu(x.sid)||{};var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':' <a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td>'+esc(m.nama||"(dihapus)")+'</td><td>'+esc(x.bulan)+'</td><td>'+rp(x.jumlah)+'</td><td>'+esc(x.metode)+'</td><td class="'+(x.status==="Lunas"?"ok":"no")+'">'+x.status+'</td><td><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+' <button class="sm" data-dp="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="6">Belum ada catatan untuk bulan ini.</td></tr>';
   drawDashboard();
@@ -380,7 +380,8 @@ function drawTeachers(){
   populateTeacherAccounts();
   var active=TEACHERS.filter(function(x){return x.status!=="Nonaktif"}).length;
   $("teacherMasterCount").textContent=active;
-  $("teacherMasterBody").innerHTML=TEACHERS.map(function(x){
+  var tq=($("teacherSearch").value||"").toLowerCase(),ts=$("teacherStatusFilter").value;var visibleTeachers=TEACHERS.filter(function(x){return (!ts||x.status===ts)&&(!tq||[x.nama,x.email,x.mapel,x.hp].join(" ").toLowerCase().includes(tq))});
+  $("teacherMasterBody").innerHTML=visibleTeachers.map(function(x){
     return '<tr><td><b>'+esc(x.nama||"Belum diisi")+'</b></td><td>'+esc(x.email||"")+'</td><td>'+esc(x.hp||"-")+'</td><td>'+esc(x.mapel||"-")+'</td><td class="'+(x.status==="Aktif"?"ok":"no")+'">'+esc(x.status||"Aktif")+'</td><td><button class="sm" data-etm="'+x.id+'">Edit</button></td></tr>';
   }).join("")||'<tr><td colspan="6">Belum ada akun Guru. Buat akun Guru di Supabase Authentication terlebih dahulu.</td></tr>';
 }
@@ -483,3 +484,5 @@ document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
 $("exportAdminBtn").onclick=function(){exportAdminExcel()};
 
 $("adminBell").onclick=function(e){e.stopPropagation();$("adminNotificationPanel").hidden=!$("adminNotificationPanel").hidden};document.addEventListener("click",function(e){if(!$("adminNotificationPanel").hidden&&!$("adminNotificationPanel").contains(e.target))$("adminNotificationPanel").hidden=true});
+
+["studentSearch","paymentSearch","expenseSearch","teacherSearch"].forEach(function(id){$(id).oninput=draw});["studentLevelFilter","paymentStatusFilter","teacherStatusFilter"].forEach(function(id){$(id).onchange=draw});
