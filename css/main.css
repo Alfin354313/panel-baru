@@ -1432,3 +1432,13 @@ body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;
 
 /* Wider desktop login canvas */
 @media(min-width:1000px){.ref-login-shell{width:min(1240px,calc(100vw - 56px));grid-template-columns:55% 45%}.ref-login-story{padding-left:42px;padding-right:42px}.ref-login-panel{padding-left:64px;padding-right:64px}.ref-login-panel .login-v5-card{width:min(390px,100%)!important}}
+
+/* Desktop workspace width aligned with the widened login (Admin + Guru). */
+@media(min-width:1000px){
+  #app,#teacherApp{width:min(1240px,calc(100vw - 56px))!important;max-width:1240px!important;margin-left:auto!important;margin-right:auto!important}
+  #app>header,#teacherApp>.card:first-child{width:100%!important;box-sizing:border-box!important}
+  #app>.tabs.top-menu.admin-sidebar,#teacherApp .top-menu{width:100%!important;box-sizing:border-box!important}
+  #app>#dashboard,#app>#tm,#app>#tp,#app>#te,#teacherApp .teacher-page{width:100%!important;max-width:none!important;box-sizing:border-box!important}
+  #teacherApp .top-menu{display:flex!important;overflow-x:auto!important;gap:8px!important}
+  #teacherApp .top-menu button{flex:1 0 auto!important;white-space:nowrap!important}
+}
