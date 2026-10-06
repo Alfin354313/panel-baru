@@ -1429,3 +1429,6 @@ body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;
 .ref-brand-logo{width:44px;height:44px;display:block;object-fit:contain;border-radius:50%;filter:drop-shadow(0 5px 12px rgba(4,35,61,.22))}
 .ref-login-panel .ref-logo img{width:84px!important;height:84px!important}
 @media(max-width:520px){.ref-login-panel .ref-logo img{width:76px!important;height:76px!important}}
+
+/* Wider desktop login canvas */
+@media(min-width:1000px){.ref-login-shell{width:min(1240px,calc(100vw - 56px));grid-template-columns:55% 45%}.ref-login-story{padding-left:42px;padding-right:42px}.ref-login-panel{padding-left:64px;padding-right:64px}.ref-login-panel .login-v5-card{width:min(390px,100%)!important}}
