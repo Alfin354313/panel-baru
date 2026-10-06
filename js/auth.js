@@ -25,11 +25,19 @@ async function jeniusLoginSubmitV5(){
   err.textContent="Menghubungkan ke Supabase...";
   err.style.display="block";
   try{
-    if(!sb){
-      var cfg=await apiConfig();
-      sb=window.supabase.createClient(cfg.url,cfg.key);
+    var client=window.sb;
+    if(!client){
+      var controller=new AbortController();
+      var timer=setTimeout(function(){controller.abort()},10000);
+      var response;
+      try{response=await fetch("/api/config?ts="+Date.now(),{cache:"no-store",signal:controller.signal})}finally{clearTimeout(timer)}
+      if(!response.ok)throw new Error("Konfigurasi Supabase belum tersedia (HTTP "+response.status+").");
+      var cfg=await response.json();
+      if(!cfg.url||!cfg.key)throw new Error("Konfigurasi Supabase belum lengkap.");
+      client=window.supabase.createClient(cfg.url,cfg.key);
+      window.sb=client;
     }
-    var loginPromise=sb.auth.signInWithPassword({email:email,password:password});
+    var loginPromise=client.auth.signInWithPassword({email:email,password:password});
     var timeoutPromise=new Promise(function(_,reject){
       setTimeout(function(){reject(new Error("Login ke Supabase terlalu lama. Periksa koneksi internet dan konfigurasi Supabase."));},15000);
     });
@@ -39,16 +47,17 @@ async function jeniusLoginSubmitV5(){
     if(!session||!session.user)throw new Error("Sesi login tidak terbentuk. Silakan coba lagi.");
     var role=normalizeRole(session.user.app_metadata&&session.user.app_metadata.role);
     if(!role){
-      await sb.auth.signOut();
+      await client.auth.signOut();
       throw new Error("Login berhasil, tetapi role akun belum diatur. Isi app_metadata.role dengan admin atau guru di Supabase.");
     }
     if(role!==loginRole){
-      await sb.auth.signOut();
+      await client.auth.signOut();
       throw new Error("Akun ini adalah "+(role==="guru"?"Guru":"Admin")+". Pilih jenis akun yang sesuai.");
     }
     err.textContent="Login berhasil. Membuka panel...";
     lastStartedSessionId=session.user.id;
-    await startApp(session);
+    if(typeof window.startApp!=="function"){throw new Error("Aplikasi utama belum siap. Muat ulang halaman setelah deployment selesai.");}
+    await window.startApp(session);
     err.style.display="none";
   }catch(e){
     console.error("LOGIN ERROR:",e);
