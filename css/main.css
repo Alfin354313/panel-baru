@@ -1461,3 +1461,17 @@ html,body{max-width:100%;overflow-x:hidden}
  #app>.tabs.top-menu.admin-sidebar>.tabs{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;align-items:stretch!important;gap:10px!important}
  #app>.tabs.top-menu.admin-sidebar>.tabs>button{width:100%!important;min-width:0!important;max-width:none!important;white-space:nowrap!important;margin:0!important}
 }
+
+/* Stage 1 polish — shared Admin/Guru header and navigation */
+#app>header,#teacherApp>.card:first-child{background:linear-gradient(135deg,#fff 0%,#f4f9ff 100%)!important;border:1px solid #cfe3f6!important;box-shadow:0 10px 30px rgba(21,67,107,.07)!important;border-radius:18px!important}
+#app>header img,.teacher-brand .dashboard-logo{width:52px!important;height:52px!important;flex-basis:52px!important;box-shadow:0 6px 16px rgba(21,67,107,.12);background:#fff;padding:3px}
+#app>header h1,.teacher-brand h1{font-size:1.45rem!important;letter-spacing:-.02em;color:#0b4677!important}
+.sync-badge{display:inline-flex!important;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:#eef7ff;color:#37617f!important;font-size:.78rem!important;white-space:nowrap}
+.sync-badge:before{content:"";width:7px;height:7px;border-radius:50%;background:#27a86b;box-shadow:0 0 0 3px rgba(39,168,107,.11)}
+.header-action{border-radius:999px!important;padding:8px 13px!important;background:#fff!important;border:1px solid #bcd8ef!important;color:#0b4677!important;box-shadow:none!important}
+.header-action:hover{background:#eef7ff!important}.logout-action{color:#c4382b!important;border-color:#efb9b3!important}.logout-action:hover{background:#fff3f1!important}
+#app>.tabs.top-menu.admin-sidebar,#teacherApp .top-menu{background:transparent!important;border:0!important;border-bottom:1px solid #d8e7f4!important;border-radius:0!important;padding:10px 12px 14px!important;box-shadow:none!important}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button,#app>.tabs.top-menu.admin-sidebar .admin-menu-group button,#teacherApp .top-menu button{min-height:46px!important;border-radius:12px!important;border:1px solid transparent!important;background:transparent!important;color:#244e70!important;font-weight:700!important;transition:.18s ease!important}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button:hover,#app>.tabs.top-menu.admin-sidebar .admin-menu-group button:hover,#teacherApp .top-menu button:hover{background:#edf7ff!important;border-color:#d4e9f8!important;transform:translateY(-1px)}
+#app>.tabs.top-menu.admin-sidebar>.tabs>button.on,#app>.tabs.top-menu.admin-sidebar .admin-menu-group button.on,#teacherApp .top-menu button.on{background:#dcefff!important;border-color:#acd6f3!important;color:#073f70!important;box-shadow:0 5px 14px rgba(30,111,184,.10)!important}
+@media(max-width:700px){.sync-badge{padding:6px 8px}.header-action{padding:7px 10px!important}#app>header img,.teacher-brand .dashboard-logo{width:44px!important;height:44px!important;flex-basis:44px!important}}
