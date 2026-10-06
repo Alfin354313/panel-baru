@@ -105,7 +105,7 @@
     <label>Biaya per bulan (Rp)<input name="biaya" type="number" min="0" required></label>
     <button id="fmSubmit" class="pri">Simpan murid</button><button id="cancelEdit" type="button" hidden>Batal edit</button>
   </form>
-  <div class="tw"><table><thead><tr><th>Nama</th><th>Jenjang</th><th>Kelas / mapel</th><th>Orang tua</th><th>WhatsApp</th><th>Biaya</th><th></th></tr></thead><tbody id="bm"></tbody></table></div>
+  <div class="table-tools"><input id="studentSearch" type="search" placeholder="Cari nama, kelas, orang tua..."><select id="studentLevelFilter"><option value="">Semua jenjang</option><option>SD</option><option>SMP</option><option>SMA</option></select></div><div class="tw"><table><thead><tr><th>Nama</th><th>Jenjang</th><th>Kelas / mapel</th><th>Orang tua</th><th>WhatsApp</th><th>Biaya</th><th></th></tr></thead><tbody id="bm"></tbody></table></div>
 </div>
 
 <div id="tp" class="card" hidden>
@@ -117,7 +117,7 @@
     <label>Metode<select name="metode"><option>Transfer</option><option>QRIS</option><option>Tunai</option></select></label>
     <button class="pri">Catat pembayaran</button>
   </form>
-  <label style="max-width:220px;margin-bottom:10px">Lihat bulan<input type="month" id="fb"></label>
+  <div class="table-tools"><label>Lihat bulan<input type="month" id="fb"></label><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option></select></div>
   <div class="tw"><table><thead><tr><th>Murid</th><th>Bulan</th><th>Jumlah</th><th>Metode</th><th>Status</th><th></th></tr></thead><tbody id="bp"></tbody></table></div>
 </div>
 <div id="te" class="card" hidden>
@@ -129,7 +129,7 @@
     <label>Jumlah (Rp)<input name="jumlah" type="number" min="0" required></label>
     <button class="pri">Catat pengeluaran</button>
   </form>
-  <label style="max-width:220px;margin-bottom:10px">Lihat bulan<input type="month" id="eb"></label>
+  <div class="table-tools"><label>Lihat bulan<input type="month" id="eb"></label><input id="expenseSearch" type="search" placeholder="Cari kategori atau keterangan..."></div>
   <p id="et2" style="font-weight:700;margin:0 0 10px"></p>
   <div class="tw"><table><thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jumlah</th><th></th></tr></thead><tbody id="be"></tbody></table></div>
 </div>
@@ -160,7 +160,7 @@
     </div>
   </form>
   <div style="margin-top:18px">
-    <h2>Daftar Guru</h2>
+    <div class="dashboard-head"><h2>Daftar Guru</h2><div class="table-tools compact"><input id="teacherSearch" type="search" placeholder="Cari guru atau mapel..."><select id="teacherStatusFilter"><option value="">Semua status</option><option>Aktif</option><option>Nonaktif</option></select></div></div>
     <div class="tw"><table><thead><tr><th>Nama</th><th>Email</th><th>No. HP</th><th>Mapel</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="teacherMasterBody"></tbody></table></div>
   </div>
 </div>
