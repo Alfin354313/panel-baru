@@ -1558,3 +1558,7 @@ html{scroll-behavior:smooth}body{background:linear-gradient(180deg,#f5f9fc 0,#ed
 
 /* Feature 8 — audit log */
 .audit-note{margin:12px 0 0;color:#7c909f;font-size:.7rem}.audit-action{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:.64rem;font-weight:900}.audit-action.create{background:#e8f6ee;color:#23805a}.audit-action.update{background:#eaf4fb;color:#2877aa}.audit-action.delete{background:#fff0ed;color:#bd5946}#auditLogBody small{color:#8497a5}
+
+/* Invoice close control */
+.professional-invoice{position:relative}.invoice-close-x{position:absolute;z-index:5;top:10px;right:10px;width:34px;height:34px;border:0;border-radius:50%;background:#fff;color:#174c71;font-size:1.35rem;line-height:1;box-shadow:0 2px 10px rgba(25,64,90,.16);cursor:pointer}.invoice-close-x:hover{background:#eef7fc}
+@media print{.invoice-close-x{display:none!important}}
