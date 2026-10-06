@@ -21,7 +21,8 @@ function invoiceNo(x){
   var count=P.filter(function(q){return q.status==="Lunas"&&q.id!==x.id}).length+1;
   return "INV-JE-"+d+"-"+String(count).padStart(3,"0")
 }
-function setSync(t){$("syncStatus").textContent=t}\nasync function auditLog(action,module,recordId,detail){if(!sb||!currentUser)return;try{await sb.from("audit_logs").insert({user_id:currentUser.id,user_email:currentUser.email||"",role:currentRole||"",action:action,module:module,record_id:String(recordId||""),detail:String(detail||"")})}catch(e){console.warn("Audit log gagal dicatat",e)}}
+function setSync(t){$("syncStatus").textContent=t}
+async function auditLog(action,module,recordId,detail){if(!sb||!currentUser)return;try{await sb.from("audit_logs").insert({user_id:currentUser.id,user_email:currentUser.email||"",role:currentRole||"",action:action,module:module,record_id:String(recordId||""),detail:String(detail||"")})}catch(e){console.warn("Audit log gagal dicatat",e)}}
 
 async function apiConfig(){
   var controller=new AbortController();
