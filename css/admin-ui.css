@@ -259,3 +259,38 @@ body.role-admin #attendanceAdminBody td:first-child{font-weight:800;color:#123e6
    background:rgba(255,255,255,.09)!important;border:0!important;transform:none!important
  }
 }
+
+
+/* Desktop app viewport: sidebar stays fixed, only right workspace scrolls */
+@media(min-width:900px){
+ html:has(body.role-admin),body.role-admin{height:100%;overflow:hidden!important}
+ body.role-admin #app{
+   height:calc(100vh - 36px)!important;
+   min-height:0!important;
+   overflow:hidden!important;
+   align-items:stretch!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   position:relative!important;
+   top:auto!important;
+   height:100%!important;
+   min-height:0!important;
+   overflow:hidden!important;
+ }
+ body.role-admin #app>header{
+   position:sticky!important;
+   top:0!important;
+   z-index:40!important;
+ }
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{
+   max-height:calc(100vh - 128px)!important;
+   overflow-y:auto!important;
+   overflow-x:hidden!important;
+   padding-right:4px!important;
+   scrollbar-gutter:stable!important;
+ }
+}
