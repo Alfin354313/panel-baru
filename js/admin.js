@@ -571,9 +571,50 @@ document.querySelector('[data-t="r"]').addEventListener("click",drawFinancialRep
 $("financialReportCsv").onclick=function(){var d=financialReportData(),rows=[["Periode","Jenis","Keterangan","Masuk","Keluar"]];d.paid.forEach(function(x){var m=stu(x.sid)||{};rows.push([x.bulan,"Pendapatan","Pembayaran "+(m.nama||"Murid"),Number(x.jumlah||0),0])});d.expenses.forEach(function(x){rows.push([x.tgl,"Pengeluaran",(x.kat||"")+" - "+(x.ket||""),0,Number(x.jumlah||0)])});rows.push(["","TOTAL","",d.income,d.expense],["","LABA/RUGI","",d.profit,""]);var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'}).join(",")}).join("\n"),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="Laporan-Keuangan-Jenius-Edu-"+d.month+".csv";link.click();setTimeout(function(){URL.revokeObjectURL(url)},500)};
 $("financialReportPdf").onclick=function(){var d=financialReportData();if(!window.jspdf||!window.jspdf.jsPDF){alert("Library PDF belum siap.");return}var doc=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),y=20;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.setFontSize(20);doc.text("JENIUS EDU",20,y);y+=8;doc.setFontSize(14);doc.text("LAPORAN KEUANGAN",20,y);y+=7;doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,115,130);doc.text("Periode: "+d.month,20,y);y+=12;[["Pendapatan",d.income],["Pengeluaran",d.expense],["Laba / Rugi",d.profit],["Piutang",d.unpaid]].forEach(function(r){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(r[0],20,y);doc.setFont("helvetica","bold");doc.text(rp(r[1]),190,y,{align:"right"});y+=8});y+=3;doc.setDrawColor(210,220,230);doc.line(20,y,190,y);y+=9;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.text("RINCIAN PENGELUARAN",20,y);y+=8;var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});Object.keys(cats).forEach(function(k){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(k,20,y);doc.setFont("helvetica","bold");doc.text(rp(cats[k]),190,y,{align:"right"});y+=7});doc.save("Laporan-Keuangan-Jenius-Edu-"+d.month+".pdf")};
 
-async function loadAuditLog(){$("auditLogBody").innerHTML=tableSkeleton(5);var r=await window.sb.from("audit_logs").select("*").order("created_at",{ascending:false}).limit(300);if(r.error){$("auditLogBody").innerHTML='<tr><td colspan="5">Audit log belum tersedia. Jalankan SQL Tahap 8 di Supabase.</td></tr>';return}AUDIT=r.data||[];drawAuditLog()}
-function drawAuditLog(){var q=($("auditSearch").value||"").toLowerCase(),f=$("auditActionFilter").value,rows=AUDIT.filter(function(x){return (!f||x.action===f)&&(!q||[x.user_email,x.action,x.module,x.detail].join(" ").toLowerCase().includes(q))});$("auditLogBody").innerHTML=rows.map(function(x){var dt=x.created_at?new Date(x.created_at).toLocaleString("id-ID"):"-";return '<tr><td>'+esc(dt)+'</td><td>'+esc(x.user_email||"-")+'<br><small>'+esc(x.role||"")+'</small></td><td><span class="audit-action '+String(x.action||"").toLowerCase()+'">'+esc(x.action||"-")+'</span></td><td>'+esc(x.module||"-")+'</td><td>'+esc(x.detail||"-")+'</td></tr>'}).join("")||emptyTable(5,"Belum ada aktivitas","Aktivitas baru atau hasil pencarian akan tampil di sini.")}
-$("refreshAuditLog").onclick=loadAuditLog;$("auditSearch").oninput=drawAuditLog;$("auditActionFilter").onchange=drawAuditLog;document.querySelector('[data-t="a"]').addEventListener("click",loadAuditLog);
+async function loadAuditLog(){
+  $("auditLogBody").innerHTML=tableSkeleton(5);
+  var r=await window.sb.from("audit_logs").select("*").order("created_at",{ascending:false}).limit(300);
+  if(r.error){$("auditLogBody").innerHTML='<tr><td colspan="5">Audit log belum tersedia. Jalankan SQL Tahap 8 di Supabase.</td></tr>';return}
+  AUDIT=r.data||[];
+  populateAuditUsers();
+  drawAuditLog();
+}
+function populateAuditUsers(){
+  var el=$("auditActionFilter");if(!el)return;
+  var keep=el.value;
+  var users=Array.from(new Set(AUDIT.map(function(x){return x.user_email||x.role||""}).filter(Boolean))).sort();
+  el.innerHTML='<option value="">Semua Pengguna</option>'+users.map(function(u){return '<option value="'+esc(u)+'">'+esc(u)+'</option>'}).join("");
+  if(keep&&users.indexOf(keep)>=0)el.value=keep;
+}
+function auditActivityLabel(x){
+  var action=String(x.action||"").toUpperCase(),detail=String(x.detail||"").trim();
+  if(detail)return detail;
+  if(action==="CREATE")return "Menambah data";
+  if(action==="UPDATE")return "Mengubah data";
+  if(action==="DELETE")return "Menghapus data";
+  if(action==="LOGIN")return "Login ke sistem";
+  return action||"-";
+}
+function drawAuditLog(){
+  var q=($("auditSearch").value||"").toLowerCase(),user=$("auditActionFilter").value;
+  var from=$("auditDateFrom")&&$("auditDateFrom").value,to=$("auditDateTo")&&$("auditDateTo").value;
+  var rows=AUDIT.filter(function(x){
+    var who=x.user_email||x.role||"",day=String(x.created_at||"").slice(0,10);
+    var search=[who,x.action,x.module,x.detail,auditActivityLabel(x)].join(" ").toLowerCase();
+    return (!user||who===user)&&(!q||search.includes(q))&&(!from||day>=from)&&(!to||day<=to);
+  });
+  $("auditLogBody").innerHTML=rows.map(function(x,idx){
+    var dt=x.created_at?new Date(x.created_at).toLocaleString("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"-";
+    var who=x.user_email||x.role||"-";
+    return '<tr><td>'+(idx+1)+'</td><td>'+esc(dt)+'</td><td><b>'+esc(who)+'</b></td><td>'+esc(auditActivityLabel(x))+'</td><td>'+esc(x.module||"-")+'</td></tr>';
+  }).join("")||emptyTable(5,"Belum ada aktivitas","Aktivitas baru atau hasil pencarian akan tampil di sini.");
+}
+$("refreshAuditLog").onclick=loadAuditLog;
+$("auditSearch").oninput=drawAuditLog;
+$("auditActionFilter").onchange=drawAuditLog;
+if($("auditDateFrom"))$("auditDateFrom").onchange=drawAuditLog;
+if($("auditDateTo"))$("auditDateTo").onchange=drawAuditLog;
+document.querySelector('[data-t="a"]').addEventListener("click",loadAuditLog);
 
 function tableSkeleton(cols){return '<tr class="skeleton-row"><td colspan="'+cols+'"><div class="skeleton-line w90"></div><div class="skeleton-line w70"></div><div class="skeleton-line w80"></div></td></tr>'}
 function emptyTable(cols,title,desc){return '<tr><td colspan="'+cols+'"><div class="empty-state"><div class="empty-state-icon">⌁</div><b>'+esc(title)+'</b><span>'+esc(desc)+'</span></div></td></tr>'}
