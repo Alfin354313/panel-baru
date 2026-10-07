@@ -1116,3 +1116,16 @@ body.role-admin .admin-topbar::after{
    cursor:pointer!important;
  }
 }
+
+@media(max-width:899px){
+ body.role-admin #app>.admin-sidebar{display:grid!important;grid-template-columns:minmax(0,1fr) 25%!important;align-items:stretch!important}
+ body.role-admin #app>.admin-sidebar>.tabs{grid-column:1!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.role-admin #app>.admin-sidebar>.tabs:after{display:none!important;content:none!important}
+ body.role-admin #app>.admin-sidebar>.mobile-more-menu{
+  grid-column:2!important;display:flex!important;width:100%!important;height:56px!important;min-height:56px!important;margin:0!important;padding:4px 2px!important;
+  flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:0!important;border-radius:8px!important;
+  background:transparent!important;color:#174c78!important;font-size:10px!important;font-weight:700!important
+ }
+ body.role-admin #app>.admin-sidebar>.mobile-more-menu .menu-icon{display:block!important;width:22px!important;height:22px!important;margin:0!important}
+}
+@media(min-width:900px){body.role-admin #app>.admin-sidebar>.mobile-more-menu{display:none!important}}
