@@ -178,10 +178,9 @@ function drawSalary(){
   var total=monthRows.reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   var paid=monthRows.filter(function(x){return x.status==="Sudah Dibayar"}).reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   $("salaryTotal").textContent=rp(total);$("salaryPaid").textContent=rp(paid);$("salaryUnpaid").textContent=rp(total-paid);
-  $("salaryBody").innerHTML=monthRows.map(function(x){
-    var it=salaryItemTotals(x.id);
-    return '<tr><td>'+esc(x.teacher_name||salaryTeacherLabel(x.teacher_id))+'</td><td>'+esc(x.bulan)+'</td><td>'+Number(x.jumlah_pertemuan||0)+'</td><td>'+rp(x.total_pertemuan)+'</td><td>'+rp(x.bonus)+'</td><td>'+rp(x.total_tambahan||it.add)+'</td><td>'+rp(x.total_potongan||it.cut)+'</td><td><b>'+rp(x.total_gaji)+'</b></td><td class="'+(x.status==="Sudah Dibayar"?"salary-status-paid":"salary-status-unpaid")+'">'+esc(x.status)+'</td><td><button class="sm" data-esal="'+x.id+'">Edit</button> <button class="sm" data-ssal="'+x.id+'">Slip Gaji</button> <button class="sm" data-psal="'+x.id+'">'+(x.status==="Sudah Dibayar"?"Tandai Belum":"Tandai Dibayar")+'</button> <button class="sm" data-dsal="'+x.id+'">Hapus</button></td></tr>';
-  }).join("")||'<tr><td colspan="10">Belum ada gaji untuk periode ini.</td></tr>';
+  $("salaryBody").innerHTML=monthRows.map(function(x,idx){
+    return '<tr><td>'+(idx+1)+'</td><td><b>'+esc(x.teacher_name||salaryTeacherLabel(x.teacher_id))+'</b></td><td>'+Number(x.jumlah_pertemuan||0)+'</td><td><b>'+rp(x.total_gaji)+'</b></td><td><span class="salary-state '+(x.status==="Sudah Dibayar"?"paid":"unpaid")+'">'+esc(x.status||"Belum Dibayar")+'</span></td><td><div class="salary-row-actions"><button class="salary-more" type="button">•••</button><div class="salary-action-menu"><button data-esal="'+x.id+'">Edit</button><button data-ssal="'+x.id+'">Slip Gaji</button><button data-psal="'+x.id+'">'+(x.status==="Sudah Dibayar"?"Tandai Belum":"Tandai Dibayar")+'</button><button data-dsal="'+x.id+'">Hapus</button></div></div></td></tr>';
+  }).join("")||'<tr><td colspan="6"><div class="salary-empty"><span>▤</span><b>Pilih periode untuk melihat rekap gaji</b><small>Belum ada data gaji guru pada periode ini.</small></div></td></tr>';
 }
 function resetSalaryForm(){
   editingSalaryId=null;$("salaryForm").reset();$("salaryMonth").value=thisM;$("salaryFormMonth").value=thisM;$("salaryRate").value=12500;$("salaryBonus").value=50000;$("salaryItems").innerHTML="";$("salarySubmit").textContent="💾 Simpan Gaji";$("salaryCancel").hidden=true;$("salaryNote").value="";updateSalaryMeeting();drawSalary();
@@ -190,7 +189,7 @@ function editSalary(id){
   var x=SAL.find(function(q){return q.id===id});if(!x)return;
   editingSalaryId=id;$("salaryTeacher").value=x.teacher_id;$("salaryTeacherName").value=x.teacher_name||"";$("salaryMonth").value=x.bulan;$("salaryFormMonth").value=x.bulan;$("salaryRate").value=Number(x.tarif_pertemuan||12500);$("salaryBonus").value=Number(x.bonus||0);$("salaryNote").value=x.catatan||"";$("salaryItems").innerHTML="";
   SALITEMS.filter(function(q){return q.salary_id===id}).forEach(addSalaryItemRow);
-  $("salarySubmit").textContent="💾 Simpan Perubahan";$("salaryCancel").hidden=false;updateSalaryMeeting();$("salaryForm").scrollIntoView({behavior:"smooth",block:"start"});
+  $("salarySubmit").textContent="💾 Simpan Perubahan";$("salaryCancel").hidden=false;$("salaryForm").hidden=false;updateSalaryMeeting();$("salaryForm").scrollIntoView({behavior:"smooth",block:"start"});
 }
 function showSalarySlip(id){
   var x=SAL.find(function(q){return q.id===id});
@@ -590,3 +589,7 @@ if($("openExpenseForm"))$("openExpenseForm").onclick=function(){var p=$("expense
 /* Data Guru form + row actions */
 if($("openTeacherForm"))$("openTeacherForm").onclick=function(){var p=$("teacherFormPanel");if(!p)return;p.hidden=!p.hidden;if(!p.hidden)syncTeacherMasterForm();};
 document.addEventListener("click",function(e){var more=e.target.closest(".teacher-more");document.querySelectorAll(".teacher-action-menu.open").forEach(function(m){if(!more||m!==more.nextElementSibling)m.classList.remove("open")});if(more){e.stopPropagation();more.nextElementSibling.classList.toggle("open")}});
+
+/* Gaji Guru redesigned controls */
+if($("openSalaryForm"))$("openSalaryForm").onclick=function(){var f=$("salaryForm");f.hidden=!f.hidden;if(!f.hidden){$("salaryFormMonth").value=$("salaryMonth").value||thisM;updateSalaryMeeting();}};
+document.addEventListener("click",function(e){var more=e.target.closest(".salary-more");document.querySelectorAll(".salary-action-menu.open").forEach(function(m){if(!more||m!==more.nextElementSibling)m.classList.remove("open")});if(more){e.stopPropagation();more.nextElementSibling.classList.toggle("open")}});
