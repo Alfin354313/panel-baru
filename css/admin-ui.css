@@ -606,3 +606,21 @@ body.role-admin .admin-students-page .student-search-box{box-sizing:border-box!i
 body.role-admin .admin-students-page .student-search-box input#studentSearch{box-sizing:border-box!important;display:block!important;min-width:0!important;width:100%!important;height:36px!important;margin:0!important;border:0!important;padding:0!important}
 body.role-admin .admin-students-page #studentLevelFilter{box-sizing:border-box!important;width:100%!important;margin:0!important}
 @media(max-width:899px){body.role-admin .admin-students-page .students-tools{grid-template-columns:1fr!important}}
+
+
+/* Compact Data Murid layout and finish search field */
+body.role-admin .admin-students-page{padding:14px 18px!important}
+body.role-admin .admin-students-page .students-page-head{margin-bottom:10px!important}
+body.role-admin .admin-students-page .students-tools{gap:10px!important;margin-bottom:8px!important}
+body.role-admin .admin-students-page .student-search-box{
+ height:40px!important;padding:0 12px!important;border:1px solid #c9dceb!important;border-radius:8px!important;
+ background:#fff!important;box-shadow:none!important;overflow:hidden!important
+}
+body.role-admin .admin-students-page .student-search-box span{flex:0 0 auto!important;display:grid!important;place-items:center!important;width:18px!important;font-size:17px!important}
+body.role-admin .admin-students-page .student-search-box input#studentSearch{
+ flex:1 1 auto!important;height:38px!important;line-height:38px!important;padding:0!important;margin:0!important;
+ border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important
+}
+body.role-admin .admin-students-page .students-table th{padding:9px 12px!important}
+body.role-admin .admin-students-page .students-table td{padding:7px 12px!important;height:46px!important}
+body.role-admin .admin-students-page .student-avatar{width:30px!important;height:30px!important}
