@@ -825,3 +825,21 @@ body.role-admin #auditLogPage .audit-note{margin:10px 2px 0;color:#6f879a;font-s
  body.role-admin #dashboard .dashboard-filter>span{font-size:11px!important;line-height:14px!important;margin:0 0 4px!important}
  body.role-admin #dashboard .dashboard-filter input{height:38px!important;min-height:38px!important;padding:7px 10px!important}
 }
+
+
+/* Dashboard period final alignment: vertically centered in Ringkasan panel */
+@media(min-width:900px){
+ body.role-admin #dashboard .admin-dashboard-welcome{position:relative!important;min-height:96px!important}
+ body.role-admin #dashboard .dashboard-filter{
+   top:50%!important;
+   right:14px!important;
+   transform:translateY(-50%)!important;
+   width:180px!important;
+   height:auto!important;
+   min-height:0!important;
+   padding:8px 10px!important;
+   overflow:visible!important;
+ }
+ body.role-admin #dashboard .dashboard-filter label,
+ body.role-admin #dashboard .dashboard-filter>span{display:block!important;margin:0 0 4px!important;line-height:14px!important}
+}
