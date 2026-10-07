@@ -719,3 +719,40 @@ body.role-admin .financial-page-v2{padding:16px 18px!important}
 .financial-summary-table{width:100%;border-collapse:collapse;font-size:12px}.financial-summary-table th,.financial-summary-table td{padding:10px 11px;border:1px solid #d9e4ed;text-align:left}.financial-summary-table th{background:#eaf2f8}.financial-summary-table td:last-child{font-weight:800}
 .financial-transactions-v2{margin-top:4px}.financial-transactions-v2 h3{margin:0 0 8px}.financial-transactions-v2 th,.financial-transactions-v2 td{padding:8px 10px!important}
 @media(max-width:800px){.financial-page-v2 .financial-report-head,.financial-page-v2 .financial-report-tools{align-items:stretch;flex-direction:column}.financial-period-label{width:100%}.financial-kpis-v2,.financial-overview-v2{grid-template-columns:1fr}.financial-report-chart{height:170px}}
+
+
+/* Gaji Guru — table polish */
+body.role-admin #salaryPage .salary-table-v2{margin-top:4px;border:1px solid #d7e5f0;border-radius:10px;background:#fff;overflow:visible}
+body.role-admin #salaryPage .salary-table-v2 .tw{border:0!important;border-radius:10px!important;box-shadow:none!important;overflow-x:auto!important;overflow-y:visible!important}
+body.role-admin #salaryPage .salary-table-v2 table{table-layout:fixed;min-width:720px;background:#fff!important}
+body.role-admin #salaryPage .salary-table-v2 th,
+body.role-admin #salaryPage .salary-table-v2 td{height:46px;padding:8px 12px!important;border-bottom:1px solid #e2ebf2!important;font-size:13px!important;line-height:1.25;vertical-align:middle!important}
+body.role-admin #salaryPage .salary-table-v2 th{height:40px;background:#eaf2f8!important;color:#153f61!important;font-size:12px!important;font-weight:800!important}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(1),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(1){width:7%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(2),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(2){width:28%;text-align:left}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(3),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(3){width:15%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(4),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(4){width:20%;text-align:right}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(5),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(5){width:18%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(6),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(6){width:12%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 tbody tr:last-child td{border-bottom:0!important}
+body.role-admin #salaryPage .salary-table-v2 tbody tr:not(:has(.salary-empty)):hover{background:#f7fbff!important}
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(2) b{font-weight:800;color:#123f63}
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(4) b{font-weight:850;color:#0b4f84}
+body.role-admin #salaryPage .salary-state{min-width:96px;justify-content:center;padding:6px 11px;font-size:11px;line-height:1}
+body.role-admin #salaryPage .salary-more{width:34px;height:30px;display:inline-flex!important;align-items:center;justify-content:center;padding:0!important;border-radius:8px!important;letter-spacing:2px}
+body.role-admin #salaryPage .salary-more:hover{background:#eef6ff!important}
+body.role-admin #salaryPage .salary-action-menu{top:calc(100% + 4px);min-width:150px}
+body.role-admin #salaryPage .salary-action-menu button{min-height:32px!important;font-size:12px!important}
+body.role-admin #salaryPage .salary-empty{min-height:150px;padding:20px}
+body.role-admin #salaryPage .salary-empty>span{width:44px;height:44px}
+@media(max-width:760px){
+  body.role-admin #salaryPage .salary-table-v2 table{min-width:680px}
+  body.role-admin #salaryPage .salary-table-v2 th,
+  body.role-admin #salaryPage .salary-table-v2 td{height:43px;padding:7px 10px!important;font-size:12px!important}
+}
