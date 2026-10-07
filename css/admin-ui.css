@@ -632,3 +632,10 @@ body.role-admin .admin-students-page .students-table td{padding:5px 10px!importa
 body.role-admin .admin-students-page .student-avatar{width:27px!important;height:27px!important}
 body.role-admin .admin-students-page .student-active-badge{padding:4px 10px!important}
 body.role-admin .admin-students-page .student-form-panel form{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+
+
+/* Data Murid: narrower, denser list */
+body.role-admin .admin-students-page .students-table th{padding:5px 10px!important;height:30px!important}
+body.role-admin .admin-students-page .students-table td{padding:3px 10px!important;height:32px!important;line-height:1.05!important}
+body.role-admin .admin-students-page .student-avatar{width:24px!important;height:24px!important;font-size:10px!important}
+body.role-admin .admin-students-page .student-active-badge{padding:3px 9px!important}
