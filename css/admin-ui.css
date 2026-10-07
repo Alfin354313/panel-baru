@@ -683,3 +683,15 @@ body.role-admin .admin-expenses-page{padding:16px 18px!important}
 .expense-table th,.expense-table td{padding:8px 10px!important;vertical-align:middle}.expense-table th{background:#eaf2f8}.expense-no{width:44px}.expense-actions{display:flex;gap:6px}.expense-actions .danger{color:#d93636}
 .expense-table-wrap .empty-state{padding:28px 12px!important}
 @media(max-width:760px){.expenses-page-head{align-items:stretch;flex-direction:column}.expenses-head-actions{align-items:stretch;flex-wrap:wrap}.expense-month{flex:1}.expenses-head-actions select{width:auto;flex:1}.expense-summary{width:auto}.expense-form-panel form{grid-template-columns:1fr 1fr}}
+
+
+/* Data Guru — reference layout */
+body.role-admin .teacher-master-page{padding:16px 18px!important}
+.teacher-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px}
+.teacher-page-title{display:flex;align-items:center;gap:10px;margin:4px 0 0}.teacher-title-icon{width:30px;height:30px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;background:#087cf0;color:#fff}.teacher-title-icon svg{width:18px;height:18px}
+.teacher-form-panel{padding:14px 16px;margin-bottom:12px;border:1px solid #cfe0ef;border-radius:12px;background:#f8fbff}.teacher-form-panel h3{margin:0 0 10px}.teacher-form-panel .teacher-master-form{margin:0}
+.teacher-search-row{position:relative;display:grid;grid-template-columns:minmax(260px,650px) 180px;gap:10px;margin-bottom:10px}.teacher-search-row input{padding-left:34px!important}.teacher-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);z-index:1;color:#326b9d;font-size:18px}
+.teacher-master-table th,.teacher-master-table td{padding:8px 10px!important;vertical-align:middle}.teacher-master-table th{background:#eaf2f8}.teacher-no{width:44px}.teacher-name-cell{display:flex;align-items:center;gap:9px}.teacher-avatar{width:29px;height:29px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#e7f2ff;color:#087cf0;font-size:10px;font-weight:800}
+.teacher-status{display:inline-flex;align-items:center;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:700}.teacher-status.active{background:#dcf7e9;color:#008e5b}.teacher-status.inactive{background:#ffe3e3;color:#d93636}
+.teacher-row-actions{position:relative;display:inline-block}.teacher-more{border:0!important;background:transparent!important;box-shadow:none!important;font-size:18px;font-weight:800;padding:3px 8px!important;color:#0a4f85}.teacher-action-menu{display:none;position:absolute;right:0;top:100%;z-index:20;min-width:100px;padding:5px;background:#fff;border:1px solid #d7e4ef;border-radius:9px;box-shadow:0 8px 24px rgba(12,55,91,.12)}.teacher-action-menu.open{display:grid}.teacher-action-menu button{border:0;background:transparent;text-align:left;padding:7px 9px;border-radius:6px}.teacher-action-menu button:hover{background:#eef6ff}
+@media(max-width:760px){.teacher-page-head{align-items:stretch;flex-direction:column}.teacher-search-row{grid-template-columns:1fr}.teacher-search-row select{width:100%}}
