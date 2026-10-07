@@ -497,3 +497,18 @@ body.role-admin .attendance-icon.sakit,body.role-admin .attendance-icon.absen{ba
  body.role-admin .admin-dashboard-welcome>div:first-child{text-align:center!important;margin:auto!important;padding:0 210px!important}
  body.role-admin .admin-dashboard-welcome .dashboard-filter{position:absolute!important;right:12px!important;top:50%!important;transform:translateY(-50%)!important}
 }
+
+
+/* Keep period picker above decorative card shapes and fully clickable */
+body.role-admin .admin-dashboard-welcome{overflow:visible!important}
+body.role-admin .admin-dashboard-welcome .dashboard-filter{
+ z-index:20!important;pointer-events:auto!important;overflow:visible!important
+}
+body.role-admin .admin-dashboard-welcome .dashboard-filter input,
+body.role-admin #dashboardMonth{
+ position:relative!important;z-index:21!important;pointer-events:auto!important;cursor:pointer!important
+}
+body.role-admin .admin-dashboard-welcome::before,
+body.role-admin .admin-dashboard-welcome::after,
+body.role-admin .dashboard-filter::before,
+body.role-admin .dashboard-filter::after{pointer-events:none!important}
