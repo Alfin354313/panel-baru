@@ -489,3 +489,11 @@ body.role-admin .attendance-icon.sakit,body.role-admin .attendance-icon.absen{ba
  body.role-admin #dashboard .attendance-compact-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
  body.role-admin #dashboard .dashboard-ratio-grid{grid-area:ratio!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,230px))!important;gap:8px!important;margin:0!important}
 }
+
+
+/* Center dashboard summary copy while keeping period control on the right */
+@media(min-width:900px){
+ body.role-admin .admin-dashboard-welcome{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important}
+ body.role-admin .admin-dashboard-welcome>div:first-child{text-align:center!important;margin:auto!important;padding:0 210px!important}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter{position:absolute!important;right:12px!important;top:50%!important;transform:translateY(-50%)!important}
+}
