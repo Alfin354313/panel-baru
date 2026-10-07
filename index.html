@@ -125,17 +125,28 @@
 
 <div id="studentProfilePage" class="card student-profile-page" hidden><div class="student-profile-head"><button id="studentProfileBack" type="button">← Kembali</button><div><small>PROFIL MURID</small><h2 id="studentProfileName">-</h2><span id="studentProfileMeta">-</span></div></div><div id="studentProfileSummary" class="student-profile-summary"></div><div class="student-profile-grid"><section><h3>Riwayat Pembayaran</h3><div id="studentProfilePayments"></div></section><section><h3>Rekap Absensi</h3><div id="studentProfileAttendance"></div></section><section><h3>Catatan Guru Terbaru</h3><div id="studentProfileNotes"></div></section><section><h3>Laporan Perkembangan</h3><div id="studentProfileReports"></div></section></div></div>
 
-<div id="tp" class="card" hidden>
-  <h2>Catat pembayaran</h2>
-  <form id="fp">
-    <label>Murid<select name="sid" id="sel" required></select></label>
-    <label>Bulan<input name="bulan" id="pb" type="month" required></label>
-    <label>Jumlah (Rp)<input name="jumlah" id="pj" type="number" min="0" required></label>
-    <label>Metode<select name="metode"><option>Transfer</option><option>QRIS</option><option>Tunai</option></select></label>
-    <button class="pri">Catat pembayaran</button>
-  </form>
-  <div class="table-tools"><label>Lihat bulan<input type="month" id="fb"></label><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option></select></div>
-  <div class="tw"><table><thead><tr><th>Murid</th><th>Bulan</th><th>Jumlah</th><th>Metode</th><th>Status</th><th></th></tr></thead><tbody id="bp"></tbody></table></div>
+<div id="tp" class="card admin-payments-page" hidden>
+  <div class="payments-page-head">
+    <div><span class="section-eyebrow">TRANSAKSI</span><h2 class="payments-title"><span class="payments-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M7 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Data Pembayaran</h2></div>
+    <div class="payments-head-actions"><label class="payment-month"><span>Periode</span><input type="month" id="fb"></label><button id="openPaymentForm" type="button" class="pri">＋ Catat Pembayaran</button></div>
+  </div>
+  <div id="paymentFormPanel" class="payment-form-panel" hidden>
+    <h3>Catat pembayaran</h3>
+    <form id="fp">
+      <label>Murid<select name="sid" id="sel" required></select></label>
+      <label>Bulan<input name="bulan" id="pb" type="month" required></label>
+      <label>Jumlah (Rp)<input name="jumlah" id="pj" type="number" min="0" required></label>
+      <label>Metode<select name="metode"><option>Transfer</option><option>QRIS</option><option>Tunai</option></select></label>
+      <button class="pri">Simpan Pembayaran</button>
+    </form>
+  </div>
+  <div class="payment-kpis">
+    <div class="payment-kpi bill"><span class="payment-kpi-icon">▣</span><div><small>Tagihan</small><b id="paymentBillTotal">Rp0</b></div></div>
+    <div class="payment-kpi paid"><span class="payment-kpi-icon">✓</span><div><small>Lunas</small><b id="paymentPaidTotal">Rp0</b></div></div>
+    <div class="payment-kpi unpaid"><span class="payment-kpi-icon">!</span><div><small>Belum Lunas</small><b id="paymentUnpaidTotal">Rp0</b></div></div>
+  </div>
+  <div class="payment-filter-row"><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option></select></div>
+  <div class="tw payment-table-wrap"><table class="payment-table"><thead><tr><th>No</th><th>Murid</th><th>Periode</th><th>Nominal</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="bp"></tbody></table></div>
 </div>
 <div id="te" class="card" hidden>
   <h2>Catat pengeluaran</h2>
