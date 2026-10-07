@@ -410,240 +410,44 @@ body.role-admin .dashboard-student-count{display:block;margin-top:7px;color:#668
 }
 
 
-/* Compact desktop KPI grid — 4 cards per row like approved reference */
-@media(min-width:900px){
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){
-   display:grid!important;
-   grid-template-columns:repeat(4,minmax(0,1fr))!important;
-   gap:8px!important;
- }
- body.role-admin #dashboard .dashboard-card{
-   position:relative!important;
-   min-height:76px!important;
-   padding:10px 10px 10px 52px!important;
-   display:flex!important;
-   flex-direction:column!important;
-   justify-content:center!important;
-   overflow:hidden!important;
- }
- body.role-admin #dashboard .dashboard-card .kpi-icon{
-   position:absolute!important;
-   left:10px!important;right:auto!important;top:50%!important;
-   transform:translateY(-50%)!important;
-   width:32px!important;height:32px!important;min-width:32px!important;
-   margin:0!important;padding:7px!important;
-   border-radius:9px!important;
-   z-index:3!important;
- }
- body.role-admin #dashboard .dashboard-card:after{display:none!important}
- body.role-admin #dashboard .dashboard-card small{
-   line-height:1.15!important;margin:0!important;font-size:.66rem!important;
- }
- body.role-admin #dashboard .dashboard-card b{
-   margin:3px 0 0!important;font-size:1.12rem!important;line-height:1.1!important;
- }
- body.role-admin #dashboard .dashboard-card .kpi-caption{
-   margin-top:3px!important;font-size:.55rem!important;line-height:1.1!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){
-   display:grid!important;
-   grid-template-columns:repeat(2,minmax(0,230px))!important;
-   gap:8px!important;margin-top:8px!important;
-   justify-content:start!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2)>.card{
-   min-height:54px!important;padding:9px 11px!important;
- }
-}
-@media(min-width:900px) and (max-width:1120px){
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){
-   grid-template-columns:repeat(2,minmax(0,1fr))!important;
- }
-}
-
-
-/* KPI grid correction — override legacy dashboard-card flex/width rules */
-@media(min-width:1121px){
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){
-   display:grid!important;
-   grid-template-columns:repeat(4,minmax(0,1fr))!important;
-   grid-auto-flow:row!important;
-   width:100%!important;
-   max-width:none!important;
-   gap:10px!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card{
-   width:auto!important;max-width:none!important;min-width:0!important;
-   height:82px!important;min-height:82px!important;
-   margin:0!important;padding:10px 10px 10px 54px!important;
-   box-sizing:border-box!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-icon{
-   left:11px!important;top:50%!important;width:34px!important;height:34px!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small,
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b,
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-caption{
-   position:static!important;display:block!important;width:auto!important;
-   overflow:visible!important;white-space:normal!important;text-overflow:clip!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small{font-size:.68rem!important}
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b{font-size:1.12rem!important}
-}
-
-
-/* KPI icon placement v3 — keep icons on the right so text never overlaps */
-@media(min-width:900px){
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card{
-   display:block!important;
-   position:relative!important;
-   padding:12px 52px 10px 12px!important;
-   overflow:hidden!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-icon{
-   position:absolute!important;
-   left:auto!important;right:11px!important;top:50%!important;
-   transform:translateY(-50%)!important;
-   width:34px!important;height:34px!important;min-width:34px!important;
-   margin:0!important;padding:7px!important;
-   border-radius:9px!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small,
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b,
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-caption{
-   display:block!important;position:static!important;
-   max-width:100%!important;margin-left:0!important;
- }
-}
-
-
-/* Compact attendance block beside KPI area */
-body.role-admin .dashboard-attendance-compact{margin-top:8px;padding:10px 12px;border:1px solid #dbe8f2;border-radius:11px;background:#fff}
-body.role-admin .attendance-compact-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;color:#123e65}
-body.role-admin .attendance-compact-head small{color:#7890a3;font-size:.62rem}
-body.role-admin .attendance-compact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-body.role-admin .attendance-compact-grid>div{display:grid;grid-template-columns:28px 1fr;grid-template-rows:auto auto;column-gap:7px;align-items:center;padding:7px 8px;border:1px solid #e1ebf3;border-radius:8px;background:#fbfdff}
-body.role-admin .attendance-compact-grid small{font-size:.6rem;color:#617c92}
-body.role-admin .attendance-compact-grid b{font-size:.92rem;color:#0b3566}
-body.role-admin .attendance-icon{grid-row:1/3;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;font-weight:900}
-body.role-admin .attendance-icon.hadir{background:#eaf4ff;color:#087bf1}
-body.role-admin .attendance-icon.izin{background:#fff5e9;color:#ef8b2c}
-body.role-admin .attendance-icon.sakit{background:#fff0f0;color:#e94a4f}
-body.role-admin .attendance-icon.absen{background:#fff0f0;color:#e23c43}
-@media(min-width:1121px){
- body.role-admin #dashboard>.dashboard-section:first-child{display:grid!important;grid-template-columns:minmax(0,1.7fr) minmax(330px,.7fr)!important;column-gap:10px!important}
- body.role-admin #dashboard>.dashboard-section:first-child>.admin-dashboard-welcome{grid-column:1/-1!important}
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-column:1!important}
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-attendance-compact{grid-column:2!important;grid-row:2!important;margin-top:0!important}
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){grid-column:1/-1!important}
- body.role-admin .attendance-compact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:899px){
- body.role-admin .dashboard-attendance-compact{margin:8px 0!important}
- body.role-admin .attendance-compact-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
- body.role-admin .attendance-compact-grid>div{display:flex;flex-direction:column;gap:2px;padding:7px 3px;text-align:center}
- body.role-admin .attendance-icon{width:26px;height:26px}
-}
-
-
-/* Dashboard top composition v4 — balanced KPI + attendance, no dead space */
+/* Dashboard layout — consolidated desktop rules */
 @media(min-width:1121px){
  body.role-admin #dashboard>.dashboard-section:first-child{
-   display:grid!important;
-   grid-template-columns:minmax(0,2.15fr) minmax(300px,.85fr)!important;
-   grid-template-rows:auto auto auto!important;
-   gap:10px!important;
-   align-items:stretch!important;
+  display:grid!important;grid-template-columns:minmax(0,1fr) 320px!important;
+  grid-template-areas:"welcome welcome" "kpis attendance" "ratio ratio"!important;
+  gap:10px!important;padding:12px!important;align-items:stretch!important
  }
- body.role-admin #dashboard>.dashboard-section:first-child>.admin-dashboard-welcome{
-   grid-column:1/-1!important;grid-row:1!important;
+ body.role-admin #dashboard .admin-dashboard-welcome{grid-area:welcome!important;min-height:96px!important}
+ body.role-admin #dashboard .dashboard-kpi-grid{
+  grid-area:kpis!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,78px)!important;gap:8px!important;width:100%!important;margin:0!important
  }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){
-   grid-column:1!important;grid-row:2!important;
-   display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
-   gap:8px!important;width:100%!important;align-self:stretch!important;
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+  display:block!important;position:relative!important;width:auto!important;min-width:0!important;max-width:none!important;
+  height:78px!important;min-height:78px!important;margin:0!important;padding:11px 45px 9px 11px!important;
+  box-sizing:border-box!important;overflow:hidden!important
  }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card{
-   height:78px!important;min-height:78px!important;width:100%!important;
-   padding:10px 46px 9px 10px!important;
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-icon{
+  position:absolute!important;left:auto!important;right:9px!important;top:50%!important;transform:translateY(-50%)!important;
+  width:30px!important;height:30px!important;min-width:30px!important;margin:0!important;padding:6px!important;border-radius:9px!important
  }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-icon{
-   right:9px!important;width:30px!important;height:30px!important;min-width:30px!important;padding:6px!important;
+ body.role-admin #dashboard .dashboard-kpi-grid small,
+ body.role-admin #dashboard .dashboard-kpi-grid b,
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-caption{display:block!important;position:static!important;max-width:100%!important;margin-left:0!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{
+  grid-area:attendance!important;margin:0!important;padding:10px 12px!important;height:164px!important;min-height:164px!important;
+  display:flex!important;flex-direction:column!important;justify-content:center!important;border:1px solid #dbe8f2!important;border-radius:11px!important;background:#fff!important
  }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-attendance-compact{
-   grid-column:2!important;grid-row:2!important;
-   margin:0!important;height:100%!important;min-height:164px!important;
-   display:flex!important;flex-direction:column!important;justify-content:center!important;
+ body.role-admin #dashboard .attendance-compact-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{
+  grid-area:ratio!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,230px))!important;
+  gap:8px!important;width:100%!important;margin:0!important;justify-content:start!important
  }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-attendance-compact .attendance-compact-grid{
-   grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){
-   grid-column:1/-1!important;grid-row:3!important;
-   display:grid!important;grid-template-columns:repeat(2,minmax(0,230px))!important;
-   gap:8px!important;margin:0!important;
- }
+ body.role-admin #dashboard .dashboard-ratio-grid>.card{width:100%!important;min-height:54px!important;margin:0!important;padding:9px 11px!important}
 }
 @media(min-width:900px) and (max-width:1120px){
  body.role-admin #dashboard>.dashboard-section:first-child{display:block!important}
- body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-attendance-compact{margin-top:8px!important}
-}
-
-
-/* Dashboard layout v5 — stable class-based selectors (do not rely on nth-of-type) */
-@media(min-width:1121px){
- body.role-admin #dashboard>.dashboard-section:first-child{
-   display:grid!important;
-   grid-template-columns:minmax(0,1fr) 320px!important;
-   grid-template-areas:
-     "welcome welcome"
-     "kpis attendance"
-     "ratio ratio"!important;
-   grid-template-rows:auto auto auto!important;
-   gap:10px!important;
-   align-items:stretch!important;
-   padding:12px!important;
- }
- body.role-admin #dashboard>.dashboard-section:first-child>.admin-dashboard-welcome{
-   grid-area:welcome!important;display:flex!important;min-height:96px!important;
- }
- body.role-admin #dashboard .dashboard-kpi-grid{
-   grid-area:kpis!important;
-   display:grid!important;
-   grid-template-columns:repeat(4,minmax(0,1fr))!important;
-   grid-template-rows:repeat(2,78px)!important;
-   gap:8px!important;width:100%!important;margin:0!important;
- }
- body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
-   display:block!important;position:relative!important;
-   width:100%!important;min-width:0!important;max-width:none!important;
-   height:78px!important;min-height:78px!important;
-   margin:0!important;padding:11px 45px 9px 11px!important;
-   box-sizing:border-box!important;overflow:hidden!important;
- }
- body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-icon{
-   position:absolute!important;left:auto!important;right:9px!important;top:50%!important;
-   transform:translateY(-50%)!important;width:30px!important;height:30px!important;
-   min-width:30px!important;margin:0!important;padding:6px!important;
- }
- body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card small,
- body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card b,
- body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{
-   position:static!important;display:block!important;width:auto!important;max-width:100%!important;
-   margin-left:0!important;white-space:normal!important;overflow:visible!important;
- }
- body.role-admin #dashboard .dashboard-attendance-compact{
-   grid-area:attendance!important;margin:0!important;
-   height:164px!important;min-height:164px!important;
-   display:flex!important;flex-direction:column!important;justify-content:center!important;
-   box-sizing:border-box!important;
- }
- body.role-admin #dashboard .dashboard-ratio-grid{
-   grid-area:ratio!important;display:grid!important;
-   grid-template-columns:repeat(2,minmax(0,230px))!important;
-   gap:8px!important;width:100%!important;margin:0!important;justify-content:start!important;
- }
- body.role-admin #dashboard .dashboard-ratio-grid>.card{
-   width:100%!important;min-height:54px!important;height:auto!important;margin:0!important;padding:9px 11px!important;
- }
+ body.role-admin #dashboard .dashboard-kpi-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{margin-top:8px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:8px!important}
 }
