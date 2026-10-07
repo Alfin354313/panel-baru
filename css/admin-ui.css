@@ -1394,3 +1394,11 @@ body.role-admin .admin-topbar::after{
   font-size:11px!important;font-weight:800!important;white-space:nowrap!important
  }
 }
+
+
+/* Nudge only the mobile Menu control left to match the compact group visually. */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu{
+  transform:translateX(-5px)!important
+ }
+}
