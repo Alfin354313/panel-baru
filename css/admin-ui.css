@@ -1129,3 +1129,25 @@ body.role-admin .admin-topbar::after{
  body.role-admin #app>.admin-sidebar>.mobile-more-menu .menu-icon{display:block!important;width:22px!important;height:22px!important;margin:0!important}
 }
 @media(min-width:900px){body.role-admin #app>.admin-sidebar>.mobile-more-menu{display:none!important}}
+
+
+/* FINAL mobile bottom bar: override legacy hidden menu rules */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+  display:flex!important;flex-direction:row!important;align-items:stretch!important;
+  width:100%!important;height:66px!important;padding:4px 6px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+  display:grid!important;grid-template-columns:repeat(3,1fr)!important;flex:0 0 75%!important;
+  width:75%!important;height:58px!important;gap:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"]{display:flex!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group{display:none!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(1),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(2){display:block!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(1)>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(2)>button{display:flex!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu{
+  display:flex!important;flex:0 0 25%!important;width:25%!important;height:58px!important
+ }
+}
