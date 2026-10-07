@@ -215,3 +215,47 @@ body.role-admin #attendanceAdminBody td:first-child{font-weight:800;color:#123e6
  body.role-admin #dashboardUnpaid{grid-template-columns:1fr!important}
  body.role-admin #attendanceAdminBody{font-size:.72rem!important}
 }
+
+
+/* Desktop sidebar hard reset — prevent legacy .tabs rules from collapsing the menu */
+@media(min-width:900px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   display:block!important;position:sticky!important;top:0!important;overflow:visible!important;
+   width:210px!important;min-width:210px!important;max-width:210px!important;
+   min-height:calc(100vh - 36px)!important;height:auto!important;
+   padding:20px 14px!important;margin:0!important;
+   border:0!important;border-radius:0!important;
+   background:linear-gradient(180deg,#082f59 0%,#0a477b 100%)!important;
+   box-shadow:none!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+   display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;
+   align-items:stretch!important;justify-content:flex-start!important;
+   width:100%!important;max-width:none!important;overflow:visible!important;gap:6px!important;
+   margin:0!important;padding:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group{
+   display:block!important;position:static!important;float:none!important;
+   flex:0 0 auto!important;width:100%!important;min-width:0!important;max-width:none!important;
+   margin:0!important;padding:0!important;border:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button{
+   display:flex!important;align-items:center!important;justify-content:flex-start!important;
+   width:100%!important;min-width:0!important;max-width:none!important;height:42px!important;
+   margin:0!important;padding:0 12px!important;
+   border:0!important;border-radius:8px!important;
+   background:transparent!important;color:#f3f8fd!important;
+   font-size:.82rem!important;font-weight:700!important;line-height:1!important;
+   text-align:left!important;white-space:nowrap!important;overflow:hidden!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button.on{
+   background:#147df5!important;color:#fff!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button:hover,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button:hover{
+   background:rgba(255,255,255,.09)!important;border:0!important;transform:none!important
+ }
+}
