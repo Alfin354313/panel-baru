@@ -1339,3 +1339,26 @@ body.role-admin .admin-topbar::after{
  body.role-admin #app>.tabs.top-menu.admin-sidebar button span{font-size:9px!important;line-height:11px!important}
  body.role-admin #app{padding-bottom:48px!important}
 }
+
+
+/* Keep the four mobile Admin controls as one contiguous group. */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+  display:grid!important;
+  grid-template-columns:192px 64px!important;
+  justify-content:center!important;
+  column-gap:2px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+  grid-column:1!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,64px)!important;
+  gap:2px!important;
+  width:192px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu{
+  grid-column:2!important;
+  width:64px!important;
+  margin:0!important
+ }
+}
