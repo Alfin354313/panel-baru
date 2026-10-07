@@ -843,3 +843,18 @@ body.role-admin #auditLogPage .audit-note{margin:10px 2px 0;color:#6f879a;font-s
  body.role-admin #dashboard .dashboard-filter label,
  body.role-admin #dashboard .dashboard-filter>span{display:block!important;margin:0 0 4px!important;line-height:14px!important}
 }
+
+
+/* Extend blue accent line under Panel Pengelola across the header */
+body.role-admin .admin-topbar{position:relative!important}
+body.role-admin .admin-topbar::after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:3px!important;
+  background:#1683f8!important;
+  border-radius:0 0 3px 3px!important;
+  pointer-events:none!important;
+}
