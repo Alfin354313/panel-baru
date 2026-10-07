@@ -639,3 +639,9 @@ body.role-admin .admin-students-page .students-table th{padding:5px 10px!importa
 body.role-admin .admin-students-page .students-table td{padding:3px 10px!important;height:32px!important;line-height:1.05!important}
 body.role-admin .admin-students-page .student-avatar{width:24px!important;height:24px!important;font-size:10px!important}
 body.role-admin .admin-students-page .student-active-badge{padding:3px 9px!important}
+
+
+/* Data Murid title icon */
+body.role-admin .admin-students-page .students-title{display:flex;align-items:center;gap:10px}
+body.role-admin .admin-students-page .students-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0;flex:0 0 30px}
+body.role-admin .admin-students-page .students-title-icon svg{width:18px;height:18px;display:block}
