@@ -355,3 +355,20 @@ body.role-admin #attendanceAdminBody td:first-child{font-weight:800;color:#123e6
    padding-bottom:20px!important;
  }
 }
+
+
+/* Admin navigation SVG icon system */
+body.role-admin .admin-sidebar .menu-icon{
+ width:19px!important;height:19px!important;min-width:19px!important;
+ margin-right:10px!important;fill:none!important;stroke:currentColor!important;
+ stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;
+ vertical-align:middle!important
+}
+body.role-admin .admin-sidebar button span{display:inline-block!important}
+@media(max-width:899px){
+ body.role-admin .admin-sidebar .menu-icon{
+  display:block!important;width:21px!important;height:21px!important;
+  margin:0 auto 3px!important
+ }
+ body.role-admin .admin-sidebar button span{display:block!important}
+}
