@@ -460,3 +460,33 @@ body.role-admin .dashboard-student-count{display:block;margin-top:7px;color:#668
    grid-template-columns:repeat(2,minmax(0,1fr))!important;
  }
 }
+
+
+/* KPI grid correction — override legacy dashboard-card flex/width rules */
+@media(min-width:1121px){
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){
+   display:grid!important;
+   grid-template-columns:repeat(4,minmax(0,1fr))!important;
+   grid-auto-flow:row!important;
+   width:100%!important;
+   max-width:none!important;
+   gap:10px!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card{
+   width:auto!important;max-width:none!important;min-width:0!important;
+   height:82px!important;min-height:82px!important;
+   margin:0!important;padding:10px 10px 10px 54px!important;
+   box-sizing:border-box!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-icon{
+   left:11px!important;top:50%!important;width:34px!important;height:34px!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small,
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b,
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-caption{
+   position:static!important;display:block!important;width:auto!important;
+   overflow:visible!important;white-space:normal!important;text-overflow:clip!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small{font-size:.68rem!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b{font-size:1.12rem!important}
+}
