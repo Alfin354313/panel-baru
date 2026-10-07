@@ -588,3 +588,62 @@ body.role-admin .attendance-icon.absen{background:#fff0f0;color:#e23c43}
  body.role-admin #dashboard>.dashboard-section:first-child{display:block!important}
  body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-attendance-compact{margin-top:8px!important}
 }
+
+
+/* Dashboard layout v5 — stable class-based selectors (do not rely on nth-of-type) */
+@media(min-width:1121px){
+ body.role-admin #dashboard>.dashboard-section:first-child{
+   display:grid!important;
+   grid-template-columns:minmax(0,1fr) 320px!important;
+   grid-template-areas:
+     "welcome welcome"
+     "kpis attendance"
+     "ratio ratio"!important;
+   grid-template-rows:auto auto auto!important;
+   gap:10px!important;
+   align-items:stretch!important;
+   padding:12px!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.admin-dashboard-welcome{
+   grid-area:welcome!important;display:flex!important;min-height:96px!important;
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid{
+   grid-area:kpis!important;
+   display:grid!important;
+   grid-template-columns:repeat(4,minmax(0,1fr))!important;
+   grid-template-rows:repeat(2,78px)!important;
+   gap:8px!important;width:100%!important;margin:0!important;
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+   display:block!important;position:relative!important;
+   width:100%!important;min-width:0!important;max-width:none!important;
+   height:78px!important;min-height:78px!important;
+   margin:0!important;padding:11px 45px 9px 11px!important;
+   box-sizing:border-box!important;overflow:hidden!important;
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-icon{
+   position:absolute!important;left:auto!important;right:9px!important;top:50%!important;
+   transform:translateY(-50%)!important;width:30px!important;height:30px!important;
+   min-width:30px!important;margin:0!important;padding:6px!important;
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card small,
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card b,
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{
+   position:static!important;display:block!important;width:auto!important;max-width:100%!important;
+   margin-left:0!important;white-space:normal!important;overflow:visible!important;
+ }
+ body.role-admin #dashboard .dashboard-attendance-compact{
+   grid-area:attendance!important;margin:0!important;
+   height:164px!important;min-height:164px!important;
+   display:flex!important;flex-direction:column!important;justify-content:center!important;
+   box-sizing:border-box!important;
+ }
+ body.role-admin #dashboard .dashboard-ratio-grid{
+   grid-area:ratio!important;display:grid!important;
+   grid-template-columns:repeat(2,minmax(0,230px))!important;
+   gap:8px!important;width:100%!important;margin:0!important;justify-content:start!important;
+ }
+ body.role-admin #dashboard .dashboard-ratio-grid>.card{
+   width:100%!important;min-height:54px!important;height:auto!important;margin:0!important;padding:9px 11px!important;
+ }
+}
