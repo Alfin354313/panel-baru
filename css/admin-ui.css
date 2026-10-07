@@ -756,3 +756,10 @@ body.role-admin #salaryPage .salary-empty>span{width:44px;height:44px}
   body.role-admin #salaryPage .salary-table-v2 th,
   body.role-admin #salaryPage .salary-table-v2 td{height:43px;padding:7px 10px!important;font-size:12px!important}
 }
+
+
+/* Gaji Guru — no unnecessary table scrollbar on desktop */
+@media(min-width:761px){
+  body.role-admin #salaryPage .salary-table-v2 .tw{overflow:visible!important}
+  body.role-admin #salaryPage .salary-table-v2 table{min-width:0!important;width:100%!important}
+}
