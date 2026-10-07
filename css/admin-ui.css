@@ -1159,3 +1159,18 @@ body.role-admin .admin-topbar::after{
  body.role-admin #mobileMorePanel button:last-child{grid-column:1/-1!important}
 }
 @media(min-width:900px){#mobileMorePanel{display:none!important}}
+
+
+/* Mobile page visibility: hidden admin pages must never remain visible behind the selected tab. */
+@media(max-width:899px){
+ body.role-admin #app>#dashboard[hidden],
+ body.role-admin #app>#tm[hidden],
+ body.role-admin #app>#tp[hidden],
+ body.role-admin #app>#te[hidden],
+ body.role-admin #app>#teacherMasterPage[hidden],
+ body.role-admin #app>#salaryPage[hidden],
+ body.role-admin #app>#financialReportPage[hidden],
+ body.role-admin #app>#auditLogPage[hidden],
+ body.role-admin #app>#studentProfilePage[hidden],
+ body.role-admin #app>#teacherProfilePage[hidden]{display:none!important}
+}
