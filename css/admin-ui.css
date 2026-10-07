@@ -490,3 +490,28 @@ body.role-admin .dashboard-student-count{display:block;margin-top:7px;color:#668
  body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small{font-size:.68rem!important}
  body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b{font-size:1.12rem!important}
 }
+
+
+/* KPI icon placement v3 — keep icons on the right so text never overlaps */
+@media(min-width:900px){
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card{
+   display:block!important;
+   position:relative!important;
+   padding:12px 52px 10px 12px!important;
+   overflow:hidden!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-icon{
+   position:absolute!important;
+   left:auto!important;right:11px!important;top:50%!important;
+   transform:translateY(-50%)!important;
+   width:34px!important;height:34px!important;min-width:34px!important;
+   margin:0!important;padding:7px!important;
+   border-radius:9px!important;
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card small,
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card b,
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1)>.dashboard-card .kpi-caption{
+   display:block!important;position:static!important;
+   max-width:100%!important;margin-left:0!important;
+ }
+}
