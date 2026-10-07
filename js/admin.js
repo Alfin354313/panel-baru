@@ -281,10 +281,14 @@ function drawAdminAttendance(month){
     if(!counts[x.student_id])counts[x.student_id]={Hadir:0,Izin:0,Sakit:0,"Tidak Hadir":0};
     if(counts[x.student_id][x.status]!==undefined)counts[x.student_id][x.status]++;
   });
-  $("aHadir").textContent=rows.filter(function(x){return x.status==="Hadir"}).length;
-  $("aIzin").textContent=rows.filter(function(x){return x.status==="Izin"}).length;
-  $("aSakit").textContent=rows.filter(function(x){return x.status==="Sakit"}).length;
-  $("aTidakHadir").textContent=rows.filter(function(x){return x.status==="Tidak Hadir"}).length;
+  var aHadirTopCount=rows.filter(function(x){return x.status==="Hadir"}).length;
+  $("aHadir").textContent=aHadirTopCount;if($("aHadirTop"))$("aHadirTop").textContent=aHadirTopCount;
+  var aIzinTopCount=rows.filter(function(x){return x.status==="Izin"}).length;
+  $("aIzin").textContent=aIzinTopCount;if($("aIzinTop"))$("aIzinTop").textContent=aIzinTopCount;
+  var aSakitTopCount=rows.filter(function(x){return x.status==="Sakit"}).length;
+  $("aSakit").textContent=aSakitTopCount;if($("aSakitTop"))$("aSakitTop").textContent=aSakitTopCount;
+  var aTidakHadirTopCount=rows.filter(function(x){return x.status==="Tidak Hadir"}).length;
+  $("aTidakHadir").textContent=aTidakHadirTopCount;if($("aTidakHadirTop"))$("aTidakHadirTop").textContent=aTidakHadirTopCount;
   $("attendanceAdminBody").innerHTML=Object.keys(counts).map(function(id){
     var m=stu(id)||{},q=counts[id],total=q.Hadir+q.Izin+q.Sakit+q["Tidak Hadir"];
     return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+q.Hadir+'</td><td>'+q.Izin+'</td><td>'+q.Sakit+'</td><td>'+q["Tidak Hadir"]+'</td><td><b>'+total+'</b></td></tr>';
