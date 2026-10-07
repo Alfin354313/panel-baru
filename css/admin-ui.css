@@ -89,3 +89,41 @@ body.role-admin #app .finance-bars{height:165px!important}
  body.role-admin #app>header>div:last-child{width:auto!important;margin-left:auto!important;margin-top:0!important}
  body.role-admin #app #exportAdminBtn,body.role-admin #app #logoutBtn,body.role-admin #app #syncStatus{display:none!important}
 }
+
+
+/* Dashboard refinement — follows supplied desktop/mobile mockup */
+body.role-admin #dashboard{display:grid;gap:12px}
+body.role-admin #dashboard>.dashboard-section:first-child{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.role-admin .admin-dashboard-welcome{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:2px 2px 14px}
+body.role-admin .admin-dashboard-welcome h2{margin:3px 0 4px;color:#092f68;font-size:1.28rem;letter-spacing:-.025em}
+body.role-admin .admin-dashboard-welcome p{margin:0;color:#748ba0;font-size:.78rem}
+body.role-admin .admin-eyebrow{display:block;color:#0b7df0;font-size:.62rem;font-weight:900;letter-spacing:.12em}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-template-columns:repeat(4,minmax(0,1fr))!important}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){margin-top:10px;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2)>.card{padding:12px 14px;border:1px solid #dce8f1;border-radius:10px;background:#fff;box-shadow:0 3px 12px rgba(21,67,107,.035)}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2) small{display:block;color:#73899b;font-size:.69rem;font-weight:700}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2) b{display:inline-block;margin:5px 4px 0 0;color:#123e65;font-size:1rem}
+body.role-admin .kpi-caption{position:relative;z-index:2;display:block;margin-top:6px;color:#8498a8;font-size:.62rem;font-weight:700}
+body.role-admin .kpi-caption.positive{color:#15945a}
+body.role-admin .kpi-caption.danger{color:#d5484f}
+body.role-admin #dashboard>.dashboard-section:not(:first-child){background:#fff!important}
+body.role-admin #dashboardUnpaid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+body.role-admin #dashboardUnpaid .dashboard-alert{margin:0!important;border-radius:10px!important;background:#fbfdff!important}
+body.role-admin #dashboardUnpaid .dashboard-alert a{border-radius:7px!important;background:#eef6ff!important;color:#087bf1!important;border-color:#cce2f7!important}
+body.role-admin #attendanceAdminBody td:first-child{font-weight:800;color:#123e65!important}
+@media(min-width:1100px){
+ body.role-admin #dashboard{grid-template-columns:minmax(0,1.4fr) minmax(320px,.6fr);align-items:start}
+ body.role-admin #dashboard>.dashboard-section:first-child,
+ body.role-admin #dashboard>.dashboard-section:nth-child(2){grid-column:1/-1}
+ body.role-admin #dashboard>#adminNotificationPanel{grid-column:auto}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(3){grid-column:1}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(4){grid-column:1/-1}
+}
+@media(max-width:899px){
+ body.role-admin .admin-dashboard-welcome{align-items:flex-start;flex-direction:column;padding:2px 2px 10px}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter{width:100%!important}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter input{width:100%!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #dashboardUnpaid{grid-template-columns:1fr}
+}
