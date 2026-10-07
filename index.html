@@ -68,7 +68,7 @@
 </aside><div id="dashboard">
   <div class="card dashboard-section">
     <div class="admin-dashboard-welcome"><div><span class="admin-eyebrow">PANEL PENGELOLA</span><h2>Selamat Datang 👋</h2><p>Ringkasan aktivitas dan keuangan Jenius Edu.</p></div><label class="dashboard-filter">Periode<input id="dashboardMonth" type="month"></label></div>
-    <div class="dashboard-grid">
+    <div class="dashboard-grid dashboard-kpi-grid">
       <div class="card dashboard-card kpi-students"><span class="kpi-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3.5 20c0-4 2.3-6 5.5-6s5.5 2 5.5 6"/><path d="M14 15c3.8-.8 6.5 1.1 6.5 5"/></svg></span><small>Murid aktif</small><b id="dStudents">0</b><span class="kpi-caption">Murid terdaftar</span></div>
       <div class="card dashboard-card kpi-income"><span class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M5 19 19 5"/><path d="M10 5h9v9"/></svg></span><small>Pendapatan Bulan Ini</small><b id="dIncome">Rp0</b><span class="kpi-caption positive">Pembayaran lunas</span></div>
       <div class="card dashboard-card dashboard-warning kpi-receivable"><span class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M12 3 3 20h18L12 3Z"/><path d="M12 9v5"/><path d="M12 17h.01"/></svg></span><small>Belum Lunas</small><b id="dReceivable">Rp0</b><span class="kpi-caption danger">Perlu ditindaklanjuti</span></div>
@@ -87,7 +87,7 @@
         <div><span class="attendance-icon absen">×</span><small>Tidak Hadir</small><b id="aTidakHadirTop">0</b></div>
       </div>
     </div>
-    <div class="dashboard-grid">
+    <div class="dashboard-grid dashboard-ratio-grid">
       <div class="card"><small>Rasio pembayaran</small><b id="dPaidRate">0%</b><span style="color:var(--muted)"> dari jumlah transaksi pada periode</span></div>
       <div class="card"><small>Rata-rata pembayaran</small><b id="dAverage">Rp0</b><span style="color:var(--muted)"> per transaksi</span></div>
     </div>
