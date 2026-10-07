@@ -67,12 +67,12 @@
   </div>
 </aside><div id="dashboard">
   <div class="card dashboard-section">
-    <div class="dashboard-head"><h2>Dashboard Utama</h2><label class="dashboard-filter">Periode<input id="dashboardMonth" type="month"></label></div>
+    <div class="admin-dashboard-welcome"><div><span class="admin-eyebrow">PANEL PENGELOLA</span><h2>Selamat Datang 👋</h2><p>Ringkasan aktivitas dan keuangan Jenius Edu.</p></div><label class="dashboard-filter">Periode<input id="dashboardMonth" type="month"></label></div>
     <div class="dashboard-grid">
-      <div class="card dashboard-card kpi-students"><span class="kpi-icon">👥</span><small>Murid aktif</small><b id="dStudents">0</b></div>
-      <div class="card dashboard-card kpi-income"><span class="kpi-icon">↗</span><small>Pendapatan</small><b id="dIncome">Rp0</b></div>
-      <div class="card dashboard-card dashboard-warning kpi-receivable"><span class="kpi-icon">!</span><small>Piutang / belum lunas</small><b id="dReceivable">Rp0</b></div>
-      <div class="card dashboard-card kpi-expense"><span class="kpi-icon">↘</span><small>Pengeluaran</small><b id="dExpense">Rp0</b></div>
+      <div class="card dashboard-card kpi-students"><span class="kpi-icon">👥</span><small>Total Murid</small><b id="dStudents">0</b><span class="kpi-caption">Murid terdaftar</span></div>
+      <div class="card dashboard-card kpi-income"><span class="kpi-icon">↗</span><small>Pendapatan Bulan Ini</small><b id="dIncome">Rp0</b><span class="kpi-caption positive">Pembayaran lunas</span></div>
+      <div class="card dashboard-card dashboard-warning kpi-receivable"><span class="kpi-icon">!</span><small>Belum Lunas</small><b id="dReceivable">Rp0</b><span class="kpi-caption danger">Perlu ditindaklanjuti</span></div>
+      <div class="card dashboard-card kpi-expense"><span class="kpi-icon">↘</span><small>Pengeluaran Bulan Ini</small><b id="dExpense">Rp0</b><span class="kpi-caption">Biaya operasional</span></div>
       <div class="card dashboard-card dashboard-positive kpi-profit"><span class="kpi-icon">✓</span><small>Laba bersih</small><b id="dProfit">Rp0</b></div>
       <div class="card dashboard-card kpi-paid"><span class="kpi-icon">✓</span><small>Pembayaran lunas</small><b id="dPaidCount">0</b></div>
       <div class="card dashboard-card dashboard-warning kpi-unpaid"><span class="kpi-icon">!</span><small>Belum lunas</small><b id="dUnpaidCount">0</b></div>
