@@ -515,3 +515,32 @@ body.role-admin .dashboard-student-count{display:block;margin-top:7px;color:#668
    max-width:100%!important;margin-left:0!important;
  }
 }
+
+
+/* Compact attendance block beside KPI area */
+body.role-admin .dashboard-attendance-compact{margin-top:8px;padding:10px 12px;border:1px solid #dbe8f2;border-radius:11px;background:#fff}
+body.role-admin .attendance-compact-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;color:#123e65}
+body.role-admin .attendance-compact-head small{color:#7890a3;font-size:.62rem}
+body.role-admin .attendance-compact-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
+body.role-admin .attendance-compact-grid>div{display:grid;grid-template-columns:28px 1fr;grid-template-rows:auto auto;column-gap:7px;align-items:center;padding:7px 8px;border:1px solid #e1ebf3;border-radius:8px;background:#fbfdff}
+body.role-admin .attendance-compact-grid small{font-size:.6rem;color:#617c92}
+body.role-admin .attendance-compact-grid b{font-size:.92rem;color:#0b3566}
+body.role-admin .attendance-icon{grid-row:1/3;display:grid;place-items:center;width:28px;height:28px;border-radius:8px;font-weight:900}
+body.role-admin .attendance-icon.hadir{background:#eaf4ff;color:#087bf1}
+body.role-admin .attendance-icon.izin{background:#fff5e9;color:#ef8b2c}
+body.role-admin .attendance-icon.sakit{background:#fff0f0;color:#e94a4f}
+body.role-admin .attendance-icon.absen{background:#fff0f0;color:#e23c43}
+@media(min-width:1121px){
+ body.role-admin #dashboard>.dashboard-section:first-child{display:grid!important;grid-template-columns:minmax(0,1.7fr) minmax(330px,.7fr)!important;column-gap:10px!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.admin-dashboard-welcome{grid-column:1/-1!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-column:1!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-attendance-compact{grid-column:2!important;grid-row:2!important;margin-top:0!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){grid-column:1/-1!important}
+ body.role-admin .attendance-compact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:899px){
+ body.role-admin .dashboard-attendance-compact{margin:8px 0!important}
+ body.role-admin .attendance-compact-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ body.role-admin .attendance-compact-grid>div{display:flex;flex-direction:column;gap:2px;padding:7px 3px;text-align:center}
+ body.role-admin .attendance-icon{width:26px;height:26px}
+}
