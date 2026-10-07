@@ -22,7 +22,7 @@ function cancelEditStudent(){
   if($("studentFormPanel"))$("studentFormPanel").hidden=true;
 }
 $("cancelEdit").onclick=cancelEditStudent;
-if($("openStudentForm"))$("openStudentForm").onclick=function(){editingStudentId=null;$("fm").reset();$("mmTitle").textContent="Tambah murid";$("fmSubmit").textContent="Simpan murid";$("cancelEdit").hidden=true;$("studentFormPanel").hidden=false;};
+if($("openStudentForm"))$("openStudentForm").onclick=function(){var p=$("studentFormPanel");if(!p)return;if(!p.hidden){p.hidden=true;return}editingStudentId=null;$("fm").reset();$("mmTitle").textContent="Tambah murid";$("fmSubmit").textContent="Simpan murid";$("cancelEdit").hidden=true;p.hidden=false;};
 
 $("fm").onsubmit=async function(e){
   e.preventDefault();var o=fd(e.target);
