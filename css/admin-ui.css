@@ -294,3 +294,36 @@ body.role-admin #attendanceAdminBody td:first-child{font-weight:800;color:#123e6
    scrollbar-gutter:stable!important;
  }
 }
+
+
+/* Desktop viewport polish — remove clipped bottom edge and excess outer gap */
+@media(min-width:900px){
+ body.role-admin{padding:0!important}
+ body.role-admin #app{
+   width:min(1480px,calc(100% - 32px))!important;
+   height:calc(100vh - 20px)!important;
+   margin:10px auto!important;
+   padding:0!important;
+   border-radius:18px!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   height:100%!important;
+   border-radius:18px 0 0 18px!important;
+ }
+ body.role-admin #app>header{
+   margin:10px 10px 8px 12px!important;
+ }
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{
+   max-height:calc(100vh - 106px)!important;
+   margin-bottom:10px!important;
+   padding-bottom:14px!important;
+   scroll-padding-bottom:14px!important;
+ }
+ body.role-admin #app>#dashboard>.dashboard-section:last-child,
+ body.role-admin #app>#tm>*:last-child,body.role-admin #app>#tp>*:last-child,
+ body.role-admin #app>#te>*:last-child{margin-bottom:0!important}
+}
