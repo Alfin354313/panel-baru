@@ -168,35 +168,27 @@
   <p id="et2" class="expense-total-text"></p>
   <div class="tw expense-table-wrap"><table class="expense-table"><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="be"></tbody></table></div>
 </div>
-<div id="teacherMasterPage" class="card" hidden>
-  <div class="teacher-master-head">
-    <div>
-      <h2>👨‍🏫 Data Guru</h2>
-      <small style="color:var(--muted)">Master data guru terhubung dengan akun login Guru. Tambahkan akun guru di Supabase Authentication, lalu kelola profilnya di sini.</small>
-    </div>
-    <div class="teacher-master-count"><b id="teacherMasterCount">0</b><span>Guru aktif</span></div>
+<div id="teacherMasterPage" class="card teacher-master-page" hidden>
+  <div class="teacher-page-head">
+    <div><span class="section-eyebrow">DATA MASTER</span><h2 class="teacher-page-title"><span class="teacher-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3" stroke="currentColor" stroke-width="2"/><path d="M3.5 19c0-4 2.2-6 5.5-6s5.5 2 5.5 6M17 10v6M14 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Data Guru</h2></div>
+    <button id="openTeacherForm" type="button" class="pri">＋ Tambah Guru</button>
   </div>
-  <div class="teacher-master-info">
-    <b>Alur data:</b> akun Guru → Data Guru → Absensi → Gaji Guru → Laporan/Jadwal.
+  <div id="teacherFormPanel" class="teacher-form-panel" hidden>
+    <h3>Tambah / Edit Guru</h3>
+    <form id="teacherMasterForm" class="teacher-master-form">
+      <label>Akun Guru<select id="teacherAccountId" name="id" required></select></label>
+      <label>Nama Guru<input id="teacherMasterName" name="nama" placeholder="Contoh: Budi Santoso" required></label>
+      <label>Email<input id="teacherMasterEmail" name="email" type="email" readonly></label>
+      <label>No. WhatsApp<input id="teacherMasterHp" name="hp" placeholder="08xxxxxxxxxx"></label>
+      <label>Mata Pelajaran<input id="teacherMasterMapel" name="mapel" placeholder="Contoh: Matematika"></label>
+      <label>Status<select id="teacherMasterStatus" name="status"><option>Aktif</option><option>Nonaktif</option></select></label>
+      <label class="full">Catatan<textarea id="teacherMasterNote" name="catatan" placeholder="Catatan guru"></textarea></label>
+      <div class="full teacher-master-actions"><button class="pri" type="submit">Simpan Data Guru</button><button type="button" id="teacherMasterReset">Reset</button><span id="teacherMasterSync" style="color:var(--muted)"></span></div>
+    </form>
   </div>
-  <form id="teacherMasterForm" class="teacher-master-form">
-    <label>Akun Guru<select id="teacherAccountId" name="id" required></select></label>
-    <label>Nama Guru<input id="teacherMasterName" name="nama" placeholder="Contoh: Budi Santoso" required></label>
-    <label>Email<input id="teacherMasterEmail" name="email" type="email" readonly></label>
-    <label>No. WhatsApp<input id="teacherMasterHp" name="hp" placeholder="08xxxxxxxxxx"></label>
-    <label>Mata Pelajaran<input id="teacherMasterMapel" name="mapel" placeholder="Contoh: Matematika"></label>
-    <label>Status<select id="teacherMasterStatus" name="status"><option>Aktif</option><option>Nonaktif</option></select></label>
-    <label class="full">Catatan<textarea id="teacherMasterNote" name="catatan" placeholder="Catatan guru"></textarea></label>
-    <div class="full teacher-master-actions">
-      <button class="pri" type="submit">💾 Simpan Data Guru</button>
-      <button type="button" id="teacherMasterReset">Reset</button>
-      <span id="teacherMasterSync" style="color:var(--muted)"></span>
-    </div>
-  </form>
-  <div style="margin-top:18px">
-    <div class="dashboard-head"><h2>Daftar Guru</h2><div class="table-tools compact"><input id="teacherSearch" type="search" placeholder="Cari guru atau mapel..."><select id="teacherStatusFilter"><option value="">Semua status</option><option>Aktif</option><option>Nonaktif</option></select></div></div>
-    <div class="tw"><table><thead><tr><th>Nama</th><th>Email</th><th>No. HP</th><th>Mapel</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="teacherMasterBody"></tbody></table></div>
-  </div>
+  <div class="teacher-search-row"><span class="teacher-search-icon" aria-hidden="true">⌕</span><input id="teacherSearch" type="search" placeholder="Cari guru..."><select id="teacherStatusFilter"><option value="">Semua status</option><option>Aktif</option><option>Nonaktif</option></select></div>
+  <div class="tw teacher-master-table-wrap"><table class="teacher-master-table"><thead><tr><th>No</th><th>Nama Guru</th><th>Mata Pelajaran</th><th>Kontak</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="teacherMasterBody"></tbody></table></div>
+  <span id="teacherMasterCount" hidden>0</span>
 </div>
 <div id="auditLogPage" class="card" hidden><div class="financial-report-head"><div><small>KEAMANAN & AKTIVITAS</small><h2>Audit Log</h2></div><button id="refreshAuditLog" type="button">↻ Muat Ulang</button></div><div class="table-tools"><input id="auditSearch" type="search" placeholder="Cari aksi, modul, atau pengguna..."><select id="auditActionFilter"><option value="">Semua aktivitas</option><option value="CREATE">Tambah</option><option value="UPDATE">Ubah</option><option value="DELETE">Hapus</option></select></div><div class="tw"><table><thead><tr><th>Waktu</th><th>Pengguna</th><th>Aksi</th><th>Modul</th><th>Detail</th></tr></thead><tbody id="auditLogBody"></tbody></table></div><p class="audit-note">Audit log disimpan di Supabase dan hanya dapat dibaca oleh Admin.</p></div>
 <div id="financialReportPage" class="card" hidden><div class="financial-report-head"><div><small>LAPORAN KEUANGAN</small><h2>Ringkasan Laba/Rugi</h2></div><div class="financial-report-tools"><input id="financialReportMonth" type="month"><button id="financialReportPdf" type="button">PDF</button><button id="financialReportCsv" class="pri" type="button">CSV</button></div></div><div id="financialReportKpi" class="student-profile-summary"></div><div class="financial-report-grid"><section><h3>Ringkasan Periode</h3><div id="financialReportSummary"></div></section><section><h3>Komposisi Pengeluaran</h3><div id="financialExpenseBreakdown"></div></section></div><div class="financial-report-table"><h3>Transaksi Periode</h3><div class="tw"><table><thead><tr><th>Tanggal/Periode</th><th>Jenis</th><th>Keterangan</th><th>Masuk</th><th>Keluar</th></tr></thead><tbody id="financialReportBody"></tbody></table></div></div></div>
