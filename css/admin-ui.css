@@ -561,3 +561,40 @@ body.role-admin #dashboard .dashboard-student-count{display:block!important;marg
  body.role-admin #dashboard .dashboard-students-panel .dashboard-head{align-items:stretch!important;flex-direction:column!important}
  body.role-admin #dashboard .dashboard-search-wrap{width:100%!important}
 }
+
+
+/* Data Murid page — reference layout */
+body.role-admin .admin-students-page{padding:18px!important}
+body.role-admin .students-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
+body.role-admin .students-page-head h2{margin:2px 0 0!important;font-size:23px!important;color:#073a70}
+body.role-admin .students-page-head .section-eyebrow{font-size:9px;font-weight:800;letter-spacing:.12em;color:#2684df}
+body.role-admin #openStudentForm{min-height:38px;padding:8px 16px!important;border-radius:8px!important}
+body.role-admin .student-form-panel{margin:0 0 14px;padding:14px;border:1px solid #d8e6f0;border-radius:10px;background:#f8fbfe}
+body.role-admin .student-form-panel h3{margin:0 0 10px;color:#123e65}
+body.role-admin .students-tools{display:grid!important;grid-template-columns:minmax(260px,1fr) 220px!important;gap:10px!important;margin:0 0 10px!important}
+body.role-admin .student-search-box{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid #cbddea;border-radius:8px;background:#fff}
+body.role-admin .student-search-box span{font-size:19px;color:#4c78a1}
+body.role-admin .student-search-box input{border:0!important;box-shadow:none!important;outline:0!important;background:transparent!important;width:100%!important;padding:0!important}
+body.role-admin .students-tools select{height:40px!important;border-radius:8px!important}
+body.role-admin .students-table-wrap{border:1px solid #d6e4ee!important;border-radius:9px!important;overflow:visible!important}
+body.role-admin .students-table{width:100%!important;margin:0!important}
+body.role-admin .students-table th{padding:11px 12px!important;background:#eaf3f9!important;font-size:11px!important;color:#173e62!important}
+body.role-admin .students-table td{padding:10px 12px!important;font-size:12px!important;vertical-align:middle!important;border-top:1px solid #e4edf4!important}
+body.role-admin .students-table .student-no{width:48px;text-align:center;color:#607b91}
+body.role-admin .student-name-cell{display:flex!important;align-items:center!important;gap:9px!important;border:0!important;background:transparent!important;padding:0!important;color:#0a3767!important;cursor:pointer!important}
+body.role-admin .student-avatar{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:#e7f2ff;color:#1476db;font-size:10px;font-weight:800}
+body.role-admin .student-active-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:#dcf8ea;color:#16845c;font-size:11px;font-weight:700}
+body.role-admin .student-active-badge i{width:7px;height:7px;border-radius:50%;background:#18ad77}
+body.role-admin .student-row-actions{position:relative;display:inline-block}
+body.role-admin .student-more{border:0!important;background:transparent!important;padding:5px 8px!important;font-weight:900!important;letter-spacing:1px!important;color:#164d7e!important}
+body.role-admin .student-action-menu{display:none;position:absolute;right:0;top:30px;z-index:30;min-width:105px;padding:5px;background:#fff;border:1px solid #d6e4ee;border-radius:8px;box-shadow:0 8px 24px rgba(22,61,95,.13)}
+body.role-admin .student-row-actions:hover .student-action-menu,body.role-admin .student-row-actions:focus-within .student-action-menu{display:grid}
+body.role-admin .student-action-menu button{border:0;background:transparent;text-align:left;padding:7px 9px;border-radius:5px;font-size:11px;color:#173e62}
+body.role-admin .student-action-menu button:hover{background:#edf6ff}
+@media(max-width:899px){
+ body.role-admin .admin-students-page{padding:12px!important}
+ body.role-admin .students-page-head{align-items:center!important}
+ body.role-admin .students-tools{grid-template-columns:1fr!important}
+ body.role-admin .students-table-wrap{overflow-x:auto!important}
+ body.role-admin .students-table{min-width:680px!important}
+}
