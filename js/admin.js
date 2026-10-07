@@ -636,3 +636,21 @@ document.addEventListener("click",function(e){var more=e.target.closest(".teache
 /* Gaji Guru redesigned controls */
 if($("openSalaryForm"))$("openSalaryForm").onclick=function(){var f=$("salaryForm");f.hidden=!f.hidden;if(!f.hidden){$("salaryFormMonth").value=$("salaryMonth").value||thisM;updateSalaryMeeting();}};
 document.addEventListener("click",function(e){var more=e.target.closest(".salary-more");document.querySelectorAll(".salary-action-menu.open").forEach(function(m){if(!more||m!==more.nextElementSibling)m.classList.remove("open")});if(more){e.stopPropagation();more.nextElementSibling.classList.toggle("open")}});
+
+
+/* Mobile bottom navigation secondary menu. */
+(function(){
+ var more=$("mobileMoreMenu"),panel=$("mobileMorePanel");
+ if(!more||!panel)return;
+ more.onclick=function(e){e.stopPropagation();panel.hidden=!panel.hidden;more.classList.toggle("on",!panel.hidden)};
+ panel.querySelectorAll("[data-mobile-t]").forEach(function(b){
+  b.onclick=function(){
+   var target=document.querySelector('#app .top-menu .tabs button[data-t="'+b.dataset.mobileT+'"]');
+   if(target)target.click();
+   panel.hidden=true;more.classList.remove("on");
+  };
+ });
+ document.addEventListener("click",function(e){if(!panel.hidden&&!panel.contains(e.target)&&e.target!==more){panel.hidden=true;more.classList.remove("on")}});
+ var home=document.querySelector('#app .top-menu .tabs button[data-t="d"]');
+ if(home)home.click();
+})();
