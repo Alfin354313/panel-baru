@@ -1207,3 +1207,10 @@ body.role-admin .admin-topbar::after{
   min-height:82px!important
  }
 }
+
+
+/* Mobile dashboard: student list is available from the Murid tab, so hide its dashboard duplicate. */
+@media(max-width:899px){
+ body.role-admin #dashboard>.dashboard-students,
+ body.role-admin #dashboard .dashboard-students{display:none!important}
+}
