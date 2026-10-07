@@ -47,3 +47,37 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
  body.role-guru .teacher-form,body.role-guru .report-form{grid-template-columns:1fr!important}
  body.role-guru .teacher-form .full,body.role-guru .report-form .full{grid-column:auto!important}
 }
+
+
+/* Desktop teacher sidebar polish */
+@media(min-width:900px){
+ body.role-guru #teacherApp{overflow:visible!important}
+ body.role-guru #teacherApp>.card{align-items:start!important}
+ body.role-guru #teacherMenu{
+  position:sticky!important;top:18px!important;align-self:start!important;
+  grid-row:1 / span 2!important;min-height:calc(100vh - 36px)!important;height:calc(100vh - 36px)!important;
+  padding:18px 14px!important;gap:7px!important;overflow:hidden!important
+ }
+ body.role-guru #teacherMenu:before{display:none!important;content:none!important}
+ body.role-guru #teacherMenu .teacher-side-brand{
+  display:flex!important;align-items:center!important;gap:9px!important;height:44px!important;
+  margin:0 4px 14px!important;padding:0 4px!important;color:#fff!important
+ }
+ body.role-guru #teacherMenu .teacher-side-brand img{width:32px!important;height:32px!important;border-radius:50%!important;background:#fff!important;padding:3px!important}
+ body.role-guru #teacherMenu .teacher-side-brand b{font-size:16px!important;white-space:nowrap!important}
+ body.role-guru #teacherMenu button{
+  flex:0 0 auto!important;min-height:44px!important;height:44px!important;
+  gap:10px!important;padding:10px 12px!important
+ }
+ body.role-guru #teacherMenu .teacher-nav-icon{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:22px!important;height:22px!important;min-width:22px!important;
+  font-size:17px!important;line-height:1!important;color:inherit!important
+ }
+ body.role-guru .teacher-head{position:relative!important;z-index:2!important}
+}
+@media(max-width:899px){
+ body.role-guru #teacherMenu .teacher-side-brand{display:none!important}
+ body.role-guru #teacherMenu .teacher-nav-icon{display:block!important;font-size:19px!important;line-height:20px!important;margin-bottom:2px!important}
+ body.role-guru #teacherMenu button{flex-direction:column!important;gap:1px!important}
+}
