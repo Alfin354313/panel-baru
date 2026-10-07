@@ -807,3 +807,11 @@ body.role-admin #auditLogPage .audit-note{margin:10px 2px 0;color:#6f879a;font-s
  body.role-admin #auditLogPage .audit-search-v2,body.role-admin #auditLogPage .audit-date-v2{grid-column:auto}
  body.role-admin #auditLogPage .audit-date-v2 input{width:calc(50% - 18px)}
 }
+
+
+/* Dashboard period: prevent decorative/period card overlap */
+@media(min-width:900px){
+ body.role-admin #dashboard .admin-dashboard-welcome{position:relative!important;min-height:94px!important;padding:18px 220px 18px 18px!important;box-sizing:border-box!important}
+ body.role-admin #dashboard .dashboard-filter{position:absolute!important;top:12px!important;right:12px!important;width:180px!important;max-width:180px!important;margin:0!important;box-sizing:border-box!important}
+ body.role-admin #dashboard .dashboard-filter input{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+}
