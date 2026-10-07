@@ -148,18 +148,25 @@
   <div class="payment-filter-row"><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option></select></div>
   <div class="tw payment-table-wrap"><table class="payment-table"><thead><tr><th>No</th><th>Murid</th><th>Periode</th><th>Nominal</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="bp"></tbody></table></div>
 </div>
-<div id="te" class="card" hidden>
-  <h2>Catat pengeluaran</h2>
-  <form id="fe">
-    <label>Tanggal<input name="tgl" id="et" type="date" required></label>
-    <label>Kategori<select name="kat"><option>Gaji pengajar</option><option>Sewa tempat</option><option>Listrik dan internet</option><option>Alat tulis dan bahan ajar</option><option>Promosi</option><option>Lainnya</option></select></label>
-    <label>Keterangan<input name="ket" placeholder="Contoh: spidol dan kertas"></label>
-    <label>Jumlah (Rp)<input name="jumlah" type="number" min="0" required></label>
-    <button class="pri">Catat pengeluaran</button>
-  </form>
-  <div class="table-tools"><label>Lihat bulan<input type="month" id="eb"></label><input id="expenseSearch" type="search" placeholder="Cari kategori atau keterangan..."></div>
-  <p id="et2" style="font-weight:700;margin:0 0 10px"></p>
-  <div class="tw"><table><thead><tr><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Jumlah</th><th></th></tr></thead><tbody id="be"></tbody></table></div>
+<div id="te" class="card admin-expenses-page" hidden>
+  <div class="expenses-page-head">
+    <div><span class="section-eyebrow">TRANSAKSI</span><h2 class="expenses-title"><span class="expenses-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12v18H6zM9 7h6M9 11h6M9 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Data Pengeluaran</h2></div>
+    <div class="expenses-head-actions"><label class="expense-month"><span>Periode</span><input type="month" id="eb"></label><select id="expenseCategoryFilter"><option value="">Semua Kategori</option><option>Gaji pengajar</option><option>Sewa tempat</option><option>Listrik dan internet</option><option>Alat tulis dan bahan ajar</option><option>Promosi</option><option>Lainnya</option></select><button id="openExpenseForm" type="button" class="pri">＋ Tambah Pengeluaran</button></div>
+  </div>
+  <div class="expense-summary"><span class="expense-summary-icon">▣</span><div><small>Total Pengeluaran</small><b id="expenseTotal">Rp0</b></div></div>
+  <div id="expenseFormPanel" class="expense-form-panel" hidden>
+    <h3>Tambah pengeluaran</h3>
+    <form id="fe">
+      <label>Tanggal<input name="tgl" id="et" type="date" required></label>
+      <label>Kategori<select name="kat"><option>Gaji pengajar</option><option>Sewa tempat</option><option>Listrik dan internet</option><option>Alat tulis dan bahan ajar</option><option>Promosi</option><option>Lainnya</option></select></label>
+      <label>Keterangan<input name="ket" placeholder="Contoh: spidol dan kertas"></label>
+      <label>Jumlah (Rp)<input name="jumlah" type="number" min="0" required></label>
+      <button class="pri">Simpan Pengeluaran</button>
+    </form>
+  </div>
+  <div class="expense-filter-row"><input id="expenseSearch" type="search" placeholder="Cari kategori atau keterangan..."></div>
+  <p id="et2" class="expense-total-text"></p>
+  <div class="tw expense-table-wrap"><table class="expense-table"><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="be"></tbody></table></div>
 </div>
 <div id="teacherMasterPage" class="card" hidden>
   <div class="teacher-master-head">
