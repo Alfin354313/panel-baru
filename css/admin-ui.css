@@ -1084,3 +1084,35 @@ body.role-admin .admin-topbar::after{
  body.role-admin #dashboard>.dashboard-students{display:block!important;margin-top:10px!important}
  body.role-admin #dashboard>.dashboard-section:nth-of-type(3){display:block!important;margin-top:10px!important}
 }
+
+
+/* Mobile bottom nav: Dashboard / Murid / Pembayaran / Menu */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+   display:grid!important;
+   grid-template-columns:repeat(4,minmax(0,1fr))!important;
+   align-items:stretch!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"],
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="m"]),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="p"]){
+   display:block!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="a"]){display:none!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs:after{
+   content:"☰\A Menu"!important;
+   white-space:pre!important;
+   display:flex!important;
+   flex-direction:column!important;
+   align-items:center!important;
+   justify-content:center!important;
+   gap:1px!important;
+   height:56px!important;
+   border-radius:8px!important;
+   color:#174c78!important;
+   font-size:10px!important;
+   line-height:18px!important;
+   font-weight:700!important;
+   cursor:pointer!important;
+ }
+}
