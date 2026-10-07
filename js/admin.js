@@ -642,7 +642,18 @@ document.addEventListener("click",function(e){var more=e.target.closest(".salary
 (function(){
  var more=$("mobileMoreMenu"),panel=$("mobileMorePanel");
  if(!more||!panel)return;
- more.onclick=function(e){e.stopPropagation();panel.hidden=!panel.hidden;more.classList.toggle("on",!panel.hidden)};
+ more.onclick=function(e){
+  e.stopPropagation();
+  var opening=panel.hidden;
+  if(opening){
+   ["dashboard","tm","tp","te","teacherMasterPage","salaryPage","financialReportPage","auditLogPage","studentProfilePage","teacherProfilePage"].forEach(function(id){var page=$(id);if(page)page.hidden=true});
+   document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.remove("on")});
+  }else{
+   var home=document.querySelector('#app .top-menu .tabs button[data-t="d"]');
+   if(home)home.click();
+  }
+  panel.hidden=!opening;more.classList.toggle("on",opening);
+ };
  panel.querySelectorAll("[data-mobile-t]").forEach(function(b){
   b.onclick=function(){
    var target=document.querySelector('#app .top-menu .tabs button[data-t="'+b.dataset.mobileT+'"]');
