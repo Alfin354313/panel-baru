@@ -1362,3 +1362,35 @@ body.role-admin .admin-topbar::after{
   margin:0!important
  }
 }
+
+
+/* Mobile Admin finishing: Menu matches the other nav items; keep Logout visible in header. */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu{
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  border:0!important;border-radius:8px!important;background:transparent!important;color:#174c78!important;
+  font-size:9px!important;font-weight:700!important;line-height:11px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu.on{
+  background:#edf6ff!important;color:#087bf1!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu .menu-icon{
+  display:block!important;width:18px!important;height:18px!important;margin:0 auto 1px!important;
+  fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important
+ }
+ body.role-admin #app>header>div:last-child{
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  gap:5px!important;margin:0!important;flex-wrap:nowrap!important
+ }
+ body.role-admin #app>header #syncStatus,
+ body.role-admin #app>header #exportAdminBtn{display:none!important}
+ body.role-admin #app>header #adminBell{
+  display:flex!important;width:34px!important;height:34px!important;min-width:34px!important;padding:0!important
+ }
+ body.role-admin #app>header #logoutBtn{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  width:auto!important;min-width:52px!important;height:32px!important;margin:0!important;padding:0 9px!important;
+  border:1px solid #ff9b8f!important;border-radius:16px!important;background:#fff!important;color:#d33a28!important;
+  font-size:11px!important;font-weight:800!important;white-space:nowrap!important
+ }
+}
