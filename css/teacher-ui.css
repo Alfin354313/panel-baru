@@ -237,3 +237,43 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
  body.role-guru #teacherApp{padding-bottom:48px!important}
  body.role-guru .teacher-page{margin-bottom:50px!important}
 }
+
+
+/* Mobile Guru: show all four remaining teacher destinations in the bottom bar. */
+@media(max-width:899px){
+ body.role-guru #teacherMenu{
+  display:grid!important;
+  grid-template-columns:repeat(4,64px)!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:2px!important;
+  height:48px!important;
+  min-height:48px!important;
+  padding:0 4px!important
+ }
+ body.role-guru #teacherMenu .teacher-side-brand{display:none!important}
+ body.role-guru #teacherMenu button,
+ body.role-guru #teacherMenu button:nth-child(5){
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:64px!important;
+  min-width:64px!important;
+  max-width:64px!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:0!important;
+  margin:0!important;
+  gap:0!important;
+  font-size:9px!important;
+  line-height:11px!important
+ }
+ body.role-guru #teacherMenu .teacher-nav-icon{
+  display:block!important;
+  font-size:17px!important;
+  line-height:18px!important;
+  margin:0 auto 1px!important
+ }
+ body.role-guru #teacherApp{padding-bottom:48px!important}
+}
