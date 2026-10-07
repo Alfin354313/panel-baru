@@ -55,7 +55,7 @@ $("fe").onsubmit=async function(e){
   var r=await window.sb.from("expenses").insert({tanggal:o.tgl,kategori:o.kat||"",keterangan:o.ket||"",jumlah:Number(o.jumlah||0)}).select().single();
   if(r.error){alert("Gagal menyimpan pengeluaran: "+r.error.message);return}
   E.push({id:r.data.id,tgl:r.data.tanggal,kat:r.data.kategori||"",ket:r.data.keterangan||"",jumlah:Number(r.data.jumlah||0)});
-  $("eb").value=String(o.tgl).slice(0,7);e.target.reset();$("et").value=todayISO;draw();alert("Pengeluaran berhasil dicatat.")
+  $("eb").value=String(o.tgl).slice(0,7);e.target.reset();$("et").value=todayISO;if($("expenseFormPanel"))$("expenseFormPanel").hidden=true;draw();alert("Pengeluaran berhasil dicatat.")
 };
 
 /* Admin payment delegated actions: delete, status/invoice, view invoice. */
@@ -361,8 +361,8 @@ function draw(){
   var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return x.bulan===f&&(!ps||x.status===ps)&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
   /* Statistik utama sekarang ditampilkan oleh Dashboard Utama. */
-  var ef=$("eb").value,eq=($("expenseSearch").value||"").toLowerCase(),EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef&&(!eq||[x.kat,x.ket].join(" ").toLowerCase().includes(eq))}).sort(function(a,b){return a.tgl<b.tgl?1:-1});$("et2").textContent="Total pengeluaran bulan ini: "+rp(EL.reduce(function(a,x){return a+Number(x.jumlah)},0));
-  $("be").innerHTML=EL.map(function(x){return '<tr><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket)+'</td><td>'+rp(x.jumlah)+'</td><td><button class="sm" data-er="'+x.id+'">Unduh Struk</button> <button class="sm" data-de="'+x.id+'">Hapus</button></td></tr>'}).join("")||emptyTable(5,"Belum ada pengeluaran","Tidak ada pengeluaran pada periode atau pencarian ini.");
+  var ef=$("eb").value,eq=($("expenseSearch").value||"").toLowerCase(),ec=$("expenseCategoryFilter")?$("expenseCategoryFilter").value:"",EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef&&(!ec||x.kat===ec)&&(!eq||[x.kat,x.ket].join(" ").toLowerCase().includes(eq))}).sort(function(a,b){return a.tgl<b.tgl?1:-1});var expenseTotal=EL.reduce(function(a,x){return a+Number(x.jumlah)},0);$("et2").textContent="";if($("expenseTotal"))$("expenseTotal").textContent=rp(expenseTotal);
+  $("be").innerHTML=EL.map(function(x,idx){return '<tr><td class="expense-no">'+(idx+1)+'</td><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket||"-")+'</td><td><b>'+rp(x.jumlah)+'</b></td><td><div class="expense-actions"><button class="sm" data-er="'+x.id+'">Struk</button><button class="sm danger" data-de="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pengeluaran pada periode ini","Klik tombol Tambah Pengeluaran untuk mencatat pengeluaran.");
   if($("paymentBillTotal"))$("paymentBillTotal").textContent=rp(L.reduce(function(a,x){return a+Number(x.jumlah||0)},0));
   if($("paymentPaidTotal"))$("paymentPaidTotal").textContent=rp(L.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
   if($("paymentUnpaidTotal"))$("paymentUnpaidTotal").textContent=rp(L.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
@@ -372,7 +372,7 @@ function draw(){
   drawSalary();
 }
 
-$("fb").onchange=draw;$("eb").onchange=draw;$("sel").onchange=function(){var m=stu($("sel").value);if(m)$("pj").value=m.biaya};
+$("fb").onchange=draw;$("eb").onchange=draw;if($("expenseCategoryFilter"))$("expenseCategoryFilter").onchange=draw;$("sel").onchange=function(){var m=stu($("sel").value);if(m)$("pj").value=m.biaya};
 function teacherAccountLabel(id){
   var t=TEACHERS.find(function(x){return x.id===id})||{};
   return (t.nama||"Belum diisi")+" — "+(t.email||String(id||"").slice(0,8));
@@ -583,3 +583,6 @@ if($("dashboardAddStudent"))$("dashboardAddStudent").onclick=function(){document
 
 /* Pembayaran form toggle */
 if($("openPaymentForm"))$("openPaymentForm").onclick=function(){var p=$("paymentFormPanel");if(!p)return;if(!p.hidden){p.hidden=true;return}p.hidden=false;if($("pb"))$("pb").value=$("fb").value||thisM;};
+
+/* Pengeluaran form toggle */
+if($("openExpenseForm"))$("openExpenseForm").onclick=function(){var p=$("expenseFormPanel");if(!p)return;p.hidden=!p.hidden;if(!p.hidden&&$("et"))$("et").value=todayISO;};
