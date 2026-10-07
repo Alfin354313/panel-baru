@@ -185,3 +185,21 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
  body.role-guru #teacherMenu .teacher-nav-icon{font-size:18px!important;line-height:19px!important;margin:0!important}
  body.role-guru .teacher-page{margin-bottom:62px!important}
 }
+
+
+/* FINAL mobile teacher navigation sizing: compact like Admin. */
+@media(max-width:899px){
+ body.role-guru .teacher-head{height:50px!important;min-height:50px!important;padding:4px 10px!important}
+ body.role-guru .teacher-brand img{width:31px!important;height:31px!important}
+ body.role-guru #teacherMenu{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  height:52px!important;min-height:52px!important;padding:2px 6px!important;gap:4px!important
+ }
+ body.role-guru #teacherMenu button{
+  flex:0 0 76px!important;width:76px!important;height:48px!important;min-height:48px!important;
+  padding:1px!important;gap:0!important
+ }
+ body.role-guru #teacherMenu .teacher-nav-icon{font-size:17px!important;line-height:18px!important}
+ body.role-guru #teacherApp{padding-bottom:52px!important}
+ body.role-guru .teacher-page{margin-bottom:54px!important}
+}
