@@ -37,7 +37,7 @@ $("fm").onsubmit=async function(e){
   var r=await window.sb.from("students").insert({nama:o.nama,jenjang:o.jenjang,kelas:o.kelas,ortu:o.ortu,hp:o.hp,biaya:Number(o.biaya||0)}).select().single();
   if(r.error){alert("Gagal menyimpan murid: "+r.error.message);return}
   S.push({id:r.data.id,nama:r.data.nama,jenjang:r.data.jenjang,kelas:r.data.kelas,ortu:r.data.ortu,hp:r.data.hp,biaya:Number(r.data.biaya||0)});auditLog("CREATE","Murid",r.data.id,"Menambahkan murid "+(r.data.nama||""));
-  e.target.reset();draw();alert("Murid berhasil disimpan.")
+  e.target.reset();if($("studentFormPanel"))$("studentFormPanel").hidden=true;draw();alert("Murid berhasil disimpan.")
 };
 
 /* Admin payment form handler. */
