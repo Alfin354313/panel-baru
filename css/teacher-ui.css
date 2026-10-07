@@ -164,3 +164,12 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
 
 .teacher-page-title{display:flex!important;align-items:center!important;gap:9px!important}
 .teacher-title-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:30px!important;height:30px!important;min-width:30px!important;border-radius:8px!important;background:#e9f4ff!important;color:#087bf1!important;font-size:16px!important;font-weight:800!important;line-height:1!important}
+
+
+/* Give the teacher dashboard KPI row breathing room below the header. */
+@media(min-width:900px){
+ body.role-guru #teacherDashboardPage>.dashboard-grid{
+  margin-top:18px!important;
+  margin-bottom:14px!important
+ }
+}
