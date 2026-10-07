@@ -523,3 +523,21 @@ body.role-admin #dashboard .dashboard-filter::before,
 body.role-admin #dashboard .dashboard-filter::after{
  content:none!important;display:none!important;background:none!important
 }
+
+
+/* Improve dashboard KPI readability */
+@media(min-width:900px){
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card small{
+   font-size:12px!important;line-height:1.2!important;font-weight:500!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card b{
+   font-size:19px!important;line-height:1.15!important;font-weight:800!important;margin-top:3px!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{
+   font-size:10.5px!important;line-height:1.2!important;margin-top:4px!important
+ }
+ body.role-admin #dashboard .attendance-compact-head b{font-size:14px!important}
+ body.role-admin #dashboard .attendance-compact-head small{font-size:10px!important}
+ body.role-admin #dashboard .attendance-compact-grid small{font-size:10.5px!important}
+ body.role-admin #dashboard .attendance-compact-grid b{font-size:16px!important}
+}
