@@ -290,6 +290,13 @@ function drawAdminAttendance(month){
     return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+q.Hadir+'</td><td>'+q.Izin+'</td><td>'+q.Sakit+'</td><td>'+q["Tidak Hadir"]+'</td><td><b>'+total+'</b></td></tr>';
   }).join("")||'<tr><td colspan="6">Belum ada data absensi pada periode ini.</td></tr>';
 }
+function drawDashboardStudents(){
+  var body=$("dashboardStudentBody");if(!body)return;
+  var q=(($("dashboardStudentSearch")&&$("dashboardStudentSearch").value)||"").toLowerCase().trim();
+  var rows=S.filter(function(m){return !q||[m.nama,m.kelas,m.jenjang].join(" ").toLowerCase().includes(q)}).slice(0,4);
+  body.innerHTML=rows.map(function(m){var initials=String(m.nama||"?").trim().split(/\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td><span class="student-mini-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"-")+'</b></td><td>'+esc(m.jenjang||"-")+' '+esc(m.kelas||"")+'</td><td>'+esc(m.kelas||m.jenjang||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><button class="student-more" data-profile="'+m.id+'" aria-label="Detail '+esc(m.nama||"murid")+'">⋮</button></td></tr>'}).join("")||emptyTable(5,"Belum ada murid","Tambahkan murid untuk menampilkan data di dashboard.");
+  if($("dashboardStudentCount"))$("dashboardStudentCount").textContent="Menampilkan "+rows.length+" dari "+S.length+" siswa";
+}
 function drawDashboard(){
   var month=$("dashboardMonth").value||thisM;
   var monthPayments=P.filter(function(x){return x.bulan===month});
@@ -302,6 +309,7 @@ function drawDashboard(){
   var paidRate=billCount?Math.round(paidCount/billCount*100):0;
   var average=billCount?monthPayments.reduce(function(a,x){return a+Number(x.jumlah||0)},0)/billCount:0;
   $("dStudents").textContent=S.length;
+  drawDashboardStudents();
   $("dIncome").textContent=rp(income);
   $("dReceivable").textContent=rp(receivable);
   $("dExpense").textContent=rp(expense);
@@ -558,3 +566,6 @@ $("refreshAuditLog").onclick=loadAuditLog;$("auditSearch").oninput=drawAuditLog;
 function tableSkeleton(cols){return '<tr class="skeleton-row"><td colspan="'+cols+'"><div class="skeleton-line w90"></div><div class="skeleton-line w70"></div><div class="skeleton-line w80"></div></td></tr>'}
 function emptyTable(cols,title,desc){return '<tr><td colspan="'+cols+'"><div class="empty-state"><div class="empty-state-icon">⌁</div><b>'+esc(title)+'</b><span>'+esc(desc)+'</span></div></td></tr>'}
 function showAdminLoading(){[["bm",7],["bp",6],["be",5],["teacherMasterBody",6]].forEach(function(x){var el=$(x[0]);if(el)el.innerHTML=tableSkeleton(x[1])});var sync=$("syncStatus");if(sync)sync.textContent="Memuat data..."}
+
+if($("dashboardStudentSearch"))$("dashboardStudentSearch").oninput=drawDashboardStudents;
+if($("dashboardAddStudent"))$("dashboardAddStudent").onclick=function(){document.querySelector('[data-t="m"]').click();setTimeout(function(){var n=$("nama");if(n)n.focus()},0)};
