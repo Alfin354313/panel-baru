@@ -46,7 +46,7 @@ $("fp").onsubmit=async function(e){
   var r=await window.sb.from("payments").insert({student_id:o.sid,bulan:o.bulan,jumlah:Number(o.jumlah||0),metode:o.metode||"",status:"Belum"}).select().single();
   if(r.error){alert("Gagal menyimpan pembayaran: "+r.error.message);return}
   P.push({id:r.data.id,sid:r.data.student_id,bulan:r.data.bulan,jumlah:Number(r.data.jumlah),metode:r.data.metode||"",status:r.data.status});
-  $("fb").value=o.bulan;draw();alert("Pembayaran berhasil dicatat.")
+  $("fb").value=o.bulan;e.target.reset();if($("paymentFormPanel"))$("paymentFormPanel").hidden=true;draw();alert("Pembayaran berhasil dicatat.")
 };
 
 /* Admin expense form handler. */
@@ -363,7 +363,10 @@ function draw(){
   /* Statistik utama sekarang ditampilkan oleh Dashboard Utama. */
   var ef=$("eb").value,eq=($("expenseSearch").value||"").toLowerCase(),EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef&&(!eq||[x.kat,x.ket].join(" ").toLowerCase().includes(eq))}).sort(function(a,b){return a.tgl<b.tgl?1:-1});$("et2").textContent="Total pengeluaran bulan ini: "+rp(EL.reduce(function(a,x){return a+Number(x.jumlah)},0));
   $("be").innerHTML=EL.map(function(x){return '<tr><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket)+'</td><td>'+rp(x.jumlah)+'</td><td><button class="sm" data-er="'+x.id+'">Unduh Struk</button> <button class="sm" data-de="'+x.id+'">Hapus</button></td></tr>'}).join("")||emptyTable(5,"Belum ada pengeluaran","Tidak ada pengeluaran pada periode atau pencarian ini.");
-  $("bp").innerHTML=L.map(function(x){var m=stu(x.sid)||{};var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':' <a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td>'+esc(m.nama||"(dihapus)")+'</td><td>'+esc(x.bulan)+'</td><td>'+rp(x.jumlah)+'</td><td>'+esc(x.metode)+'</td><td class="'+(x.status==="Lunas"?"ok":"no")+'">'+x.status+'</td><td><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+' <button class="sm" data-dp="'+x.id+'">Hapus</button></td></tr>'}).join("")||emptyTable(6,"Belum ada pembayaran","Tidak ada pembayaran pada periode atau filter ini.");
+  if($("paymentBillTotal"))$("paymentBillTotal").textContent=rp(L.reduce(function(a,x){return a+Number(x.jumlah||0)},0));
+  if($("paymentPaidTotal"))$("paymentPaidTotal").textContent=rp(L.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
+  if($("paymentUnpaidTotal"))$("paymentUnpaidTotal").textContent=rp(L.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
+  $("bp").innerHTML=L.map(function(x,idx){var m=stu(x.sid)||{};var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':'<a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td class="payment-no">'+(idx+1)+'</td><td><span class="payment-student"><span class="payment-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"(dihapus)")+'</b></span></td><td>'+esc(x.bulan)+'</td><td><b>'+rp(x.jumlah)+'</b></td><td><span class="payment-status '+(x.status==="Lunas"?"paid":"unpaid")+'">'+esc(x.status==="Lunas"?"Lunas":"Belum Lunas")+'</span></td><td><div class="payment-actions"><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+'<button class="sm danger" data-dp="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pembayaran","Tidak ada pembayaran pada periode atau filter ini.");
   drawDashboard();
   drawTeachers();
   drawSalary();
@@ -577,3 +580,6 @@ function showAdminLoading(){[["bm",7],["bp",6],["be",5],["teacherMasterBody",6]]
 
 if($("dashboardStudentSearch"))$("dashboardStudentSearch").oninput=drawDashboardStudents;
 if($("dashboardAddStudent"))$("dashboardAddStudent").onclick=function(){document.querySelector('[data-t="m"]').click();setTimeout(function(){var n=$("nama");if(n)n.focus()},0)};
+
+/* Pembayaran form toggle */
+if($("openPaymentForm"))$("openPaymentForm").onclick=function(){var p=$("paymentFormPanel");if(!p)return;if(!p.hidden){p.hidden=true;return}p.hidden=false;if($("pb"))$("pb").value=$("fb").value||thisM;};
