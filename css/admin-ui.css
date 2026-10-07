@@ -1,0 +1,91 @@
+/* Admin UI/UX redesign — reference mockup, isolated from Guru panel */
+@media (min-width:900px){
+ body.role-admin{background:#edf6fc!important}
+ body.role-admin #app{width:min(1480px,calc(100% - 36px))!important;max-width:none!important;margin:18px auto!important;padding:0 0 24px 224px!important;position:relative!important;box-sizing:border-box!important}
+ body.role-admin #app>header{margin:0 0 14px!important;min-height:72px!important;border-radius:15px!important;background:#fff!important;box-shadow:0 4px 18px rgba(12,61,105,.06)!important}
+ body.role-admin #app>header img{width:46px!important;height:46px!important;flex-basis:46px!important}
+ body.role-admin #app>.admin-sidebar{position:absolute!important;left:0!important;top:0!important;bottom:0!important;width:205px!important;margin:0!important;padding:20px 12px!important;background:linear-gradient(180deg,#082f59 0%,#0a477b 100%)!important;border:0!important;border-radius:18px 0 0 18px!important;box-shadow:0 10px 30px rgba(4,39,72,.16)!important;overflow:visible!important}
+ body.role-admin #app>.admin-sidebar:before{content:"◆  Jenius Edu";display:block;padding:5px 10px 20px;color:#fff;font-size:.93rem;font-weight:900}
+ body.role-admin #app>.admin-sidebar .admin-sidebar-title{display:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:flex!important;flex-direction:column!important;gap:5px!important;width:100%!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{width:100%!important;display:block!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{min-height:43px!important;padding:10px 12px!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#e8f3fc!important;text-align:left!important;font-size:.82rem!important;font-weight:700!important;box-shadow:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button:hover,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button:hover{background:rgba(255,255,255,.09)!important;transform:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button.on{background:#147df5!important;color:#fff!important;box-shadow:0 5px 15px rgba(20,125,245,.28)!important}
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{margin-left:0!important;max-width:none!important}
+ body.role-admin #app>.card,body.role-admin #app>#dashboard>.card{border-radius:14px!important}
+}
+body.role-admin #app{font-size:14px}
+body.role-admin #app .dashboard-section{padding:16px!important;border-color:#dbe8f2!important;box-shadow:0 4px 16px rgba(21,67,107,.04)!important}
+body.role-admin #app .dashboard-head h2{font-size:1.2rem!important;color:#092f68!important}
+body.role-admin #app .dashboard-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+body.role-admin #app .dashboard-card{min-height:86px!important;padding:14px 14px!important;border-radius:11px!important;background:#fff!important}
+body.role-admin #app .dashboard-card small{font-size:.72rem!important}
+body.role-admin #app .dashboard-card b{font-size:1.28rem!important;margin-top:8px!important;color:#092f68!important}
+body.role-admin #app .dashboard-card.kpi-income,
+body.role-admin #app .dashboard-card.kpi-profit,
+body.role-admin #app .dashboard-card.kpi-paid{background:linear-gradient(135deg,#f7fffb,#eaf9f1)!important}
+body.role-admin #app .dashboard-card.kpi-receivable,
+body.role-admin #app .dashboard-card.kpi-unpaid{background:linear-gradient(135deg,#fffafa,#fff0f0)!important}
+body.role-admin #app .dashboard-card.kpi-expense{background:linear-gradient(135deg,#fffdf9,#fff5ed)!important}
+body.role-admin #app .dashboard-card.kpi-income b,
+body.role-admin #app .dashboard-card.kpi-profit b,
+body.role-admin #app .dashboard-card.kpi-paid b{color:#079653!important}
+body.role-admin #app .dashboard-card.kpi-receivable b,
+body.role-admin #app .dashboard-card.kpi-unpaid b{color:#e11d2e!important}
+body.role-admin #app .dashboard-card.kpi-icon{border-radius:9px!important}
+body.role-admin #app .tw{border-radius:10px!important;box-shadow:none!important}
+body.role-admin #app th{background:#edf4f8!important;color:#173c61!important;padding:10px 12px!important}
+body.role-admin #app td{padding:10px 12px!important;color:#183b5d!important}
+body.role-admin #app .table-tools input,
+body.role-admin #app .table-tools select,
+body.role-admin #app .dashboard-filter input,
+body.role-admin #app .financial-report-tools input{border:1px solid #cdddeb!important;border-radius:8px!important;background:#fff!important;min-height:39px!important}
+body.role-admin #app button.pri,
+body.role-admin #app form button:not(.ghost):not(.danger){background:#087bf1!important;border-color:#087bf1!important;border-radius:8px!important}
+body.role-admin #app #tm>h2:before{content:"▣ ";color:#087bf1}
+body.role-admin #app #tp>h2:before{content:"▣ ";color:#087bf1}
+body.role-admin #app #te>h2:before{content:"▣ ";color:#087bf1}
+body.role-admin #app #tm,body.role-admin #app #tp,body.role-admin #app #te,
+body.role-admin #app #teacherMasterPage,body.role-admin #app #salaryPage,
+body.role-admin #app #financialReportPage,body.role-admin #app #auditLogPage{background:#fff!important;border:1px solid #dbe8f2!important;box-shadow:0 5px 18px rgba(21,67,107,.05)!important}
+body.role-admin #app #tm>h2,body.role-admin #app #tp>h2,body.role-admin #app #te>h2{color:#0a3268!important;font-size:1.15rem!important}
+body.role-admin #app .finance-chart{height:220px!important;background:#fff!important;border-color:#e2ebf2!important}
+body.role-admin #app .finance-bars{height:165px!important}
+@media(max-width:899px){
+ body.role-admin{background:#f4f9fd!important}
+ body.role-admin #app{padding:8px 8px 76px!important}
+ body.role-admin #app>header{position:sticky!important;top:0!important;z-index:50!important;border-radius:0!important;margin:-8px -8px 12px!important;padding:12px 14px!important;background:#fff!important}
+ body.role-admin #app>header h1{font-size:1.08rem!important}
+ body.role-admin #app>header small{display:none!important}
+ body.role-admin #app>.admin-sidebar{position:fixed!important;z-index:100!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;margin:0!important;padding:5px 8px calc(5px + env(safe-area-inset-bottom))!important;border:0!important;border-top:1px solid #d8e5ef!important;background:#fff!important;box-shadow:0 -6px 20px rgba(16,59,94,.08)!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:grid!important;grid-template-columns:repeat(4,1fr)!important;width:100%!important;gap:3px!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{min-width:0!important;width:100%!important;min-height:52px!important;padding:6px 3px!important;border:0!important;background:transparent!important;color:#174c78!important;font-size:.62rem!important;text-align:center!important;white-space:normal!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button.on{background:#eef6ff!important;color:#087bf1!important;box-shadow:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button:nth-child(n+5),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:nth-child(n+5){display:none!important}
+ body.role-admin #app .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #app .dashboard-card{min-height:92px!important}
+ body.role-admin #app .dashboard-section{padding:12px!important}
+ body.role-admin #app .dashboard-head{flex-wrap:wrap!important}
+ body.role-admin #app .dashboard-filter{width:auto!important}
+ body.role-admin #app table{min-width:680px!important}
+}
+@media(max-width:430px){
+ body.role-admin #app .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #app .dashboard-card{min-height:86px!important;padding:12px!important}
+ body.role-admin #app .dashboard-card b{font-size:1.15rem!important}
+ body.role-admin #app>header>div:last-child{width:auto!important;margin-left:auto!important;margin-top:0!important}
+ body.role-admin #app #exportAdminBtn,body.role-admin #app #logoutBtn,body.role-admin #app #syncStatus{display:none!important}
+}
