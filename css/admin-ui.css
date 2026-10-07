@@ -1151,3 +1151,11 @@ body.role-admin .admin-topbar::after{
   display:flex!important;flex:0 0 25%!important;width:25%!important;height:58px!important
  }
 }
+
+@media(max-width:899px){
+ body.role-admin #mobileMorePanel{position:fixed!important;z-index:210!important;left:12px!important;right:12px!important;bottom:74px!important;padding:8px!important;border:1px solid #d5e5f1!important;border-radius:14px!important;background:#fff!important;box-shadow:0 12px 30px rgba(13,57,94,.18)!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ body.role-admin #mobileMorePanel:not([hidden]){display:grid!important}
+ body.role-admin #mobileMorePanel button{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:44px!important;padding:9px 12px!important;border:0!important;border-radius:9px!important;background:#f2f8fd!important;color:#174c78!important;font-size:12px!important;font-weight:700!important;text-align:left!important}
+ body.role-admin #mobileMorePanel button:last-child{grid-column:1/-1!important}
+}
+@media(min-width:900px){#mobileMorePanel{display:none!important}}
