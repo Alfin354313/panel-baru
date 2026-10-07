@@ -512,3 +512,14 @@ body.role-admin .admin-dashboard-welcome::before,
 body.role-admin .admin-dashboard-welcome::after,
 body.role-admin .dashboard-filter::before,
 body.role-admin .dashboard-filter::after{pointer-events:none!important}
+
+
+/* Remove circular decorative shapes from Admin dashboard cards */
+body.role-admin #dashboard .dashboard-card::before,
+body.role-admin #dashboard .dashboard-card::after,
+body.role-admin #dashboard .admin-dashboard-welcome::before,
+body.role-admin #dashboard .admin-dashboard-welcome::after,
+body.role-admin #dashboard .dashboard-filter::before,
+body.role-admin #dashboard .dashboard-filter::after{
+ content:none!important;display:none!important;background:none!important
+}
