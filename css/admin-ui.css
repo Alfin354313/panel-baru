@@ -451,3 +451,41 @@ body.role-admin .dashboard-student-count{display:block;margin-top:7px;color:#668
  body.role-admin #dashboard .dashboard-attendance-compact{margin-top:8px!important}
  body.role-admin #dashboard .dashboard-ratio-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:8px!important}
 }
+
+
+/* Dashboard desktop v6 — tuned for scaled desktop viewports */
+body.role-admin .attendance-compact-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin-bottom:9px!important;color:#123e65!important}
+body.role-admin .attendance-compact-head b{font-size:.82rem!important;white-space:nowrap!important}
+body.role-admin .attendance-compact-head small{font-size:.56rem!important;color:#7890a3!important;white-space:nowrap!important}
+body.role-admin .attendance-compact-grid>div{display:grid!important;grid-template-columns:28px 1fr!important;grid-template-rows:auto auto!important;column-gap:7px!important;align-items:center!important;padding:7px 8px!important;border:1px solid #e1ebf3!important;border-radius:8px!important;background:#fbfdff!important}
+body.role-admin .attendance-compact-grid small{font-size:.58rem!important;color:#617c92!important}
+body.role-admin .attendance-compact-grid b{font-size:.9rem!important;color:#0b3566!important}
+body.role-admin .attendance-icon{grid-row:1/3!important;display:grid!important;place-items:center!important;width:28px!important;height:28px!important;border-radius:8px!important;font-weight:900!important}
+body.role-admin .attendance-icon.hadir{background:#eaf4ff!important;color:#087bf1!important}
+body.role-admin .attendance-icon.izin{background:#fff5e9!important;color:#ef8b2c!important}
+body.role-admin .attendance-icon.sakit,body.role-admin .attendance-icon.absen{background:#fff0f0!important;color:#e94a4f!important}
+
+@media(min-width:900px){
+ body.role-admin #dashboard>.dashboard-section:first-child{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(260px,30%)!important;
+  grid-template-areas:"welcome welcome" "kpis attendance" "ratio ratio"!important;gap:10px!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid{
+  grid-area:kpis!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,78px)!important;gap:8px!important;margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+  min-width:0!important;width:auto!important;height:78px!important;min-height:78px!important;
+  padding:10px 38px 8px 10px!important;margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-icon{
+  left:auto!important;right:7px!important;top:50%!important;transform:translateY(-50%)!important;
+  width:27px!important;height:27px!important;min-width:27px!important;padding:5px!important;z-index:1!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid small{font-size:.58rem!important;line-height:1.1!important}
+ body.role-admin #dashboard .dashboard-kpi-grid b{font-size:1rem!important;line-height:1.05!important;margin-top:3px!important}
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-caption{font-size:.5rem!important;line-height:1.05!important;margin-top:3px!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{grid-area:attendance!important;height:164px!important;min-height:164px!important;margin:0!important;padding:10px!important}
+ body.role-admin #dashboard .attendance-compact-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{grid-area:ratio!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,230px))!important;gap:8px!important;margin:0!important}
+}
