@@ -815,3 +815,13 @@ body.role-admin #auditLogPage .audit-note{margin:10px 2px 0;color:#6f879a;font-s
  body.role-admin #dashboard .dashboard-filter{position:absolute!important;top:12px!important;right:12px!important;width:180px!important;max-width:180px!important;margin:0!important;box-sizing:border-box!important}
  body.role-admin #dashboard .dashboard-filter input{width:100%!important;min-width:0!important;box-sizing:border-box!important}
 }
+
+
+/* Dashboard period correction: keep the whole period card inside welcome panel */
+@media(min-width:900px){
+ body.role-admin #dashboard .admin-dashboard-welcome{overflow:hidden!important;min-height:96px!important;padding:18px 210px 18px 18px!important}
+ body.role-admin #dashboard .dashboard-filter{top:10px!important;right:12px!important;width:180px!important;max-width:180px!important;height:72px!important;min-height:72px!important;padding:8px 10px!important;overflow:hidden!important;z-index:2!important}
+ body.role-admin #dashboard .dashboard-filter label,
+ body.role-admin #dashboard .dashboard-filter>span{font-size:11px!important;line-height:14px!important;margin:0 0 4px!important}
+ body.role-admin #dashboard .dashboard-filter input{height:38px!important;min-height:38px!important;padding:7px 10px!important}
+}
