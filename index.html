@@ -78,6 +78,15 @@
       <div class="card dashboard-card dashboard-warning kpi-unpaid"><span class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M12 3 3 20h18L12 3Z"/><path d="M12 9v5"/><path d="M12 17h.01"/></svg></span><small>Belum lunas</small><b id="dUnpaidCount">0</b></div>
       <div class="card dashboard-card kpi-bills"><span class="kpi-icon"><svg viewBox="0 0 24 24"><path d="M6 3h12v18H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></span><small>Total tagihan</small><b id="dBillCount">0</b></div>
     </div>
+    <div class="dashboard-attendance-compact">
+      <div class="attendance-compact-head"><b>Rekap Absensi Murid</b><small>Ringkasan periode</small></div>
+      <div class="attendance-compact-grid">
+        <div><span class="attendance-icon hadir">✓</span><small>Hadir</small><b id="aHadirTop">0</b></div>
+        <div><span class="attendance-icon izin">▤</span><small>Izin</small><b id="aIzinTop">0</b></div>
+        <div><span class="attendance-icon sakit">＋</span><small>Sakit</small><b id="aSakitTop">0</b></div>
+        <div><span class="attendance-icon absen">×</span><small>Tidak Hadir</small><b id="aTidakHadirTop">0</b></div>
+      </div>
+    </div>
     <div class="dashboard-grid">
       <div class="card"><small>Rasio pembayaran</small><b id="dPaidRate">0%</b><span style="color:var(--muted)"> dari jumlah transaksi pada periode</span></div>
       <div class="card"><small>Rata-rata pembayaran</small><b id="dAverage">Rp0</b><span style="color:var(--muted)"> per transaksi</span></div>
