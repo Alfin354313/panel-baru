@@ -136,3 +136,28 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
   overflow-y:auto!important;overflow-x:hidden!important;box-sizing:border-box!important
  }
 }
+
+
+/* Desktop teacher content density: keep cards comfortably narrow */
+@media(min-width:900px){
+ body.role-guru .teacher-page{
+  padding-right:28px!important
+ }
+ body.role-guru .teacher-page>.card,
+ body.role-guru #teacherDashboardPage>.dashboard-grid,
+ body.role-guru #teacherDashboardPage>.teacher-dashboard-panels,
+ body.role-guru #teacherDashboardPage>#teacherNotificationPanel{
+  max-width:1080px!important;
+  margin-left:auto!important;
+  margin-right:auto!important
+ }
+ body.role-guru #teacherDashboardPage>.dashboard-section{
+  max-width:1080px!important;
+  margin-left:auto!important;
+  margin-right:auto!important
+ }
+ body.role-guru #teacherDashboardPage .teacher-dashboard-list>div{
+  padding:10px 12px!important;
+  min-height:58px!important
+ }
+}
