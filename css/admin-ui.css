@@ -598,3 +598,11 @@ body.role-admin .student-action-menu button:hover{background:#edf6ff}
  body.role-admin .students-table-wrap{overflow-x:auto!important}
  body.role-admin .students-table{min-width:680px!important}
 }
+
+
+/* Data Murid search alignment fix */
+body.role-admin .admin-students-page .students-tools{display:grid!important;grid-template-columns:minmax(0,1fr) 220px!important;align-items:stretch!important}
+body.role-admin .admin-students-page .student-search-box{box-sizing:border-box!important;width:100%!important;min-width:0!important;margin:0!important}
+body.role-admin .admin-students-page .student-search-box input#studentSearch{box-sizing:border-box!important;display:block!important;min-width:0!important;width:100%!important;height:36px!important;margin:0!important;border:0!important;padding:0!important}
+body.role-admin .admin-students-page #studentLevelFilter{box-sizing:border-box!important;width:100%!important;margin:0!important}
+@media(max-width:899px){body.role-admin .admin-students-page .students-tools{grid-template-columns:1fr!important}}
