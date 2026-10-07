@@ -203,3 +203,37 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
  body.role-guru #teacherApp{padding-bottom:52px!important}
  body.role-guru .teacher-page{margin-bottom:54px!important}
 }
+
+
+/* Match Panel Guru mobile shell/navigation to the approved Admin mobile layout. */
+@media(max-width:899px){
+ body.role-guru .teacher-head{
+  height:50px!important;min-height:50px!important;padding:4px 10px!important
+ }
+ body.role-guru .teacher-head>div:last-child{
+  display:flex!important;align-items:center!important;justify-content:flex-end!important;
+  gap:5px!important;margin:0!important;flex-wrap:nowrap!important
+ }
+ body.role-guru #teacherSync,body.role-guru #exportTeacherBtn{display:none!important}
+ body.role-guru #teacherLogoutBtn{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  min-width:52px!important;width:auto!important;height:32px!important;margin:0!important;padding:0 9px!important;
+  border:1px solid #ff9b8f!important;border-radius:16px!important;background:#fff!important;color:#d33a28!important;
+  font-size:11px!important;font-weight:800!important;white-space:nowrap!important
+ }
+ body.role-guru #teacherMenu{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  height:48px!important;min-height:48px!important;padding:0 4px!important;gap:2px!important
+ }
+ body.role-guru #teacherMenu button{
+  flex:0 0 64px!important;width:64px!important;max-width:64px!important;
+  height:44px!important;min-height:44px!important;margin:0!important;padding:0!important;gap:0!important;
+  border-radius:8px!important
+ }
+ body.role-guru #teacherMenu .teacher-nav-icon{
+  font-size:17px!important;line-height:18px!important;margin:0 0 1px!important
+ }
+ body.role-guru #teacherMenu button span:last-child{font-size:9px!important;line-height:11px!important}
+ body.role-guru #teacherApp{padding-bottom:48px!important}
+ body.role-guru .teacher-page{margin-bottom:50px!important}
+}
