@@ -1,0 +1,1263 @@
+/* Admin UI/UX redesign — reference mockup, isolated from Guru panel */
+@media (min-width:900px){
+ body.role-admin{background:#edf6fc!important}
+ body.role-admin #app{width:min(1480px,calc(100% - 36px))!important;max-width:none!important;margin:18px auto!important;padding:0 0 24px 224px!important;position:relative!important;box-sizing:border-box!important}
+ body.role-admin #app>header{margin:0 0 14px!important;min-height:72px!important;border-radius:15px!important;background:#fff!important;box-shadow:0 4px 18px rgba(12,61,105,.06)!important}
+ body.role-admin #app>header img{width:46px!important;height:46px!important;flex-basis:46px!important}
+ body.role-admin #app>.admin-sidebar{position:absolute!important;left:0!important;top:0!important;bottom:0!important;width:205px!important;margin:0!important;padding:20px 12px!important;background:linear-gradient(180deg,#082f59 0%,#0a477b 100%)!important;border:0!important;border-radius:18px 0 0 18px!important;box-shadow:0 10px 30px rgba(4,39,72,.16)!important;overflow:visible!important}
+ body.role-admin #app>.admin-sidebar:before{content:"◆  Jenius Edu";display:block;padding:5px 10px 20px;color:#fff;font-size:.93rem;font-weight:900}
+ body.role-admin #app>.admin-sidebar .admin-sidebar-title{display:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:flex!important;flex-direction:column!important;gap:5px!important;width:100%!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{width:100%!important;display:block!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{min-height:43px!important;padding:10px 12px!important;border:0!important;border-radius:9px!important;background:transparent!important;color:#e8f3fc!important;text-align:left!important;font-size:.82rem!important;font-weight:700!important;box-shadow:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button:hover,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button:hover{background:rgba(255,255,255,.09)!important;transform:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button.on{background:#147df5!important;color:#fff!important;box-shadow:0 5px 15px rgba(20,125,245,.28)!important}
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{margin-left:0!important;max-width:none!important}
+ body.role-admin #app>.card,body.role-admin #app>#dashboard>.card{border-radius:14px!important}
+}
+body.role-admin #app{font-size:14px}
+body.role-admin #app .dashboard-section{padding:16px!important;border-color:#dbe8f2!important;box-shadow:0 4px 16px rgba(21,67,107,.04)!important}
+body.role-admin #app .dashboard-head h2{font-size:1.2rem!important;color:#092f68!important}
+body.role-admin #app .dashboard-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important}
+body.role-admin #app .dashboard-card{min-height:86px!important;padding:14px 14px!important;border-radius:11px!important;background:#fff!important}
+body.role-admin #app .dashboard-card small{font-size:.72rem!important}
+body.role-admin #app .dashboard-card b{font-size:1.28rem!important;margin-top:8px!important;color:#092f68!important}
+body.role-admin #app .dashboard-card.kpi-income,
+body.role-admin #app .dashboard-card.kpi-profit,
+body.role-admin #app .dashboard-card.kpi-paid{background:linear-gradient(135deg,#f7fffb,#eaf9f1)!important}
+body.role-admin #app .dashboard-card.kpi-receivable,
+body.role-admin #app .dashboard-card.kpi-unpaid{background:linear-gradient(135deg,#fffafa,#fff0f0)!important}
+body.role-admin #app .dashboard-card.kpi-expense{background:linear-gradient(135deg,#fffdf9,#fff5ed)!important}
+body.role-admin #app .dashboard-card.kpi-income b,
+body.role-admin #app .dashboard-card.kpi-profit b,
+body.role-admin #app .dashboard-card.kpi-paid b{color:#079653!important}
+body.role-admin #app .dashboard-card.kpi-receivable b,
+body.role-admin #app .dashboard-card.kpi-unpaid b{color:#e11d2e!important}
+body.role-admin #app .dashboard-card.kpi-icon{border-radius:9px!important}
+body.role-admin #app .tw{border-radius:10px!important;box-shadow:none!important}
+body.role-admin #app th{background:#edf4f8!important;color:#173c61!important;padding:10px 12px!important}
+body.role-admin #app td{padding:10px 12px!important;color:#183b5d!important}
+body.role-admin #app .table-tools input,
+body.role-admin #app .table-tools select,
+body.role-admin #app .dashboard-filter input,
+body.role-admin #app .financial-report-tools input{border:1px solid #cdddeb!important;border-radius:8px!important;background:#fff!important;min-height:39px!important}
+body.role-admin #app button.pri,
+body.role-admin #app form button:not(.ghost):not(.danger){background:#087bf1!important;border-color:#087bf1!important;border-radius:8px!important}
+body.role-admin #app #tm>h2:before{content:"▣ ";color:#087bf1}
+body.role-admin #app #tp>h2:before{content:"▣ ";color:#087bf1}
+body.role-admin #app #te>h2:before{content:"▣ ";color:#087bf1}
+body.role-admin #app #tm,body.role-admin #app #tp,body.role-admin #app #te,
+body.role-admin #app #teacherMasterPage,body.role-admin #app #salaryPage,
+body.role-admin #app #financialReportPage,body.role-admin #app #auditLogPage{background:#fff!important;border:1px solid #dbe8f2!important;box-shadow:0 5px 18px rgba(21,67,107,.05)!important}
+body.role-admin #app #tm>h2,body.role-admin #app #tp>h2,body.role-admin #app #te>h2{color:#0a3268!important;font-size:1.15rem!important}
+body.role-admin #app .finance-chart{height:220px!important;background:#fff!important;border-color:#e2ebf2!important}
+body.role-admin #app .finance-bars{height:165px!important}
+@media(max-width:899px){
+ body.role-admin{background:#f4f9fd!important}
+ body.role-admin #app{padding:8px 8px 76px!important}
+ body.role-admin #app>header{position:sticky!important;top:0!important;z-index:50!important;border-radius:0!important;margin:-8px -8px 12px!important;padding:12px 14px!important;background:#fff!important}
+ body.role-admin #app>header h1{font-size:1.08rem!important}
+ body.role-admin #app>header small{display:none!important}
+ body.role-admin #app>.admin-sidebar{position:fixed!important;z-index:100!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;margin:0!important;padding:5px 8px calc(5px + env(safe-area-inset-bottom))!important;border:0!important;border-top:1px solid #d8e5ef!important;background:#fff!important;box-shadow:0 -6px 20px rgba(16,59,94,.08)!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:grid!important;grid-template-columns:repeat(4,1fr)!important;width:100%!important;gap:3px!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{min-width:0!important;width:100%!important;min-height:52px!important;padding:6px 3px!important;border:0!important;background:transparent!important;color:#174c78!important;font-size:.62rem!important;text-align:center!important;white-space:normal!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button.on{background:#eef6ff!important;color:#087bf1!important;box-shadow:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button:nth-child(n+5),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:nth-child(n+5){display:none!important}
+ body.role-admin #app .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #app .dashboard-card{min-height:92px!important}
+ body.role-admin #app .dashboard-section{padding:12px!important}
+ body.role-admin #app .dashboard-head{flex-wrap:wrap!important}
+ body.role-admin #app .dashboard-filter{width:auto!important}
+ body.role-admin #app table{min-width:680px!important}
+}
+@media(max-width:430px){
+ body.role-admin #app .dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #app .dashboard-card{min-height:86px!important;padding:12px!important}
+ body.role-admin #app .dashboard-card b{font-size:1.15rem!important}
+ body.role-admin #app>header>div:last-child{width:auto!important;margin-left:auto!important;margin-top:0!important}
+ body.role-admin #app #exportAdminBtn,body.role-admin #app #logoutBtn,body.role-admin #app #syncStatus{display:none!important}
+}
+
+
+/* Dashboard refinement — follows supplied desktop/mobile mockup */
+body.role-admin #dashboard{display:grid;gap:12px}
+body.role-admin #dashboard>.dashboard-section:first-child{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.role-admin .admin-dashboard-welcome{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;padding:2px 2px 14px}
+body.role-admin .admin-dashboard-welcome h2{margin:3px 0 4px;color:#092f68;font-size:1.28rem;letter-spacing:-.025em}
+body.role-admin .admin-dashboard-welcome p{margin:0;color:#748ba0;font-size:.78rem}
+body.role-admin .admin-eyebrow{display:block;color:#0b7df0;font-size:.62rem;font-weight:900;letter-spacing:.12em}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-template-columns:repeat(4,minmax(0,1fr))!important}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){margin-top:10px;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2)>.card{padding:12px 14px;border:1px solid #dce8f1;border-radius:10px;background:#fff;box-shadow:0 3px 12px rgba(21,67,107,.035)}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2) small{display:block;color:#73899b;font-size:.69rem;font-weight:700}
+body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2) b{display:inline-block;margin:5px 4px 0 0;color:#123e65;font-size:1rem}
+body.role-admin .kpi-caption{position:relative;z-index:2;display:block;margin-top:6px;color:#8498a8;font-size:.62rem;font-weight:700}
+body.role-admin .kpi-caption.positive{color:#15945a}
+body.role-admin .kpi-caption.danger{color:#d5484f}
+body.role-admin #dashboard>.dashboard-section:not(:first-child){background:#fff!important}
+body.role-admin #dashboardUnpaid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+body.role-admin #dashboardUnpaid .dashboard-alert{margin:0!important;border-radius:10px!important;background:#fbfdff!important}
+body.role-admin #dashboardUnpaid .dashboard-alert a{border-radius:7px!important;background:#eef6ff!important;color:#087bf1!important;border-color:#cce2f7!important}
+body.role-admin #attendanceAdminBody td:first-child{font-weight:800;color:#123e65!important}
+@media(min-width:1100px){
+ body.role-admin #dashboard{grid-template-columns:minmax(0,1.4fr) minmax(320px,.6fr);align-items:start}
+ body.role-admin #dashboard>.dashboard-section:first-child,
+ body.role-admin #dashboard>.dashboard-section:nth-child(2){grid-column:1/-1}
+ body.role-admin #dashboard>#adminNotificationPanel{grid-column:auto}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(3){grid-column:1}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(4){grid-column:1/-1}
+}
+@media(max-width:899px){
+ body.role-admin .admin-dashboard-welcome{align-items:flex-start;flex-direction:column;padding:2px 2px 10px}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter{width:100%!important}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter input{width:100%!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #dashboardUnpaid{grid-template-columns:1fr}
+}
+
+
+/* Fix desktop app shell after Preview review: header/content must not overlap sidebar */
+@media(min-width:900px){
+ body.role-admin #app{display:grid!important;grid-template-columns:220px minmax(0,1fr)!important;grid-template-rows:auto 1fr!important;column-gap:18px!important;align-items:start!important;width:min(1480px,calc(100% - 36px))!important;margin:18px auto!important;padding:0 0 28px!important}
+ body.role-admin #app>.admin-sidebar{position:sticky!important;left:auto!important;top:18px!important;bottom:auto!important;grid-column:1!important;grid-row:1 / span 20!important;width:220px!important;min-height:calc(100vh - 36px)!important;border-radius:18px!important}
+ body.role-admin #app>header{grid-column:2!important;grid-row:1!important;width:100%!important;margin:0 0 14px!important;box-sizing:border-box!important}
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{grid-column:2!important;width:100%!important;min-width:0!important;box-sizing:border-box!important}
+ body.role-admin #app>.admin-sidebar:before{padding:7px 10px 22px!important}
+}
+@media(min-width:1100px){
+ body.role-admin #dashboard{grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr)!important}
+ body.role-admin #dashboard>.dashboard-section:first-child,
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(2){grid-column:1/-1!important}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(3){grid-column:1/-1!important}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(4){grid-column:1/-1!important}
+}
+
+
+/* Reference lock v2 — exact Admin shell direction from approved desktop/mobile mockup */
+@media(min-width:900px){
+ body.role-admin #app{grid-template-columns:210px minmax(0,1fr)!important;column-gap:0!important;background:#eef7fd!important;border:1px solid #bfd8eb!important;border-radius:22px!important;overflow:clip!important;box-shadow:0 16px 42px rgba(8,47,89,.12)!important}
+ body.role-admin #app>.admin-sidebar{grid-column:1!important;grid-row:1 / span 30!important;position:sticky!important;top:0!important;width:210px!important;min-height:calc(100vh - 36px)!important;margin:0!important;padding:20px 14px!important;border-radius:0!important;background:linear-gradient(180deg,#082f59,#0b477a)!important}
+ body.role-admin #app>.admin-sidebar:before{content:"▣  Jenius Edu"!important;display:block!important;padding:4px 8px 22px!important;color:#fff!important;font-size:1rem!important;font-weight:900!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:flex!important;flex-direction:column!important;gap:7px!important;width:100%!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group{display:block!important;width:100%!important;padding:0!important;margin:0!important;border:0!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{display:block!important;width:100%!important;min-width:0!important;min-height:42px!important;margin:0!important;padding:10px 12px!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#f2f8ff!important;text-align:left!important;font-size:.82rem!important;white-space:nowrap!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button.on{background:#167ff2!important;color:#fff!important}
+ body.role-admin #app>header{grid-column:2!important;margin:12px 12px 8px!important;width:auto!important;min-height:68px!important;padding:12px 16px!important;border:1px solid #d9e8f3!important;border-radius:12px!important}
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{grid-column:2!important;margin-left:12px!important;margin-right:12px!important;width:auto!important}
+ body.role-admin #dashboard>.dashboard-section:first-child{padding:0!important}
+ body.role-admin .admin-dashboard-welcome{padding:4px 2px 8px!important;align-items:center!important}
+ body.role-admin .admin-dashboard-welcome .admin-eyebrow,
+ body.role-admin .admin-dashboard-welcome p{display:none!important}
+ body.role-admin .admin-dashboard-welcome h2{font-size:1.28rem!important;margin:0!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){gap:7px!important}
+ body.role-admin #dashboard .dashboard-card{min-height:72px!important;padding:10px 12px!important}
+ body.role-admin #dashboard .dashboard-card b{font-size:1.18rem!important;margin-top:3px!important}
+ body.role-admin #dashboard .dashboard-card small{font-size:.67rem!important}
+ body.role-admin #dashboard .kpi-caption{font-size:.56rem!important;margin-top:2px!important}
+}
+@media(max-width:899px){
+ body.role-admin #app{display:block!important;width:100%!important;margin:0!important;padding:0 10px 72px!important;background:#eef7fd!important}
+ body.role-admin #app>header{position:sticky!important;top:0!important;z-index:80!important;margin:0 -10px 10px!important;padding:10px 14px!important;min-height:58px!important;border:0!important;border-bottom:1px solid #d9e8f3!important;border-radius:0!important;background:#fff!important}
+ body.role-admin #app>header img{width:34px!important;height:34px!important}
+ body.role-admin #app>header h1{font-size:1rem!important}
+ body.role-admin #app>header h1:before{content:"Jenius Edu";font-size:1rem}
+ body.role-admin #app>header h1{font-size:0!important}
+ body.role-admin #app>header small,body.role-admin #syncStatus,body.role-admin #exportAdminBtn,body.role-admin #logoutBtn{display:none!important}
+ body.role-admin #app>.admin-sidebar{display:block!important;position:fixed!important;z-index:100!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%!important;min-height:0!important;margin:0!important;padding:5px 6px calc(5px + env(safe-area-inset-bottom))!important;border:0!important;border-top:1px solid #d5e5f1!important;border-radius:0!important;background:#fff!important}
+ body.role-admin #app>.admin-sidebar:before{display:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:2px!important;width:100%!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group{display:none!important;margin:0!important;padding:0!important;border:0!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button[data-t="d"],
+ body.role-admin #app>.admin-sidebar .admin-menu-group:has(button[data-t="m"]),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:has(button[data-t="p"]),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:last-child{display:block!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button{display:block!important;width:100%!important;min-width:0!important;min-height:48px!important;padding:5px 2px!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#174c78!important;text-align:center!important;font-size:.62rem!important;white-space:normal!important}
+ body.role-admin #app>.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.admin-sidebar .admin-menu-group button.on{background:#edf6ff!important;color:#087bf1!important}
+ body.role-admin #dashboard{display:block!important;margin:0!important}
+ body.role-admin .admin-dashboard-welcome{display:flex!important;flex-direction:row!important;align-items:center!important;padding:2px 2px 8px!important}
+ body.role-admin .admin-dashboard-welcome .admin-eyebrow,body.role-admin .admin-dashboard-welcome p{display:none!important}
+ body.role-admin .admin-dashboard-welcome h2{font-size:1.2rem!important}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter{width:auto!important;min-width:135px!important;margin-left:auto!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(1){grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid:nth-of-type(2){display:none!important}
+ body.role-admin #dashboard .dashboard-card{min-height:78px!important;padding:10px!important}
+ body.role-admin #dashboard .dashboard-card b{font-size:1.08rem!important;margin-top:2px!important}
+ body.role-admin #dashboard .kpi-caption{display:none!important}
+ body.role-admin #dashboard>.dashboard-section{margin:8px 0!important;padding:10px!important;border-radius:10px!important}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(2){order:5}
+ body.role-admin #dashboardUnpaid{grid-template-columns:1fr!important}
+ body.role-admin #attendanceAdminBody{font-size:.72rem!important}
+}
+
+
+/* Desktop sidebar hard reset — prevent legacy .tabs rules from collapsing the menu */
+@media(min-width:900px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   display:block!important;position:sticky!important;top:0!important;overflow:visible!important;
+   width:210px!important;min-width:210px!important;max-width:210px!important;
+   min-height:calc(100vh - 36px)!important;height:auto!important;
+   padding:20px 14px!important;margin:0!important;
+   border:0!important;border-radius:0!important;
+   background:linear-gradient(180deg,#082f59 0%,#0a477b 100%)!important;
+   box-shadow:none!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+   display:flex!important;flex-direction:column!important;flex-wrap:nowrap!important;
+   align-items:stretch!important;justify-content:flex-start!important;
+   width:100%!important;max-width:none!important;overflow:visible!important;gap:6px!important;
+   margin:0!important;padding:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group{
+   display:block!important;position:static!important;float:none!important;
+   flex:0 0 auto!important;width:100%!important;min-width:0!important;max-width:none!important;
+   margin:0!important;padding:0!important;border:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button{
+   display:flex!important;align-items:center!important;justify-content:flex-start!important;
+   width:100%!important;min-width:0!important;max-width:none!important;height:42px!important;
+   margin:0!important;padding:0 12px!important;
+   border:0!important;border-radius:8px!important;
+   background:transparent!important;color:#f3f8fd!important;
+   font-size:.82rem!important;font-weight:700!important;line-height:1!important;
+   text-align:left!important;white-space:nowrap!important;overflow:hidden!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button.on,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button.on{
+   background:#147df5!important;color:#fff!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button:hover,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button:hover{
+   background:rgba(255,255,255,.09)!important;border:0!important;transform:none!important
+ }
+}
+
+
+/* Desktop app viewport: sidebar stays fixed, only right workspace scrolls */
+@media(min-width:900px){
+ html:has(body.role-admin),body.role-admin{height:100%;overflow:hidden!important}
+ body.role-admin #app{
+   height:calc(100vh - 36px)!important;
+   min-height:0!important;
+   overflow:hidden!important;
+   align-items:stretch!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   position:relative!important;
+   top:auto!important;
+   height:100%!important;
+   min-height:0!important;
+   overflow:hidden!important;
+ }
+ body.role-admin #app>header{
+   position:sticky!important;
+   top:0!important;
+   z-index:40!important;
+ }
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{
+   max-height:calc(100vh - 128px)!important;
+   overflow-y:auto!important;
+   overflow-x:hidden!important;
+   padding-right:4px!important;
+   scrollbar-gutter:stable!important;
+ }
+}
+
+
+/* Desktop viewport polish — remove clipped bottom edge and excess outer gap */
+@media(min-width:900px){
+ body.role-admin{padding:0!important}
+ body.role-admin #app{
+   width:min(1480px,calc(100% - 32px))!important;
+   height:calc(100vh - 20px)!important;
+   margin:10px auto!important;
+   padding:0!important;
+   border-radius:18px!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   height:100%!important;
+   border-radius:18px 0 0 18px!important;
+ }
+ body.role-admin #app>header{
+   margin:10px 10px 8px 12px!important;
+ }
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{
+   max-height:calc(100vh - 106px)!important;
+   margin-bottom:10px!important;
+   padding-bottom:14px!important;
+   scroll-padding-bottom:14px!important;
+ }
+ body.role-admin #app>#dashboard>.dashboard-section:last-child,
+ body.role-admin #app>#tm>*:last-child,body.role-admin #app>#tp>*:last-child,
+ body.role-admin #app>#te>*:last-child{margin-bottom:0!important}
+}
+
+
+/* Full-screen desktop Admin workspace */
+@media(min-width:900px){
+ html:has(body.role-admin),body.role-admin{width:100%;height:100%;margin:0!important;padding:0!important;background:#eef7fd!important}
+ body.role-admin #app{
+   width:100%!important;max-width:none!important;height:100vh!important;
+   margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
+   grid-template-columns:220px minmax(0,1fr)!important;
+   background:#eef7fd!important;box-shadow:none!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   width:220px!important;min-width:220px!important;max-width:220px!important;
+   height:100vh!important;border-radius:0!important;padding:22px 14px!important;
+ }
+ body.role-admin #app>header{
+   margin:12px 16px 8px!important;width:auto!important;
+ }
+ body.role-admin #app>#dashboard,
+ body.role-admin #app>#tm,body.role-admin #app>#tp,body.role-admin #app>#te,
+ body.role-admin #app>#teacherMasterPage,body.role-admin #app>#salaryPage,
+ body.role-admin #app>#financialReportPage,body.role-admin #app>#auditLogPage,
+ body.role-admin #app>#studentProfilePage,body.role-admin #app>#teacherProfilePage{
+   margin-left:16px!important;margin-right:16px!important;margin-bottom:0!important;
+   width:auto!important;max-height:calc(100vh - 96px)!important;
+   padding-bottom:20px!important;
+ }
+}
+
+
+/* Admin navigation SVG icon system */
+body.role-admin .admin-sidebar .menu-icon{
+ width:19px!important;height:19px!important;min-width:19px!important;
+ margin-right:10px!important;fill:none!important;stroke:currentColor!important;
+ stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;
+ vertical-align:middle!important
+}
+body.role-admin .admin-sidebar button span{display:inline-block!important}
+@media(max-width:899px){
+ body.role-admin .admin-sidebar .menu-icon{
+  display:block!important;width:21px!important;height:21px!important;
+  margin:0 auto 3px!important
+ }
+ body.role-admin .admin-sidebar button span{display:block!important}
+}
+
+
+/* Dashboard reference: SVG KPI icons + active student preview */
+body.role-admin #dashboard .kpi-icon{display:grid!important;place-items:center!important;width:34px!important;height:34px!important;padding:7px!important}
+body.role-admin #dashboard .kpi-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+body.role-admin .kpi-students .kpi-icon{color:#087bf1!important;background:#eaf4ff!important}
+body.role-admin .kpi-income .kpi-icon,body.role-admin .kpi-profit .kpi-icon{color:#079653!important;background:#e9f9f0!important}
+body.role-admin .kpi-receivable .kpi-icon,body.role-admin .kpi-unpaid .kpi-icon{color:#ef3e46!important;background:#fff0f0!important}
+body.role-admin .kpi-expense .kpi-icon{color:#f16a32!important;background:#fff3eb!important}
+body.role-admin .kpi-paid .kpi-icon{color:#7147e8!important;background:#f1edff!important}
+body.role-admin .kpi-bills .kpi-icon{color:#087bf1!important;background:#eaf4ff!important}
+body.role-admin .dashboard-students .dashboard-head{align-items:center!important}
+body.role-admin .dashboard-student-actions{display:flex;gap:8px;align-items:center}
+body.role-admin .dashboard-student-actions input{width:230px;min-height:36px;border:1px solid #d4e4ef;border-radius:8px;padding:0 11px;background:#fff}
+body.role-admin .dashboard-students td:first-child{display:flex;align-items:center;gap:9px}
+body.role-admin .student-mini-avatar{display:grid;place-items:center;width:29px;height:29px;min-width:29px;border-radius:50%;background:#e7f1ff;color:#175fc4;font-size:.66rem;font-weight:900}
+body.role-admin .student-active-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:#e8f8ef;color:#118553;font-size:.68rem;font-weight:800}
+body.role-admin .student-active-badge i{width:7px;height:7px;border-radius:50%;background:#12ad6a}
+body.role-admin .student-more{border:0!important;background:transparent!important;color:#0c5fae!important;font-size:1.2rem!important;padding:2px 8px!important}
+body.role-admin .dashboard-student-count{display:block;margin-top:7px;color:#668198;font-size:.67rem}
+@media(max-width:899px){
+ body.role-admin .dashboard-students .dashboard-head{display:flex!important;flex-wrap:wrap!important}
+ body.role-admin .dashboard-student-actions{width:100%;flex-wrap:wrap}
+ body.role-admin .dashboard-student-actions input{order:2;width:100%}
+ body.role-admin .dashboard-student-actions button{margin-left:auto}
+ body.role-admin .dashboard-students .tw{overflow:visible!important}
+ body.role-admin .dashboard-students table,body.role-admin .dashboard-students thead{display:none!important}
+ body.role-admin .dashboard-students tbody{display:block!important}
+ body.role-admin .dashboard-students tr{display:grid!important;grid-template-columns:1fr auto auto!important;align-items:center!important;gap:7px!important;padding:8px 2px!important;border-bottom:1px solid #e3edf4!important}
+ body.role-admin .dashboard-students td{display:block!important;padding:0!important;border:0!important}
+ body.role-admin .dashboard-students td:nth-child(2),body.role-admin .dashboard-students td:nth-child(3){font-size:.62rem;color:#5c7890}
+ body.role-admin .dashboard-students td:nth-child(2){grid-column:1;padding-left:38px!important;margin-top:-7px}
+ body.role-admin .dashboard-students td:nth-child(3){display:none!important}
+ body.role-admin .dashboard-students td:nth-child(4){grid-column:2;grid-row:1 / span 2}
+ body.role-admin .dashboard-students td:nth-child(5){grid-column:3;grid-row:1 / span 2}
+}
+
+
+/* Dashboard layout — consolidated desktop rules */
+@media(min-width:1121px){
+ body.role-admin #dashboard>.dashboard-section:first-child{
+  display:grid!important;grid-template-columns:minmax(0,1fr) 320px!important;
+  grid-template-areas:"welcome welcome" "kpis attendance" "ratio ratio"!important;
+  gap:10px!important;padding:12px!important;align-items:stretch!important
+ }
+ body.role-admin #dashboard .admin-dashboard-welcome{grid-area:welcome!important;min-height:96px!important}
+ body.role-admin #dashboard .dashboard-kpi-grid{
+  grid-area:kpis!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,78px)!important;gap:8px!important;width:100%!important;margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+  display:block!important;position:relative!important;width:auto!important;min-width:0!important;max-width:none!important;
+  height:78px!important;min-height:78px!important;margin:0!important;padding:11px 45px 9px 11px!important;
+  box-sizing:border-box!important;overflow:hidden!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-icon{
+  position:absolute!important;left:auto!important;right:9px!important;top:50%!important;transform:translateY(-50%)!important;
+  width:30px!important;height:30px!important;min-width:30px!important;margin:0!important;padding:6px!important;border-radius:9px!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid small,
+ body.role-admin #dashboard .dashboard-kpi-grid b,
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-caption{display:block!important;position:static!important;max-width:100%!important;margin-left:0!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{
+  grid-area:attendance!important;margin:0!important;padding:10px 12px!important;height:164px!important;min-height:164px!important;
+  display:flex!important;flex-direction:column!important;justify-content:center!important;border:1px solid #dbe8f2!important;border-radius:11px!important;background:#fff!important
+ }
+ body.role-admin #dashboard .attendance-compact-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{
+  grid-area:ratio!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,230px))!important;
+  gap:8px!important;width:100%!important;margin:0!important;justify-content:start!important
+ }
+ body.role-admin #dashboard .dashboard-ratio-grid>.card{width:100%!important;min-height:54px!important;margin:0!important;padding:9px 11px!important}
+}
+@media(min-width:900px) and (max-width:1120px){
+ body.role-admin #dashboard>.dashboard-section:first-child{display:block!important}
+ body.role-admin #dashboard .dashboard-kpi-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{margin-top:8px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-top:8px!important}
+}
+
+
+/* Dashboard desktop v6 — tuned for scaled desktop viewports */
+body.role-admin .attendance-compact-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:8px!important;margin-bottom:9px!important;color:#123e65!important}
+body.role-admin .attendance-compact-head b{font-size:.82rem!important;white-space:nowrap!important}
+body.role-admin .attendance-compact-head small{font-size:.56rem!important;color:#7890a3!important;white-space:nowrap!important}
+body.role-admin .attendance-compact-grid>div{display:grid!important;grid-template-columns:28px 1fr!important;grid-template-rows:auto auto!important;column-gap:7px!important;align-items:center!important;padding:7px 8px!important;border:1px solid #e1ebf3!important;border-radius:8px!important;background:#fbfdff!important}
+body.role-admin .attendance-compact-grid small{font-size:.58rem!important;color:#617c92!important}
+body.role-admin .attendance-compact-grid b{font-size:.9rem!important;color:#0b3566!important}
+body.role-admin .attendance-icon{grid-row:1/3!important;display:grid!important;place-items:center!important;width:28px!important;height:28px!important;border-radius:8px!important;font-weight:900!important}
+body.role-admin .attendance-icon.hadir{background:#eaf4ff!important;color:#087bf1!important}
+body.role-admin .attendance-icon.izin{background:#fff5e9!important;color:#ef8b2c!important}
+body.role-admin .attendance-icon.sakit,body.role-admin .attendance-icon.absen{background:#fff0f0!important;color:#e94a4f!important}
+
+@media(min-width:900px){
+ body.role-admin #dashboard>.dashboard-section:first-child{
+  display:grid!important;grid-template-columns:minmax(0,1fr) minmax(260px,30%)!important;
+  grid-template-areas:"welcome welcome" "kpis attendance" "ratio ratio"!important;gap:10px!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid{
+  grid-area:kpis!important;display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  grid-template-rows:repeat(2,78px)!important;gap:8px!important;margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+  min-width:0!important;width:auto!important;height:78px!important;min-height:78px!important;
+  padding:10px 38px 8px 10px!important;margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-icon{
+  left:auto!important;right:7px!important;top:50%!important;transform:translateY(-50%)!important;
+  width:27px!important;height:27px!important;min-width:27px!important;padding:5px!important;z-index:1!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid small{font-size:.58rem!important;line-height:1.1!important}
+ body.role-admin #dashboard .dashboard-kpi-grid b{font-size:1rem!important;line-height:1.05!important;margin-top:3px!important}
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-caption{font-size:.5rem!important;line-height:1.05!important;margin-top:3px!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{grid-area:attendance!important;height:164px!important;min-height:164px!important;margin:0!important;padding:10px!important}
+ body.role-admin #dashboard .attendance-compact-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{grid-area:ratio!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,230px))!important;gap:8px!important;margin:0!important}
+}
+
+
+/* Center dashboard summary copy while keeping period control on the right */
+@media(min-width:900px){
+ body.role-admin .admin-dashboard-welcome{position:relative!important;display:flex!important;align-items:center!important;justify-content:center!important}
+ body.role-admin .admin-dashboard-welcome>div:first-child{text-align:center!important;margin:auto!important;padding:0 210px!important}
+ body.role-admin .admin-dashboard-welcome .dashboard-filter{position:absolute!important;right:12px!important;top:50%!important;transform:translateY(-50%)!important}
+}
+
+
+/* Keep period picker above decorative card shapes and fully clickable */
+body.role-admin .admin-dashboard-welcome{overflow:visible!important}
+body.role-admin .admin-dashboard-welcome .dashboard-filter{
+ z-index:20!important;pointer-events:auto!important;overflow:visible!important
+}
+body.role-admin .admin-dashboard-welcome .dashboard-filter input,
+body.role-admin #dashboardMonth{
+ position:relative!important;z-index:21!important;pointer-events:auto!important;cursor:pointer!important
+}
+body.role-admin .admin-dashboard-welcome::before,
+body.role-admin .admin-dashboard-welcome::after,
+body.role-admin .dashboard-filter::before,
+body.role-admin .dashboard-filter::after{pointer-events:none!important}
+
+
+/* Remove circular decorative shapes from Admin dashboard cards */
+body.role-admin #dashboard .dashboard-card::before,
+body.role-admin #dashboard .dashboard-card::after,
+body.role-admin #dashboard .admin-dashboard-welcome::before,
+body.role-admin #dashboard .admin-dashboard-welcome::after,
+body.role-admin #dashboard .dashboard-filter::before,
+body.role-admin #dashboard .dashboard-filter::after{
+ content:none!important;display:none!important;background:none!important
+}
+
+
+/* Improve dashboard KPI readability */
+@media(min-width:900px){
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card small{
+   font-size:12px!important;line-height:1.2!important;font-weight:500!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card b{
+   font-size:19px!important;line-height:1.15!important;font-weight:800!important;margin-top:3px!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{
+   font-size:10.5px!important;line-height:1.2!important;margin-top:4px!important
+ }
+ body.role-admin #dashboard .attendance-compact-head b{font-size:14px!important}
+ body.role-admin #dashboard .attendance-compact-head small{font-size:10px!important}
+ body.role-admin #dashboard .attendance-compact-grid small{font-size:10.5px!important}
+ body.role-admin #dashboard .attendance-compact-grid b{font-size:16px!important}
+}
+
+
+/* Dashboard active students — reference-aligned read-only presentation */
+body.role-admin #dashboard .dashboard-students-panel{padding:14px 16px!important;border-radius:12px!important}
+body.role-admin #dashboard .dashboard-students-panel .dashboard-head{display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:14px!important;margin-bottom:10px!important}
+body.role-admin #dashboard .dashboard-students-panel .section-eyebrow{display:block;font-size:9px;font-weight:800;letter-spacing:.12em;color:#2684df;margin-bottom:2px}
+body.role-admin #dashboard .dashboard-students-panel h2{font-size:18px!important;margin:0!important;color:#073a70!important}
+body.role-admin #dashboard .dashboard-search-wrap{display:flex;align-items:center;gap:7px;width:260px;max-width:100%;height:36px;padding:0 10px;border:1px solid #cfe0ee;border-radius:9px;background:#fff}
+body.role-admin #dashboard .dashboard-search-wrap span{font-size:18px;color:#3578b7;line-height:1}
+body.role-admin #dashboard .dashboard-search-wrap input{width:100%!important;height:auto!important;padding:0!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;font-size:12px!important}
+body.role-admin #dashboard .dashboard-students-panel .tw{border:1px solid #d7e5ef!important;border-radius:9px!important;overflow:auto!important}
+body.role-admin #dashboard .dashboard-students-panel table{margin:0!important;width:100%!important}
+body.role-admin #dashboard .dashboard-students-panel thead th{padding:10px 12px!important;background:#eaf3f9!important;color:#123e65!important;font-size:11px!important}
+body.role-admin #dashboard .dashboard-students-panel tbody td{padding:9px 12px!important;font-size:12px!important;vertical-align:middle!important}
+body.role-admin #dashboard .dashboard-student-count{display:block!important;margin-top:7px!important;font-size:10px!important;color:#5f7890!important}
+@media(max-width:899px){
+ body.role-admin #dashboard .dashboard-students-panel{padding:12px!important}
+ body.role-admin #dashboard .dashboard-students-panel .dashboard-head{align-items:stretch!important;flex-direction:column!important}
+ body.role-admin #dashboard .dashboard-search-wrap{width:100%!important}
+}
+
+
+/* Data Murid page — reference layout */
+body.role-admin .admin-students-page{padding:18px!important}
+body.role-admin .students-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-bottom:14px}
+body.role-admin .students-page-head h2{margin:2px 0 0!important;font-size:23px!important;color:#073a70}
+body.role-admin .students-page-head .section-eyebrow{font-size:9px;font-weight:800;letter-spacing:.12em;color:#2684df}
+body.role-admin #openStudentForm{min-height:38px;padding:8px 16px!important;border-radius:8px!important}
+body.role-admin .student-form-panel{margin:0 0 14px;padding:14px;border:1px solid #d8e6f0;border-radius:10px;background:#f8fbfe}
+body.role-admin .student-form-panel h3{margin:0 0 10px;color:#123e65}
+body.role-admin .students-tools{display:grid!important;grid-template-columns:minmax(260px,1fr) 220px!important;gap:10px!important;margin:0 0 10px!important}
+body.role-admin .student-search-box{display:flex;align-items:center;gap:8px;height:40px;padding:0 12px;border:1px solid #cbddea;border-radius:8px;background:#fff}
+body.role-admin .student-search-box span{font-size:19px;color:#4c78a1}
+body.role-admin .student-search-box input{border:0!important;box-shadow:none!important;outline:0!important;background:transparent!important;width:100%!important;padding:0!important}
+body.role-admin .students-tools select{height:40px!important;border-radius:8px!important}
+body.role-admin .students-table-wrap{border:1px solid #d6e4ee!important;border-radius:9px!important;overflow:visible!important}
+body.role-admin .students-table{width:100%!important;margin:0!important}
+body.role-admin .students-table th{padding:11px 12px!important;background:#eaf3f9!important;font-size:11px!important;color:#173e62!important}
+body.role-admin .students-table td{padding:10px 12px!important;font-size:12px!important;vertical-align:middle!important;border-top:1px solid #e4edf4!important}
+body.role-admin .students-table .student-no{width:48px;text-align:center;color:#607b91}
+body.role-admin .student-name-cell{display:flex!important;align-items:center!important;gap:9px!important;border:0!important;background:transparent!important;padding:0!important;color:#0a3767!important;cursor:pointer!important}
+body.role-admin .student-avatar{display:grid;place-items:center;width:31px;height:31px;border-radius:50%;background:#e7f2ff;color:#1476db;font-size:10px;font-weight:800}
+body.role-admin .student-active-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;background:#dcf8ea;color:#16845c;font-size:11px;font-weight:700}
+body.role-admin .student-active-badge i{width:7px;height:7px;border-radius:50%;background:#18ad77}
+body.role-admin .student-row-actions{position:relative;display:inline-block}
+body.role-admin .student-more{border:0!important;background:transparent!important;padding:5px 8px!important;font-weight:900!important;letter-spacing:1px!important;color:#164d7e!important}
+body.role-admin .student-action-menu{display:none;position:absolute;right:0;top:30px;z-index:30;min-width:105px;padding:5px;background:#fff;border:1px solid #d6e4ee;border-radius:8px;box-shadow:0 8px 24px rgba(22,61,95,.13)}
+body.role-admin .student-row-actions:hover .student-action-menu,body.role-admin .student-row-actions:focus-within .student-action-menu{display:grid}
+body.role-admin .student-action-menu button{border:0;background:transparent;text-align:left;padding:7px 9px;border-radius:5px;font-size:11px;color:#173e62}
+body.role-admin .student-action-menu button:hover{background:#edf6ff}
+@media(max-width:899px){
+ body.role-admin .admin-students-page{padding:12px!important}
+ body.role-admin .students-page-head{align-items:center!important}
+ body.role-admin .students-tools{grid-template-columns:1fr!important}
+ body.role-admin .students-table-wrap{overflow-x:auto!important}
+ body.role-admin .students-table{min-width:680px!important}
+}
+
+
+/* Data Murid search alignment fix */
+body.role-admin .admin-students-page .students-tools{display:grid!important;grid-template-columns:minmax(0,1fr) 220px!important;align-items:stretch!important}
+body.role-admin .admin-students-page .student-search-box{box-sizing:border-box!important;width:100%!important;min-width:0!important;margin:0!important}
+body.role-admin .admin-students-page .student-search-box input#studentSearch{box-sizing:border-box!important;display:block!important;min-width:0!important;width:100%!important;height:36px!important;margin:0!important;border:0!important;padding:0!important}
+body.role-admin .admin-students-page #studentLevelFilter{box-sizing:border-box!important;width:100%!important;margin:0!important}
+@media(max-width:899px){body.role-admin .admin-students-page .students-tools{grid-template-columns:1fr!important}}
+
+
+/* Compact Data Murid layout and finish search field */
+body.role-admin .admin-students-page{padding:14px 18px!important}
+body.role-admin .admin-students-page .students-page-head{margin-bottom:10px!important}
+body.role-admin .admin-students-page .students-tools{gap:10px!important;margin-bottom:8px!important}
+body.role-admin .admin-students-page .student-search-box{
+ height:40px!important;padding:0 12px!important;border:1px solid #c9dceb!important;border-radius:8px!important;
+ background:#fff!important;box-shadow:none!important;overflow:hidden!important
+}
+body.role-admin .admin-students-page .student-search-box span{flex:0 0 auto!important;display:grid!important;place-items:center!important;width:18px!important;font-size:17px!important}
+body.role-admin .admin-students-page .student-search-box input#studentSearch{
+ flex:1 1 auto!important;height:38px!important;line-height:38px!important;padding:0!important;margin:0!important;
+ border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important
+}
+body.role-admin .admin-students-page .students-table th{padding:9px 12px!important}
+body.role-admin .admin-students-page .students-table td{padding:7px 12px!important;height:46px!important}
+body.role-admin .admin-students-page .student-avatar{width:30px!important;height:30px!important}
+
+
+/* Denser Data Murid table */
+body.role-admin .admin-students-page .students-table th{padding:7px 10px!important;height:34px!important}
+body.role-admin .admin-students-page .students-table td{padding:5px 10px!important;height:38px!important;line-height:1.15!important}
+body.role-admin .admin-students-page .student-avatar{width:27px!important;height:27px!important}
+body.role-admin .admin-students-page .student-active-badge{padding:4px 10px!important}
+body.role-admin .admin-students-page .student-form-panel form{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+
+
+/* Data Murid: narrower, denser list */
+body.role-admin .admin-students-page .students-table th{padding:5px 10px!important;height:30px!important}
+body.role-admin .admin-students-page .students-table td{padding:3px 10px!important;height:32px!important;line-height:1.05!important}
+body.role-admin .admin-students-page .student-avatar{width:24px!important;height:24px!important;font-size:10px!important}
+body.role-admin .admin-students-page .student-active-badge{padding:3px 9px!important}
+
+
+/* Data Murid title icon */
+body.role-admin .admin-students-page .students-title{display:flex;align-items:center;gap:10px}
+body.role-admin .admin-students-page .students-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0;flex:0 0 30px}
+body.role-admin .admin-students-page .students-title-icon svg{width:18px;height:18px;display:block}
+
+
+/* Pembayaran — reference layout */
+body.role-admin .admin-payments-page{padding:16px 18px!important}
+.payments-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:14px}
+.payments-title{display:flex;align-items:center;gap:10px;margin:4px 0 0}
+.payments-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0}
+.payments-title-icon svg{width:18px;height:18px}
+.payments-head-actions{display:flex;align-items:flex-end;gap:10px}
+.payment-month{margin:0!important;min-width:150px}.payment-month span{display:block;font-size:11px;font-weight:700;margin-bottom:4px}
+.payment-month input{height:40px!important}
+.payment-form-panel{padding:14px 16px;margin:0 0 14px;border:1px solid #cfe0ef;border-radius:12px;background:#f8fbff}
+.payment-form-panel h3{margin:0 0 10px}.payment-form-panel form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.payment-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:700px;margin-bottom:14px}
+.payment-kpi{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #d9e7f3;border-radius:11px;background:#f5faff}
+.payment-kpi.paid{background:#effbf5}.payment-kpi.unpaid{background:#fff2f2}
+.payment-kpi-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#e3f1ff;color:#087cf0;font-weight:900;font-size:18px}
+.payment-kpi.paid .payment-kpi-icon{background:#dff7eb;color:#00a66a}.payment-kpi.unpaid .payment-kpi-icon{background:#ffe3e3;color:#f04444}
+.payment-kpi small{display:block}.payment-kpi b{display:block;font-size:19px;margin-top:2px}
+.payment-filter-row{display:flex;gap:10px;margin:0 0 10px}.payment-filter-row input{flex:1}.payment-filter-row select{width:190px}
+.payment-table th,.payment-table td{padding:8px 10px!important;vertical-align:middle}.payment-table th{background:#eaf2f8}
+.payment-no{width:44px}.payment-student{display:flex;align-items:center;gap:9px}.payment-avatar{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#e7f2ff;color:#087cf0;font-size:10px;font-weight:800}
+.payment-status{display:inline-flex;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700}.payment-status.paid{background:#dcf7e9;color:#008e5b}.payment-status.unpaid{background:#ffe1e1;color:#d93636}
+.payment-actions{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.payment-actions .danger{color:#d93636}
+@media(max-width:760px){.payments-page-head{align-items:stretch;flex-direction:column}.payments-head-actions{align-items:stretch}.payment-month{flex:1}.payment-kpis{grid-template-columns:1fr}.payment-form-panel form{grid-template-columns:1fr 1fr}.payment-filter-row{flex-direction:column}.payment-filter-row select{width:100%}}
+
+
+/* Pengeluaran — reference layout */
+body.role-admin .admin-expenses-page{padding:16px 18px!important}
+.expenses-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:12px}
+.expenses-title{display:flex;align-items:center;gap:10px;margin:4px 0 0}.expenses-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0}.expenses-title-icon svg{width:18px;height:18px}
+.expenses-head-actions{display:flex;align-items:flex-end;gap:10px}.expense-month{margin:0!important;min-width:145px}.expense-month span{display:block;font-size:11px;font-weight:700;margin-bottom:4px}.expense-month input,.expenses-head-actions select{height:40px!important}.expenses-head-actions select{width:165px}
+.expense-summary{display:flex;align-items:center;gap:12px;width:270px;padding:12px 14px;margin-bottom:12px;border:1px solid #cfe1f0;border-radius:10px;background:#eef8ff}.expense-summary-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#dcefff;color:#087cf0;font-weight:900}.expense-summary small{display:block;color:#2871bd}.expense-summary b{display:block;font-size:20px;margin-top:2px}
+.expense-form-panel{padding:14px 16px;margin-bottom:12px;border:1px solid #cfe0ef;border-radius:12px;background:#f8fbff}.expense-form-panel h3{margin:0 0 10px}.expense-form-panel form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.expense-filter-row{margin-bottom:10px}.expense-filter-row input{width:100%}.expense-total-text{display:none!important}
+.expense-table th,.expense-table td{padding:8px 10px!important;vertical-align:middle}.expense-table th{background:#eaf2f8}.expense-no{width:44px}.expense-actions{display:flex;gap:6px}.expense-actions .danger{color:#d93636}
+.expense-table-wrap .empty-state{padding:28px 12px!important}
+@media(max-width:760px){.expenses-page-head{align-items:stretch;flex-direction:column}.expenses-head-actions{align-items:stretch;flex-wrap:wrap}.expense-month{flex:1}.expenses-head-actions select{width:auto;flex:1}.expense-summary{width:auto}.expense-form-panel form{grid-template-columns:1fr 1fr}}
+
+
+/* Data Guru — reference layout */
+body.role-admin .teacher-master-page{padding:16px 18px!important}
+.teacher-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px}
+.teacher-page-title{display:flex;align-items:center;gap:10px;margin:4px 0 0}.teacher-title-icon{width:30px;height:30px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;background:#087cf0;color:#fff}.teacher-title-icon svg{width:18px;height:18px}
+.teacher-form-panel{padding:14px 16px;margin-bottom:12px;border:1px solid #cfe0ef;border-radius:12px;background:#f8fbff}.teacher-form-panel h3{margin:0 0 10px}.teacher-form-panel .teacher-master-form{margin:0}
+.teacher-search-row{position:relative;display:grid;grid-template-columns:minmax(260px,650px) 180px;gap:10px;margin-bottom:10px}.teacher-search-row input{padding-left:34px!important}.teacher-search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);z-index:1;color:#326b9d;font-size:18px}
+.teacher-master-table th,.teacher-master-table td{padding:8px 10px!important;vertical-align:middle}.teacher-master-table th{background:#eaf2f8}.teacher-no{width:44px}.teacher-name-cell{display:flex;align-items:center;gap:9px}.teacher-avatar{width:29px;height:29px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#e7f2ff;color:#087cf0;font-size:10px;font-weight:800}
+.teacher-status{display:inline-flex;align-items:center;padding:5px 14px;border-radius:999px;font-size:12px;font-weight:700}.teacher-status.active{background:#dcf7e9;color:#008e5b}.teacher-status.inactive{background:#ffe3e3;color:#d93636}
+.teacher-row-actions{position:relative;display:inline-block}.teacher-more{border:0!important;background:transparent!important;box-shadow:none!important;font-size:18px;font-weight:800;padding:3px 8px!important;color:#0a4f85}.teacher-action-menu{display:none;position:absolute;right:0;top:100%;z-index:20;min-width:100px;padding:5px;background:#fff;border:1px solid #d7e4ef;border-radius:9px;box-shadow:0 8px 24px rgba(12,55,91,.12)}.teacher-action-menu.open{display:grid}.teacher-action-menu button{border:0;background:transparent;text-align:left;padding:7px 9px;border-radius:6px}.teacher-action-menu button:hover{background:#eef6ff}
+@media(max-width:760px){.teacher-page-head{align-items:stretch;flex-direction:column}.teacher-search-row{grid-template-columns:1fr}.teacher-search-row select{width:100%}}
+
+
+/* Gaji Guru — reference layout */
+body.role-admin .salary-page{padding:16px 18px!important}
+.salary-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:14px}.salary-page-title{display:flex;align-items:center;gap:9px;margin:4px 0 0}.salary-title-icon{width:30px;height:30px;border-radius:8px;background:#1685f5;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:17px}
+.salary-head-actions{display:flex;align-items:flex-end;gap:10px}.salary-period{width:165px!important;margin:0!important}.salary-period span{display:block;font-size:11px;font-weight:700;margin-bottom:4px}.salary-period input{height:40px!important}
+.salary-kpis-v2{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;margin:0 0 14px!important}.salary-kpis-v2 .salary-kpi{min-height:78px;border:1px solid #d5e5f1;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:12px}.salary-kpis-v2 .salary-kpi.total{background:#eff8ff}.salary-kpis-v2 .salary-kpi.paid{background:#effbf6}.salary-kpis-v2 .salary-kpi.unpaid{background:#fff1f1}.salary-kpi-icon{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#dbeeff;color:#087cf0;font-weight:900;font-size:18px}.salary-kpi.paid .salary-kpi-icon{background:#d9f5e7;color:#00935f}.salary-kpi.unpaid .salary-kpi-icon{background:#ffe0e0;color:#ef3340}.salary-kpis-v2 small{display:block;font-size:12px}.salary-kpis-v2 b{display:block;font-size:20px;margin-top:2px}.salary-kpi.paid b{color:#008e5b}.salary-kpi.unpaid b{color:#e62f3d}
+.salary-form-panel:has(#salaryForm:not([hidden])){padding:14px;margin-bottom:14px;border:1px solid #d5e5f1;border-radius:11px;background:#f8fbff}.salary-form-panel #salaryForm{margin:0}
+.salary-table-v2 table th,.salary-table-v2 table td{padding:9px 12px!important;vertical-align:middle}.salary-table-v2 table th{background:#eaf2f8}.salary-state{display:inline-flex;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700}.salary-state.paid{background:#dcf7e9;color:#008e5b}.salary-state.unpaid{background:#ffe2e2;color:#d93636}
+.salary-row-actions{position:relative;display:inline-block}.salary-more{border:0!important;background:transparent!important;box-shadow:none!important;padding:3px 8px!important;font-weight:900;font-size:18px;color:#0b4f84}.salary-action-menu{display:none;position:absolute;right:0;top:100%;z-index:25;min-width:140px;padding:5px;background:#fff;border:1px solid #d7e4ef;border-radius:9px;box-shadow:0 8px 24px rgba(12,55,91,.14)}.salary-action-menu.open{display:grid}.salary-action-menu button{border:0;background:transparent;text-align:left;padding:7px 9px;border-radius:6px}.salary-action-menu button:hover{background:#eef6ff}.salary-empty{min-height:115px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center}.salary-empty>span{width:46px;height:46px;border-radius:50%;background:#edf6ff;color:#1769a8;display:grid;place-items:center;font-size:23px}.salary-empty small{color:var(--muted)}
+@media(max-width:760px){.salary-page-head,.salary-head-actions{align-items:stretch;flex-direction:column}.salary-period{width:100%!important}.salary-kpis-v2{grid-template-columns:1fr!important}}
+
+
+/* Laporan Keuangan — reference layout */
+body.role-admin .financial-page-v2{padding:16px 18px!important}
+.financial-page-v2 .financial-report-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:14px}.financial-page-v2 .financial-report-head small{color:#087cf0;font-weight:800;letter-spacing:.12em}.financial-page-v2 .financial-report-head h2{margin:4px 0 0}
+.financial-page-v2 .financial-report-tools{display:flex;align-items:flex-end;gap:9px}.financial-period-label{margin:0!important;width:185px}.financial-period-label span{display:block;font-size:11px;font-weight:700;margin-bottom:4px}.financial-period-label input{height:40px!important}
+.report-excel,.report-pdf{height:40px!important;color:#fff!important;border:0!important;font-weight:800!important}.report-excel{background:#149447!important}.report-pdf{background:#f23838!important}
+.financial-kpis-v2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}.financial-kpi{min-height:76px;border:1px solid #d7e6f1;border-radius:10px;padding:11px 14px;display:flex;align-items:center;gap:12px}.financial-kpi.income{background:#eff8ff}.financial-kpi.expense{background:#fff1f1}.financial-kpi.profit{background:#effaf5}.financial-kpi-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:23px;font-weight:900}.financial-kpi.income .financial-kpi-icon{background:#dceeff;color:#147df0}.financial-kpi.expense .financial-kpi-icon{background:#ffe0e0;color:#ef3e4d}.financial-kpi.profit .financial-kpi-icon{background:#daf4e6;color:#07955e}.financial-kpi small{display:block;font-size:12px}.financial-kpi b{display:block;font-size:20px;margin-top:2px}.financial-kpi.income b{color:#087cf0}.financial-kpi.expense b{color:#e62f3d}.financial-kpi.profit b{color:#008e5b}
+.financial-overview-v2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.85fr);gap:12px;margin-bottom:14px}.financial-overview-v2>section{border:1px solid #d7e6f1;border-radius:10px;padding:12px;background:#fff}.financial-overview-v2 h3{margin:0 0 9px;font-size:15px}
+.financial-report-chart{height:185px;border:1px solid #e0eaf2;border-radius:8px;padding:12px 10px 7px}.report-chart-bars{height:100%;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;align-items:end;border-bottom:1px solid #d9e6f0}.report-chart-col{height:100%;display:grid;grid-template-rows:18px 1fr 22px;align-items:end;text-align:center;font-size:10px;color:#52708a}.report-chart-value{overflow:hidden;white-space:nowrap;font-size:9px}.report-chart-track{height:100%;display:flex;align-items:flex-end;justify-content:center}.report-chart-track i{display:block;width:28px;max-height:100%;background:#258bd4;border-radius:4px 4px 0 0}
+.financial-summary-table{width:100%;border-collapse:collapse;font-size:12px}.financial-summary-table th,.financial-summary-table td{padding:10px 11px;border:1px solid #d9e4ed;text-align:left}.financial-summary-table th{background:#eaf2f8}.financial-summary-table td:last-child{font-weight:800}
+.financial-transactions-v2{margin-top:4px}.financial-transactions-v2 h3{margin:0 0 8px}.financial-transactions-v2 th,.financial-transactions-v2 td{padding:8px 10px!important}
+@media(max-width:800px){.financial-page-v2 .financial-report-head,.financial-page-v2 .financial-report-tools{align-items:stretch;flex-direction:column}.financial-period-label{width:100%}.financial-kpis-v2,.financial-overview-v2{grid-template-columns:1fr}.financial-report-chart{height:170px}}
+
+
+/* Gaji Guru — table polish */
+body.role-admin #salaryPage .salary-table-v2{margin-top:4px;border:1px solid #d7e5f0;border-radius:10px;background:#fff;overflow:visible}
+body.role-admin #salaryPage .salary-table-v2 .tw{border:0!important;border-radius:10px!important;box-shadow:none!important;overflow-x:auto!important;overflow-y:visible!important}
+body.role-admin #salaryPage .salary-table-v2 table{table-layout:fixed;min-width:720px;background:#fff!important}
+body.role-admin #salaryPage .salary-table-v2 th,
+body.role-admin #salaryPage .salary-table-v2 td{height:46px;padding:8px 12px!important;border-bottom:1px solid #e2ebf2!important;font-size:13px!important;line-height:1.25;vertical-align:middle!important}
+body.role-admin #salaryPage .salary-table-v2 th{height:40px;background:#eaf2f8!important;color:#153f61!important;font-size:12px!important;font-weight:800!important}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(1),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(1){width:7%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(2),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(2){width:28%;text-align:left}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(3),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(3){width:15%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(4),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(4){width:20%;text-align:right}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(5),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(5){width:18%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 th:nth-child(6),
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(6){width:12%;text-align:center}
+body.role-admin #salaryPage .salary-table-v2 tbody tr:last-child td{border-bottom:0!important}
+body.role-admin #salaryPage .salary-table-v2 tbody tr:not(:has(.salary-empty)):hover{background:#f7fbff!important}
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(2) b{font-weight:800;color:#123f63}
+body.role-admin #salaryPage .salary-table-v2 td:nth-child(4) b{font-weight:850;color:#0b4f84}
+body.role-admin #salaryPage .salary-state{min-width:96px;justify-content:center;padding:6px 11px;font-size:11px;line-height:1}
+body.role-admin #salaryPage .salary-more{width:34px;height:30px;display:inline-flex!important;align-items:center;justify-content:center;padding:0!important;border-radius:8px!important;letter-spacing:2px}
+body.role-admin #salaryPage .salary-more:hover{background:#eef6ff!important}
+body.role-admin #salaryPage .salary-action-menu{top:calc(100% + 4px);min-width:150px}
+body.role-admin #salaryPage .salary-action-menu button{min-height:32px!important;font-size:12px!important}
+body.role-admin #salaryPage .salary-empty{min-height:150px;padding:20px}
+body.role-admin #salaryPage .salary-empty>span{width:44px;height:44px}
+@media(max-width:760px){
+  body.role-admin #salaryPage .salary-table-v2 table{min-width:680px}
+  body.role-admin #salaryPage .salary-table-v2 th,
+  body.role-admin #salaryPage .salary-table-v2 td{height:43px;padding:7px 10px!important;font-size:12px!important}
+}
+
+
+/* Gaji Guru — no unnecessary table scrollbar on desktop */
+@media(min-width:761px){
+  body.role-admin #salaryPage .salary-table-v2 .tw{overflow:visible!important}
+  body.role-admin #salaryPage .salary-table-v2 table{min-width:0!important;width:100%!important}
+}
+
+
+/* Audit / Log Aktivitas */
+body.role-admin #auditLogPage.audit-page-v2{padding:18px!important}
+body.role-admin #auditLogPage .audit-title-v2{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+body.role-admin #auditLogPage .audit-title-icon{width:34px;height:34px;border-radius:8px;background:#e7f2ff;color:#087bf1;display:grid;place-items:center;font-size:19px;font-weight:900}
+body.role-admin #auditLogPage .audit-title-v2 small{display:block;color:#087bf1;font-size:10px;font-weight:800;letter-spacing:.09em;margin-bottom:2px}
+body.role-admin #auditLogPage .audit-title-v2 h2{margin:0;color:#0b315f;font-size:20px}
+body.role-admin #auditLogPage #refreshAuditLog{margin-left:auto;min-height:36px;padding:7px 13px;border-radius:8px}
+body.role-admin #auditLogPage .audit-tools-v2{display:grid;grid-template-columns:minmax(260px,1fr) 190px minmax(310px,390px);gap:10px;margin-bottom:12px;align-items:center}
+body.role-admin #auditLogPage .audit-search-v2{height:40px;border:1px solid #caddeb;border-radius:8px;background:#fff;display:flex;align-items:center;padding:0 11px;gap:8px}
+body.role-admin #auditLogPage .audit-search-v2 span{color:#53738d;font-size:18px}
+body.role-admin #auditLogPage .audit-search-v2 input{width:100%;height:36px!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;padding:0!important}
+body.role-admin #auditLogPage .audit-tools-v2>select{height:40px!important;border-radius:8px!important;background:#fff!important}
+body.role-admin #auditLogPage .audit-date-v2{height:40px;border:1px solid #caddeb;border-radius:8px;background:#fff;display:flex;align-items:center;gap:6px;padding:0 9px}
+body.role-admin #auditLogPage .audit-date-v2 input{min-width:0;width:145px;height:34px!important;border:0!important;background:transparent!important;padding:0 2px!important;box-shadow:none!important}
+body.role-admin #auditLogPage .audit-date-v2 b{color:#7b93a6}
+body.role-admin #auditLogPage .audit-table-wrap{border:1px solid #d6e3ed!important;border-radius:9px!important;overflow:hidden!important}
+body.role-admin #auditLogPage .audit-table-v2{width:100%;table-layout:fixed}
+body.role-admin #auditLogPage .audit-table-v2 th{height:39px;padding:8px 12px!important;background:#eaf2f7!important;color:#153e5e!important;font-size:12px!important}
+body.role-admin #auditLogPage .audit-table-v2 td{height:44px;padding:8px 12px!important;border-bottom:1px solid #e2ebf2!important;font-size:12px!important;color:#23435e;vertical-align:middle}
+body.role-admin #auditLogPage .audit-table-v2 th:nth-child(1),body.role-admin #auditLogPage .audit-table-v2 td:nth-child(1){width:7%;text-align:center}
+body.role-admin #auditLogPage .audit-table-v2 th:nth-child(2),body.role-admin #auditLogPage .audit-table-v2 td:nth-child(2){width:21%}
+body.role-admin #auditLogPage .audit-table-v2 th:nth-child(3),body.role-admin #auditLogPage .audit-table-v2 td:nth-child(3){width:25%}
+body.role-admin #auditLogPage .audit-table-v2 th:nth-child(4),body.role-admin #auditLogPage .audit-table-v2 td:nth-child(4){width:30%}
+body.role-admin #auditLogPage .audit-table-v2 th:nth-child(5),body.role-admin #auditLogPage .audit-table-v2 td:nth-child(5){width:17%}
+body.role-admin #auditLogPage .audit-table-v2 tbody tr:last-child td{border-bottom:0!important}
+body.role-admin #auditLogPage .audit-table-v2 tbody tr:hover{background:#f8fbfe}
+body.role-admin #auditLogPage .audit-note{margin:10px 2px 0;color:#6f879a;font-size:11px}
+@media(max-width:900px){
+ body.role-admin #auditLogPage .audit-tools-v2{grid-template-columns:1fr 1fr}
+ body.role-admin #auditLogPage .audit-search-v2{grid-column:1/-1}
+ body.role-admin #auditLogPage .audit-date-v2{grid-column:1/-1}
+ body.role-admin #auditLogPage .audit-table-wrap{overflow-x:auto!important}
+ body.role-admin #auditLogPage .audit-table-v2{min-width:720px}
+}
+@media(max-width:560px){
+ body.role-admin #auditLogPage.audit-page-v2{padding:13px!important}
+ body.role-admin #auditLogPage .audit-title-v2{flex-wrap:wrap}
+ body.role-admin #auditLogPage #refreshAuditLog{margin-left:0}
+ body.role-admin #auditLogPage .audit-tools-v2{grid-template-columns:1fr}
+ body.role-admin #auditLogPage .audit-search-v2,body.role-admin #auditLogPage .audit-date-v2{grid-column:auto}
+ body.role-admin #auditLogPage .audit-date-v2 input{width:calc(50% - 18px)}
+}
+
+
+/* Dashboard period: prevent decorative/period card overlap */
+@media(min-width:900px){
+ body.role-admin #dashboard .admin-dashboard-welcome{position:relative!important;min-height:94px!important;padding:18px 220px 18px 18px!important;box-sizing:border-box!important}
+ body.role-admin #dashboard .dashboard-filter{position:absolute!important;top:12px!important;right:12px!important;width:180px!important;max-width:180px!important;margin:0!important;box-sizing:border-box!important}
+ body.role-admin #dashboard .dashboard-filter input{width:100%!important;min-width:0!important;box-sizing:border-box!important}
+}
+
+
+/* Dashboard period correction: keep the whole period card inside welcome panel */
+@media(min-width:900px){
+ body.role-admin #dashboard .admin-dashboard-welcome{overflow:hidden!important;min-height:96px!important;padding:18px 210px 18px 18px!important}
+ body.role-admin #dashboard .dashboard-filter{top:10px!important;right:12px!important;width:180px!important;max-width:180px!important;height:72px!important;min-height:72px!important;padding:8px 10px!important;overflow:hidden!important;z-index:2!important}
+ body.role-admin #dashboard .dashboard-filter label,
+ body.role-admin #dashboard .dashboard-filter>span{font-size:11px!important;line-height:14px!important;margin:0 0 4px!important}
+ body.role-admin #dashboard .dashboard-filter input{height:38px!important;min-height:38px!important;padding:7px 10px!important}
+}
+
+
+/* Dashboard period final alignment: vertically centered in Ringkasan panel */
+@media(min-width:900px){
+ body.role-admin #dashboard .admin-dashboard-welcome{position:relative!important;min-height:96px!important}
+ body.role-admin #dashboard .dashboard-filter{
+   top:50%!important;
+   right:14px!important;
+   transform:translateY(-50%)!important;
+   width:180px!important;
+   height:auto!important;
+   min-height:0!important;
+   padding:8px 10px!important;
+   overflow:visible!important;
+ }
+ body.role-admin #dashboard .dashboard-filter label,
+ body.role-admin #dashboard .dashboard-filter>span{display:block!important;margin:0 0 4px!important;line-height:14px!important}
+}
+
+
+/* Extend blue accent line under Panel Pengelola across the header */
+body.role-admin .admin-topbar{position:relative!important}
+body.role-admin .admin-topbar::after{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  bottom:0!important;
+  height:3px!important;
+  background:#1683f8!important;
+  border-radius:0 0 3px 3px!important;
+  pointer-events:none!important;
+}
+
+
+/* Mobile dashboard layout fix */
+@media(max-width:899px){
+  body.role-admin #app>#dashboard{padding-bottom:82px!important;overflow:visible!important}
+  body.role-admin #dashboard>.dashboard-section:first-child{
+    display:block!important;
+    padding:10px!important;
+    margin:8px 0!important;
+  }
+  body.role-admin #dashboard .admin-dashboard-welcome{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 154px!important;
+    gap:10px!important;
+    align-items:center!important;
+    min-height:92px!important;
+    padding:10px 10px 10px 14px!important;
+    overflow:hidden!important;
+  }
+  body.role-admin #dashboard .admin-dashboard-welcome>div:first-child{
+    min-width:0!important;
+    padding:0!important;
+    margin:0!important;
+    text-align:left!important;
+  }
+  body.role-admin #dashboard .admin-dashboard-welcome h2{
+    font-size:18px!important;
+    line-height:1.25!important;
+    text-align:left!important;
+    margin:0!important;
+  }
+  body.role-admin #dashboard .admin-dashboard-welcome .dashboard-filter{
+    position:static!important;
+    transform:none!important;
+    width:154px!important;
+    min-width:0!important;
+    max-width:154px!important;
+    height:auto!important;
+    margin:0!important;
+    padding:8px!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+  body.role-admin #dashboard .admin-dashboard-welcome .dashboard-filter input{
+    width:100%!important;
+    min-width:0!important;
+    height:38px!important;
+    box-sizing:border-box!important;
+  }
+  body.role-admin #dashboard .dashboard-attendance-compact{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:10px 0!important;
+    padding:10px!important;
+    box-sizing:border-box!important;
+  }
+  body.role-admin #dashboard .attendance-compact-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:7px!important;
+  }
+  body.role-admin #dashboard .dashboard-kpi-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+  }
+  body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+    width:100%!important;
+    min-width:0!important;
+    min-height:92px!important;
+    box-sizing:border-box!important;
+  }
+  body.role-admin #dashboard .dashboard-ratio-grid{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    width:100%!important;
+    margin-top:8px!important;
+  }
+  body.role-admin #dashboard .dashboard-ratio-grid>.card{
+    min-width:0!important;
+    width:100%!important;
+    box-sizing:border-box!important;
+  }
+}
+@media(max-width:430px){
+  body.role-admin #dashboard .admin-dashboard-welcome{grid-template-columns:minmax(0,1fr) 148px!important}
+  body.role-admin #dashboard .admin-dashboard-welcome .dashboard-filter{width:148px!important;max-width:148px!important}
+  body.role-admin #dashboard .attendance-compact-grid{grid-template-columns:1fr!important}
+}
+
+
+/* Mobile Admin dashboard — reference layout */
+@media(max-width:899px){
+ body.role-admin{background:#eef7ff!important}
+ body.role-admin #app{padding-bottom:74px!important}
+ body.role-admin #app>header{min-height:60px!important;padding:10px 14px!important;background:#fff!important}
+ body.role-admin #app>header h1,body.role-admin #app>header .brand-title{font-size:19px!important;color:#073a86!important}
+ body.role-admin #dashboard{padding:0 10px 76px!important}
+ body.role-admin #dashboard>.dashboard-section{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;margin:10px 0!important}
+ body.role-admin #dashboard>.dashboard-section:first-child{display:flex!important;flex-direction:column!important}
+ body.role-admin #dashboard .admin-dashboard-welcome{
+   order:1!important;display:block!important;min-height:0!important;padding:0!important;margin:4px 0 10px!important;
+   background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important
+ }
+ body.role-admin #dashboard .admin-dashboard-welcome>div:first-child{padding:0!important;margin:0!important}
+ body.role-admin #dashboard .admin-dashboard-welcome h2{font-size:22px!important;line-height:1.15!important;color:#073582!important;margin:0 0 8px!important}
+ body.role-admin #dashboard .admin-dashboard-welcome .dashboard-filter{
+   position:static!important;transform:none!important;display:block!important;width:150px!important;max-width:150px!important;
+   padding:0!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important
+ }
+ body.role-admin #dashboard .admin-dashboard-welcome .dashboard-filter{font-size:0!important}
+ body.role-admin #dashboard .admin-dashboard-welcome .dashboard-filter input{
+   display:block!important;width:150px!important;height:34px!important;padding:5px 9px!important;border:1px solid #d7e7f4!important;
+   border-radius:8px!important;background:#fff!important;color:#073582!important;font-size:12px!important;font-weight:700!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid{
+   order:2!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+   min-height:66px!important;padding:9px 10px!important;border:1px solid #dceaf5!important;border-radius:10px!important;background:#fff!important;
+   display:grid!important;grid-template-columns:36px minmax(0,1fr)!important;grid-template-rows:auto auto!important;column-gap:8px!important;align-items:center!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-icon{grid-row:1/3!important;width:36px!important;height:36px!important;margin:0!important}
+ body.role-admin #dashboard .dashboard-kpi-grid small{font-size:10px!important;line-height:1.1!important;margin:0!important}
+ body.role-admin #dashboard .dashboard-kpi-grid b{font-size:17px!important;line-height:1.1!important;margin:0!important}
+ body.role-admin #dashboard .dashboard-kpi-grid .kpi-caption{display:none!important}
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card:nth-child(n+5){display:none!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{
+   order:4!important;margin:10px 0 0!important;padding:10px!important;background:#fff!important;border:1px solid #dceaf5!important;border-radius:10px!important
+ }
+ body.role-admin #dashboard .attendance-compact-head{margin-bottom:8px!important}
+ body.role-admin #dashboard .attendance-compact-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important}
+ body.role-admin #dashboard .attendance-compact-grid>div{
+   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;
+   min-height:74px!important;padding:6px 2px!important;text-align:center!important
+ }
+ body.role-admin #dashboard .attendance-icon{grid-row:auto!important;width:28px!important;height:28px!important}
+ body.role-admin #dashboard .attendance-compact-grid small{font-size:9px!important;white-space:nowrap!important}
+ body.role-admin #dashboard .attendance-compact-grid b{font-size:17px!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{display:none!important}
+ body.role-admin #dashboard .dashboard-students{order:3!important;background:#fff!important;border:1px solid #dceaf5!important;border-radius:10px!important;padding:10px!important}
+ body.role-admin #dashboard .dashboard-students .dashboard-head{display:block!important;margin-bottom:8px!important}
+ body.role-admin #dashboard .dashboard-students .dashboard-head h2{font-size:18px!important;color:#073582!important;margin:0 0 8px!important}
+ body.role-admin #dashboard .dashboard-student-actions{width:100%!important}
+ body.role-admin #dashboard .dashboard-student-actions input{width:100%!important;height:36px!important}
+ body.role-admin #dashboard .dashboard-students tbody{display:block!important}
+ body.role-admin #dashboard .dashboard-students tr{min-height:50px!important;padding:7px 3px!important}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(3){
+   background:#fff!important;border:1px solid #dceaf5!important;border-radius:10px!important;padding:10px!important
+ }
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(3) h2{font-size:15px!important;color:#073582!important}
+ body.role-admin #dashboard .finance-chart{min-height:120px!important}
+ body.role-admin #app>.admin-sidebar{height:64px!important;padding:4px 6px calc(4px + env(safe-area-inset-bottom))!important;box-shadow:0 -2px 10px rgba(20,74,120,.08)!important}
+ body.role-admin #app>.admin-sidebar .admin-sidebar-head{display:none!important}
+ body.role-admin #app>.admin-sidebar .admin-menu{display:grid!important;grid-template-columns:repeat(4,1fr)!important;width:100%!important}
+ body.role-admin #app>.admin-sidebar .admin-menu-group{display:none!important}
+ body.role-admin #app>.admin-sidebar .admin-menu-group:nth-child(1),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:nth-child(2),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:nth-child(3),
+ body.role-admin #app>.admin-sidebar .admin-menu-group:last-child{display:block!important}
+ body.role-admin #app>.admin-sidebar button{height:54px!important;padding:4px 2px!important;border-radius:8px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:2px!important;font-size:10px!important}
+ body.role-admin #app>.admin-sidebar button .menu-icon{width:21px!important;height:21px!important;margin:0!important}
+}
+
+
+/* Mobile app shell correction — explicit selectors for existing DOM */
+@media(max-width:899px){
+ body.role-admin #app{
+   display:block!important;width:100%!important;max-width:100%!important;min-height:100dvh!important;
+   margin:0!important;padding:0 0 72px!important;background:#eef7ff!important;overflow-x:hidden!important
+ }
+ body.role-admin #app>header{
+   position:sticky!important;top:0!important;z-index:90!important;display:grid!important;
+   grid-template-columns:36px minmax(0,1fr) 42px!important;align-items:center!important;gap:8px!important;
+   width:100%!important;min-height:60px!important;margin:0!important;padding:9px 14px!important;box-sizing:border-box!important;
+   border:0!important;border-bottom:1px solid #d8e8f4!important;border-radius:0!important;background:#fff!important
+ }
+ body.role-admin #app>header img{grid-column:1!important;width:36px!important;height:36px!important;margin:0!important}
+ body.role-admin #app>header>div:nth-of-type(1){grid-column:2!important;min-width:0!important}
+ body.role-admin #app>header h1{font-size:0!important;white-space:nowrap!important;margin:0!important}
+ body.role-admin #app>header h1:before{content:"Jenius Edu"!important;font-size:17px!important;color:#073582!important;font-weight:800!important}
+ body.role-admin #app>header>div:last-child{
+   grid-column:3!important;width:42px!important;margin:0!important;display:flex!important;justify-content:flex-end!important;align-items:center!important
+ }
+ body.role-admin #adminBell{display:flex!important;width:36px!important;height:36px!important;align-items:center!important;justify-content:center!important}
+ body.role-admin #syncStatus,body.role-admin #exportAdminBtn,body.role-admin #logoutBtn{display:none!important}
+
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+   display:block!important;position:fixed!important;z-index:200!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;
+   width:100%!important;height:66px!important;min-height:66px!important;margin:0!important;padding:4px 6px calc(4px + env(safe-area-inset-bottom))!important;
+   box-sizing:border-box!important;border:0!important;border-top:1px solid #d5e5f1!important;border-radius:0!important;background:#fff!important;
+   box-shadow:0 -4px 14px rgba(16,59,94,.10)!important;overflow:visible!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar:before,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.admin-sidebar-title{display:none!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+   display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:2px!important;
+   width:100%!important;height:100%!important;margin:0!important;padding:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group{display:none!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"],
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="m"]),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="p"]),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="a"]){display:block!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group>button{
+   width:100%!important;height:56px!important;min-height:56px!important;margin:0!important;padding:4px 2px!important;
+   display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;
+   border:0!important;border-radius:8px!important;background:transparent!important;color:#174c78!important;font-size:10px!important;text-align:center!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar .menu-icon{display:block!important;width:22px!important;height:22px!important;margin:0!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar button.on{background:#edf6ff!important;color:#087bf1!important}
+
+ body.role-admin #dashboard{width:100%!important;max-width:100%!important;margin:0!important;padding:8px 12px 78px!important;box-sizing:border-box!important}
+ body.role-admin #dashboard>.dashboard-section:first-child{display:flex!important;flex-direction:column!important}
+ body.role-admin #dashboard .admin-dashboard-welcome{order:1!important}
+ body.role-admin #dashboard .dashboard-kpi-grid{order:2!important}
+ body.role-admin #dashboard .dashboard-attendance-compact{order:3!important}
+ body.role-admin #dashboard .dashboard-ratio-grid{order:4!important}
+ body.role-admin #dashboard>.dashboard-students{display:block!important;margin-top:10px!important}
+ body.role-admin #dashboard>.dashboard-section:nth-of-type(3){display:block!important;margin-top:10px!important}
+}
+
+
+/* Mobile bottom nav: Dashboard / Murid / Pembayaran / Menu */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+   display:grid!important;
+   grid-template-columns:repeat(4,minmax(0,1fr))!important;
+   align-items:stretch!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"],
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="m"]),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="p"]){
+   display:block!important;
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:has(button[data-t="a"]){display:none!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs:after{
+   content:"☰\A Menu"!important;
+   white-space:pre!important;
+   display:flex!important;
+   flex-direction:column!important;
+   align-items:center!important;
+   justify-content:center!important;
+   gap:1px!important;
+   height:56px!important;
+   border-radius:8px!important;
+   color:#174c78!important;
+   font-size:10px!important;
+   line-height:18px!important;
+   font-weight:700!important;
+   cursor:pointer!important;
+ }
+}
+
+@media(max-width:899px){
+ body.role-admin #app>.admin-sidebar{display:grid!important;grid-template-columns:minmax(0,1fr) 25%!important;align-items:stretch!important}
+ body.role-admin #app>.admin-sidebar>.tabs{grid-column:1!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.role-admin #app>.admin-sidebar>.tabs:after{display:none!important;content:none!important}
+ body.role-admin #app>.admin-sidebar>.mobile-more-menu{
+  grid-column:2!important;display:flex!important;width:100%!important;height:56px!important;min-height:56px!important;margin:0!important;padding:4px 2px!important;
+  flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;border:0!important;border-radius:8px!important;
+  background:transparent!important;color:#174c78!important;font-size:10px!important;font-weight:700!important
+ }
+ body.role-admin #app>.admin-sidebar>.mobile-more-menu .menu-icon{display:block!important;width:22px!important;height:22px!important;margin:0!important}
+}
+@media(min-width:900px){body.role-admin #app>.admin-sidebar>.mobile-more-menu{display:none!important}}
+
+
+/* FINAL mobile bottom bar: override legacy hidden menu rules */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+  display:flex!important;flex-direction:row!important;align-items:stretch!important;
+  width:100%!important;height:66px!important;padding:4px 6px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+  display:grid!important;grid-template-columns:repeat(3,1fr)!important;flex:0 0 75%!important;
+  width:75%!important;height:58px!important;gap:0!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"]{display:flex!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group{display:none!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(1),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(2){display:block!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(1)>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(2)>button{display:flex!important}
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu{
+  display:flex!important;flex:0 0 25%!important;width:25%!important;height:58px!important
+ }
+}
+
+@media(max-width:899px){
+ body.role-admin #mobileMorePanel{position:fixed!important;z-index:210!important;left:12px!important;right:12px!important;bottom:74px!important;padding:8px!important;border:1px solid #d5e5f1!important;border-radius:14px!important;background:#fff!important;box-shadow:0 12px 30px rgba(13,57,94,.18)!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ body.role-admin #mobileMorePanel:not([hidden]){display:grid!important}
+ body.role-admin #mobileMorePanel button{display:flex!important;align-items:center!important;justify-content:flex-start!important;width:100%!important;min-height:44px!important;padding:9px 12px!important;border:0!important;border-radius:9px!important;background:#f2f8fd!important;color:#174c78!important;font-size:12px!important;font-weight:700!important;text-align:left!important}
+ body.role-admin #mobileMorePanel button:last-child{grid-column:1/-1!important}
+}
+@media(min-width:900px){#mobileMorePanel{display:none!important}}
+
+
+/* Mobile page visibility: hidden admin pages must never remain visible behind the selected tab. */
+@media(max-width:899px){
+ body.role-admin #app>#dashboard[hidden],
+ body.role-admin #app>#tm[hidden],
+ body.role-admin #app>#tp[hidden],
+ body.role-admin #app>#te[hidden],
+ body.role-admin #app>#teacherMasterPage[hidden],
+ body.role-admin #app>#salaryPage[hidden],
+ body.role-admin #app>#financialReportPage[hidden],
+ body.role-admin #app>#auditLogPage[hidden],
+ body.role-admin #app>#studentProfilePage[hidden],
+ body.role-admin #app>#teacherProfilePage[hidden]{display:none!important}
+}
+
+
+/* Mobile dashboard: keep all 8 KPI cards visible. */
+@media(max-width:899px){
+ body.role-admin #dashboard .dashboard-kpi-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card,
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card:nth-child(n){display:grid!important}
+}
+
+
+/* FINAL mobile dashboard visibility: override legacy nth-of-type rule that hid the KPI grid. */
+@media(max-width:899px){
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid.dashboard-kpi-grid{
+  display:grid!important;
+  visibility:visible!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:none!important;
+  gap:8px!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:8px 0!important;
+  overflow:visible!important
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid.dashboard-kpi-grid>.dashboard-card{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:82px!important
+ }
+}
+
+
+/* Mobile dashboard: student list is available from the Murid tab, so hide its dashboard duplicate. */
+@media(max-width:899px){
+ body.role-admin #dashboard>.dashboard-students,
+ body.role-admin #dashboard .dashboard-students{display:none!important}
+}
+
+
+/* Mobile KPI typography/alignment polish */
+@media(max-width:899px){
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card{
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 38px!important;
+  grid-template-rows:auto auto!important;
+  column-gap:8px!important;
+  align-content:center!important;
+  padding:12px 48px 12px 12px!important;
+  min-height:82px!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card small{
+  grid-column:1!important;
+  display:block!important;
+  max-width:none!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+  font-weight:700!important;
+  white-space:normal!important;
+  overflow-wrap:normal!important;
+  word-break:normal!important;
+  color:#48677f!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card b{
+  grid-column:1!important;
+  display:block!important;
+  margin-top:5px!important;
+  font-size:17px!important;
+  line-height:1.15!important;
+  font-weight:850!important;
+  white-space:nowrap!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-icon{
+  position:absolute!important;
+  right:12px!important;
+  left:auto!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:36px!important;
+  height:36px!important;
+  margin:0!important
+ }
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{display:none!important}
+}
