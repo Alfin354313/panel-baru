@@ -645,3 +645,28 @@ body.role-admin .admin-students-page .student-active-badge{padding:3px 9px!impor
 body.role-admin .admin-students-page .students-title{display:flex;align-items:center;gap:10px}
 body.role-admin .admin-students-page .students-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0;flex:0 0 30px}
 body.role-admin .admin-students-page .students-title-icon svg{width:18px;height:18px;display:block}
+
+
+/* Pembayaran — reference layout */
+body.role-admin .admin-payments-page{padding:16px 18px!important}
+.payments-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:14px}
+.payments-title{display:flex;align-items:center;gap:10px;margin:4px 0 0}
+.payments-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0}
+.payments-title-icon svg{width:18px;height:18px}
+.payments-head-actions{display:flex;align-items:flex-end;gap:10px}
+.payment-month{margin:0!important;min-width:150px}.payment-month span{display:block;font-size:11px;font-weight:700;margin-bottom:4px}
+.payment-month input{height:40px!important}
+.payment-form-panel{padding:14px 16px;margin:0 0 14px;border:1px solid #cfe0ef;border-radius:12px;background:#f8fbff}
+.payment-form-panel h3{margin:0 0 10px}.payment-form-panel form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.payment-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:700px;margin-bottom:14px}
+.payment-kpi{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid #d9e7f3;border-radius:11px;background:#f5faff}
+.payment-kpi.paid{background:#effbf5}.payment-kpi.unpaid{background:#fff2f2}
+.payment-kpi-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:#e3f1ff;color:#087cf0;font-weight:900;font-size:18px}
+.payment-kpi.paid .payment-kpi-icon{background:#dff7eb;color:#00a66a}.payment-kpi.unpaid .payment-kpi-icon{background:#ffe3e3;color:#f04444}
+.payment-kpi small{display:block}.payment-kpi b{display:block;font-size:19px;margin-top:2px}
+.payment-filter-row{display:flex;gap:10px;margin:0 0 10px}.payment-filter-row input{flex:1}.payment-filter-row select{width:190px}
+.payment-table th,.payment-table td{padding:8px 10px!important;vertical-align:middle}.payment-table th{background:#eaf2f8}
+.payment-no{width:44px}.payment-student{display:flex;align-items:center;gap:9px}.payment-avatar{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#e7f2ff;color:#087cf0;font-size:10px;font-weight:800}
+.payment-status{display:inline-flex;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700}.payment-status.paid{background:#dcf7e9;color:#008e5b}.payment-status.unpaid{background:#ffe1e1;color:#d93636}
+.payment-actions{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.payment-actions .danger{color:#d93636}
+@media(max-width:760px){.payments-page-head{align-items:stretch;flex-direction:column}.payments-head-actions{align-items:stretch}.payment-month{flex:1}.payment-kpis{grid-template-columns:1fr}.payment-form-panel form{grid-template-columns:1fr 1fr}.payment-filter-row{flex-direction:column}.payment-filter-row select{width:100%}}
