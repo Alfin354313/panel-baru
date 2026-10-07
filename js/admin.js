@@ -400,8 +400,8 @@ function drawTeachers(){
   var active=TEACHERS.filter(function(x){return x.status!=="Nonaktif"}).length;
   $("teacherMasterCount").textContent=active;
   var tq=($("teacherSearch").value||"").toLowerCase(),ts=$("teacherStatusFilter").value;var visibleTeachers=TEACHERS.filter(function(x){return (!ts||x.status===ts)&&(!tq||[x.nama,x.email,x.mapel,x.hp].join(" ").toLowerCase().includes(tq))});
-  $("teacherMasterBody").innerHTML=visibleTeachers.map(function(x){
-    return '<tr><td><b>'+esc(x.nama||"Belum diisi")+'</b></td><td>'+esc(x.email||"")+'</td><td>'+esc(x.hp||"-")+'</td><td>'+esc(x.mapel||"-")+'</td><td class="'+(x.status==="Aktif"?"ok":"no")+'">'+esc(x.status||"Aktif")+'</td><td><button class="sm" data-teacher-profile="'+x.id+'">Detail</button> <button class="sm" data-etm="'+x.id+'">Edit</button></td></tr>';
+  $("teacherMasterBody").innerHTML=visibleTeachers.map(function(x,idx){var initials=(x.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();
+    return '<tr><td class="teacher-no">'+(idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+esc(initials)+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
   }).join("")||emptyTable(6,"Belum ada data guru","Akun Guru yang tersedia akan tampil di sini.");
 }
 $("teacherAccountId").onchange=syncTeacherMasterForm;
@@ -417,12 +417,12 @@ $("teacherMasterForm").onsubmit=async function(e){
   var i=TEACHERS.findIndex(function(x){return x.id===id});
   auditLog("UPDATE","Guru",id,"Menyimpan profil guru "+payload.nama);if(i>=0)TEACHERS[i]=Object.assign({},TEACHERS[i],r.data);else TEACHERS.push(Object.assign({},r.data));
   $("teacherMasterSync").textContent="Data guru tersimpan";
-  drawTeachers();drawSalary();
+  drawTeachers();drawSalary();if($("teacherFormPanel"))$("teacherFormPanel").hidden=true;
   alert("Data guru berhasil disimpan.");
 };
 document.addEventListener("click",function(e){
   var b=e.target.closest("[data-etm]");
-  if(b){$("teacherAccountId").value=b.getAttribute("data-etm");syncTeacherMasterForm();$("teacherMasterForm").scrollIntoView({behavior:"smooth",block:"start"})}
+  if(b){$("teacherAccountId").value=b.getAttribute("data-etm");syncTeacherMasterForm();if($("teacherFormPanel"))$("teacherFormPanel").hidden=false;$("teacherMasterForm").scrollIntoView({behavior:"smooth",block:"start"})}
 });
 
 /* Admin data loading. */
@@ -586,3 +586,7 @@ if($("openPaymentForm"))$("openPaymentForm").onclick=function(){var p=$("payment
 
 /* Pengeluaran form toggle */
 if($("openExpenseForm"))$("openExpenseForm").onclick=function(){var p=$("expenseFormPanel");if(!p)return;p.hidden=!p.hidden;if(!p.hidden&&$("et"))$("et").value=todayISO;};
+
+/* Data Guru form + row actions */
+if($("openTeacherForm"))$("openTeacherForm").onclick=function(){var p=$("teacherFormPanel");if(!p)return;p.hidden=!p.hidden;if(!p.hidden)syncTeacherMasterForm();};
+document.addEventListener("click",function(e){var more=e.target.closest(".teacher-more");document.querySelectorAll(".teacher-action-menu.open").forEach(function(m){if(!more||m!==more.nextElementSibling)m.classList.remove("open")});if(more){e.stopPropagation();more.nextElementSibling.classList.toggle("open")}});
