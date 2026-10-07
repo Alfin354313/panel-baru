@@ -289,7 +289,8 @@ function drawAdminAttendance(month){
   if($("aSakit"))$("aSakit").textContent=aSakitTopCount;if($("aSakitTop"))$("aSakitTop").textContent=aSakitTopCount;
   var aTidakHadirTopCount=rows.filter(function(x){return x.status==="Tidak Hadir"}).length;
   if($("aTidakHadir"))$("aTidakHadir").textContent=aTidakHadirTopCount;if($("aTidakHadirTop"))$("aTidakHadirTop").textContent=aTidakHadirTopCount;
-  $("attendanceAdminBody").innerHTML=Object.keys(counts).map(function(id){
+    var attendanceBody=$("attendanceAdminBody");
+  if(attendanceBody)attendanceBody.innerHTML=Object.keys(counts).map(function(id){
     var m=stu(id)||{},q=counts[id],total=q.Hadir+q.Izin+q.Sakit+q["Tidak Hadir"];
     return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+q.Hadir+'</td><td>'+q.Izin+'</td><td>'+q.Sakit+'</td><td>'+q["Tidak Hadir"]+'</td><td><b>'+total+'</b></td></tr>';
   }).join("")||'<tr><td colspan="6">Belum ada data absensi pada periode ini.</td></tr>';
@@ -439,7 +440,7 @@ async function dbLoad(){
   try{d=await window.sb.from("invoices").select("*").order("created_at",{ascending:true})}catch(err){throw new Error("Gagal menghubungi Supabase saat membaca invoices: "+(err.message||"Failed to fetch"))}
   if(d.error)throw new Error("Tabel invoices: "+d.error.message);
   var at=await window.sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
-  if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
+  if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];if($("attendanceAdminSync"))$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];if($("attendanceAdminSync"))$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas,ortu:x.ortu,hp:x.hp,biaya:Number(x.biaya||0)}});
   P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
