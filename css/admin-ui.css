@@ -1182,3 +1182,28 @@ body.role-admin .admin-topbar::after{
  body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card,
  body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card:nth-child(n){display:grid!important}
 }
+
+
+/* FINAL mobile dashboard visibility: override legacy nth-of-type rule that hid the KPI grid. */
+@media(max-width:899px){
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid.dashboard-kpi-grid{
+  display:grid!important;
+  visibility:visible!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-rows:none!important;
+  gap:8px!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  margin:8px 0!important;
+  overflow:visible!important
+ }
+ body.role-admin #dashboard>.dashboard-section:first-child>.dashboard-grid.dashboard-kpi-grid>.dashboard-card{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:82px!important
+ }
+}
