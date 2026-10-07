@@ -10,6 +10,7 @@ function startEditStudent(id){
   var f=$("fm");
   f.nama.value=m.nama||"";f.jenjang.value=m.jenjang||"SD";f.kelas.value=m.kelas||"";
   f.ortu.value=m.ortu||"";f.hp.value=m.hp||"";f.biaya.value=m.biaya||0;
+  if($("studentFormPanel"))$("studentFormPanel").hidden=false;
   f.scrollIntoView({behavior:"smooth",block:"start"});
 }
 function cancelEditStudent(){
@@ -18,8 +19,10 @@ function cancelEditStudent(){
   $("mmTitle").textContent="Tambah murid";
   $("fmSubmit").textContent="Simpan murid";
   $("cancelEdit").hidden=true;
+  if($("studentFormPanel"))$("studentFormPanel").hidden=true;
 }
 $("cancelEdit").onclick=cancelEditStudent;
+if($("openStudentForm"))$("openStudentForm").onclick=function(){editingStudentId=null;$("fm").reset();$("mmTitle").textContent="Tambah murid";$("fmSubmit").textContent="Simpan murid";$("cancelEdit").hidden=true;$("studentFormPanel").hidden=false;};
 
 $("fm").onsubmit=async function(e){
   e.preventDefault();var o=fd(e.target);
@@ -353,7 +356,7 @@ function drawDashboard(){
 $("dashboardMonth").onchange=drawDashboard;
 
 function draw(){
-  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});$("bm").innerHTML=filteredStudents.map(function(m){return '<tr><td>'+esc(m.nama)+'</td><td>'+esc(m.jenjang)+'</td><td>'+esc(m.kelas)+'</td><td>'+esc(m.ortu)+'</td><td>'+esc(m.hp)+'</td><td>'+rp(m.biaya)+'</td><td><button class="sm" data-profile="'+m.id+'">Detail</button> <button class="sm" data-es="'+m.id+'">Edit</button> <button class="sm" data-ds="'+m.id+'">Hapus</button></td></tr>'}).join("")||emptyTable(7,"Belum ada murid","Tambahkan murid melalui formulir di atas.");
+  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});$("bm").innerHTML=filteredStudents.map(function(m,idx){var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td class="student-no">'+(idx+1)+'</td><td><button class="student-name-cell" data-profile="'+m.id+'"><span class="student-avatar">'+esc(initials)+'</span><b>'+esc(m.nama)+'</b></button></td><td>'+esc(m.jenjang||"-")+' '+esc(m.kelas||"")+'</td><td>'+esc(m.kelas||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><div class="student-row-actions"><button class="student-more" type="button" aria-label="Aksi murid">•••</button><div class="student-action-menu"><button data-profile="'+m.id+'">Detail</button><button data-es="'+m.id+'">Edit</button><button data-ds="'+m.id+'">Hapus</button></div></div></td></tr>'}).join("")||emptyTable(6,"Belum ada murid","Tambahkan murid dengan tombol Tambah Murid.");
   var keep=$("sel").value;$("sel").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+'</option>'}).join("");if(keep)$("sel").value=keep;
   var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return x.bulan===f&&(!ps||x.status===ps)&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
