@@ -81,3 +81,30 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
  body.role-guru #teacherMenu .teacher-nav-icon{display:block!important;font-size:19px!important;line-height:20px!important;margin-bottom:2px!important}
  body.role-guru #teacherMenu button{flex-direction:column!important;gap:1px!important}
 }
+
+
+/* Desktop full-screen shell — match Panel Pengelola proportions */
+@media(min-width:900px){
+ body.role-guru{margin:0!important;padding:0!important;min-height:100vh!important;background:#eef7fd!important}
+ body.role-guru #teacherApp{
+  width:100%!important;max-width:none!important;min-height:100vh!important;
+  margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important
+ }
+ body.role-guru #teacherApp>.card{
+  width:100%!important;min-height:100vh!important;
+  grid-template-columns:220px minmax(0,1fr)!important;
+  grid-template-rows:auto minmax(0,1fr)!important
+ }
+ body.role-guru #teacherMenu{
+  top:0!important;width:220px!important;height:100vh!important;min-height:100vh!important;
+  border-radius:0!important
+ }
+ body.role-guru .teacher-head{
+  margin:12px 16px 8px!important;
+  width:auto!important
+ }
+ body.role-guru .teacher-page{
+  margin:0 16px 16px!important;
+  width:auto!important;max-width:none!important
+ }
+}
