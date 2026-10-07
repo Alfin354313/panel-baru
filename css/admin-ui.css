@@ -1277,3 +1277,31 @@ body.role-admin .admin-topbar::after{
  body.role-admin #app>.admin-sidebar>.mobile-more-menu{height:54px!important;min-height:54px!important;padding:2px!important;gap:1px!important}
  body.role-admin #app>.admin-sidebar .menu-icon{width:20px!important;height:20px!important}
 }
+
+
+/* FINAL mobile navigation sizing: compact centered controls, no stretched spacing. */
+@media(max-width:899px){
+ body.role-admin #app>.tabs.top-menu.admin-sidebar{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  height:52px!important;min-height:52px!important;padding:2px 6px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs{
+  display:flex!important;flex:0 1 auto!important;width:auto!important;height:48px!important;min-height:48px!important;
+  align-items:center!important;justify-content:center!important;gap:4px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"],
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(1),
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(2){
+  flex:0 0 76px!important;width:76px!important;height:48px!important;min-height:48px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(1)>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>.admin-menu-group:nth-of-type(2)>button,
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.tabs>button[data-t="d"]{
+  width:76px!important;height:48px!important;min-height:48px!important;padding:1px!important
+ }
+ body.role-admin #app>.tabs.top-menu.admin-sidebar>.mobile-more-menu{
+  flex:0 0 76px!important;width:76px!important;height:48px!important;min-height:48px!important;margin-left:4px!important;padding:1px!important
+ }
+ body.role-admin #app>header{height:50px!important;min-height:50px!important;padding:4px 10px!important}
+ body.role-admin #app>header img{width:31px!important;height:31px!important}
+}
