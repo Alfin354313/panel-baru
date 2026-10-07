@@ -670,3 +670,16 @@ body.role-admin .admin-payments-page{padding:16px 18px!important}
 .payment-status{display:inline-flex;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700}.payment-status.paid{background:#dcf7e9;color:#008e5b}.payment-status.unpaid{background:#ffe1e1;color:#d93636}
 .payment-actions{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.payment-actions .danger{color:#d93636}
 @media(max-width:760px){.payments-page-head{align-items:stretch;flex-direction:column}.payments-head-actions{align-items:stretch}.payment-month{flex:1}.payment-kpis{grid-template-columns:1fr}.payment-form-panel form{grid-template-columns:1fr 1fr}.payment-filter-row{flex-direction:column}.payment-filter-row select{width:100%}}
+
+
+/* Pengeluaran — reference layout */
+body.role-admin .admin-expenses-page{padding:16px 18px!important}
+.expenses-page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:12px}
+.expenses-title{display:flex;align-items:center;gap:10px;margin:4px 0 0}.expenses-title-icon{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;background:#eaf4ff;color:#087cf0}.expenses-title-icon svg{width:18px;height:18px}
+.expenses-head-actions{display:flex;align-items:flex-end;gap:10px}.expense-month{margin:0!important;min-width:145px}.expense-month span{display:block;font-size:11px;font-weight:700;margin-bottom:4px}.expense-month input,.expenses-head-actions select{height:40px!important}.expenses-head-actions select{width:165px}
+.expense-summary{display:flex;align-items:center;gap:12px;width:270px;padding:12px 14px;margin-bottom:12px;border:1px solid #cfe1f0;border-radius:10px;background:#eef8ff}.expense-summary-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#dcefff;color:#087cf0;font-weight:900}.expense-summary small{display:block;color:#2871bd}.expense-summary b{display:block;font-size:20px;margin-top:2px}
+.expense-form-panel{padding:14px 16px;margin-bottom:12px;border:1px solid #cfe0ef;border-radius:12px;background:#f8fbff}.expense-form-panel h3{margin:0 0 10px}.expense-form-panel form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) auto;gap:10px;align-items:end}
+.expense-filter-row{margin-bottom:10px}.expense-filter-row input{width:100%}.expense-total-text{display:none!important}
+.expense-table th,.expense-table td{padding:8px 10px!important;vertical-align:middle}.expense-table th{background:#eaf2f8}.expense-no{width:44px}.expense-actions{display:flex;gap:6px}.expense-actions .danger{color:#d93636}
+.expense-table-wrap .empty-state{padding:28px 12px!important}
+@media(max-width:760px){.expenses-page-head{align-items:stretch;flex-direction:column}.expenses-head-actions{align-items:stretch;flex-wrap:wrap}.expense-month{flex:1}.expenses-head-actions select{width:auto;flex:1}.expense-summary{width:auto}.expense-form-panel form{grid-template-columns:1fr 1fr}}
