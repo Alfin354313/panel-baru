@@ -1174,3 +1174,11 @@ body.role-admin .admin-topbar::after{
  body.role-admin #app>#studentProfilePage[hidden],
  body.role-admin #app>#teacherProfilePage[hidden]{display:none!important}
 }
+
+
+/* Mobile dashboard: keep all 8 KPI cards visible. */
+@media(max-width:899px){
+ body.role-admin #dashboard .dashboard-kpi-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card,
+ body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card:nth-child(n){display:grid!important}
+}
