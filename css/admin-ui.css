@@ -624,3 +624,11 @@ body.role-admin .admin-students-page .student-search-box input#studentSearch{
 body.role-admin .admin-students-page .students-table th{padding:9px 12px!important}
 body.role-admin .admin-students-page .students-table td{padding:7px 12px!important;height:46px!important}
 body.role-admin .admin-students-page .student-avatar{width:30px!important;height:30px!important}
+
+
+/* Denser Data Murid table */
+body.role-admin .admin-students-page .students-table th{padding:7px 10px!important;height:34px!important}
+body.role-admin .admin-students-page .students-table td{padding:5px 10px!important;height:38px!important;line-height:1.15!important}
+body.role-admin .admin-students-page .student-avatar{width:27px!important;height:27px!important}
+body.role-admin .admin-students-page .student-active-badge{padding:4px 10px!important}
+body.role-admin .admin-students-page .student-form-panel form{grid-template-columns:repeat(3,minmax(0,1fr))!important}
