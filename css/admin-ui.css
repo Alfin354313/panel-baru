@@ -541,3 +541,23 @@ body.role-admin #dashboard .dashboard-filter::after{
  body.role-admin #dashboard .attendance-compact-grid small{font-size:10.5px!important}
  body.role-admin #dashboard .attendance-compact-grid b{font-size:16px!important}
 }
+
+
+/* Dashboard active students — reference-aligned read-only presentation */
+body.role-admin #dashboard .dashboard-students-panel{padding:14px 16px!important;border-radius:12px!important}
+body.role-admin #dashboard .dashboard-students-panel .dashboard-head{display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:14px!important;margin-bottom:10px!important}
+body.role-admin #dashboard .dashboard-students-panel .section-eyebrow{display:block;font-size:9px;font-weight:800;letter-spacing:.12em;color:#2684df;margin-bottom:2px}
+body.role-admin #dashboard .dashboard-students-panel h2{font-size:18px!important;margin:0!important;color:#073a70!important}
+body.role-admin #dashboard .dashboard-search-wrap{display:flex;align-items:center;gap:7px;width:260px;max-width:100%;height:36px;padding:0 10px;border:1px solid #cfe0ee;border-radius:9px;background:#fff}
+body.role-admin #dashboard .dashboard-search-wrap span{font-size:18px;color:#3578b7;line-height:1}
+body.role-admin #dashboard .dashboard-search-wrap input{width:100%!important;height:auto!important;padding:0!important;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;font-size:12px!important}
+body.role-admin #dashboard .dashboard-students-panel .tw{border:1px solid #d7e5ef!important;border-radius:9px!important;overflow:auto!important}
+body.role-admin #dashboard .dashboard-students-panel table{margin:0!important;width:100%!important}
+body.role-admin #dashboard .dashboard-students-panel thead th{padding:10px 12px!important;background:#eaf3f9!important;color:#123e65!important;font-size:11px!important}
+body.role-admin #dashboard .dashboard-students-panel tbody td{padding:9px 12px!important;font-size:12px!important;vertical-align:middle!important}
+body.role-admin #dashboard .dashboard-student-count{display:block!important;margin-top:7px!important;font-size:10px!important;color:#5f7890!important}
+@media(max-width:899px){
+ body.role-admin #dashboard .dashboard-students-panel{padding:12px!important}
+ body.role-admin #dashboard .dashboard-students-panel .dashboard-head{align-items:stretch!important;flex-direction:column!important}
+ body.role-admin #dashboard .dashboard-search-wrap{width:100%!important}
+}
