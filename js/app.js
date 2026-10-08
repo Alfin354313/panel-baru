@@ -101,7 +101,7 @@ async function startApp(session){
     $("teacherApp").hidden=false;
     $("teacherApp").style.display="block";
     $("teacherSync").textContent="Memuat...";
-    try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();scheduleDateToday();$("teacherSync").textContent="Tersimpan online"}
+    try{await dbLoadTeacher();teacherDateToday();attendanceDateToday();$("teacherSync").textContent="Tersimpan online"}
     catch(err){console.error(err);$("teacherSync").textContent="Gagal memuat";alert("Gagal memuat panel guru: "+(err.message||err))}
     return
   }
