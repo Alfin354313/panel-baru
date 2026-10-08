@@ -14,7 +14,7 @@
 
 
   <link rel="stylesheet" href="./css/main.css?v=20261007-teacher-header-minimal">
-<link rel="stylesheet" href="./css/admin-ui.css?v=20261008-backup3">
+<link rel="stylesheet" href="./css/admin-ui.css?v=20261008-announcements1">
 <link rel="stylesheet" href="./css/teacher-ui.css?v=20261008-reference1">
 </head><body>
 
@@ -66,8 +66,9 @@
     <div class="admin-menu-group"><button data-t="u"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="12" height="16" rx="2"/><circle cx="11" cy="9" r="2.5"/><path d="M7.5 16c.6-2.2 1.8-3.3 3.5-3.3s2.9 1.1 3.5 3.3"/><path d="M17 8h2.5v12H9v-1"/></svg><span>Data Guru</span></button></div>
     <div class="admin-menu-group"><button data-t="g"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg><span>Gaji Guru</span></button></div><div class="admin-menu-group"><button data-t="r"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10"/><path d="M10 20V5"/><path d="M15 20v-7"/><path d="M20 20V3"/></svg><span>Laporan</span></button></div><div class="admin-menu-group"><button data-t="a"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v5c0 5-3.2 8.3-8 10-4.8-1.7-8-5-8-10V6l8-3Z"/><path d="m9 12 2 2 4-5"/></svg><span>Audit</span></button></div>
 <div class="admin-menu-group"><button data-t="b"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="4" rx="1"/><path d="M5 9v11h14V9M9 13h6"/></svg><span>Backup &amp; Arsip</span></button></div>
+<div class="admin-menu-group"><button data-t="n"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v5h4l10 5V5L8 10H4Z"/><path d="M8 15v5M21 9v7"/></svg><span>Pengumuman</span></button></div>
   </div>
-<button id="mobileMoreMenu" type="button" class="mobile-more-menu" aria-label="Menu lainnya"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button><div id="mobileMorePanel" class="mobile-more-panel" hidden><button type="button" data-mobile-t="e">Pengeluaran</button><button type="button" data-mobile-t="u">Data Guru</button><button type="button" data-mobile-t="g">Gaji Guru</button><button type="button" data-mobile-t="r">Laporan</button><button type="button" data-mobile-t="a">Audit</button><button type="button" data-mobile-t="b">Backup &amp; Arsip</button></div></aside><div id="dashboard">
+<button id="mobileMoreMenu" type="button" class="mobile-more-menu" aria-label="Menu lainnya"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>Menu</span></button><div id="mobileMorePanel" class="mobile-more-panel" hidden><button type="button" data-mobile-t="e">Pengeluaran</button><button type="button" data-mobile-t="u">Data Guru</button><button type="button" data-mobile-t="g">Gaji Guru</button><button type="button" data-mobile-t="r">Laporan</button><button type="button" data-mobile-t="a">Audit</button><button type="button" data-mobile-t="b">Backup &amp; Arsip</button><button type="button" data-mobile-t="n">Pengumuman</button></div></aside><div id="dashboard">
   <div class="card dashboard-section">
     <div class="admin-dashboard-welcome"><div><span class="admin-eyebrow">PANEL PENGELOLA</span><h2>Ringkasan Jenius Edu</h2><p>Pantau aktivitas, keuangan, dan data operasional dalam satu dashboard.</p></div><label class="dashboard-filter">Periode<input id="dashboardMonth" type="month"></label></div>
     <div class="dashboard-grid dashboard-kpi-grid">
@@ -125,7 +126,7 @@
   <div class="tw students-table-wrap"><table class="students-table"><thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Program</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="bm"></tbody></table></div>
 </div>
 
-<div id="studentProfilePage" class="card student-profile-page" hidden><div class="student-profile-head"><button id="studentProfileBack" type="button">← Kembali</button><div><small>PROFIL MURID</small><h2 id="studentProfileName">-</h2><span id="studentProfileMeta">-</span></div></div><section class="card" aria-labelledby="parentInviteTitle"><h3 id="parentInviteTitle">Undangan Orang Tua</h3><p>Uji coba satu murid. Kode berlaku 24 jam dan hanya dapat digunakan sekali.</p><button id="adminParentInviteGenerate" type="button">Buat kode undangan</button><p id="adminParentInviteStatus" role="status" aria-live="polite"></p><div id="adminParentInviteResult" hidden><label>Kode undangan<input id="adminParentInviteCode" readonly></label><button id="adminParentInviteCopy" type="button">Salin kode</button><p>Bagikan kode ini hanya kepada orang tua murid tersebut.</p><a href="/orang-tua.html" target="_blank" rel="noopener">Buka Portal Orang Tua ↗</a></div></section><div id="studentProfileSummary" class="student-profile-summary"></div><div class="student-profile-grid"><section><h3>Riwayat Pembayaran</h3><div id="studentProfilePayments"></div></section><section><h3>Rekap Absensi</h3><div id="studentProfileAttendance"></div></section><section><h3>Catatan Guru Terbaru</h3><div id="studentProfileNotes"></div></section><section><h3>Laporan Perkembangan</h3><div id="studentProfileReports"></div></section></div></div>
+<div id="parentAnnouncementsPage" class="card" hidden><div class="admin-dashboard-welcome"><div><span class="admin-eyebrow">INFORMASI ORANG TUA</span><h2>Pengumuman</h2><p>Buat satu pengumuman untuk semua akun orang tua yang terhubung.</p></div></div></div><div id="studentProfilePage" class="card student-profile-page" hidden><div class="student-profile-head"><button id="studentProfileBack" type="button">← Kembali</button><div><small>PROFIL MURID</small><h2 id="studentProfileName">-</h2><span id="studentProfileMeta">-</span></div></div><section class="card" aria-labelledby="parentInviteTitle"><h3 id="parentInviteTitle">Undangan Orang Tua</h3><p>Uji coba satu murid. Kode berlaku 24 jam dan hanya dapat digunakan sekali.</p><button id="adminParentInviteGenerate" type="button">Buat kode undangan</button><p id="adminParentInviteStatus" role="status" aria-live="polite"></p><div id="adminParentInviteResult" hidden><label>Kode undangan<input id="adminParentInviteCode" readonly></label><button id="adminParentInviteCopy" type="button">Salin kode</button><p>Bagikan kode ini hanya kepada orang tua murid tersebut.</p><a href="/orang-tua.html" target="_blank" rel="noopener">Buka Portal Orang Tua ↗</a></div></section><div id="studentProfileSummary" class="student-profile-summary"></div><div class="student-profile-grid"><section><h3>Riwayat Pembayaran</h3><div id="studentProfilePayments"></div></section><section><h3>Rekap Absensi</h3><div id="studentProfileAttendance"></div></section><section><h3>Catatan Guru Terbaru</h3><div id="studentProfileNotes"></div></section><section><h3>Laporan Perkembangan</h3><div id="studentProfileReports"></div></section></div></div>
 
 <div id="tp" class="card admin-payments-page" hidden>
   <div class="payments-page-head">
@@ -254,7 +255,7 @@
 <div class="card" style="margin-top:14px;padding:20px 22px"><h2 class="teacher-page-title"><span class="teacher-title-icon">▤</span>Riwayat Laporan</h2><div class="tw"><table><thead><tr><th>Murid</th><th>Periode</th><th>Kehadiran</th><th>Pencapaian</th><th>Aksi</th></tr></thead><tbody id="teacherReportsBody"></tbody></table></div></div>
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
-<script src="./js/admin.js?v=20261008-parent-invite1"></script>
+<script src="./js/admin.js?v=20261008-announcements1"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=reports1-20261008-reference1"></script>
   <script src="./js/auth.js?v=20261006-rolefix"></script>
@@ -275,4 +276,4 @@ if("serviceWorker" in navigator){
   });
 }
 </script>
-<script src="./js/parent-updates.js?v=20261008-reports1"></script></body></html>
+<script src="./js/parent-updates.js?v=20261008-announcements1"></script></body></html>

@@ -1310,3 +1310,6 @@ body.role-admin .admin-topbar::after{
  body.role-admin #app>#dataManagementPage{grid-column:2!important;grid-row:2!important;min-height:0!important;height:auto!important;max-height:calc(100dvh - 116px)!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-gutter:stable!important;margin:0!important;padding:20px!important;overscroll-behavior:contain}
 }
 #dataManagementPage .data-archive-shortcut{width:100%;margin-top:8px;color:#1e6fb8;background:#fff}
+
+@media(min-width:900px){body.role-admin #app>#parentAnnouncementsPage{grid-column:2!important;grid-row:2!important;min-height:0!important;max-height:calc(100dvh - 116px)!important;overflow-y:auto!important;margin:0!important;padding:20px!important;scrollbar-gutter:stable}}
+#parentAnnouncementsPage textarea{font:inherit;color:inherit;padding:12px;border:1px solid #c7d5e7;border-radius:10px;resize:vertical}#parentAnnouncementsPage .profile-text-row p{white-space:pre-wrap;overflow-wrap:anywhere}
