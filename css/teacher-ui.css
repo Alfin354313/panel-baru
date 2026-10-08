@@ -277,3 +277,13 @@ body.role-guru .pri{background:#087bf1!important;border-color:#087bf1!important}
  }
  body.role-guru #teacherApp{padding-bottom:48px!important}
 }
+
+/* Keep the first content card below the teacher header, including the desktop grid. */
+body.role-guru #teacherApp #teacherAttendancePage,
+body.role-guru #teacherApp #teacherNotesPage,
+body.role-guru #teacherApp #teacherReportPage{padding-top:40px!important}
+@media(max-width:899px){
+ body.role-guru #teacherApp #teacherAttendancePage,
+ body.role-guru #teacherApp #teacherNotesPage,
+ body.role-guru #teacherApp #teacherReportPage{padding-top:18px!important}
+}
