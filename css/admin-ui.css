@@ -1262,13 +1262,45 @@ body.role-admin .admin-topbar::after{
  body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{display:none!important}
 }
 
-/* Data management stays within the existing admin card layout. */
-.data-tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}
-.data-tools-grid section{padding:16px;border:1px solid var(--line,#d3e6f7);border-radius:14px}
-.data-tools-grid label{display:grid;gap:6px;margin:12px 0}
-#dataRestoreSummary{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
-#dataStatus{padding:12px;background:#eef6ff;border-radius:10px;color:#15436b}
-.data-archive-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #d3e6f7}
-.data-archive-row span{overflow-wrap:anywhere;min-width:0}
 
-#dataOperationHistory{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;max-height:220px;overflow:auto}
+/* Backup page: scoped so the other admin/teacher screens retain their layout. */
+#dataManagementPage{padding:24px!important;margin:16px!important;min-width:0}
+#dataManagementPage .data-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}
+#dataManagementPage h2{margin:4px 0 6px!important;text-align:left!important;font-size:22px!important}
+#dataManagementPage h3,#dataManagementPage h4{margin:0 0 10px;text-align:left}
+#dataManagementPage p{font-size:13px;line-height:1.6;margin:0 0 14px;color:#52708a}
+#dataManagementPage .data-page-head small,.data-tool-label{font-size:10px;font-weight:800;letter-spacing:.08em;color:#387aa9}
+#dataManagementPage .data-admin-badge{padding:7px 12px;border-radius:999px;background:#edf6ff;color:#1e6fb8;font-size:12px;white-space:nowrap}
+#dataManagementPage #dataStatus{padding:12px 16px;background:#eef6ff;border:1px solid #d3e6f7;border-radius:10px;color:#15436b}
+#dataManagementPage .data-tools-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:stretch}
+#dataManagementPage .data-tool{display:flex;flex-direction:column;min-width:0;padding:20px;border:1px solid #d3e6f7;border-radius:14px;background:#fff}
+#dataManagementPage .data-tool-label{display:block;margin-bottom:10px}
+#dataManagementPage .data-tool>h3{font-size:17px}
+#dataManagementPage .data-tool>p{min-height:42px}
+#dataManagementPage .data-tool-content{flex:1;margin-bottom:16px;min-width:0}
+#dataManagementPage label{display:grid;gap:6px;margin:0 0 12px;font-size:12px}
+#dataManagementPage input{min-height:42px;padding:9px 10px;border:1px solid #cfe1f1;border-radius:9px;background:#f7fbff;font-size:13px}
+#dataManagementPage input[type=file]{width:100%;font-size:11px;padding:7px}
+#dataManagementPage input::file-selector-button{border:0;border-radius:6px;background:#e2effb;color:#15436b;padding:6px;margin-right:6px;cursor:pointer}
+#dataManagementPage button{border:1px solid #c1d9ee;border-radius:9px;min-height:42px;padding:9px 12px;font-size:12px;background:#f6faff;color:#15436b}
+#dataManagementPage .data-tool>button{width:100%;margin-top:auto}
+#dataManagementPage button.pri{background:#167bea;color:white;border-color:#167bea}
+#dataManagementPage button:disabled{opacity:.45;cursor:not-allowed}
+#dataManagementPage ol{margin:0 0 16px;padding-left:18px;color:#52708a;font-size:13px;line-height:1.9}
+#dataManagementPage details{font-size:12px;color:#52708a}
+#dataManagementPage summary{cursor:pointer;font-weight:700;color:#1e6fb8;padding:6px 0}
+#dataManagementPage details p{margin:8px 0 0;font-size:12px}
+#dataRestoreSummary{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;max-height:180px;overflow:auto;margin:10px 0}
+#dataRestoreSummary:empty{display:none}
+#dataManagementPage .data-guide{margin:18px 0;padding:10px 14px;background:#f7fbff;border:1px solid #e1edf7;border-radius:10px}
+#dataManagementPage .data-list-head{display:flex;align-items:center;justify-content:space-between;margin:24px 0 12px;gap:12px}
+#dataManagementPage .data-list-head h3{margin:0}
+#dataManagementPage .data-lists-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#dataManagementPage .data-lists-grid section{min-width:0;padding:16px;border:1px solid #d3e6f7;border-radius:12px}
+#dataManagementPage h4{font-size:13px}
+#dataManagementPage .data-empty{font-size:12px;line-height:1.8;color:#6f879b}
+#dataOperationHistory{white-space:pre-wrap;overflow-wrap:anywhere;max-height:220px;overflow:auto}
+#dataManagementPage .data-archive-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #e3edf6}
+#dataManagementPage .data-archive-row span{overflow-wrap:anywhere;min-width:0}
+@media(max-width:1100px){#dataManagementPage .data-tools-grid{grid-template-columns:1fr}#dataManagementPage .data-tool>p{min-height:0}}
+@media(max-width:700px){#dataManagementPage{padding:16px!important;margin:10px 0!important}#dataManagementPage .data-lists-grid{grid-template-columns:1fr}#dataManagementPage .data-page-head{flex-wrap:wrap}#dataManagementPage .data-tool{padding:16px}}
