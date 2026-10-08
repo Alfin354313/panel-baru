@@ -76,4 +76,4 @@ document.getElementById("loginBtnV5").onclick=jeniusLoginSubmitV5;
 setLoginMode("admin");
 
 // Dedicated parent portal entry from the existing login screen.
-(function(){var brand=document.querySelector(".login-v5-brand");if(brand){var link=document.createElement("a");link.href="/orang-tua.html";link.textContent="Portal Orang Tua →";link.style.cssText="display:inline-block;margin-top:12px;font-size:14px;font-weight:600";brand.appendChild(link);}})();
+(function(){var modes=document.querySelector(".login-v5-modes");if(modes){var link=document.createElement("a");link.href="/orang-tua.html";link.className="login-v5-mode login-parent-link";link.textContent="Orang Tua ↗";link.setAttribute("aria-label","Buka Portal Orang Tua");modes.appendChild(link);}})();
