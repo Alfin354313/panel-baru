@@ -2,7 +2,7 @@
 
 Aktifkan dengan menyalin seluruh `supabase/parent_portal.sql` ke Supabase SQL Editor dan Run. SQL backup yang sudah dipasang tidak perlu dijalankan ulang. Migrasi ini belum dijalankan oleh Codex di database produksi.
 
-Buka `/orang-tua.html`. Admin login menggunakan akun admin, pilih data **Lita** yang benar, lalu Buat kode undangan. Jika nama Lita tidak persis sama atau ada duplikasi, periksa pilihan sebelum melanjutkan. Undangan pertama mengunci uji coba ke satu ID murid; murid kedua ditolak oleh database. Membuat kode baru membatalkan kode sebelumnya yang belum digunakan. Kode tidak dikirim otomatis.
+Admin login ke Panel Pengelola utama, buka **Murid → Lita → Undangan Orang Tua → Buat kode undangan**. Tidak perlu login Admin di Portal Orang Tua. Orang tua tetap daftar/login di `/orang-tua.html`. Jika nama Lita tidak persis sama atau ada duplikasi, periksa pilihan sebelum melanjutkan. Undangan pertama mengunci uji coba ke satu ID murid; murid kedua ditolak oleh database. Membuat kode baru membatalkan kode sebelumnya yang belum digunakan. Kode tidak dikirim otomatis.
 
 Orang tua membuka halaman yang sama, Daftar dengan email/password, konfirmasi email jika diaktifkan, lalu login dan masukkan kode. Di Supabase Authentication > URL Configuration, tambahkan URL produksi `/orang-tua.html` sebagai Redirect URL. Enable email signup dan pengiriman email harus tersedia. Admin/Guru tidak dipakai sebagai akun orang tua. Sesi portal disimpan terpisah dari panel utama.
 

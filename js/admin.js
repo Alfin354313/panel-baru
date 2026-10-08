@@ -517,6 +517,7 @@ $("adminBell").onclick=function(e){e.stopPropagation();$("adminNotificationPanel
 var activeStudentProfileId=null;
 function openStudentProfile(id){
   var m=stu(id);if(!m)return;activeStudentProfileId=id;
+  $("adminParentInviteResult").hidden=true;$("adminParentInviteCode").value="";$("adminParentInviteStatus").textContent="";
   ["dashboard","tm","tp","te","teacherMasterPage","salaryPage"].forEach(function(pid){var el=$(pid);if(el)el.hidden=true});
   $("studentProfilePage").hidden=false;$("studentProfileName").textContent=m.nama||"-";$("studentProfileMeta").textContent=(m.jenjang||"-")+" · "+(m.kelas||"-")+" · Orang tua: "+(m.ortu||"-");
   var pays=P.filter(function(x){return x.sid===id}).sort(function(x,y){return String(y.bulan).localeCompare(String(x.bulan))});
@@ -665,3 +666,26 @@ document.addEventListener("click",function(e){var more=e.target.closest(".salary
  var home=document.querySelector('#app .top-menu .tabs button[data-t="d"]');
  if(home)home.click();
 })();
+
+/* Invitations use the existing Admin session and selected student profile. */
+var parentInviteBusy=false;
+$("adminParentInviteGenerate").onclick=async function(){
+ if(parentInviteBusy||currentRole!=="admin"||!activeStudentProfileId)return;
+ var studentId=activeStudentProfileId,m=stu(studentId);if(!m)return;
+ if(!confirm("Buat undangan Orang Tua untuk "+m.nama+"? Kode lama yang belum dipakai akan dibatalkan."))return;
+ parentInviteBusy=true;this.disabled=true;
+ $("adminParentInviteResult").hidden=true;$("adminParentInviteCode").value="";
+ $("adminParentInviteStatus").textContent="Membuat undangan...";
+ try{
+  var r=await window.sb.rpc("jenius_parent_invite",{target_student:studentId});
+  if(r.error)throw r.error;
+  if(activeStudentProfileId!==studentId)return;
+  $("adminParentInviteCode").value=r.data.code;$("adminParentInviteResult").hidden=false;
+  $("adminParentInviteStatus").textContent="Kode untuk "+r.data.nama+" berhasil dibuat. Berlaku sampai "+new Date(r.data.expires_at).toLocaleString("id-ID")+".";
+ }catch(e){if(activeStudentProfileId===studentId)$("adminParentInviteStatus").textContent=String(e.message||"Gagal membuat undangan.").includes("Could not find")?"Portal belum aktif. Jalankan parent_portal.sql di Supabase terlebih dahulu.":e.message;}
+ finally{parentInviteBusy=false;this.disabled=false;}
+};
+$("adminParentInviteCopy").onclick=async function(){
+ try{await navigator.clipboard.writeText($("adminParentInviteCode").value);$("adminParentInviteStatus").textContent="Kode undangan disalin.";}
+ catch(e){$("adminParentInviteCode").focus();$("adminParentInviteCode").select();$("adminParentInviteStatus").textContent="Pilih kode lalu salin secara manual.";}
+};
