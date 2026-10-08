@@ -1261,3 +1261,14 @@ body.role-admin .admin-topbar::after{
  }
  body.role-admin #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{display:none!important}
 }
+
+/* Data management stays within the existing admin card layout. */
+.data-tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:20px}
+.data-tools-grid section{padding:16px;border:1px solid var(--line,#d3e6f7);border-radius:14px}
+.data-tools-grid label{display:grid;gap:6px;margin:12px 0}
+#dataRestoreSummary{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
+#dataStatus{padding:12px;background:#eef6ff;border-radius:10px;color:#15436b}
+.data-archive-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #d3e6f7}
+.data-archive-row span{overflow-wrap:anywhere;min-width:0}
+
+#dataOperationHistory{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;max-height:220px;overflow:auto}

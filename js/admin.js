@@ -496,8 +496,8 @@ function downloadInvoicePdf(x,no,tgl,m){
 document.querySelectorAll("#app .top-menu .tabs button").forEach(function(b){
   b.onclick=function(){
     document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
-    ["d","m","p","e","u","g","r","a"].forEach(function(k){
-      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):k==="r"?$("financialReportPage"):k==="a"?$("auditLogPage"):$("t"+k);
+    ["d","m","p","e","u","g","r","a","b"].forEach(function(k){
+      var el=k==="d"?$("dashboard"):k==="g"?$("salaryPage"):k==="u"?$("teacherMasterPage"):k==="r"?$("financialReportPage"):k==="a"?$("auditLogPage"):k==="b"?$("dataManagementPage"):$("t"+k);
       if(el)el.hidden=k!==b.dataset.t;
     });
     if(b.dataset.focus){
@@ -646,7 +646,7 @@ document.addEventListener("click",function(e){var more=e.target.closest(".salary
   e.stopPropagation();
   var opening=panel.hidden;
   if(opening){
-   ["dashboard","tm","tp","te","teacherMasterPage","salaryPage","financialReportPage","auditLogPage","studentProfilePage","teacherProfilePage"].forEach(function(id){var page=$(id);if(page)page.hidden=true});
+   ["dashboard","tm","tp","te","teacherMasterPage","salaryPage","financialReportPage","auditLogPage","dataManagementPage","studentProfilePage","teacherProfilePage"].forEach(function(id){var page=$(id);if(page)page.hidden=true});
    document.querySelectorAll("#app .top-menu .tabs button").forEach(function(x){x.classList.remove("on")});
   }else{
    var home=document.querySelector('#app .top-menu .tabs button[data-t="d"]');
