@@ -74,3 +74,6 @@ document.getElementById("loginPasswordToggleV5").onclick=function(){var p=docume
 document.getElementById("loginBtnV5").onclick=jeniusLoginSubmitV5;
 ["loginEmailV5","loginPasswordV5"].forEach(function(id){document.getElementById(id).addEventListener("keydown",function(e){if(e.key==="Enter")jeniusLoginSubmitV5()})});
 setLoginMode("admin");
+
+// Dedicated parent portal entry from the existing login screen.
+(function(){var brand=document.querySelector(".login-v5-brand");if(brand){var link=document.createElement("a");link.href="/orang-tua.html";link.textContent="Portal Orang Tua →";link.style.cssText="display:inline-block;margin-top:12px;font-size:14px;font-weight:600";brand.appendChild(link);}})();
