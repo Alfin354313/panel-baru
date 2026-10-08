@@ -1304,3 +1304,9 @@ body.role-admin .admin-topbar::after{
 #dataManagementPage .data-archive-row span{overflow-wrap:anywhere;min-width:0}
 @media(max-width:1100px){#dataManagementPage .data-tools-grid{grid-template-columns:1fr}#dataManagementPage .data-tool>p{min-height:0}}
 @media(max-width:700px){#dataManagementPage{padding:16px!important;margin:10px 0!important}#dataManagementPage .data-lists-grid{grid-template-columns:1fr}#dataManagementPage .data-page-head{flex-wrap:wrap}#dataManagementPage .data-tool{padding:16px}}
+
+/* Include the new workspace in the desktop scroll container. */
+@media(min-width:900px){
+ body.role-admin #app>#dataManagementPage{grid-column:2!important;grid-row:2!important;min-height:0!important;height:auto!important;max-height:calc(100dvh - 116px)!important;overflow-y:auto!important;overflow-x:hidden!important;scrollbar-gutter:stable!important;margin:0!important;padding:20px!important;overscroll-behavior:contain}
+}
+#dataManagementPage .data-archive-shortcut{width:100%;margin-top:8px;color:#1e6fb8;background:#fff}

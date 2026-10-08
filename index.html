@@ -14,7 +14,7 @@
 
 
   <link rel="stylesheet" href="./css/main.css?v=20261007-teacher-header-minimal">
-<link rel="stylesheet" href="./css/admin-ui.css?v=20261008-backup2">
+<link rel="stylesheet" href="./css/admin-ui.css?v=20261008-backup3">
 <link rel="stylesheet" href="./css/teacher-ui.css?v=20261008-reference1">
 </head><body>
 
@@ -198,7 +198,7 @@
 <div class="data-tools-grid">
 <section class="data-tool"><span class="data-tool-label">01 · CADANGKAN</span><h3>Backup data</h3><p>Unduh salinan data murid, pembayaran, invoice dan kegiatan guru.</p><div class="data-tool-content"><ol><li>Klik unduh backup.</li><li>Simpan file JSON di folder cadangan.</li><li>Buat cadangan sebelum perubahan besar.</li></ol><details><summary>Apa saja yang dicadangkan?</summary><p>11 tabel aplikasi yang tersedia. Akun login, password, berkas Storage, skema dan log aktivitas tidak termasuk.</p></details></div><button id="dataBackup" type="button" class="pri">Unduh backup JSON</button></section>
 <section class="data-tool"><span class="data-tool-label">02 · PULIHKAN</span><h3>Restore data</h3><p>Tambahkan kembali data yang belum ada dari file cadangan.</p><div class="data-tool-content"><label>File backup JSON<input id="dataFile" type="file" accept=".json,application/json"></label><button id="dataValidate" type="button">1. Periksa file</button><pre id="dataRestoreSummary"></pre><details><summary>Bagaimana data lama dilindungi?</summary><p>Data yang identik dilewati. Konflik ID atau relasi tidak valid membatalkan restore. Data lama tidak ditimpa.</p></details></div><button id="dataRestore" type="button" disabled>2. Restore data</button></section>
-<section class="data-tool"><span class="data-tool-label">03 · ARSIPKAN</span><h3>Arsip tahunan</h3><p>Simpan salinan transaksi satu tahun beserta data pendukung.</p><div class="data-tool-content"><label>Nama arsip<input id="dataArchiveLabel" maxlength="100" placeholder="Contoh: Arsip kalender 2025"></label><label>Tahun kalender<input id="dataArchiveYear" type="number" min="2000" max="2100"></label><p class="data-hint">Data sumber tetap tersedia di panel.</p></div><button id="dataArchiveCreate" type="button">Simpan salinan arsip</button></section>
+<section class="data-tool"><span class="data-tool-label">03 · ARSIPKAN</span><h3>Arsip tahunan</h3><p>Simpan salinan transaksi satu tahun beserta data pendukung.</p><div class="data-tool-content"><label>Nama arsip<input id="dataArchiveLabel" maxlength="100" placeholder="Contoh: Arsip kalender 2025"></label><label>Tahun kalender<input id="dataArchiveYear" type="number" min="2000" max="2100"></label><p class="data-hint">Data sumber tetap tersedia di panel.</p></div><button id="dataArchiveCreate" type="button">Simpan salinan arsip</button><button id="dataArchiveView" class="data-archive-shortcut" type="button">Lihat &amp; unduh arsip ↓</button></section>
 </div>
 <details class="data-guide"><summary>Panduan singkat penggunaan</summary><p><b>Backup</b> untuk membuat cadangan. <b>Restore</b> hanya jika perlu mengembalikan data yang hilang. <b>Arsip</b> untuk menyimpan salinan per tahun, tanpa menghapus data aktif.</p><p>File cadangan berisi informasi murid dan keuangan. Simpan di tempat aman dan jangan dibagikan secara publik.</p></details>
 <div class="data-list-head"><h3>Arsip &amp; riwayat</h3><button id="dataArchiveRefresh" type="button">↻ Muat daftar</button></div>
@@ -255,7 +255,7 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin.js?v=20261008-backup1"></script>
-<script src="./js/data-management.js?v=20261008-backup1"></script>
+<script src="./js/data-management.js?v=20261008-backup3"></script>
   <script src="./js/teacher.js?v=20261008-reference1"></script>
   <script src="./js/auth.js?v=20261006-rolefix"></script>
 <script>

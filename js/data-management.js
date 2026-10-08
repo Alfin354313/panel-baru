@@ -43,10 +43,10 @@
   if(history.error)throw new Error(history.error.message);
   el('dataOperationHistory').textContent=(history.data||[]).map(function(x){return new Date(x.created_at).toLocaleString('id-ID')+' · '+x.action+' · '+x.user_id}).join('\n')||'Belum ada aktivitas.';
   var box=el('dataArchives');box.replaceChildren();
-  if(!items.length){box.textContent='Belum ada arsip.';return}
+  if(!items.length){box.textContent='Belum ada arsip. Isi nama dan tahun, lalu klik Simpan salinan arsip. Tombol Unduh salinan akan muncul di sini.';return}
   items.forEach(function(item){
    var row=document.createElement('div'),text=document.createElement('span'),button=document.createElement('button');
-   row.className='data-archive-row';text.textContent=item.label+' · '+item.year+' · '+new Date(item.created_at).toLocaleString('id-ID');button.type='button';button.textContent='Unduh';
+   row.className='data-archive-row';text.textContent=item.label+' · '+item.year+' · '+new Date(item.created_at).toLocaleString('id-ID');button.type='button';button.textContent='Unduh salinan';
    button.onclick=function(){run(async function(){status('Menyiapkan arsip…');await download(await rpc('jenius_archive_download',{archive_id:item.id}),'Jenius-Arsip');status('Unduhan arsip disiapkan.');})};
    row.append(text,button);box.append(row);
   });
@@ -70,5 +70,7 @@
  })};
  el('dataArchiveCreate').onclick=function(){run(async function(){status('Membuat salinan arsip…');await rpc('jenius_archive',{label:el('dataArchiveLabel').value,period_year:Number(el('dataArchiveYear').value)});await list();status('Arsip tersimpan. Data sumber tetap tersedia di panel.');})};
  el('dataArchiveRefresh').onclick=function(){run(async function(){await list();status('Daftar arsip diperbarui.');})};
+ el('dataArchiveView').onclick=function(){run(async function(){await list();document.querySelector('#dataManagementPage .data-list-head').scrollIntoView({behavior:'smooth',block:'start'});})};
+ document.querySelectorAll('#app button[data-t="b"]').forEach(function(button){button.addEventListener('click',function(){run(list)})});
  el('dataArchiveYear').value=new Date().getFullYear()-1;controls();
 })();
