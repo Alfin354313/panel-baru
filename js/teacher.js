@@ -212,3 +212,6 @@ $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
 document.addEventListener("click",function(e){var b=e.target.closest("[data-quick-page]");if(!b)return;var id=b.getAttribute("data-quick-page"),menu=document.querySelector('#teacherMenu [data-teacher-page="'+id+'"]');if(menu)menu.click();});
 
 $("teacherBell").onclick=function(e){e.stopPropagation();$("teacherNotificationPanel").hidden=!$("teacherNotificationPanel").hidden};document.addEventListener("click",function(e){if(!$("teacherNotificationPanel").hidden&&!$("teacherNotificationPanel").contains(e.target))$("teacherNotificationPanel").hidden=true});
+
+/* Parent-visible fields only: internal notes remain private. */
+(function(){var field=document.querySelector('#teacherForm [name="materi"]');if(!field)return;var hint=document.createElement('p');hint.id='parentMaterialHint';hint.textContent='Tanggal pertemuan dan materi yang disimpan akan tampil di Portal Orang Tua setelah fitur diaktifkan. Metode, kesulitan, dan rencana lanjutan tetap internal.';hint.style.cssText='font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0';field.after(hint);field.setAttribute('aria-describedby','parentMaterialHint');})();
