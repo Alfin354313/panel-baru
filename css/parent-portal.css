@@ -36,3 +36,32 @@ body:has(#portalLanding:not([hidden])){background:white;color:#15436b;display:bl
 @media(max-width:800px){.landing-nav{gap:9px;padding:12px 20px}.landing-nav .landing-brand{gap:8px;font-size:18px}.landing-brand img{width:36px;height:36px}}
 @media(max-width:560px){.landing-nav{gap:6px;padding:10px 12px}.landing-nav .landing-brand{font-size:14px;gap:5px}.landing-brand img{width:29px;height:29px}.landing-nav a:not(.landing-brand){font-size:10px;padding:7px 9px;min-height:34px}}
 @media(max-width:360px){.landing-nav{gap:4px;padding:10px 8px}.landing-nav .landing-brand{font-size:12px}.landing-brand img{width:25px;height:25px}.landing-nav a:not(.landing-brand){padding:6px;font-size:9px}}
+
+/* Signed-in parent dashboard */
+body:has(#account:not([hidden])){background:#f4f7fb}
+body:has(#account:not([hidden])) main{max-width:1160px;margin:0 auto;padding:24px 28px 36px}
+.accountBar{padding:0 0 20px;border-bottom:1px solid #dce6f1;margin-bottom:24px}
+.account-brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:19px;font-weight:800;color:#17365a}
+.account-brand img{object-fit:contain}.account-brand small{display:block;font-size:11px;color:#65768c;font-weight:500;margin-top:3px}
+.account-actions{display:flex;align-items:center;gap:16px}.account-actions>span{font-size:12px;color:#65768c}
+.account-actions button{margin:0;font-size:12px;padding:10px 16px}
+.student-hero{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 28px;background:linear-gradient(110deg,#153f6d,#276898);color:white;border-radius:20px}
+.student-hero .eyebrow{color:#b5ddff;margin:0 0 8px;font-size:10px}.student-hero h1{font-size:34px;margin:0 0 8px}.student-hero #childClass{color:#d6e8f7;margin:0;font-size:13px}
+.student-welcome{max-width:310px;border-left:1px solid #ffffff35;padding-left:24px}.student-welcome b{font-size:17px}.student-welcome p{color:#d6e8f7;font-size:12px;line-height:1.7;margin:8px 0 0}
+.dashboard-nav{display:flex;gap:8px;overflow-x:auto;padding:16px 0 2px;scrollbar-width:thin}.dashboard-nav a{white-space:nowrap;text-decoration:none;color:#345577;border:1px solid #dce6f1;border-radius:10px;padding:9px 15px;background:white;font-size:12px;font-weight:650}.dashboard-nav a:hover{background:#e7f1fc}.dashboard-nav a:focus-visible{outline:3px solid #92bbed}
+#dashboard .home-summary{margin:18px 0;gap:14px}#dashboard .home-summary>div{padding:18px 20px;border-radius:15px;box-shadow:0 3px 12px #17365a04;border-top:3px solid #80b9e8}
+#dashboard .home-summary>div:nth-child(2){border-top-color:#65b5a3}#dashboard .home-summary>div:nth-child(3){border-top-color:#9d9fdf}
+#dashboard .home-summary strong{font-size:23px;margin:8px 0;color:#173f69}
+#dashboard .grid{gap:18px;align-items:start}#dashboard .card{padding:22px;margin:0 0 18px;border-radius:17px;box-shadow:0 4px 18px #17365a04;scroll-margin-top:20px}
+#dashboard h2{font-size:18px;margin:0 0 8px}#dashboard .section-caption{font-size:12px;color:#738399;margin:0 0 18px;line-height:1.6}
+#dashboard .row{font-size:13px;align-items:center;padding:13px 0}#dashboard .row small{font-size:11px;margin-top:5px}
+#dashboard .row b{border-radius:999px;padding:5px 10px;font-size:11px;white-space:nowrap;font-weight:650}
+#dashboard .paid{background:#e5f5ee;color:#24785a}#dashboard .unpaid{background:#fff2dd;color:#9e651a}#dashboard .neutral{background:#eef1f7;color:#586b83}
+#payments,#attendance{max-height:310px;overflow:auto;padding-right:4px;scrollbar-width:thin}
+#progress,#monthlyReports,#announcements,#receipts{font-size:13px;line-height:1.7;color:#526981;overflow-wrap:anywhere}
+#progress:empty,#monthlyReports:empty,#announcements:empty{min-height:40px}
+#dashboard .reportBlock{padding:14px 0}#dashboard .reportBlock:first-child{border-top:0;padding-top:0}#dashboard .reportBlock h3{font-size:14px;color:#284b70}#dashboard .reportBlock p{font-size:13px;margin:8px 0}
+#dashboard .receipt-action{padding:12px 0;font-size:13px}#dashboard .receipt-action button{font-size:12px;padding:10px 14px;margin:0}
+#dashboard #refresh{display:block;margin:4px auto 0;font-size:12px;padding:11px 18px}
+body:has(#account:not([hidden])) footer{padding:0 20px 24px;font-size:11px}
+@media(max-width:650px){body:has(#account:not([hidden])) main{padding:16px 16px 28px}.accountBar{gap:10px;margin-bottom:18px;padding-bottom:16px}.account-brand{font-size:16px;gap:8px}.account-brand img{width:33px;height:33px}.account-actions{gap:8px;flex-direction:column;align-items:flex-end}.account-actions>span{max-width:160px;font-size:10px;overflow-wrap:anywhere}.account-actions button{padding:7px 12px;font-size:11px}.student-hero{padding:22px;display:block}.student-hero h1{font-size:30px}.student-welcome{border-left:0;border-top:1px solid #ffffff30;padding:14px 0 0;margin-top:16px;max-width:none}.student-welcome b{font-size:14px}.student-welcome p{font-size:11px}.dashboard-nav{gap:6px}.dashboard-nav a{padding:8px 11px;font-size:11px}#dashboard .home-summary{grid-template-columns:1fr;gap:9px}#dashboard .home-summary>div{padding:13px 16px}#dashboard .home-summary strong{font-size:21px;margin:5px 0}#dashboard .card{padding:18px;margin-bottom:14px}#dashboard .grid{grid-template-columns:1fr;gap:0}#dashboard h2{font-size:17px}#dashboard .receipt-action{gap:10px}#dashboard .receipt-action button{font-size:11px;padding:9px 11px}}
