@@ -6,7 +6,7 @@ document.querySelectorAll("#teacherMenu button").forEach(function(b){b.onclick=f
 
 /* Teacher attendance edit/form handlers. */
 function startEditAttendance(id){
-  var x=ATT.find(function(q){return q.id===id});if(!x)return;
+  var x=ATT.find(function(q){return q.id===id});if(!x)return;setAttendanceFormOpen(true);
   editingAttendanceId=id;
   $("attendanceStudent").value=x.student_id||"";
   $("attendanceDate").value=x.tanggal||"";
@@ -35,21 +35,21 @@ $("attendanceForm").onsubmit=async function(e){
   if(r.error){alert("Absensi belum bisa disimpan. Pastikan tabel teacher_attendance sudah dibuat di Supabase.");return}
   if(editingAttendanceId){var i=ATT.findIndex(function(x){return x.id===editingAttendanceId});if(i>=0)ATT[i]=r.data}
   else ATT.unshift(r.data);
-  var wasEdit=!!editingAttendanceId;cancelEditAttendance();drawAttendance();
+  var wasEdit=!!editingAttendanceId;cancelEditAttendance();setAttendanceFormOpen(false);drawAttendance();
   alert(wasEdit?"Absensi berhasil diperbarui.":"Absensi berhasil disimpan.");
 }
 
 /* Teacher learning-notes edit/form handlers. */
-function startEditTeacher(id){var x=TN.find(function(q){return q.id===id});if(!x)return;editingTeacherId=id;$("teacherStudent").value=x.student_id||"";$("teacherDate").value=x.tanggal||"";$("teacherForm").materi.value=x.materi||"";$("teacherForm").metode.value=x.metode||"";$("teacherForm").catatan_kesulitan.value=x.catatan_kesulitan||"";$("teacherForm").rencana_lanjutan.value=x.rencana_lanjutan||"";$("teacherSubmit").textContent="Simpan Perubahan";$("teacherCancel").hidden=false;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.add("teacher-editing")});$("teacherForm").scrollIntoView({behavior:"smooth",block:"start"})}
+function startEditTeacher(id){var x=TN.find(function(q){return q.id===id});if(!x)return;setTeacherFormOpen(true);editingTeacherId=id;$("teacherStudent").value=x.student_id||"";$("teacherDate").value=x.tanggal||"";$("teacherForm").materi.value=x.materi||"";$("teacherForm").metode.value=x.metode||"";$("teacherForm").catatan_kesulitan.value=x.catatan_kesulitan||"";$("teacherForm").rencana_lanjutan.value=x.rencana_lanjutan||"";$("teacherSubmit").textContent="Simpan Perubahan";$("teacherCancel").hidden=false;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.add("teacher-editing")});$("teacherForm").scrollIntoView({behavior:"smooth",block:"start"})}
 function cancelEditTeacher(){editingTeacherId=null;$("teacherForm").reset();teacherDateToday();$("teacherSubmit").textContent="Simpan Catatan";$("teacherCancel").hidden=true;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.remove("teacher-editing")})}
 $("teacherCancel").onclick=cancelEditTeacher;
-$("teacherForm").onsubmit=async function(e){e.preventDefault();var o=fd(e.target);var payload={student_id:o.student_id,tanggal:o.tanggal,materi:o.materi,metode:o.metode,catatan_kesulitan:o.catatan_kesulitan||"",rencana_lanjutan:o.rencana_lanjutan||""};var r;if(editingTeacherId){r=await window.sb.from("teacher_notes").update(payload).eq("id",editingTeacherId).eq("teacher_id",currentUser.id).select().single()}else{r=await window.sb.from("teacher_notes").insert(Object.assign({teacher_id:currentUser.id},payload)).select().single()}if(r.error){alert((editingTeacherId?"Gagal memperbarui":"Gagal menyimpan")+" catatan: "+r.error.message);return}if(editingTeacherId){var i=TN.findIndex(function(x){return x.id===editingTeacherId});if(i>=0)TN[i]=r.data}else{TN.unshift(r.data)}var wasEdit=!!editingTeacherId;cancelEditTeacher();drawTeacher();alert(wasEdit?"Catatan pembelajaran berhasil diperbarui.":"Catatan pembelajaran berhasil disimpan.")};
+$("teacherForm").onsubmit=async function(e){e.preventDefault();var o=fd(e.target);var payload={student_id:o.student_id,tanggal:o.tanggal,materi:o.materi,metode:o.metode,catatan_kesulitan:o.catatan_kesulitan||"",rencana_lanjutan:o.rencana_lanjutan||""};var r;if(editingTeacherId){r=await window.sb.from("teacher_notes").update(payload).eq("id",editingTeacherId).eq("teacher_id",currentUser.id).select().single()}else{r=await window.sb.from("teacher_notes").insert(Object.assign({teacher_id:currentUser.id},payload)).select().single()}if(r.error){alert((editingTeacherId?"Gagal memperbarui":"Gagal menyimpan")+" catatan: "+r.error.message);return}if(editingTeacherId){var i=TN.findIndex(function(x){return x.id===editingTeacherId});if(i>=0)TN[i]=r.data}else{TN.unshift(r.data)}var wasEdit=!!editingTeacherId;cancelEditTeacher();setTeacherFormOpen(false);drawTeacher();alert(wasEdit?"Catatan pembelajaran berhasil diperbarui.":"Catatan pembelajaran berhasil disimpan.")};
 
 /* Teacher monthly-report edit/form handlers. */
-function startEditReport(id){var x=RPT.find(function(q){return q.id===id});if(!x)return;editingReportId=id;$("reportStudent").value=x.student_id;$("reportMonth").value=x.bulan;$("reportAchievement").value=x.pencapaian||"";$("reportNote").value=x.catatan||"";$("reportRecommendation").value=x.rekomendasi||"";$("reportSave").textContent="Simpan Perubahan";$("reportCancel").hidden=false;refreshReportPreview();$("reportForm").scrollIntoView({behavior:"smooth",block:"start"})}
+function startEditReport(id){var x=RPT.find(function(q){return q.id===id});if(!x)return;setReportFormOpen(true);editingReportId=id;$("reportStudent").value=x.student_id;$("reportMonth").value=x.bulan;$("reportAchievement").value=x.pencapaian||"";$("reportNote").value=x.catatan||"";$("reportRecommendation").value=x.rekomendasi||"";$("reportSave").textContent="Simpan Perubahan";$("reportCancel").hidden=false;refreshReportPreview();$("reportForm").scrollIntoView({behavior:"smooth",block:"start"})}
 function cancelEditReport(){editingReportId=null;$("reportForm").reset();$("reportMonth").value=thisM;$("reportSave").textContent="Simpan Laporan";$("reportCancel").hidden=true;refreshReportPreview()}
 $("reportCancel").onclick=cancelEditReport;
-$("reportForm").onsubmit=async function(e){e.preventDefault();if(!currentUser)return;var o=fd(e.target);var payload={teacher_id:currentUser.id,student_id:o.student_id,bulan:o.bulan,pencapaian:o.pencapaian||"",catatan:o.catatan||"",rekomendasi:o.rekomendasi||""};var r=editingReportId?await window.sb.from("teacher_reports").update(payload).eq("id",editingReportId).eq("teacher_id",currentUser.id).select().single():await window.sb.from("teacher_reports").insert(payload).select().single();if(r.error){alert("Laporan belum bisa disimpan. Pastikan tabel teacher_reports sudah dibuat di Supabase.");return}if(editingReportId){var i=RPT.findIndex(function(x){return x.id===editingReportId});if(i>=0)RPT[i]=r.data}else{RPT.unshift(r.data)}var wasEdit=!!editingReportId;cancelEditReport();drawReports();alert(wasEdit?"Laporan berhasil diperbarui.":"Laporan berhasil disimpan.")}
+$("reportForm").onsubmit=async function(e){e.preventDefault();if(!currentUser)return;var o=fd(e.target);var payload={teacher_id:currentUser.id,student_id:o.student_id,bulan:o.bulan,pencapaian:o.pencapaian||"",catatan:o.catatan||"",rekomendasi:o.rekomendasi||""};var r=editingReportId?await window.sb.from("teacher_reports").update(payload).eq("id",editingReportId).eq("teacher_id",currentUser.id).select().single():await window.sb.from("teacher_reports").insert(payload).select().single();if(r.error){alert("Laporan belum bisa disimpan. Pastikan tabel teacher_reports sudah dibuat di Supabase.");return}if(editingReportId){var i=RPT.findIndex(function(x){return x.id===editingReportId});if(i>=0)RPT[i]=r.data}else{RPT.unshift(r.data)}var wasEdit=!!editingReportId;cancelEditReport();setReportFormOpen(false);drawReports();alert(wasEdit?"Laporan berhasil diperbarui.":"Laporan berhasil disimpan.")}
 
 /* Teacher data loading and core rendering. */
 async function dbLoadTeacher(){
@@ -212,3 +212,15 @@ $("exportTeacherBtn").onclick=function(){exportTeacherExcel()};
 document.addEventListener("click",function(e){var b=e.target.closest("[data-quick-page]");if(!b)return;var id=b.getAttribute("data-quick-page"),menu=document.querySelector('#teacherMenu [data-teacher-page="'+id+'"]');if(menu)menu.click();});
 
 $("teacherBell").onclick=function(e){e.stopPropagation();$("teacherNotificationPanel").hidden=!$("teacherNotificationPanel").hidden};document.addEventListener("click",function(e){if(!$("teacherNotificationPanel").hidden&&!$("teacherNotificationPanel").contains(e.target))$("teacherNotificationPanel").hidden=true});
+
+/* Parent-visible fields only: internal notes remain private. */
+(function(){var field=document.querySelector('#teacherForm [name="materi"]');if(!field)return;var hint=document.createElement('p');hint.id='parentMaterialHint';hint.textContent='Tanggal pertemuan dan materi yang disimpan akan tampil di Portal Orang Tua setelah fitur diaktifkan. Metode, kesulitan, dan rencana lanjutan tetap internal.';hint.style.cssText='font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0';field.after(hint);field.setAttribute('aria-describedby','parentMaterialHint');})();
+
+function setTeacherFormOpen(open){$("teacherForm").hidden=!open;$("teacherFormToggle").setAttribute("aria-expanded",String(open));$("teacherFormToggle").textContent="+ Simpan Catatan";}
+$("teacherFormToggle").onclick=function(){setTeacherFormOpen($("teacherForm").hidden);};
+
+function setAttendanceFormOpen(open){$("attendanceForm").hidden=!open;$("attendanceFormToggle").setAttribute("aria-expanded",String(open));}
+$("attendanceFormToggle").onclick=function(){setAttendanceFormOpen($("attendanceForm").hidden);};
+
+function setReportFormOpen(open){$("reportForm").hidden=!open;$("reportPreview").hidden=!open;$("reportFormToggle").setAttribute("aria-expanded",String(open));}
+$("reportFormToggle").onclick=function(){setReportFormOpen($("reportForm").hidden);};
