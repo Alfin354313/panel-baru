@@ -6,7 +6,7 @@ document.querySelectorAll("#teacherMenu button").forEach(function(b){b.onclick=f
 
 /* Teacher attendance edit/form handlers. */
 function startEditAttendance(id){
-  var x=ATT.find(function(q){return q.id===id});if(!x)return;
+  var x=ATT.find(function(q){return q.id===id});if(!x)return;setAttendanceFormOpen(true);
   editingAttendanceId=id;
   $("attendanceStudent").value=x.student_id||"";
   $("attendanceDate").value=x.tanggal||"";
@@ -35,7 +35,7 @@ $("attendanceForm").onsubmit=async function(e){
   if(r.error){alert("Absensi belum bisa disimpan. Pastikan tabel teacher_attendance sudah dibuat di Supabase.");return}
   if(editingAttendanceId){var i=ATT.findIndex(function(x){return x.id===editingAttendanceId});if(i>=0)ATT[i]=r.data}
   else ATT.unshift(r.data);
-  var wasEdit=!!editingAttendanceId;cancelEditAttendance();drawAttendance();
+  var wasEdit=!!editingAttendanceId;cancelEditAttendance();setAttendanceFormOpen(false);drawAttendance();
   alert(wasEdit?"Absensi berhasil diperbarui.":"Absensi berhasil disimpan.");
 }
 
@@ -218,3 +218,6 @@ $("teacherBell").onclick=function(e){e.stopPropagation();$("teacherNotificationP
 
 function setTeacherFormOpen(open){$("teacherForm").hidden=!open;$("teacherFormToggle").setAttribute("aria-expanded",String(open));$("teacherFormToggle").textContent="+ Simpan Catatan";}
 $("teacherFormToggle").onclick=function(){setTeacherFormOpen($("teacherForm").hidden);};
+
+function setAttendanceFormOpen(open){$("attendanceForm").hidden=!open;$("attendanceFormToggle").setAttribute("aria-expanded",String(open));}
+$("attendanceFormToggle").onclick=function(){setAttendanceFormOpen($("attendanceForm").hidden);};
