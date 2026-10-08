@@ -13,3 +13,6 @@ Belum ada penghapusan hubungan/revokasi melalui UI. Jika uji coba perlu dihentik
 Backup aplikasi versi sebelumnya belum mencakup tabel `parent_pilot`, `parent_links`, dan `parent_invites`; gunakan backup database untuk hubungan portal. Setelah uji coba, integrasikan tabel hubungan ke alur backup/restore dan tambahkan pengaturan/revokasi akses sebelum memperluas ke semua murid.
 
 Validasi lokal: `PGLITE_MODULE=/tmp/jenius-db-test/node_modules/@electric-sql/pglite node tests/parent-portal.cjs`. Tes database membuktikan pembatasan pilot, akses hubungan, proyeksi data dan penolakan undangan invalid/expired/replayed. Login email, data Lita produksi, dan UX browser perlu dicoba setelah migrasi oleh pemilik database.
+
+## Perkembangan, laporan, dan pengumuman
+Jalankan `supabase/parent_updates.sql` setelah migrasi portal awal. Guru membuka Laporan, memeriksa pencapaian/catatan/rekomendasi, lalu Publikasikan ke Orang Tua. Portal menampilkan salinan eksplisit; perubahan berikutnya harus dipublikasikan ulang. Tarik dari Portal menghentikan tampilan laporan. Catatan Mengajar internal tidak dibagikan otomatis. Admin membuat/menghapus pengumuman umum melalui detail murid. Laporan bisa dicetak dan disimpan sebagai PDF melalui browser. Tidak ada jadwal belajar. Data publikasi dan pengumuman belum termasuk backup aplikasi lama.
