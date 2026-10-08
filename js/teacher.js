@@ -216,5 +216,5 @@ $("teacherBell").onclick=function(e){e.stopPropagation();$("teacherNotificationP
 /* Parent-visible fields only: internal notes remain private. */
 (function(){var field=document.querySelector('#teacherForm [name="materi"]');if(!field)return;var hint=document.createElement('p');hint.id='parentMaterialHint';hint.textContent='Tanggal pertemuan dan materi yang disimpan akan tampil di Portal Orang Tua setelah fitur diaktifkan. Metode, kesulitan, dan rencana lanjutan tetap internal.';hint.style.cssText='font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0';field.after(hint);field.setAttribute('aria-describedby','parentMaterialHint');})();
 
-function setTeacherFormOpen(open){$("teacherForm").hidden=!open;$("teacherFormToggle").setAttribute("aria-expanded",String(open));$("teacherFormToggle").textContent=open?"− Tutup Form":"+ Simpan Catatan";}
+function setTeacherFormOpen(open){$("teacherForm").hidden=!open;$("teacherFormToggle").setAttribute("aria-expanded",String(open));$("teacherFormToggle").textContent="+ Simpan Catatan";}
 $("teacherFormToggle").onclick=function(){setTeacherFormOpen($("teacherForm").hidden);};
