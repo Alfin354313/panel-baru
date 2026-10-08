@@ -1581,3 +1581,10 @@ html{scroll-behavior:smooth}body{background:linear-gradient(180deg,#f5f9fc 0,#ed
   flex:0 0 auto!important;width:auto!important;margin-top:0!important
  }
 }
+
+/* Parent portal entry matches Admin/Guru login choices. */
+.login-v5-modes:has(.login-parent-link){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+.login-v5-modes .login-parent-link{display:flex!important;align-items:center;justify-content:center;text-align:center;text-decoration:none!important;color:#15436b!important;border-radius:10px;padding:10px 5px!important;font:inherit;font-size:12px;font-weight:750;min-width:0}
+.login-v5-modes .login-parent-link:hover{background:#d3e6f7}
+.login-v5-modes .login-parent-link:focus-visible{outline:3px solid #1e6fb8;outline-offset:2px}
+@media(max-width:380px){.login-v5-modes:has(.login-parent-link)>*{font-size:11px!important;padding-left:3px!important;padding-right:3px!important}}
