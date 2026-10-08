@@ -66,7 +66,19 @@
   status('Membuat backup sebelum restore…');await download(await rpc('jenius_backup'),'Jenius-Sebelum-Restore');
   var result=await rpc('jenius_restore',{payload:pending,dry_run:false});summary(result);pending=null;
   status('Restore berhasil. Memuat ulang data panel…');
-  try{await dbLoad();draw();status('Restore berhasil dan data panel diperbarui.')}catch(e){status('Restore berhasil, tetapi panel gagal dimuat ulang: '+e.message+'. Muat ulang halaman.');}
+  try{
+   await dbLoad();draw();
+   el('dataFile').value='';el('dataRestoreSummary').textContent='';
+   el('dataManagementPage').querySelectorAll('details').forEach(function(item){item.open=false});
+   el('dataManagementPage').scrollTop=0;
+   status('Restore berhasil dan data panel diperbarui.');
+   setSync('Restore berhasil · Tersimpan online');
+   var dashboard=document.querySelector('#app .top-menu .tabs button[data-t="d"]');
+   if(dashboard)dashboard.click();
+  }catch(e){
+   setSync('Restore berhasil · Muat ulang panel');
+   status('Restore berhasil, tetapi panel gagal dimuat ulang: '+e.message+'. Muat ulang halaman.');
+  }
  })};
  el('dataArchiveCreate').onclick=function(){run(async function(){status('Membuat salinan arsip…');await rpc('jenius_archive',{label:el('dataArchiveLabel').value,period_year:Number(el('dataArchiveYear').value)});await list();status('Arsip tersimpan. Data sumber tetap tersedia di panel.');})};
  el('dataArchiveRefresh').onclick=function(){run(async function(){await list();status('Daftar arsip diperbarui.');})};
