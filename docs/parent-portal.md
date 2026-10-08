@@ -16,3 +16,8 @@ Validasi lokal: `PGLITE_MODULE=/tmp/jenius-db-test/node_modules/@electric-sql/pg
 
 ## Perkembangan, laporan, dan pengumuman
 Jalankan `supabase/parent_updates.sql` setelah migrasi portal awal. Guru membuka Laporan, memeriksa pencapaian/catatan/rekomendasi, lalu Publikasikan ke Orang Tua. Portal menampilkan salinan eksplisit; perubahan berikutnya harus dipublikasikan ulang. Tarik dari Portal menghentikan tampilan laporan. Catatan Mengajar internal tidak dibagikan otomatis. Admin membuat/menghapus pengumuman umum melalui menu Pengumuman di bawah Backup & Arsip. Laporan bisa dicetak dan disimpan sebagai PDF melalui browser. Tidak ada jadwal belajar. Data publikasi dan pengumuman belum termasuk backup aplikasi lama.
+
+## Ringkasan, pemulihan password, dan kuitansi
+Jalankan `supabase/parent_home.sql` setelah migrasi portal awal. Total tunggakan memakai seluruh catatan pembayaran belum lunas, tidak hanya daftar 24 baris. Absensi dihitung bulan kalender zona Asia/Bangkok. Kuitansi dibaca ulang dari server dan hanya untuk pembayaran Lunas milik anak terhubung. Nomor invoice ditampilkan jika tersedia; tanggal pembayaran tidak dibuat-buat bila belum dicatat. Cetak/Simpan PDF menggunakan browser.
+
+Lupa password: isi email di form login lalu tekan Lupa password. Tambahkan URL preview `/orang-tua.html?recovery=1` ke Supabase Redirect URLs; setelah merge tambahkan juga URL produksi yang sama. Email dikirim oleh Supabase, bukan Codex. Klik tautan email untuk membuka form password baru, isi dan ulangi password, lalu login kembali. Tautan tidak valid/expired menampilkan pesan, tidak mengirim password ke pihak lain. Pengiriman email, callback valid/expired dan cetak browser tetap perlu uji manual.
