@@ -1336,3 +1336,25 @@ body.role-admin .admin-topbar::after{
 #parentAnnouncementList .announcement-item p{font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0 0;color:#526981}
 @media(max-width:1000px){#parentAnnouncementsPage .announcement-workspace{grid-template-columns:1fr}}
 @media(max-width:650px){#parentAnnouncementsPage .announcement-workspace{gap:14px;margin-top:16px}#parentAnnouncementsPage .announcement-workspace>.card{padding:18px!important}#parentAnnouncementList{max-height:380px}}
+
+/* Scoped announcement layout: keep global form and button rules out. */
+#parentAnnouncementsPage #parentAnnouncementForm{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:16px;width:100%;min-width:0}
+#parentAnnouncementsPage #parentAnnouncementForm>label{display:flex;flex-direction:column;gap:8px;width:100%;min-width:0;margin:0!important;grid-column:1!important;text-align:left}
+#parentAnnouncementsPage #parentAnnouncementForm input:not([type=checkbox]),#parentAnnouncementsPage #parentAnnouncementForm textarea{width:100%;min-width:0;box-sizing:border-box;margin:0}
+#parentAnnouncementsPage #parentAnnouncementForm textarea{min-height:112px;resize:vertical}
+#parentAnnouncementsPage #parentAnnouncementForm .announcement-email-option{flex-direction:row;align-items:flex-start;padding:12px;box-sizing:border-box;border-radius:10px;background:#f2f7fc;line-height:1.6;font-size:12px}
+#parentAnnouncementsPage #announcementSendEmail{flex:0 0 auto;margin:3px 0 0}
+#parentAnnouncementsPage .announcement-submit{margin:0}
+#parentAnnouncementsPage .announcement-submit button{margin:0;max-width:100%}
+#parentAnnouncementList .announcement-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;border-top:1px solid #e1eaf3;padding-top:14px;margin-top:16px}
+#parentAnnouncementList .announcement-action{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:9px 14px;box-sizing:border-box;border:1px solid #cbdcec;border-radius:10px;font-family:inherit;font-size:12px;font-weight:600;line-height:1.4;text-decoration:none;margin:0;white-space:nowrap;cursor:pointer}
+#parentAnnouncementList .announcement-email{background:#edf5ff;color:#174f86;border-color:#bfd6ee}
+#parentAnnouncementList .announcement-whatsapp{background:#edf9f1;color:#226943;border-color:#c5e4d0}
+#parentAnnouncementList .announcement-action:hover{filter:brightness(.97)}
+#parentAnnouncementList .announcement-action:focus-visible{outline:3px solid #8dbbec;outline-offset:2px}
+#parentAnnouncementList .announcement-action:disabled{opacity:.6;cursor:wait}
+#parentAnnouncementList .announcement-poster-link{display:block;width:fit-content;max-width:100%;margin:14px auto 0}
+#parentAnnouncementList .announcement-poster{display:block;width:auto;height:auto;max-width:100%;max-height:180px;object-fit:contain;border-radius:8px}
+#parentAnnouncementsPage #parentAnnouncementImagePreview{max-height:180px!important}
+#parentAnnouncementsPage #parentAnnouncementStatus{font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+@media(max-width:650px){#parentAnnouncementList .announcement-actions{justify-content:stretch}#parentAnnouncementList .announcement-action{flex:1 1 140px}#parentAnnouncementsPage .announcement-submit button{width:100%}}
