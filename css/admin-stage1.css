@@ -1,0 +1,82 @@
+/* Admin-only reference layout. Loaded after previous UI styles. */
+body.role-admin{background:linear-gradient(135deg,#e4f1ff,#f7fbff)!important}
+body.role-admin #dashboard[hidden]{display:none!important}
+body.role-admin #dashboard{display:flex!important;flex-direction:column;gap:16px!important;padding:12px 10px 20px}
+body.role-admin .stage1-summary{background:transparent!important;padding:0!important;border:0!important}
+body.role-admin .stage1-actions{display:flex;align-items:center;gap:12px}
+body.role-admin .admin-dashboard-welcome{padding:4px 0 18px!important}
+body.role-admin .admin-dashboard-welcome h2{font-size:1.7rem!important;letter-spacing:-.035em}
+body.role-admin .admin-dashboard-welcome p{display:block!important;margin-top:7px;font-size:.82rem}
+body.role-admin .admin-eyebrow{display:none!important}
+body.role-admin #dashboard .dashboard-kpi-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+body.role-admin #dashboard .dashboard-card{min-height:108px!important;padding:18px 14px 16px 74px!important;position:relative;border:1px solid #dfebf9!important;border-radius:14px!important;overflow:visible!important}
+body.role-admin #dashboard .dashboard-card .kpi-icon{position:absolute;top:16px;left:14px;width:46px;height:46px;display:grid;place-items:center;background:#e0efff;color:#1688ff}
+body.role-admin #dashboard .dashboard-card small{font-size:.76rem!important}
+body.role-admin #dashboard .dashboard-card b{font-size:1.5rem!important;overflow-wrap:anywhere}
+body.role-admin #dashboard .kpi-caption{font-size:.7rem!important;font-weight:400;line-height:1.4;margin-top:7px!important}
+body.role-admin #dashboard .kpi-expense{background:#fff6f8!important}
+body.role-admin #dashboard .kpi-expense b{color:#ef4451!important}
+body.role-admin #dashboard .kpi-expense .kpi-icon{background:#ffe2e7;color:#ef4451}
+body.role-admin #dashboard .kpi-income .kpi-icon,body.role-admin #dashboard .kpi-profit .kpi-icon{background:#dcf7ec;color:#009f69}
+body.role-admin .stage1-extra{margin-top:12px;color:#57738e;font-size:.76rem}
+body.role-admin .stage1-extra summary{cursor:pointer;padding:5px 0}
+body.role-admin .stage1-extra-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+body.role-admin .stage1-chart-row{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px}
+body.role-admin .stage1-lower{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px;align-items:start}
+body.role-admin .stage1-side{display:grid;gap:14px}
+body.role-admin #dashboard .dashboard-section{margin:0!important;border:1px solid #e0ebf6!important;border-radius:16px!important;padding:18px!important;min-width:0}
+body.role-admin #dashboard .dashboard-head h2{font-size:1.1rem!important}
+body.role-admin #dashboard .finance-chart{height:auto!important;border:0;background:transparent!important;padding:0}
+body.role-admin .finance-chart svg{display:block;width:100%;height:auto;min-height:180px}
+body.role-admin .finance-chart text{font:10px sans-serif;fill:#607a9d}
+body.role-admin .stage1-attendance{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+body.role-admin .stage1-attendance .attendance-compact-head{grid-column:1/-1;margin:0}
+body.role-admin .stage1-attendance .attendance-compact-head b{font-size:1.1rem;color:#092f68}
+body.role-admin .stage1-attendance .attendance-compact-head small{display:none}
+body.role-admin .stage1-ring{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#eaf1f8;width:100%;max-width:170px}
+body.role-admin .stage1-ring>div{background:#fff;width:64%;height:64%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+body.role-admin .stage1-ring b{font-size:1.5rem;color:#092f68}
+body.role-admin .stage1-ring span{font-size:.75rem;color:#647da0}
+body.role-admin .stage1-attendance .attendance-compact-grid{display:flex!important;flex-direction:column;gap:10px}
+body.role-admin .stage1-attendance .attendance-compact-grid>div{display:flex!important;align-items:center;gap:7px;border:0!important;background:none!important;padding:4px 0!important;border-bottom:1px solid #edf3fa!important}
+body.role-admin .stage1-attendance .attendance-compact-grid b{margin-left:auto}
+body.role-admin .stage1-attendance .attendance-icon{width:12px;height:12px;font-size:0;border-radius:50%;background:#1688ff}
+body.role-admin .stage1-attendance .attendance-icon.izin{background:#ffa21a}
+body.role-admin .stage1-attendance .attendance-icon.sakit{background:#ef4451}
+body.role-admin .stage1-attendance .attendance-icon.absen{background:#8428f5}
+body.role-admin .stage1-link{border:0;background:none;color:#087bf1;padding:0;font-size:.72rem;white-space:nowrap}
+body.role-admin .stage1-feed{font-size:.8rem;line-height:1.5;color:#647d99}
+body.role-admin .stage1-payment{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #eaf1fa;flex-wrap:wrap}
+body.role-admin .stage1-payment>div{flex:1;min-width:70px}
+body.role-admin .stage1-payment small{display:block;margin-top:4px}
+body.role-admin .stage1-payment b,body.role-admin .stage1-payment strong{color:#092f68}
+body.role-admin .stage1-announcement{padding:14px;background:#f0f7ff;border-radius:12px;margin-top:8px}
+body.role-admin .stage1-announcement b{color:#092f68}
+body.role-admin .stage1-announcement p{margin:6px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
+body.role-admin .stage1-brand{display:flex;align-items:center;gap:10px;padding:0 5px 24px;color:white}
+body.role-admin .stage1-brand img{width:48px;height:48px}
+body.role-admin .stage1-brand b{font-size:1.1rem}
+body.role-admin .stage1-brand small{display:block;margin-top:5px;color:#bcd7ef;font-size:.72rem}
+body.role-admin #app>.admin-sidebar:before{display:none!important}
+@media(min-width:900px){body.role-admin #app{grid-template-columns:210px minmax(0,1fr)!important;max-width:1480px!important}body.role-admin #app>.admin-sidebar .tabs button{display:flex!important;align-items:center;gap:12px;min-height:48px!important}body.role-admin #app>.admin-sidebar .menu-icon{width:22px;height:22px;flex-shrink:0}body.role-admin #app>header{margin:0!important;border-radius:0 18px 18px 18px!important;padding:18px 24px!important}}
+@media(max-width:1150px){body.role-admin #dashboard .dashboard-card{padding:14px!important}body.role-admin #dashboard .dashboard-card .kpi-icon{position:static;width:34px;height:34px;margin-bottom:10px}body.role-admin .stage1-actions{gap:6px}body.role-admin .stage1-actions button{font-size:.75rem}body.role-admin .admin-dashboard-welcome h2{font-size:1.4rem!important}}
+@media(max-width:899px){body.role-admin #dashboard{padding:4px 0 12px}body.role-admin .stage1-brand{display:none}body.role-admin .stage1-chart-row,body.role-admin .stage1-lower{grid-template-columns:1fr}body.role-admin #dashboard .dashboard-kpi-grid,body.role-admin .stage1-extra-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.role-admin .admin-dashboard-welcome{flex-direction:column!important;align-items:flex-start!important;gap:12px}body.role-admin .admin-dashboard-welcome p{display:none!important}body.role-admin .stage1-actions{width:100%;justify-content:space-between}body.role-admin .stage1-actions .dashboard-filter{width:auto!important}body.role-admin .stage1-actions input{width:145px!important}body.role-admin #dashboard .dashboard-card b{font-size:1.3rem!important}body.role-admin #app #logoutBtn{display:inline-flex!important;padding:8px!important;min-width:0!important;font-size:.72rem!important}body.role-admin #app>header>div:last-child{flex-wrap:nowrap!important;gap:6px!important}body.role-admin #app{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}body.role-admin .stage1-attendance{grid-template-columns:minmax(120px,1fr) 1fr}body.role-admin #dashboard table{min-width:580px!important}body.role-admin .stage1-extra .dashboard-ratio-grid{grid-template-columns:1fr!important}}
+body.role-admin #app #dashboard>.stage1-summary{display:block!important;grid-template-areas:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid{grid-template-rows:auto!important;margin:0!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{display:block!important;height:auto!important;min-height:108px!important;padding:18px 14px 16px 74px!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card:before,body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card:after{display:none!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{left:14px!important;right:auto!important;top:18px!important;transform:none!important;width:46px!important;height:46px!important;min-width:0!important;padding:8px!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-caption{display:block!important;font-size:.7rem!important;line-height:1.4!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid small{font-size:.76rem!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid b{font-size:1.5rem!important;white-space:normal!important;line-height:1.2!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome{justify-content:space-between!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome>div:first-child{padding:0!important;margin:0!important;text-align:left!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome .dashboard-filter{position:static!important;transform:none!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-compact-grid{display:flex!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon{width:10px!important;height:10px!important;border-radius:50%!important;font-size:0!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.hadir{background:#1688ff!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.izin{background:#ffa21a!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.sakit{background:#ef4451!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.absen{background:#8428f5!important}
+@media(max-width:1150px){body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{padding:14px!important}body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{position:static!important;width:34px!important;height:34px!important;margin-bottom:8px!important}body.role-admin #app #dashboard .dashboard-kpi-grid b{font-size:1.2rem!important}}
+@media(max-width:899px){body.role-admin #app #dashboard .dashboard-students{display:block!important}body.role-admin #app #dashboard .dashboard-students table{display:table!important}body.role-admin #app #dashboard .dashboard-students thead{display:table-header-group!important}body.role-admin #app #dashboard .dashboard-students tbody{display:table-row-group!important}body.role-admin #app #dashboard .dashboard-students tr{display:table-row!important}body.role-admin #app #dashboard .dashboard-students td,body.role-admin #app #dashboard .dashboard-students th{display:table-cell!important}body.role-admin #app #dashboard .stage1-extra{order:3!important}}
