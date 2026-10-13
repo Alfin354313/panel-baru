@@ -194,3 +194,6 @@ body.role-guru #teacherApp #teacherForm input,body.role-guru #teacherApp #teache
 body.role-guru #teacherApp .notes-character-count{margin:1px 0 0!important;line-height:1.25!important}
 body.role-guru #teacherApp #parentMaterialHint{padding:6px 10px!important;margin-top:4px!important}
 body.role-guru #teacherApp .notes-entry-card{padding:16px!important}
+
+body.role-guru #teacherApp #parentMaterialHint{display:flex;align-items:flex-start;gap:8px}
+body.role-guru #teacherApp .notes-info-icon{display:inline-flex;align-items:center;justify-content:center;flex:0 0 16px;width:16px;height:16px;margin-top:1px;border-radius:50%;background:#087bfa;color:#fff;font:700 12px/1 Arial,sans-serif}
