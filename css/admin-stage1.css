@@ -80,3 +80,32 @@ body.role-admin #app #dashboard .stage1-attendance .attendance-icon.sakit{backgr
 body.role-admin #app #dashboard .stage1-attendance .attendance-icon.absen{background:#8428f5!important}
 @media(max-width:1150px){body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{padding:14px!important}body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{position:static!important;width:34px!important;height:34px!important;margin-bottom:8px!important}body.role-admin #app #dashboard .dashboard-kpi-grid b{font-size:1.2rem!important}}
 @media(max-width:899px){body.role-admin #app #dashboard .dashboard-students{display:block!important}body.role-admin #app #dashboard .dashboard-students table{display:table!important}body.role-admin #app #dashboard .dashboard-students thead{display:table-header-group!important}body.role-admin #app #dashboard .dashboard-students tbody{display:table-row-group!important}body.role-admin #app #dashboard .dashboard-students tr{display:table-row!important}body.role-admin #app #dashboard .dashboard-students td,body.role-admin #app #dashboard .dashboard-students th{display:table-cell!important}body.role-admin #app #dashboard .stage1-extra{order:3!important}}
+
+/* Fill the available dashboard width; reset legacy grid/flex placement. */
+body.role-admin #app #dashboard{width:auto!important;max-width:none!important;min-width:0!important;align-items:stretch!important;justify-items:stretch!important;box-sizing:border-box!important}
+body.role-admin #app #dashboard>.stage1-summary,
+body.role-admin #app #dashboard>.stage1-chart-row,
+body.role-admin #app #dashboard>.stage1-lower{width:100%!important;max-width:none!important;min-width:0!important;align-self:stretch!important;box-sizing:border-box!important;grid-column:auto!important;grid-area:auto!important}
+body.role-admin #app #dashboard>.stage1-chart-row,
+body.role-admin #app #dashboard>.stage1-lower{display:grid!important;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)!important;gap:16px!important}
+body.role-admin #app #dashboard .stage1-chart,
+body.role-admin #app #dashboard .stage1-attendance,
+body.role-admin #app #dashboard .dashboard-students,
+body.role-admin #app #dashboard .stage1-side,
+body.role-admin #app #dashboard .stage1-side>.dashboard-section{width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important;box-sizing:border-box!important;grid-area:auto!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome{display:flex!important;width:100%!important;justify-content:space-between!important;text-align:left!important;gap:16px!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome h2{text-align:left!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;width:100%!important;max-width:none!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{min-width:0!important;width:100%!important}
+body.role-admin #app #dashboard .dashboard-students .tw{width:100%!important;max-width:100%!important}
+body.role-admin #app #dashboard .dashboard-students table{width:100%!important;min-width:0!important}
+body.role-admin #app #dashboard .stage1-chart .finance-chart{width:100%!important;max-width:none!important}
+body.role-admin #app #dashboard .stage1-chart svg{width:100%!important;max-width:none!important}
+@media(max-width:1100px) and (min-width:900px){body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{padding:14px!important}body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{position:static!important;margin-bottom:8px!important}}
+@media(max-width:899px){
+ body.role-admin #app #dashboard{width:100%!important;margin:0!important}
+ body.role-admin #app #dashboard>.stage1-chart-row,body.role-admin #app #dashboard>.stage1-lower{grid-template-columns:minmax(0,1fr)!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #app #dashboard .admin-dashboard-welcome{flex-direction:column!important;align-items:stretch!important}
+ body.role-admin #app #dashboard .dashboard-students table{min-width:580px!important}
+}
