@@ -130,3 +130,18 @@ body.role-guru #teacherApp .attendance-field-dot{position:absolute;left:12px;top
 body.role-guru #teacherApp .attendance-status-field:has([data-status-color=sakit]) .attendance-field-dot{background:#eb425a}
 body.role-guru #teacherApp .attendance-status-field:has([data-status-color=izin]) .attendance-field-dot{background:#f59e19}
 body.role-guru #teacherApp .attendance-status-field:has([data-status-color=absen]) .attendance-field-dot{background:#874bd6}
+
+/* Keep status marker clear of the label and compact attendance actions. */
+body.role-guru #teacherApp #attendanceForm #attendanceStatus{padding-left:32px!important}
+body.role-guru #teacherApp .attendance-row-actions{display:flex;align-items:center;gap:8px}
+body.role-guru #teacherApp .attendance-edit-icon,
+body.role-guru #teacherApp .attendance-more summary{display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:6px!important;border:1px solid #e1e7ef;border-radius:8px;background:#fff;color:#64748b;cursor:pointer}
+body.role-guru #teacherApp .attendance-row-actions svg{width:18px;height:18px;pointer-events:none}
+body.role-guru #teacherApp .attendance-edit-icon svg{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+body.role-guru #teacherApp .attendance-more svg{fill:currentColor}
+body.role-guru #teacherApp .attendance-more summary{list-style:none}
+body.role-guru #teacherApp .attendance-more summary::-webkit-details-marker{display:none}
+body.role-guru #teacherApp .attendance-more[open]{display:flex;align-items:center;gap:6px}
+body.role-guru #teacherApp .attendance-more button{color:#dc3545!important;white-space:nowrap}
+body.role-guru #teacherApp .attendance-edit-icon:hover,
+body.role-guru #teacherApp .attendance-more summary:hover{background:#f1f5f9;color:#2563eb}

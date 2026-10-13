@@ -95,7 +95,7 @@ function drawAttendance(){
   $("attendanceBody").innerHTML=rows.map(function(x,idx){
     var m=stu(x.student_id)||{};
     var cls=x.status==="Hadir"?"hadir":x.status==="Izin"?"izin":x.status==="Sakit"?"sakit":"absen";
-    return '<tr><td>'+(idx+1)+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td><span class="attendance-status '+cls+'">'+esc(x.status||"")+'</span></td><td>'+esc(x.catatan||"")+'</td><td><button class="sm" data-eatt="'+x.id+'">Edit</button> <button class="sm" data-datt="'+x.id+'">Hapus</button></td></tr>';
+    return '<tr><td>'+(idx+1)+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td><span class="attendance-status '+cls+'">'+esc(x.status||"")+'</span></td><td>'+esc(x.catatan||"")+'</td><td><div class="attendance-row-actions"><button type="button" class="sm attendance-edit-icon" data-eatt="'+x.id+'" aria-label="Edit absensi" title="Edit absensi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-12 12-6 1 1-6Z"/><path d="m14 5 5 5"/></svg></button><details class="attendance-more"><summary aria-label="Aksi lainnya" title="Aksi lainnya"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></summary><button type="button" class="sm" data-datt="'+x.id+'">Hapus</button></details></div></td></tr>';
   }).join("")||'<tr><td colspan="6">Belum ada absensi sesuai filter.</td></tr>';
 }
 /* Teacher attendance edit/form handlers moved to ./teacher.js */
@@ -199,7 +199,7 @@ $("reportStudent").onchange=function(){editingReportId=null;syncReportFields();r
 
 /* Teacher delegated actions: attendance, notes, and reports. */
 document.addEventListener("click",async function(e){
-  var t=e.target,id=t.dataset;
+  var t=e.target.closest("[data-eatt],[data-datt]")||e.target,id=t.dataset;
   if(id.eatt){startEditAttendance(id.eatt);return}
   if(id.datt&&confirm("Hapus data absensi ini?")){
     var ar=await window.sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
