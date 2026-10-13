@@ -313,3 +313,37 @@ body.role-admin #te #expensePagination button[aria-current]{background:#1082ff;c
 body.role-admin #te #expensePagination button:disabled{opacity:.4}
 @media(max-width:1100px){body.role-admin #te .expense-overview{grid-template-columns:1fr 1fr}body.role-admin #te .expense-summary{grid-column:1/-1}}
 @media(max-width:700px){body.role-admin #te .expense-overview{grid-template-columns:1fr}body.role-admin #te .expenses-head-actions{flex-wrap:wrap!important}body.role-admin #te .expense-summary{grid-column:auto}}
+
+/* Financial report reference: two lines, monthly summary, period transactions. */
+body.role-admin #app #financialReportPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #financialReportPage .financial-report-head{align-items:center!important;gap:14px!important}
+body.role-admin #financialReportPage .financial-report-head h2{font-size:26px!important;color:#103864!important}
+body.role-admin #financialReportPage .financial-report-head>div>small{display:none!important}
+body.role-admin #financialReportPage .financial-report-tools{gap:10px!important;flex-wrap:wrap!important}
+body.role-admin #financialReportPage .financial-period-label{width:auto!important;min-width:0!important}
+body.role-admin #financialReportPage .financial-kpis-v2{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+body.role-admin #financialReportPage .financial-kpi{padding:18px!important;border-radius:14px!important;border:1px solid #dceaf7!important;min-width:0}
+body.role-admin #financialReportPage .financial-kpi.income{background:#f0fcf7!important}
+body.role-admin #financialReportPage .financial-kpi.expense{background:#fff5f7!important}
+body.role-admin #financialReportPage .financial-kpi.profit{background:#f1f7ff!important}
+body.role-admin #financialReportPage .financial-kpi small{display:block;margin:4px 0}
+body.role-admin #financialReportPage .financial-overview-v2{display:grid!important;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)!important;gap:14px!important;align-items:stretch!important;margin:16px 0!important}
+body.role-admin #financialReportPage .financial-chart-panel,body.role-admin #financialReportPage .financial-summary-panel,body.role-admin #financialReportPage .financial-transactions-v2{background:white!important;border:1px solid #dfeaf6!important;border-radius:14px!important;padding:16px!important;min-width:0!important}
+body.role-admin #financialReportPage h3{margin:0 0 12px!important;color:#103864!important;font-size:16px!important}
+body.role-admin #financialReportPage #financialReportChart{height:auto!important;background:transparent!important;padding:0!important;border:0!important}
+body.role-admin #financialReportPage #financialReportChart svg{display:block;width:100%;height:auto}
+body.role-admin #financialReportPage #financialReportChart text{font:11px Arial;fill:#65809f}
+body.role-admin #financialReportPage .report-line-legend{display:flex;justify-content:flex-end;gap:16px;font-size:12px;margin-bottom:8px;color:#1688ff}
+body.role-admin #financialReportPage .report-line-legend span:last-child{color:#668aba}
+body.role-admin #financialReportPage #financialReportSummary{overflow:auto}
+body.role-admin #financialReportPage .financial-summary-table{min-width:0!important;width:100%!important;font-size:11px!important}
+body.role-admin #financialReportPage .financial-summary-table th,body.role-admin #financialReportPage .financial-summary-table td{border:0!important;border-bottom:1px solid #eaf1f9!important;padding:8px 5px!important;white-space:nowrap}
+body.role-admin #financialReportPage .report-transactions-head{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:12px}
+body.role-admin #financialReportPage .report-transactions-head h3{margin:0!important}
+body.role-admin #financialReportPage .report-type-tabs{display:flex;gap:8px}
+body.role-admin #financialReportPage .report-type-tabs button{padding:6px 14px;border:0;border-radius:20px;background:#f0f6ff;color:#58799c;font-size:12px}
+body.role-admin #financialReportPage .report-type-tabs button[aria-pressed=true]{background:#1082ff;color:#fff}
+body.role-admin #financialReportPage .financial-transactions-v2 table{min-width:800px!important;width:100%}
+body.role-admin #financialReportPage .report-detail{padding:5px 10px;background:#f1f7ff;border:1px solid #d5e6f8;border-radius:7px;color:#087bf1}
+@media(max-width:1100px){body.role-admin #financialReportPage .financial-overview-v2{grid-template-columns:1fr!important}body.role-admin #financialReportPage .financial-report-head{flex-wrap:wrap!important}}
+@media(max-width:700px){body.role-admin #financialReportPage .financial-kpis-v2{grid-template-columns:1fr!important}body.role-admin #financialReportPage .financial-report-tools{width:100%!important}body.role-admin #financialReportPage .financial-period-label{flex:1!important}}
