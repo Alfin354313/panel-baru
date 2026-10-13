@@ -347,3 +347,39 @@ body.role-admin #financialReportPage .financial-transactions-v2 table{min-width:
 body.role-admin #financialReportPage .report-detail{padding:5px 10px;background:#f1f7ff;border:1px solid #d5e6f8;border-radius:7px;color:#087bf1}
 @media(max-width:1100px){body.role-admin #financialReportPage .financial-overview-v2{grid-template-columns:1fr!important}body.role-admin #financialReportPage .financial-report-head{flex-wrap:wrap!important}}
 @media(max-width:700px){body.role-admin #financialReportPage .financial-kpis-v2{grid-template-columns:1fr!important}body.role-admin #financialReportPage .financial-report-tools{width:100%!important}body.role-admin #financialReportPage .financial-period-label{flex:1!important}}
+
+/* Announcement reference: compose left, poster history right. */
+body.role-admin #app #parentAnnouncementsPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #parentAnnouncementsPage .admin-eyebrow{display:none!important}
+body.role-admin #parentAnnouncementsPage .admin-dashboard-welcome{padding:0 0 16px!important}
+body.role-admin #parentAnnouncementsPage .admin-dashboard-welcome h2{font-size:26px!important}
+body.role-admin #parentAnnouncementsPage .admin-dashboard-welcome p{display:block!important;font-size:13px!important}
+body.role-admin #parentAnnouncementsPage .announcement-workspace{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px!important;align-items:start!important}
+body.role-admin #parentAnnouncementsPage .announcement-workspace>.card{padding:18px!important;border:1px solid #dfeaf6!important;border-radius:14px!important;min-width:0!important}
+body.role-admin #parentAnnouncementsPage h3{font-size:18px!important;color:#103864!important}
+body.role-admin #parentAnnouncementsPage .announcement-compose>.announcement-caption,body.role-admin #parentAnnouncementsPage .announcement-history .announcement-caption{display:none!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementForm{display:flex!important;flex-direction:column!important;gap:14px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementForm label{font-size:13px!important;color:#214b75!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementBody{min-height:150px!important}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:145px;margin-top:8px;padding:18px;border:1px dashed #92bfff;border-radius:12px;background:#f6faff;color:#45779f;text-align:center}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone svg{width:28px;height:28px;fill:none;stroke:#1688ff;stroke-width:1.7;margin-bottom:5px}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone b{font-size:13px}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone>span,body.role-admin #parentAnnouncementsPage .announcement-dropzone small{font-size:12px}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone #parentAnnouncementImage{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0;cursor:pointer;min-height:0!important}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone:focus-within,body.role-admin #parentAnnouncementsPage .announcement-dropzone.dragging{outline:2px solid #1688ff;outline-offset:2px;background:#eaf4ff}
+body.role-admin #parentAnnouncementsPage .announcement-submit button{width:100%!important;background:#1082ff!important;border-radius:10px!important;padding:12px!important}
+body.role-admin #parentAnnouncementsPage .announcement-email-option{background:transparent!important;padding:0!important;font-size:12px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item{display:grid!important;grid-template-columns:110px minmax(0,1fr)!important;gap:4px 14px!important;padding:12px!important;margin:0 0 12px!important;background:#fbfdff!important;border:1px solid #e1ebf8!important;border-radius:12px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item-head{grid-column:2!important;display:flex;align-items:start;gap:8px}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item-head b{flex:1;color:#103864;font-size:13px}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-delete{font-size:11px!important;padding:3px 6px!important;min-height:0!important;background:#fff2f3!important;color:#c53e50!important;border:0!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-date{grid-column:2!important;font-size:11px!important;color:#7087a2}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item>p{grid-column:2!important;margin:2px 0 6px!important;font-size:12px!important;line-height:1.5!important;overflow-wrap:anywhere}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster-link{grid-column:1!important;grid-row:1/5!important;width:110px!important;height:110px!important;margin:0!important;align-self:start!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;background:#edf5ff!important;border-radius:9px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-actions{grid-column:2!important;justify-content:flex-start!important;padding:0!important;margin:3px 0 0!important;border:0!important;gap:7px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-action{padding:6px 8px!important;font-size:11px!important;min-height:30px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item:not(:has(.announcement-poster-link)){grid-template-columns:minmax(0,1fr)!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item:not(:has(.announcement-poster-link))>*{grid-column:1!important}
+@media(max-width:1000px){body.role-admin #parentAnnouncementsPage .announcement-workspace{grid-template-columns:1fr!important}}
+@media(max-width:450px){body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item{grid-template-columns:80px minmax(0,1fr)!important;gap:4px 10px!important}body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster-link{width:80px!important;height:90px!important}}
