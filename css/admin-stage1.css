@@ -118,3 +118,29 @@ body.role-admin #app #dashboard .stage1-chart svg{width:100%!important;max-width
  body.role-admin #app #dashboard .stage1-actions .dashboard-filter{position:static!important;margin:0!important;transform:none!important;right:auto!important;top:auto!important}
 }
 @media(max-width:899px){body.role-admin #app #dashboard .stage1-actions{justify-content:flex-end!important;margin-left:auto!important}}
+
+/* Search, notifications and account header. */
+body.role-admin #app>header.stage1-topbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;overflow:visible!important}
+body.role-admin #app>header.stage1-topbar>img,body.role-admin #app>header.stage1-topbar>div[hidden],body.role-admin #app #exportAdminBtn{display:none!important}
+body.role-admin #app .stage1-search{position:relative;display:flex;align-items:center;gap:10px;flex:1;max-width:520px;min-width:0;padding:10px 14px;border:1px solid #d2e4f7;border-radius:12px;background:#f4f8ff}
+body.role-admin #app .stage1-search>svg{width:20px;height:20px;flex-shrink:0;fill:none;stroke:#446b92;stroke-width:1.8}
+body.role-admin #app .stage1-search input{margin:0!important;width:100%!important;min-width:0!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;font-size:14px;color:#123e66}
+body.role-admin #app .stage1-header-tools{display:flex!important;align-items:center!important;flex-wrap:nowrap!important;width:auto!important;margin:0!important;gap:14px!important}
+body.role-admin #app #adminBell svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.role-admin #app #adminBell{display:grid!important;place-items:center;width:40px;height:40px;border:1px solid #d7e6f6!important;border-radius:10px!important;background:white!important;color:#103864!important}
+body.role-admin #app .stage1-profile{position:relative}
+body.role-admin #app .stage1-profile-toggle{display:flex!important;align-items:center;gap:10px;border:0!important;background:transparent!important;color:#103864!important;padding:4px!important;box-shadow:none!important;text-align:left}
+body.role-admin #app .stage1-avatar{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#e3f0ff;color:#164e82}
+body.role-admin #app .stage1-avatar svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+body.role-admin #app .stage1-profile-copy b{font-size:14px;display:block}
+body.role-admin #app .stage1-profile-copy small{display:block!important;margin-top:3px;color:#69809a;font-size:12px}
+body.role-admin #app .stage1-chevron{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;margin-left:12px}
+body.role-admin #app .stage1-profile-menu,body.role-admin #app .stage1-search-results{position:absolute;top:calc(100% + 10px);background:white;border:1px solid #d8e6f5;border-radius:12px;box-shadow:0 12px 30px #10386420;z-index:200;padding:6px}
+body.role-admin #app .stage1-profile-menu{right:0;min-width:170px}
+body.role-admin #app .stage1-search-results{left:0;right:0;max-height:320px;overflow:auto}
+body.role-admin #app .stage1-profile-menu[hidden],body.role-admin #app .stage1-search-results[hidden]{display:none!important}
+body.role-admin #app .stage1-profile-menu #logoutBtn{display:block!important;width:100%!important;padding:10px 12px!important;text-align:left;background:transparent!important;border:0!important;border-radius:8px!important;color:#de3844!important}
+body.role-admin #app .stage1-search-results button{display:block;width:100%;padding:10px;text-align:left;border:0;background:white;color:#123e66;border-radius:7px;box-shadow:none}
+body.role-admin #app .stage1-search-results button:hover{background:#edf5ff}
+body.role-admin #app .stage1-search-results p{padding:8px;margin:0;color:#647e99;font-size:13px}
+@media(max-width:899px){body.role-admin #app>header.stage1-topbar{gap:10px!important;padding:12px!important;flex-wrap:wrap!important}body.role-admin #app .stage1-search{max-width:none;min-width:120px;padding:10px;order:2;flex-basis:100%}body.role-admin #app .stage1-header-tools{order:1;margin-left:auto!important;gap:10px!important}body.role-admin #app .stage1-chevron{margin-left:0}body.role-admin #app .stage1-profile-copy small{display:block!important}body.role-admin #app>header.stage1-topbar:before{content:'Jenius Edu';font-size:17px;font-weight:700;color:#103864}}
