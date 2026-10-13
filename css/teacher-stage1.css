@@ -248,3 +248,6 @@ body.role-guru #teacherApp .report-stage-attendance{white-space:nowrap;font-size
 body.role-guru #teacherApp .report-stage-menu{display:flex;flex-wrap:wrap;gap:6px;max-width:240px}
 @media(max-width:1100px){body.role-guru #teacherApp .report-stage-student{flex-wrap:wrap}body.role-guru #teacherApp .report-stage-counts{width:100%;margin:5px 0 0}}
 @media(max-width:899px){body.role-guru #teacherApp .report-stage-workspace{grid-template-columns:1fr}body.role-guru #teacherApp #reportForm{grid-template-columns:1fr!important}body.role-guru #teacherApp #reportForm .full{grid-column:auto!important}}
+
+/* Override the legacy rule that unconditionally hides the report preview. */
+body.role-guru #teacherApp #teacherReportPage #reportPreview:not([hidden]){display:block!important}
