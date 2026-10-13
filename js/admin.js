@@ -405,6 +405,7 @@ function syncTeacherMasterForm(){
   $("teacherMasterMapel").value=t.mapel||"";
   $("teacherMasterStatus").value=t.status||"Aktif";
   $("teacherMasterNote").value=t.catatan||"";
+  $("teacherMasterAvatar").value=t.avatar_style||"";
 }
 var teacherPage=1,teacherPageSize=4,teacherLastFilter="";
 function drawTeachers(){
@@ -419,7 +420,7 @@ function drawTeachers(){
   var nav=$("teacherPagination");nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement("button");b.type="button";b.textContent=label;b.disabled=disabled;if(page===teacherPage&&/^\d+$/.test(label))b.setAttribute("aria-current","page");b.onclick=function(){teacherPage=page;drawTeachers()};nav.append(b)}
   pageButton("‹",teacherPage-1,teacherPage===1);for(var n=Math.max(1,teacherPage-2);n<=Math.min(pages,teacherPage+2);n++)pageButton(String(n),n,false);pageButton("›",teacherPage+1,teacherPage===pages);
   $("teacherMasterBody").innerHTML=visibleTeachers.slice(start,start+teacherPageSize).map(function(x,idx){var initials=(x.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();
-    return '<tr><td class="teacher-no">'+(start+idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+esc(initials)+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
+    return '<tr><td class="teacher-no">'+(start+idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+(['male','female','hijab'].includes(x.avatar_style)?'<img src="./assets/teacher-avatar-'+x.avatar_style+'.svg" alt="">':esc(initials))+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
   }).join("")||emptyTable(6,"Belum ada data guru","Akun Guru yang tersedia akan tampil di sini.");
 }
 $("teacherAccountId").onchange=syncTeacherMasterForm;
@@ -430,6 +431,7 @@ $("teacherMasterForm").onsubmit=async function(e){
   if(!id){alert("Belum ada akun Guru.");return}
   var payload={id:id,nama:$("teacherMasterName").value.trim(),email:$("teacherMasterEmail").value.trim(),hp:$("teacherMasterHp").value.trim(),mapel:$("teacherMasterMapel").value.trim(),status:$("teacherMasterStatus").value,catatan:$("teacherMasterNote").value.trim()};
   if(!payload.nama){alert("Nama guru wajib diisi.");return}
+  if($("teacherMasterAvatar").value||TEACHERS.some(function(t){return t.id===id&&t.avatar_style}))payload.avatar_style=$("teacherMasterAvatar").value||null;
   var r=await window.sb.from("teacher_profiles").upsert(payload,{onConflict:"id"}).select().single();
   if(r.error){alert("Data guru belum bisa disimpan: "+r.error.message);return}
   var i=TEACHERS.findIndex(function(x){return x.id===id});
@@ -474,7 +476,7 @@ async function dbLoad(){
   var si=await window.sb.from("teacher_salary_items").select("*").order("created_at",{ascending:true});
   if(si.error){console.warn("Komponen gaji belum tersedia:",si.error.message);SALITEMS=[]}else SALITEMS=si.data||[];
   var ta=await window.sb.rpc("get_teacher_accounts");
-  if(ta.error){console.warn("Master data guru belum tersedia:",ta.error.message);TEACHERS=[];$("teacherMasterSync").textContent="Jalankan SQL teacher_profiles.sql di Supabase"}else{TEACHERS=ta.data||[];$("teacherMasterSync").textContent="Tersimpan online"}
+  if(ta.error){console.warn("Master data guru belum tersedia:",ta.error.message);TEACHERS=[];$("teacherMasterSync").textContent="Jalankan SQL teacher_profiles.sql di Supabase"}else{TEACHERS=ta.data||[];var avatars=await window.sb.from("teacher_profiles").select("id,avatar_style");if(!avatars.error)TEACHERS.forEach(function(t){var a=(avatars.data||[]).find(function(x){return x.id===t.id});if(a)t.avatar_style=a.avatar_style});$("teacherMasterSync").textContent="Tersimpan online"}
 }
 
 /* Admin receipts/export utilities. */

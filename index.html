@@ -36,7 +36,7 @@
 #teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:18px!important}
 #teacherAttendancePage>.card:first-child,#teacherNotesPage>.card:first-child,#teacherReportPage>.card:first-child{margin-top:0!important}
 @media(max-width:650px){#teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:14px!important}}
-</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-filter7">
+</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-avatar8">
 </head><body>
 
 
@@ -212,6 +212,7 @@
       <label>Email<input id="teacherMasterEmail" name="email" type="email" readonly></label>
       <label>No. WhatsApp<input id="teacherMasterHp" name="hp" placeholder="08xxxxxxxxxx"></label>
       <label>Mata Pelajaran<input id="teacherMasterMapel" name="mapel" placeholder="Contoh: Matematika"></label>
+      <label>Avatar Guru<select id="teacherMasterAvatar"><option value="">Inisial nama</option><option value="male">Laki-laki</option><option value="female">Perempuan</option><option value="hijab">Perempuan berhijab</option></select></label>
       <label>Status<select id="teacherMasterStatus" name="status"><option>Aktif</option><option>Nonaktif</option></select></label>
       <label class="full">Catatan<textarea id="teacherMasterNote" name="catatan" placeholder="Catatan guru"></textarea></label>
       <div class="full teacher-master-actions"><button class="pri" type="submit">Simpan Data Guru</button><button type="button" id="teacherMasterReset">Reset</button><span id="teacherMasterSync" style="color:var(--muted)"></span></div>
@@ -284,7 +285,7 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin-stage1.js?v=20261013-header3"></script>
-<script src="./js/admin.js?v=20261013-teachers6"></script>
+<script src="./js/admin.js?v=20261013-avatar8"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=20261008-report-toggle1"></script>
   <script src="./js/auth.js?v=20261008-parent-entry1"></script>
