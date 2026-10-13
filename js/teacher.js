@@ -65,7 +65,10 @@ async function dbLoadTeacher(){
   var rr=await window.sb.from("teacher_reports").select("*").eq("teacher_id",teacherId).order("bulan",{ascending:false}).order("created_at",{ascending:false});
   if(rr.error){console.warn("Laporan guru belum tersedia:",rr.error.message);RPT=[];$("reportSync").textContent="Tabel laporan belum dibuat"}else{RPT=rr.data||[];$("reportSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});
-  TN=b.data||[];drawTeacher();drawReports()
+  TN=b.data||[];
+  var profile=await window.sb.from('teacher_profiles').select('*').eq('id',teacherId).maybeSingle();
+  if(!profile.error&&profile.data){$('teacherHeaderName').textContent=profile.data.nama||'Guru';var style=profile.data.avatar_style;if(['male','female','hijab'].includes(style))$('teacherHeaderAvatar').innerHTML='<img src="./assets/teacher-avatar-'+style+'.svg" alt="">';else $('teacherHeaderAvatar').textContent=String(profile.data.nama||'G').charAt(0)}
+  drawTeacher();drawReports()
 }
 function drawTeacher(){drawAttendance();var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-etn="'+x.id+'">Edit</button> <button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>';
 var unique={};TN.forEach(function(x){if(x.student_id)unique[x.student_id]=true});
@@ -79,7 +82,7 @@ $("teacherReminderCount").textContent=0;
 $("teacherBellDot").hidden=true;
 $("teacherReminderSummary").innerHTML='<div class="reminder-clear"><b>Semua selesai</b><small>Tidak ada reminder mengajar yang tertunda hari ini.</small></div>';
 var latest=TN.slice().sort(function(a,b){return String(b.tanggal||"").localeCompare(String(a.tanggal||""))}).slice(0,5);
-$("gLatestNotes").innerHTML=latest.map(function(x){var m=stu(x.student_id)||{};return '<div class="dashboard-alert"><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><br><small>'+esc(x.tanggal||"")+' · '+esc(x.materi||"")+'</small></div><span style="color:var(--muted)">'+esc(x.metode||"")+'</span></div>'}).join("")||'<p style="color:var(--muted);margin:0">Belum ada catatan pembelajaran.</p>';
+drawTeacherStage1();
 }
 function attendanceDateToday(){$("attendanceDate").value=todayISO}
 function drawAttendance(){
