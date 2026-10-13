@@ -153,7 +153,7 @@ $("reportStudent").onchange=function(){editingReportId=null;syncReportFields();r
 
 /* Teacher delegated actions: attendance, notes, and reports. */
 document.addEventListener("click",async function(e){
-  var t=e.target.closest("[data-eatt],[data-datt],[data-etn],[data-tn]")||e.target,id=t.dataset;
+  var t=e.target.closest("[data-eatt],[data-datt],[data-etn],[data-tn],[data-ereport],[data-pdf-report],[data-share-report],[data-dreport]")||e.target,id=t.dataset;
   if(id.eatt){startEditAttendance(id.eatt);return}
   if(id.datt&&confirm("Hapus data absensi ini?")){
     var ar=await window.sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);

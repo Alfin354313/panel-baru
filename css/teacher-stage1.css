@@ -251,3 +251,24 @@ body.role-guru #teacherApp .report-stage-menu{display:flex;flex-wrap:wrap;gap:6p
 
 /* Override the legacy rule that unconditionally hides the report preview. */
 body.role-guru #teacherApp #teacherReportPage #reportPreview:not([hidden]){display:block!important}
+
+/* Compact report history header and table matching the reference. */
+body.role-guru #teacherApp .report-stage-history{padding:12px!important;border-radius:10px!important}
+body.role-guru #teacherApp .report-history-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+body.role-guru #teacherApp .report-history-heading h2{margin:0!important;font-size:17px!important;white-space:nowrap}
+body.role-guru #teacherApp .report-history-toolbar{display:grid;grid-template-columns:minmax(180px,1fr) 160px 130px 34px;gap:8px;margin:0!important;flex:1;max-width:620px}
+body.role-guru #teacherApp .report-history-toolbar input,body.role-guru #teacherApp .report-history-toolbar select,body.role-guru #teacherApp .report-history-toolbar button{height:34px;min-height:34px;box-sizing:border-box;border:1px solid #d2e3f5;border-radius:6px;background:#f9fcff;color:#315d90;font:12px Arial,sans-serif;padding:6px 9px;margin:0;width:100%;min-width:0}
+body.role-guru #teacherApp .report-history-toolbar button{display:flex;align-items:center;justify-content:center;padding:7px}
+body.role-guru #teacherApp .report-history-toolbar svg{width:17px;height:17px;fill:none;stroke:#326fb2;stroke-width:1.7;stroke-linejoin:round}
+body.role-guru #teacherApp #teacherReportsHistory{border:1px solid #e0edf8;border-radius:7px;max-height:300px}
+body.role-guru #teacherApp #teacherReportsHistory table{border-collapse:collapse;table-layout:auto;min-width:900px!important;font-family:Arial,sans-serif!important}
+body.role-guru #teacherApp #teacherReportsHistory th{font-size:11px!important;padding:9px 10px!important;white-space:nowrap;position:sticky;top:0;z-index:1}
+body.role-guru #teacherApp #teacherReportsHistory td{font-size:12px!important;padding:7px 10px!important;border-bottom:1px solid #e6eef7!important;vertical-align:middle;line-height:1.4}
+body.role-guru #teacherApp #teacherReportsHistory tbody tr:nth-child(even){background:#f8fbff}
+body.role-guru #teacherApp #teacherReportsHistory .notes-student-avatar{width:28px;height:28px}
+body.role-guru #teacherApp #teacherReportsHistory .notes-material{max-width:230px;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
+body.role-guru #teacherApp #teacherReportsHistory .report-stage-badge{min-width:86px;justify-content:center;font-size:11px;padding:5px 10px}
+body.role-guru #teacherApp #teacherReportsHistory [data-ereport]{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 10px!important;min-height:27px;background:#edf6ff!important;border:1px solid #d4e8fb!important;border-radius:6px;color:#1769ce;font-size:11px;white-space:nowrap}
+body.role-guru #teacherApp #teacherReportsHistory [data-ereport] svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;pointer-events:none}
+body.role-guru #teacherApp #teacherReportsHistory .attendance-more summary{border:0;background:transparent;color:#315d90;width:25px;height:27px;font-weight:700}
+@media(max-width:899px){body.role-guru #teacherApp .report-history-toolbar{grid-template-columns:minmax(0,1fr) 140px;max-width:none;flex-basis:100%}body.role-guru #teacherApp .report-history-toolbar select{grid-column:1}body.role-guru #teacherApp .report-history-toolbar button{width:34px;justify-self:end}}
