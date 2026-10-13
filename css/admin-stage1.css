@@ -383,3 +383,32 @@ body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-i
 body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item:not(:has(.announcement-poster-link))>*{grid-column:1!important}
 @media(max-width:1000px){body.role-admin #parentAnnouncementsPage .announcement-workspace{grid-template-columns:1fr!important}}
 @media(max-width:450px){body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item{grid-template-columns:80px minmax(0,1fr)!important;gap:4px 10px!important}body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster-link{width:80px!important;height:90px!important}}
+
+/* Backup and archive reference layout, retaining JSON restore behavior. */
+body.role-admin #app #dataManagementPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;margin:0 12px!important;min-width:0!important}
+body.role-admin #dataManagementPage .data-page-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important}
+body.role-admin #dataManagementPage .data-page-head>div>small{display:none!important}
+body.role-admin #dataManagementPage .data-page-head h2{font-size:26px!important;color:#103864!important}
+body.role-admin #dataManagementPage .data-admin-badge{white-space:normal!important;max-width:480px!important;background:#e7f3ff!important;color:#315f8a!important;padding:12px!important;border-radius:12px!important;font-size:12px!important;line-height:1.5!important}
+body.role-admin #dataManagementPage .data-tools-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important}
+body.role-admin #dataManagementPage .data-tool{background:#fff!important;border:1px solid #dfeaf6!important;border-radius:14px!important;padding:18px!important;min-width:0!important;display:flex!important;flex-direction:column!important}
+body.role-admin #dataManagementPage .data-tool-label{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;font-size:27px!important;margin-bottom:12px!important;color:#1688ff;background:#e3f0ff;letter-spacing:0!important}
+body.role-admin #dataManagementPage .data-restore-icon{background:#dcf8ed;color:#009a68}
+body.role-admin #dataManagementPage .data-archive-icon{background:#ece5ff;color:#7c43dc}
+body.role-admin #dataManagementPage .data-tool h3{font-size:18px!important;color:#103864!important}
+body.role-admin #dataManagementPage .data-tool>p{font-size:13px!important;line-height:1.5!important;color:#6782a0!important}
+body.role-admin #dataManagementPage .data-tool-content{flex:1!important;min-height:140px!important}
+body.role-admin #dataManagementPage .data-tool>button{width:100%!important;border-radius:9px!important;min-height:42px!important;margin-top:10px!important}
+body.role-admin #dataManagementPage #dataArchiveCreate{background:#537bff!important;color:#fff!important;border:0!important}
+body.role-admin #dataManagementPage .data-dropzone{display:flex!important;position:relative;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:5px;min-height:120px;padding:15px;border:1px dashed #92bfff;border-radius:10px;background:#f6faff;color:#45779f;font-size:12px}
+body.role-admin #dataManagementPage .data-dropzone>span{font-size:24px;color:#1688ff}
+body.role-admin #dataManagementPage .data-dropzone #dataFile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0;cursor:pointer;margin:0!important}
+body.role-admin #dataManagementPage .data-dropzone:focus-within,body.role-admin #dataManagementPage .data-dropzone.dragging{outline:2px solid #1688ff;outline-offset:2px}
+body.role-admin #dataManagementPage .data-lists-grid{display:flex!important;flex-direction:column!important;gap:16px!important}
+body.role-admin #dataManagementPage .data-lists-grid>section{background:#fff!important;border:1px solid #dfeaf6!important;border-radius:14px!important;padding:16px!important;min-width:0!important}
+body.role-admin #dataManagementPage #dataArchives{overflow:auto!important;white-space:normal!important}
+body.role-admin #dataManagementPage .data-archive-table{width:100%!important;min-width:650px!important;border-collapse:collapse;font-size:12px}
+body.role-admin #dataManagementPage .data-archive-table th{background:#edf5fd!important;text-align:left;padding:10px!important}
+body.role-admin #dataManagementPage .data-archive-table td{padding:12px 10px!important;border-bottom:1px solid #eaf1f9!important}
+body.role-admin #dataManagementPage .data-archive-table button{padding:6px 12px;border:1px solid #d5e6fa;border-radius:8px;background:#eef6ff;color:#087bf1}
+@media(max-width:900px){body.role-admin #dataManagementPage .data-tools-grid{grid-template-columns:1fr!important}body.role-admin #dataManagementPage .data-page-head{flex-wrap:wrap!important}body.role-admin #dataManagementPage .data-tool-content{min-height:0!important}}
