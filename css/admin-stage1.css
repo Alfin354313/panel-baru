@@ -276,3 +276,40 @@ body.role-admin #tp #paymentPagination button{padding:6px 10px;border:1px solid 
 body.role-admin #tp #paymentPagination button[aria-current]{background:#1082ff;color:#fff}
 body.role-admin #tp #paymentPagination button:disabled{opacity:.4}
 @media(max-width:899px){body.role-admin #tp .payment-kpis{grid-template-columns:1fr!important}body.role-admin #app #tp .payment-filter-row{grid-template-columns:1fr!important}body.role-admin #tp .payments-head-actions{flex-wrap:wrap!important}}
+
+/* Expense overview: total, distribution donut and category bars. */
+body.role-admin #app #te{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #te .section-eyebrow,body.role-admin #te .expenses-title-icon{display:none!important}
+body.role-admin #te .expenses-title{margin:0!important;font-size:26px!important;color:#103864!important}
+body.role-admin #te .expense-subtitle{margin:5px 0 18px;color:#6a83a2;font-size:13px}
+body.role-admin #te .expense-overview{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.1fr) minmax(0,1.2fr);gap:14px;margin-bottom:18px;align-items:stretch}
+body.role-admin #app #te .expense-summary,body.role-admin #te .expense-chart-panel{margin:0!important;padding:18px!important;border:1px solid #dceaf7!important;border-radius:14px!important;background:#fff!important;min-width:0!important;width:auto!important;height:auto!important}
+body.role-admin #app #te .expense-summary{display:flex!important;align-items:center!important;gap:14px;background:#f0fcf7!important}
+body.role-admin #te .expense-summary b{display:block;font-size:24px!important;color:#00976b!important;overflow-wrap:anywhere}
+body.role-admin #te .expense-summary small{display:block;color:#637e9a;margin:5px 0;font-size:12px}
+body.role-admin #te .expense-chart-panel h3{margin:0 0 16px;color:#103864;font-size:15px}
+body.role-admin #te .expense-distribution{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+body.role-admin #te #expenseDonut{width:130px;height:130px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:#eaf1f8}
+body.role-admin #te #expenseDonut>div{width:70%;height:70%;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+body.role-admin #te #expenseDonutTotal{font-size:12px;color:#103864;overflow-wrap:anywhere;text-align:center}
+body.role-admin #te #expenseDonut small{font-size:12px;color:#647e9a}
+body.role-admin #te #expenseLegend{flex:1;min-width:100px}
+body.role-admin #te .expense-legend-row{display:flex;align-items:center;gap:7px;padding:6px 0;font-size:12px;color:#395d81}
+body.role-admin #te .expense-legend-row i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+body.role-admin #te .expense-legend-row span{flex:1;overflow-wrap:anywhere}
+body.role-admin #te .expense-category-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(50px,1fr) auto;align-items:center;gap:10px;margin:14px 0;font-size:12px;color:#395d81}
+body.role-admin #te .expense-category-row span{overflow-wrap:anywhere}
+body.role-admin #te .expense-category-row b{font-size:12px;color:#103864}
+body.role-admin #te .expense-bar-track{height:10px;background:#edf4fc;border-radius:20px;overflow:hidden}
+body.role-admin #te .expense-bar-track i{display:block;height:100%;border-radius:20px}
+body.role-admin #te .expense-chart-empty{color:#6a83a2;font-size:13px}
+body.role-admin #te .expense-list-panel{padding:18px;background:#fff;border:1px solid #dfeaf6;border-radius:16px;min-width:0}
+body.role-admin #te .expense-list-panel h3{margin:0 0 14px;color:#103864;font-size:18px}
+body.role-admin #te .expense-table-wrap{overflow:auto!important;width:100%!important}
+body.role-admin #te .students-list-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:16px;color:#7187a2;font-size:12px}
+body.role-admin #te #expensePagination{display:flex;gap:6px}
+body.role-admin #te #expensePagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:#fff;color:#245b91}
+body.role-admin #te #expensePagination button[aria-current]{background:#1082ff;color:#fff}
+body.role-admin #te #expensePagination button:disabled{opacity:.4}
+@media(max-width:1100px){body.role-admin #te .expense-overview{grid-template-columns:1fr 1fr}body.role-admin #te .expense-summary{grid-column:1/-1}}
+@media(max-width:700px){body.role-admin #te .expense-overview{grid-template-columns:1fr}body.role-admin #te .expenses-head-actions{flex-wrap:wrap!important}body.role-admin #te .expense-summary{grid-column:auto}}

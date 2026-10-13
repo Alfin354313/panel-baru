@@ -36,7 +36,7 @@
 #teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:18px!important}
 #teacherAttendancePage>.card:first-child,#teacherNotesPage>.card:first-child,#teacherReportPage>.card:first-child{margin-top:0!important}
 @media(max-width:650px){#teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:14px!important}}
-</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-payments11">
+</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-expenses12">
 </head><body>
 
 
@@ -184,7 +184,8 @@
     <div><span class="section-eyebrow">TRANSAKSI</span><h2 class="expenses-title"><span class="expenses-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M6 3h12v18H6zM9 7h6M9 11h6M9 15h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Data Pengeluaran</h2></div>
     <div class="expenses-head-actions"><label class="expense-month"><span>Periode</span><input type="month" id="eb"></label><select id="expenseCategoryFilter"><option value="">Semua Kategori</option><option>Gaji pengajar</option><option>Sewa tempat</option><option>Listrik dan internet</option><option>Alat tulis dan bahan ajar</option><option>Promosi</option><option>Lainnya</option></select><button id="openExpenseForm" type="button" class="pri">＋ Tambah Pengeluaran</button></div>
   </div>
-  <div class="expense-summary"><span class="expense-summary-icon">▣</span><div><small>Total Pengeluaran</small><b id="expenseTotal">Rp0</b></div></div>
+  <p class="expense-subtitle">Kelola seluruh pengeluaran operasional bimbingan belajar.</p>
+  <div class="expense-overview"><div class="expense-summary"><span class="expense-summary-icon">▣</span><div><small>Total Pengeluaran</small><b id="expenseTotal">Rp0</b><small>Seluruh pengeluaran pada filter ini</small></div></div><section class="expense-chart-panel"><h3>Distribusi Pengeluaran</h3><div class="expense-distribution"><div id="expenseDonut" role="img" aria-label="Belum ada data pengeluaran"><div><b id="expenseDonutTotal">Rp0</b><small>Total</small></div></div><div id="expenseLegend"></div></div></section><section class="expense-chart-panel"><h3>Pengeluaran per Kategori</h3><div id="expenseCategoryBars"></div></section></div>
   <div id="expenseFormPanel" class="expense-form-panel" hidden>
     <h3>Tambah pengeluaran</h3>
     <form id="fe">
@@ -195,9 +196,10 @@
       <button class="pri">Simpan Pengeluaran</button>
     </form>
   </div>
+  <section class="expense-list-panel"><h3>Daftar Pengeluaran</h3>
   <div class="expense-filter-row"><input id="expenseSearch" type="search" placeholder="Cari kategori atau keterangan..."></div>
   <p id="et2" class="expense-total-text"></p>
-  <div class="tw expense-table-wrap"><table class="expense-table"><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="be"></tbody></table></div>
+  <div class="tw expense-table-wrap"><table class="expense-table"><thead><tr><th>No</th><th>Tanggal</th><th>Kategori</th><th>Keterangan</th><th>Nominal</th><th>Aksi</th></tr></thead><tbody id="be"></tbody></table></div><div class="students-list-footer"><span id="expensePageSummary" role="status" aria-live="polite"></span><nav id="expensePagination" aria-label="Halaman daftar pengeluaran"></nav></div></section>
 </div>
 <div id="teacherMasterPage" class="card teacher-master-page" hidden>
   <div class="teacher-page-head">
@@ -290,7 +292,8 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin-stage1.js?v=20261013-header3"></script>
-<script src="./js/admin.js?v=20261013-payments11"></script>
+<script src="./js/expense-charts.js?v=20261013"></script>
+<script src="./js/admin.js?v=20261013-expenses12"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=20261008-report-toggle1"></script>
   <script src="./js/auth.js?v=20261008-parent-entry1"></script>
