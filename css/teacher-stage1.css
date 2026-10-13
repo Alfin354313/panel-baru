@@ -145,3 +145,10 @@ body.role-guru #teacherApp .attendance-more[open]{display:flex;align-items:cente
 body.role-guru #teacherApp .attendance-more button{color:#dc3545!important;white-space:nowrap}
 body.role-guru #teacherApp .attendance-edit-icon:hover,
 body.role-guru #teacherApp .attendance-more summary:hover{background:#f1f5f9;color:#2563eb}
+
+/* Consistent teacher navigation symbols and a clear sidebar logo. */
+body.role-guru #teacherApp #teacherMenu .teacher-nav-icon{display:inline-flex!important;align-items:center;justify-content:center;width:22px;min-width:22px;height:22px;line-height:1!important}
+body.role-guru #teacherApp #teacherMenu .teacher-nav-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.role-guru #teacherApp #teacherMenu .teacher-logo-mark{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;overflow:hidden;border-radius:50%}
+body.role-guru #teacherApp #teacherMenu .teacher-logo-mark img{width:64px!important;height:64px!important;max-width:none!important;flex:0 0 64px!important}
+@media(max-width:899px){body.role-guru #teacherApp #teacherMenu .teacher-nav-icon{display:flex!important;width:20px;height:20px;margin:0 auto 2px!important}body.role-guru #teacherApp #teacherMenu .teacher-nav-icon svg{width:18px;height:18px}}
