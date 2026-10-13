@@ -36,7 +36,7 @@
 #teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:18px!important}
 #teacherAttendancePage>.card:first-child,#teacherNotesPage>.card:first-child,#teacherReportPage>.card:first-child{margin-top:0!important}
 @media(max-width:650px){#teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:14px!important}}
-</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-monthly10">
+</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-payments11">
 </head><body>
 
 
@@ -158,6 +158,7 @@
     <div><span class="section-eyebrow">TRANSAKSI</span><h2 class="payments-title"><span class="payments-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/><path d="M3 9h18M7 15h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Data Pembayaran</h2></div>
     <div class="payments-head-actions"><label class="payment-month"><span>Periode</span><input type="month" id="fb"></label><button id="openPaymentForm" type="button" class="pri">＋ Catat Pembayaran</button></div>
   </div>
+  <p class="payment-subtitle">Kelola seluruh pembayaran bimbingan belajar dari murid.</p>
   <div id="paymentFormPanel" class="payment-form-panel" hidden>
     <h3>Catat pembayaran</h3>
     <form id="fp">
@@ -174,8 +175,9 @@
     <div class="payment-kpi paid"><span class="payment-kpi-icon">✓</span><div><small>Lunas</small><b id="paymentPaidTotal">Rp0</b></div></div>
     <div class="payment-kpi unpaid"><span class="payment-kpi-icon">!</span><div><small>Belum Lunas</small><b id="paymentUnpaidTotal">Rp0</b></div></div>
   </div>
+  <section class="payment-list-panel"><h3>Daftar Pembayaran</h3>
   <div class="payment-filter-row"><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option><option>Terlambat</option></select></div>
-  <div class="tw payment-table-wrap"><table class="payment-table"><thead><tr><th>No</th><th>Murid</th><th>Periode</th><th>Nominal</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="bp"></tbody></table></div>
+  <div class="tw payment-table-wrap"><table class="payment-table"><thead><tr><th>No</th><th>Tanggal Bayar</th><th>Nama Murid</th><th>Kelas</th><th>Program</th><th>Bulan Tagihan</th><th>Jumlah</th><th>Status</th><th>Kuitansi</th><th>Aksi</th></tr></thead><tbody id="bp"></tbody></table></div><div class="students-list-footer"><span id="paymentPageSummary" role="status" aria-live="polite"></span><nav id="paymentPagination" aria-label="Halaman pembayaran"></nav></div></section>
 </div>
 <div id="te" class="card admin-expenses-page" hidden>
   <div class="expenses-page-head">
@@ -288,7 +290,7 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin-stage1.js?v=20261013-header3"></script>
-<script src="./js/admin.js?v=20261013-monthly10"></script>
+<script src="./js/admin.js?v=20261013-payments11"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=20261008-report-toggle1"></script>
   <script src="./js/auth.js?v=20261008-parent-entry1"></script>
