@@ -248,3 +248,6 @@ body.role-admin #salaryPage #salaryPagination button{padding:6px 10px;border:1px
 body.role-admin #salaryPage #salaryPagination button[aria-current]{background:#1082ff;color:white}
 body.role-admin #salaryPage #salaryPagination button:disabled{opacity:.4}
 @media(max-width:899px){body.role-admin #salaryPage .salary-kpis{grid-template-columns:1fr!important}body.role-admin #salaryPage .salary-list-head{flex-wrap:wrap}body.role-admin #salaryPage #salarySearch{width:100%}body.role-admin #salaryPage .salary-head-actions{flex-wrap:wrap!important}}
+
+body.role-admin .monthly-reminder{padding:12px 16px;border:1px solid #f1d59b;background:#fff8e8;color:#845a17;border-radius:12px;line-height:1.6}
+body.role-admin .bill-deadline{display:block;margin-top:5px;color:#7a8ba2;font-size:11px}

@@ -311,6 +311,18 @@ function drawDashboardStudents(){
   body.innerHTML=rows.map(function(m){var initials=String(m.nama||"?").trim().split(/\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td><span class="student-mini-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"-")+'</b></td><td>'+esc(m.jenjang||"-")+' '+esc(m.kelas||"")+'</td><td>'+esc(m.program||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><button class="student-more" data-profile="'+m.id+'" aria-label="Detail '+esc(m.nama||"murid")+'">⋮</button></td></tr>'}).join("")||emptyTable(5,"Belum ada murid","Tambahkan murid untuk menampilkan data di dashboard.");
   if($("dashboardStudentCount"))$("dashboardStudentCount").textContent="Menampilkan "+rows.length+" dari "+S.length+" siswa";
 }
+function jeniusJakartaDate(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+function paymentDeadline(p){return p.dueDate||(/^\d{4}-\d{2}$/.test(p.bulan||'')?p.bulan+'-07':'')}
+function paymentDisplayStatus(p){return p.status==='Lunas'?'Lunas':paymentDeadline(p)&&jeniusJakartaDate()>paymentDeadline(p)?'Terlambat':'Belum Lunas'}
+function renderMonthlyReminders(){
+ var today=jeniusJakartaDate(),month=today.slice(0,7),tomorrow=new Date(today+'T12:00:00Z');tomorrow.setUTCDate(tomorrow.getUTCDate()+1);
+ var end=tomorrow.toISOString().slice(0,7)!==month;
+ var unpaid=P.filter(function(p){return p.status!=='Lunas'&&p.bulan<=month});
+ var salary=SAL.filter(function(p){return p.status!=='Sudah Dibayar'&&p.bulan<month});
+ var bill=$('monthlyBillReminder'),salaryBox=$('monthlySalaryReminder');
+ if(bill){bill.textContent=unpaid.length+' tagihan belum lunas · '+rp(unpaid.reduce(function(n,p){return n+Number(p.jumlah||0)},0))+' · jatuh tempo tanggal 7. Tunggakan bulan sebelumnya tetap tercatat.';bill.hidden=!unpaid.length}
+ if(salaryBox){salaryBox.textContent=(end?'Pengingat akhir bulan: periksa dan catat pembayaran gaji guru. ':'')+(salary.length?salary.length+' gaji periode sebelumnya belum dibayar · '+rp(salary.reduce(function(n,p){return n+Number(p.total_gaji||0)},0))+'. Pilih periode terkait untuk rincian.':'');salaryBox.hidden=!end&&!salary.length}
+}
 function drawDashboard(){
   var month=$("dashboardMonth").value||thisM;
   var monthPayments=P.filter(function(x){return x.bulan===month});
@@ -334,6 +346,7 @@ function drawDashboard(){
   $("dPaidRate").textContent=paidRate+"%";
   $("dAverage").textContent=rp(average);
   drawAdminAttendance(month);
+  renderMonthlyReminders();
 
   var months=[];
   var base=new Date(month+"-01T00:00:00");
@@ -376,7 +389,7 @@ function updateStudentPagination(total){
 function draw(){
   var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});var filterKey=sq+"|"+sl;if(filterKey!==studentLastFilter){studentPage=1;studentLastFilter=filterKey}var studentStart=updateStudentPagination(filteredStudents.length);$("bm").innerHTML=filteredStudents.slice(studentStart,studentStart+studentPageSize).map(function(m,idx){var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td class="student-no">'+(studentStart+idx+1)+'</td><td><button class="student-name-cell" data-profile="'+m.id+'"><span class="student-avatar">'+esc(initials)+'</span><b>'+esc(m.nama)+'</b></button></td><td>'+esc(m.jenjang||"-")+'</td><td>'+esc(m.program||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><div class="student-row-actions"><button class="student-more" type="button" aria-label="Aksi murid">•••</button><div class="student-action-menu"><button data-profile="'+m.id+'">Detail</button><button data-es="'+m.id+'">Edit</button><button data-ds="'+m.id+'">Hapus</button></div></div></td></tr>'}).join("")||emptyTable(6,"Belum ada murid","Tambahkan murid dengan tombol Tambah Murid.");
   var keep=$("sel").value;$("sel").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+'</option>'}).join("");if(keep)$("sel").value=keep;
-  var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return x.bulan===f&&(!ps||x.status===ps)&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
+  var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return (x.bulan===f||((ps==="Belum Lunas"||ps==="Terlambat")&&x.bulan<f&&x.status!=="Lunas"))&&(!ps||(ps==="Belum Lunas"?x.status!=="Lunas":paymentDisplayStatus(x)===ps))&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
   /* Statistik utama sekarang ditampilkan oleh Dashboard Utama. */
   var ef=$("eb").value,eq=($("expenseSearch").value||"").toLowerCase(),ec=$("expenseCategoryFilter")?$("expenseCategoryFilter").value:"",EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef&&(!ec||x.kat===ec)&&(!eq||[x.kat,x.ket].join(" ").toLowerCase().includes(eq))}).sort(function(a,b){return a.tgl<b.tgl?1:-1});var expenseTotal=EL.reduce(function(a,x){return a+Number(x.jumlah)},0);$("et2").textContent="";if($("expenseTotal"))$("expenseTotal").textContent=rp(expenseTotal);
@@ -384,7 +397,7 @@ function draw(){
   if($("paymentBillTotal"))$("paymentBillTotal").textContent=rp(L.reduce(function(a,x){return a+Number(x.jumlah||0)},0));
   if($("paymentPaidTotal"))$("paymentPaidTotal").textContent=rp(L.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
   if($("paymentUnpaidTotal"))$("paymentUnpaidTotal").textContent=rp(L.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
-  $("bp").innerHTML=L.map(function(x,idx){var m=stu(x.sid)||{};var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':'<a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td class="payment-no">'+(idx+1)+'</td><td><span class="payment-student"><span class="payment-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"(dihapus)")+'</b></span></td><td>'+esc(x.bulan)+'</td><td><b>'+rp(x.jumlah)+'</b></td><td><span class="payment-status '+(x.status==="Lunas"?"paid":"unpaid")+'">'+esc(x.status==="Lunas"?"Lunas":"Belum Lunas")+'</span></td><td><div class="payment-actions"><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+'<button class="sm danger" data-dp="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pembayaran","Tidak ada pembayaran pada periode atau filter ini.");
+  $("bp").innerHTML=L.map(function(x,idx){var m=stu(x.sid)||{};var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':'<a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td class="payment-no">'+(idx+1)+'</td><td><span class="payment-student"><span class="payment-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"(dihapus)")+'</b></span></td><td>'+esc(x.bulan)+'<small class="bill-deadline">Jatuh tempo '+esc(paymentDeadline(x)||'-')+'</small></td><td><b>'+rp(x.jumlah)+'</b></td><td><span class="payment-status '+(x.status==="Lunas"?"paid":"unpaid")+'">'+esc(paymentDisplayStatus(x))+'</span></td><td><div class="payment-actions"><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+'<button class="sm danger" data-dp="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pembayaran","Tidak ada pembayaran pada periode atau filter ini.");
   drawDashboard();
   drawTeachers();
   drawSalary();
@@ -456,6 +469,8 @@ document.addEventListener("click",function(e){
 async function dbLoad(){
   showAdminLoading();
   if(!window.sb)throw new Error("Koneksi Supabase belum siap.");
+  var monthlySync=await window.sb.rpc("jenius_sync_monthly_records");
+  if(monthlySync.error)console.warn("Sinkronisasi bulanan belum aktif:",monthlySync.error.message);
   var a;
   try{
     a=await window.sb.from("students").select("*").order("created_at",{ascending:true});
@@ -475,7 +490,7 @@ async function dbLoad(){
   var at=await window.sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
   if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];if($("attendanceAdminSync"))$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];if($("attendanceAdminSync"))$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas,ortu:x.ortu,hp:x.hp,biaya:Number(x.biaya||0)}});
-  P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
+  P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",dueDate:x.due_date,tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
   INV=d.data||[];
   var sg=await window.sb.from("teacher_salaries").select("*").order("bulan",{ascending:false}).order("created_at",{ascending:false});

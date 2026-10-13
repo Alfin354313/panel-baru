@@ -36,7 +36,7 @@
 #teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:18px!important}
 #teacherAttendancePage>.card:first-child,#teacherNotesPage>.card:first-child,#teacherReportPage>.card:first-child{margin-top:0!important}
 @media(max-width:650px){#teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:14px!important}}
-</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-salary9">
+</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-monthly10">
 </head><body>
 
 
@@ -168,12 +168,13 @@
       <button class="pri">Simpan Pembayaran</button>
     </form>
   </div>
+  <p id="monthlyBillReminder" class="monthly-reminder" hidden></p>
   <div class="payment-kpis">
     <div class="payment-kpi bill"><span class="payment-kpi-icon">▣</span><div><small>Tagihan</small><b id="paymentBillTotal">Rp0</b></div></div>
     <div class="payment-kpi paid"><span class="payment-kpi-icon">✓</span><div><small>Lunas</small><b id="paymentPaidTotal">Rp0</b></div></div>
     <div class="payment-kpi unpaid"><span class="payment-kpi-icon">!</span><div><small>Belum Lunas</small><b id="paymentUnpaidTotal">Rp0</b></div></div>
   </div>
-  <div class="payment-filter-row"><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option></select></div>
+  <div class="payment-filter-row"><input id="paymentSearch" type="search" placeholder="Cari nama murid..."><select id="paymentStatusFilter"><option value="">Semua status</option><option>Lunas</option><option>Belum Lunas</option><option>Terlambat</option></select></div>
   <div class="tw payment-table-wrap"><table class="payment-table"><thead><tr><th>No</th><th>Murid</th><th>Periode</th><th>Nominal</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="bp"></tbody></table></div>
 </div>
 <div id="te" class="card admin-expenses-page" hidden>
@@ -242,6 +243,7 @@
     <div><span class="section-eyebrow">PENGGAJIAN</span><h2 class="salary-page-title"><span class="salary-title-icon">▣</span>Gaji Guru</h2></div>
     <div class="salary-head-actions"><label class="salary-period"><span>Periode</span><input id="salaryMonth" type="month"></label><button id="openSalaryForm" class="pri" type="button">＋ Catat Pembayaran Gaji</button></div>
   </div>
+  <p id="monthlySalaryReminder" class="monthly-reminder" hidden></p>
   <p class="salary-subtitle">Kelola dan catat pembayaran gaji guru.</p>
   <div class="salary-kpis salary-kpis-v2">
     <div class="salary-kpi total"><span class="salary-kpi-icon">♙</span><div><small>Total Gaji</small><b id="salaryTotal">Rp0</b></div></div>
@@ -286,7 +288,7 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin-stage1.js?v=20261013-header3"></script>
-<script src="./js/admin.js?v=20261013-salary9"></script>
+<script src="./js/admin.js?v=20261013-monthly10"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=20261008-report-toggle1"></script>
   <script src="./js/auth.js?v=20261008-parent-entry1"></script>
