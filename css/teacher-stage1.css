@@ -118,3 +118,15 @@ body.role-guru #teacherApp .att-guide b{font-size:13px!important;line-height:1.4
 body.role-guru #teacherApp .att-guide small{font-size:12px!important;line-height:1.5!important}
 body.role-guru #teacherApp .att-guide.hadir,body.role-guru #teacherApp .attendance-status.hadir{color:#12aa70!important}
 body.role-guru #teacherApp .att-guide.sakit,body.role-guru #teacherApp .attendance-status.sakit{color:#eb425a!important}
+
+/* Compact status dots and remove the form's storage status label. */
+body.role-guru #teacherApp #attendanceStatus{background-size:6px 6px!important;background-position:12px center!important;padding-left:26px!important}
+body.role-guru #teacherApp .att-guide:before{width:7px!important;height:7px!important;left:14px!important;top:17px!important}
+body.role-guru #teacherApp .attendance-status:before{width:5px!important;height:5px!important}
+body.role-guru #teacherApp #attendanceSync{display:none!important}
+body.role-guru #teacherApp .attendance-status-field{display:block;position:relative}
+body.role-guru #teacherApp #attendanceForm #attendanceStatus[data-status-color]{background-image:none!important;background-size:auto!important}
+body.role-guru #teacherApp .attendance-field-dot{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:6px;height:6px;border-radius:50%;pointer-events:none;background:#12aa70}
+body.role-guru #teacherApp .attendance-status-field:has([data-status-color=sakit]) .attendance-field-dot{background:#eb425a}
+body.role-guru #teacherApp .attendance-status-field:has([data-status-color=izin]) .attendance-field-dot{background:#f59e19}
+body.role-guru #teacherApp .attendance-status-field:has([data-status-color=absen]) .attendance-field-dot{background:#874bd6}
