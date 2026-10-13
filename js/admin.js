@@ -168,6 +168,8 @@ function updateSalaryPreview(){
   var total=meetings*rate+bonus+add-cut;
   $("salaryGrandTotal").textContent=rp(total);
 }
+var salaryPage=1,salaryLastFilter="";
+$("salarySearch").oninput=drawSalary;
 function drawSalary(){
   populateSalaryTeachers();
   var month=$("salaryMonth").value||thisM;
@@ -178,8 +180,13 @@ function drawSalary(){
   var total=monthRows.reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   var paid=monthRows.filter(function(x){return x.status==="Sudah Dibayar"}).reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   $("salaryTotal").textContent=rp(total);$("salaryPaid").textContent=rp(paid);$("salaryUnpaid").textContent=rp(total-paid);
-  $("salaryBody").innerHTML=monthRows.map(function(x,idx){
-    return '<tr><td>'+(idx+1)+'</td><td><b>'+esc(x.teacher_name||salaryTeacherLabel(x.teacher_id))+'</b></td><td>'+Number(x.jumlah_pertemuan||0)+'</td><td><b>'+rp(x.total_gaji)+'</b></td><td><span class="salary-state '+(x.status==="Sudah Dibayar"?"paid":"unpaid")+'">'+esc(x.status||"Belum Dibayar")+'</span></td><td><div class="salary-row-actions"><button class="salary-more" type="button">•••</button><div class="salary-action-menu"><button data-esal="'+x.id+'">Edit</button><button data-ssal="'+x.id+'">Slip Gaji</button><button data-psal="'+x.id+'">'+(x.status==="Sudah Dibayar"?"Tandai Belum":"Tandai Dibayar")+'</button><button data-dsal="'+x.id+'">Hapus</button></div></div></td></tr>';
+  var q=$("salarySearch").value.trim().toLowerCase(),key=month+"|"+q;if(key!==salaryLastFilter){salaryPage=1;salaryLastFilter=key}
+  var filtered=monthRows.filter(function(x){return !q||String(x.teacher_name||salaryTeacherLabel(x.teacher_id)).toLowerCase().includes(q)}),pages=Math.max(1,Math.ceil(filtered.length/4));salaryPage=Math.min(Math.max(1,salaryPage),pages);var start=(salaryPage-1)*4;
+  $("salaryPageSummary").textContent=filtered.length?"Menampilkan "+(start+1)+"–"+Math.min(start+4,filtered.length)+" dari "+filtered.length+" pembayaran":"Belum ada pembayaran sesuai filter.";
+  var nav=$("salaryPagination");nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement("button");b.type="button";b.textContent=label;b.disabled=disabled;if(page===salaryPage&&/^\d+$/.test(label))b.setAttribute("aria-current","page");b.onclick=function(){salaryPage=page;drawSalary()};nav.append(b)}pageButton("‹",salaryPage-1,salaryPage===1);for(var n=Math.max(1,salaryPage-2);n<=Math.min(pages,salaryPage+2);n++)pageButton(String(n),n,false);pageButton("›",salaryPage+1,salaryPage===pages);
+  $("salaryBody").innerHTML=filtered.slice(start,start+4).map(function(x,idx){
+    var teacher=TEACHERS.find(function(t){return t.id===x.teacher_id})||{},avatar=['male','female','hijab'].includes(teacher.avatar_style)?'<img src="./assets/teacher-avatar-'+teacher.avatar_style+'.svg" alt="">':esc(String(x.teacher_name||salaryTeacherLabel(x.teacher_id)).charAt(0));
+    return '<tr><td>'+(start+idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+avatar+'</span><b>'+esc(x.teacher_name||salaryTeacherLabel(x.teacher_id))+'</b></span></td><td>'+Number(x.jumlah_pertemuan||0)+'</td><td><b>'+rp(x.total_gaji)+'</b></td><td><span class="salary-state '+(x.status==="Sudah Dibayar"?"paid":"unpaid")+'">'+esc(x.status||"Belum Dibayar")+'</span></td><td><button class="salary-detail" type="button" data-ssal="'+x.id+'">Detail</button><div class="salary-row-actions"><button class="salary-more" type="button">•••</button><div class="salary-action-menu"><button data-esal="'+x.id+'">Edit</button><button data-ssal="'+x.id+'">Slip Gaji</button><button data-psal="'+x.id+'">'+(x.status==="Sudah Dibayar"?"Tandai Belum":"Tandai Dibayar")+'</button><button data-dsal="'+x.id+'">Hapus</button></div></div></td></tr>';
   }).join("")||'<tr><td colspan="6"><div class="salary-empty"><span>▤</span><b>Pilih periode untuk melihat rekap gaji</b><small>Belum ada data gaji guru pada periode ini.</small></div></td></tr>';
 }
 function resetSalaryForm(){
@@ -301,8 +308,20 @@ function drawDashboardStudents(){
   var body=$("dashboardStudentBody");if(!body)return;
   var q=(($("dashboardStudentSearch")&&$("dashboardStudentSearch").value)||"").toLowerCase().trim();
   var rows=S.filter(function(m){return !q||[m.nama,m.kelas,m.jenjang].join(" ").toLowerCase().includes(q)}).slice(0,4);
-  body.innerHTML=rows.map(function(m){var initials=String(m.nama||"?").trim().split(/\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td><span class="student-mini-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"-")+'</b></td><td>'+esc(m.jenjang||"-")+' '+esc(m.kelas||"")+'</td><td>'+esc(m.kelas||m.jenjang||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><button class="student-more" data-profile="'+m.id+'" aria-label="Detail '+esc(m.nama||"murid")+'">⋮</button></td></tr>'}).join("")||emptyTable(5,"Belum ada murid","Tambahkan murid untuk menampilkan data di dashboard.");
+  body.innerHTML=rows.map(function(m){var initials=String(m.nama||"?").trim().split(/\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td><span class="student-mini-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"-")+'</b></td><td>'+esc(m.jenjang||"-")+' '+esc(m.kelas||"")+'</td><td>'+esc(m.program||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><button class="student-more" data-profile="'+m.id+'" aria-label="Detail '+esc(m.nama||"murid")+'">⋮</button></td></tr>'}).join("")||emptyTable(5,"Belum ada murid","Tambahkan murid untuk menampilkan data di dashboard.");
   if($("dashboardStudentCount"))$("dashboardStudentCount").textContent="Menampilkan "+rows.length+" dari "+S.length+" siswa";
+}
+function jeniusJakartaDate(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+function paymentDeadline(p){return p.dueDate||(/^\d{4}-\d{2}$/.test(p.bulan||'')?p.bulan+'-07':'')}
+function paymentDisplayStatus(p){return p.status==='Lunas'?'Lunas':paymentDeadline(p)&&jeniusJakartaDate()>paymentDeadline(p)?'Terlambat':'Belum Lunas'}
+function renderMonthlyReminders(){
+ var today=jeniusJakartaDate(),month=today.slice(0,7),tomorrow=new Date(today+'T12:00:00Z');tomorrow.setUTCDate(tomorrow.getUTCDate()+1);
+ var end=tomorrow.toISOString().slice(0,7)!==month;
+ var unpaid=P.filter(function(p){return p.status!=='Lunas'&&p.bulan<=month});
+ var salary=SAL.filter(function(p){return p.status!=='Sudah Dibayar'&&p.bulan<month});
+ var bill=$('monthlyBillReminder'),salaryBox=$('monthlySalaryReminder');
+ if(bill){bill.textContent=unpaid.length+' tagihan belum lunas · '+rp(unpaid.reduce(function(n,p){return n+Number(p.jumlah||0)},0))+' · jatuh tempo tanggal 7. Tunggakan bulan sebelumnya tetap tercatat.';bill.hidden=!unpaid.length}
+ if(salaryBox){salaryBox.textContent=(end?'Pengingat akhir bulan: periksa dan catat pembayaran gaji guru. ':'')+(salary.length?salary.length+' gaji periode sebelumnya belum dibayar · '+rp(salary.reduce(function(n,p){return n+Number(p.total_gaji||0)},0))+'. Pilih periode terkait untuk rincian.':'');salaryBox.hidden=!end&&!salary.length}
 }
 function drawDashboard(){
   var month=$("dashboardMonth").value||thisM;
@@ -327,6 +346,7 @@ function drawDashboard(){
   $("dPaidRate").textContent=paidRate+"%";
   $("dAverage").textContent=rp(average);
   drawAdminAttendance(month);
+  renderMonthlyReminders();
 
   var months=[];
   var base=new Date(month+"-01T00:00:00");
@@ -341,7 +361,7 @@ function drawDashboard(){
     );
   }));
   var chartData=months.map(function(m){return {m:m,inc:P.filter(function(x){return x.bulan===m&&x.status==="Lunas"}).reduce(function(s,x){return s+Number(x.jumlah||0)},0),exp:E.filter(function(x){return String(x.tgl).slice(0,7)===m}).reduce(function(s,x){return s+Number(x.jumlah||0)},0)}});
-  $("dashboardChart").innerHTML='<div class="finance-chart-grid">'+chartData.map(function(q){var ih=Math.max(3,Math.round(q.inc/max*100)),eh=Math.max(3,Math.round(q.exp/max*100)),label=q.m.slice(5)+"/"+q.m.slice(2,4);return '<div class="finance-month"><div class="finance-bars"><div class="finance-bar income" style="height:'+ih+'%" title="Pendapatan '+rp(q.inc)+'"><span>'+rp(q.inc)+'</span></div><div class="finance-bar expense" style="height:'+eh+'%" title="Pengeluaran '+rp(q.exp)+'"><span>'+rp(q.exp)+'</span></div></div><b>'+label+'</b></div>'}).join("")+'</div>';
+  drawStage1(chartData,max,monthPayments);
 
 
   var adminReminderItems=[];if(unpaidCount)adminReminderItems.push('<div class="reminder-item reminder-warn"><span>!</span><div><b>'+unpaidCount+' pembayaran belum lunas</b><small>Total '+rp(receivable)+' pada periode ini.</small></div></div>');var todaySchedules=(typeof SCH!=="undefined"?SCH:[]).filter(function(x){return x.tanggal===todayISO});if(todaySchedules.length)adminReminderItems.push('<div class="reminder-item"><span>▣</span><div><b>'+todaySchedules.length+' jadwal mengajar hari ini</b><small>Pantau aktivitas guru dan murid hari ini.</small></div></div>');$("adminReminderCount").textContent=adminReminderItems.length;$("adminBellDot").hidden=adminReminderItems.length===0;$("adminReminderSummary").innerHTML=adminReminderItems.join("")||'<div class="reminder-clear"><b>Semua aman</b><small>Tidak ada reminder penting untuk periode ini.</small></div>';
@@ -354,18 +374,39 @@ function drawDashboard(){
 }
 $("dashboardMonth").onchange=drawDashboard;
 
+var expensePage=1,expenseLastFilter="";
+var paymentPage=1,paymentLastFilter="";
+var studentPage=1,studentPageSize=4,studentLastFilter="";
+function updateStudentPagination(total){
+  var pages=Math.max(1,Math.ceil(total/studentPageSize));studentPage=Math.max(1,Math.min(studentPage,pages));
+  var start=(studentPage-1)*studentPageSize;
+  $("studentPageSummary").textContent=total?"Menampilkan "+(start+1)+"–"+Math.min(start+studentPageSize,total)+" dari "+total+" murid":"Tidak ada murid yang sesuai filter.";
+  var nav=$("studentPagination");nav.replaceChildren();
+  function button(label,page,disabled){var b=document.createElement("button");b.type="button";b.textContent=label;b.disabled=disabled;if(page===studentPage&&/^\d+$/.test(label)){b.setAttribute("aria-current","page")}b.onclick=function(){studentPage=page;draw()};nav.append(b)}
+  button("‹",studentPage-1,studentPage===1);for(var n=Math.max(1,studentPage-2);n<=Math.min(pages,studentPage+2);n++)button(String(n),n,false);button("›",studentPage+1,studentPage===pages);
+  var inactive=S.filter(function(m){return String(m.status||"").toLowerCase()==="nonaktif"}).length;
+  $("studentTotalCount").textContent=S.length;$("studentActiveCount").textContent=S.length-inactive;$("studentInactiveCount").textContent=inactive;$("studentActiveCaption").textContent=(S.length?Math.round((S.length-inactive)/S.length*100):0)+"% dari total murid";
+  return start;
+}
 function draw(){
-  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});$("bm").innerHTML=filteredStudents.map(function(m,idx){var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td class="student-no">'+(idx+1)+'</td><td><button class="student-name-cell" data-profile="'+m.id+'"><span class="student-avatar">'+esc(initials)+'</span><b>'+esc(m.nama)+'</b></button></td><td>'+esc(m.jenjang||"-")+'</td><td>'+esc((m.kelas&&String(m.kelas).toLowerCase()!=="semua")?m.kelas:"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><div class="student-row-actions"><button class="student-more" type="button" aria-label="Aksi murid">•••</button><div class="student-action-menu"><button data-profile="'+m.id+'">Detail</button><button data-es="'+m.id+'">Edit</button><button data-ds="'+m.id+'">Hapus</button></div></div></td></tr>'}).join("")||emptyTable(6,"Belum ada murid","Tambahkan murid dengan tombol Tambah Murid.");
+  var sq=($("studentSearch").value||"").toLowerCase(),sl=$("studentLevelFilter").value;var filteredStudents=S.filter(function(m){return (!sl||m.jenjang===sl)&&(!sq||[m.nama,m.kelas,m.ortu,m.hp].join(" ").toLowerCase().includes(sq))});var filterKey=sq+"|"+sl;if(filterKey!==studentLastFilter){studentPage=1;studentLastFilter=filterKey}var studentStart=updateStudentPagination(filteredStudents.length);$("bm").innerHTML=filteredStudents.slice(studentStart,studentStart+studentPageSize).map(function(m,idx){var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(x){return x.charAt(0)}).join("").toUpperCase();return '<tr><td class="student-no">'+(studentStart+idx+1)+'</td><td><button class="student-name-cell" data-profile="'+m.id+'"><span class="student-avatar">'+esc(initials)+'</span><b>'+esc(m.nama)+'</b></button></td><td>'+esc(m.jenjang||"-")+'</td><td>'+esc(m.program||"-")+'</td><td><span class="student-active-badge"><i></i>Aktif</span></td><td><div class="student-row-actions"><button class="student-more" type="button" aria-label="Aksi murid">•••</button><div class="student-action-menu"><button data-profile="'+m.id+'">Detail</button><button data-es="'+m.id+'">Edit</button><button data-ds="'+m.id+'">Hapus</button></div></div></td></tr>'}).join("")||emptyTable(6,"Belum ada murid","Tambahkan murid dengan tombol Tambah Murid.");
   var keep=$("sel").value;$("sel").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+'</option>'}).join("");if(keep)$("sel").value=keep;
-  var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return x.bulan===f&&(!ps||x.status===ps)&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
+  var f=$("fb").value,pq=($("paymentSearch").value||"").toLowerCase(),ps=$("paymentStatusFilter").value,L=P.filter(function(x){var m=stu(x.sid)||{};return (x.bulan===f||((ps==="Belum Lunas"||ps==="Terlambat")&&x.bulan<f&&x.status!=="Lunas"))&&(!ps||(ps==="Belum Lunas"?x.status!=="Lunas":paymentDisplayStatus(x)===ps))&&(!pq||(m.nama||"").toLowerCase().includes(pq))}),tm=P.filter(function(x){return x.bulan===thisM});
   var received=tm.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),unpaid=tm.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah)},0),em=E.filter(function(x){return String(x.tgl).slice(0,7)===thisM}).reduce(function(a,x){return a+Number(x.jumlah)},0);
   /* Statistik utama sekarang ditampilkan oleh Dashboard Utama. */
   var ef=$("eb").value,eq=($("expenseSearch").value||"").toLowerCase(),ec=$("expenseCategoryFilter")?$("expenseCategoryFilter").value:"",EL=E.filter(function(x){return String(x.tgl).slice(0,7)===ef&&(!ec||x.kat===ec)&&(!eq||[x.kat,x.ket].join(" ").toLowerCase().includes(eq))}).sort(function(a,b){return a.tgl<b.tgl?1:-1});var expenseTotal=EL.reduce(function(a,x){return a+Number(x.jumlah)},0);$("et2").textContent="";if($("expenseTotal"))$("expenseTotal").textContent=rp(expenseTotal);
-  $("be").innerHTML=EL.map(function(x,idx){return '<tr><td class="expense-no">'+(idx+1)+'</td><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket||"-")+'</td><td><b>'+rp(x.jumlah)+'</b></td><td><div class="expense-actions"><button class="sm" data-er="'+x.id+'">Struk</button><button class="sm danger" data-de="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pengeluaran pada periode ini","Klik tombol Tambah Pengeluaran untuk mencatat pengeluaran.");
+  drawExpenseCharts(EL);
+  var expenseKey=ef+'|'+eq+'|'+ec;if(expenseKey!==expenseLastFilter){expensePage=1;expenseLastFilter=expenseKey}var expensePages=Math.max(1,Math.ceil(EL.length/4));expensePage=Math.max(1,Math.min(expensePage,expensePages));var expenseStart=(expensePage-1)*4;
+  $('expensePageSummary').textContent=EL.length?'Menampilkan '+(expenseStart+1)+'–'+Math.min(expenseStart+4,EL.length)+' dari '+EL.length+' pengeluaran':'Belum ada pengeluaran sesuai filter.';
+  var expenseNav=$('expensePagination');expenseNav.replaceChildren();function expenseButton(label,page,disabled){var b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;if(page===expensePage&&/^\d+$/.test(label))b.setAttribute('aria-current','page');b.onclick=function(){expensePage=page;draw()};expenseNav.append(b)}expenseButton('‹',expensePage-1,expensePage===1);for(var en=Math.max(1,expensePage-2);en<=Math.min(expensePages,expensePage+2);en++)expenseButton(String(en),en,false);expenseButton('›',expensePage+1,expensePage===expensePages);
+  $("be").innerHTML=EL.slice(expenseStart,expenseStart+4).map(function(x,idx){return '<tr><td class="expense-no">'+(expenseStart+idx+1)+'</td><td>'+esc(x.tgl)+'</td><td>'+esc(x.kat)+'</td><td>'+esc(x.ket||"-")+'</td><td><b>'+rp(x.jumlah)+'</b></td><td><div class="expense-actions"><button class="sm" data-er="'+x.id+'">Struk</button><button class="sm danger" data-de="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pengeluaran pada periode ini","Klik tombol Tambah Pengeluaran untuk mencatat pengeluaran.");
   if($("paymentBillTotal"))$("paymentBillTotal").textContent=rp(L.reduce(function(a,x){return a+Number(x.jumlah||0)},0));
   if($("paymentPaidTotal"))$("paymentPaidTotal").textContent=rp(L.filter(function(x){return x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
   if($("paymentUnpaidTotal"))$("paymentUnpaidTotal").textContent=rp(L.filter(function(x){return x.status!=="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0));
-  $("bp").innerHTML=L.map(function(x,idx){var m=stu(x.sid)||{};var initials=(m.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();var rem=x.status==="Lunas"?'<button class="sm" data-iv="'+x.id+'">Invoice</button>':'<a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,"Halo, kami dari Jenius Edu. Mengingatkan pembayaran bimbel "+(m.nama||"")+" bulan "+x.bulan+" sebesar "+rp(x.jumlah)+". Terima kasih.")+'">Ingatkan</a>';return '<tr><td class="payment-no">'+(idx+1)+'</td><td><span class="payment-student"><span class="payment-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||"(dihapus)")+'</b></span></td><td>'+esc(x.bulan)+'</td><td><b>'+rp(x.jumlah)+'</b></td><td><span class="payment-status '+(x.status==="Lunas"?"paid":"unpaid")+'">'+esc(x.status==="Lunas"?"Lunas":"Belum Lunas")+'</span></td><td><div class="payment-actions"><button class="sm" data-tp="'+x.id+'">'+(x.status==="Lunas"?"Tandai belum":"Tandai lunas")+'</button>'+rem+'<button class="sm danger" data-dp="'+x.id+'">Hapus</button></div></td></tr>'}).join("")||emptyTable(6,"Belum ada pembayaran","Tidak ada pembayaran pada periode atau filter ini.");
+  var paymentKey=f+'|'+pq+'|'+ps;if(paymentKey!==paymentLastFilter){paymentPage=1;paymentLastFilter=paymentKey}var paymentPages=Math.max(1,Math.ceil(L.length/4));paymentPage=Math.max(1,Math.min(paymentPage,paymentPages));var paymentStart=(paymentPage-1)*4;
+  $('paymentPageSummary').textContent=L.length?'Menampilkan '+(paymentStart+1)+'–'+Math.min(paymentStart+4,L.length)+' dari '+L.length+' pembayaran':'Tidak ada pembayaran sesuai filter.';
+  var paymentNav=$('paymentPagination');paymentNav.replaceChildren();function paymentButton(label,page,disabled){var b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;if(page===paymentPage&&/^\d+$/.test(label))b.setAttribute('aria-current','page');b.onclick=function(){paymentPage=page;draw()};paymentNav.append(b)}paymentButton('‹',paymentPage-1,paymentPage===1);for(var pn=Math.max(1,paymentPage-2);pn<=Math.min(paymentPages,paymentPage+2);pn++)paymentButton(String(pn),pn,false);paymentButton('›',paymentPage+1,paymentPage===paymentPages);
+  $('bp').innerHTML=L.slice(paymentStart,paymentStart+4).map(function(x,idx){var m=stu(x.sid)||{},status=paymentDisplayStatus(x);var initials=String(m.nama||'?').trim().split(/\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join('').toUpperCase();var receipt=x.status==='Lunas'?'<button class="payment-receipt" data-iv="'+x.id+'">Kuitansi</button>':'<span class="payment-muted">—</span>';var reminder=x.status!=='Lunas'?'<a class="btn sm" target="_blank" rel="noopener" href="'+wa(m.hp,'Halo, kami dari Jenius Edu. Mengingatkan tagihan '+(m.nama||'')+' bulan '+x.bulan+' sebesar '+rp(x.jumlah)+'. Jatuh tempo '+paymentDeadline(x)+'. Terima kasih.')+'">Ingatkan</a>':'';return '<tr><td>'+(paymentStart+idx+1)+'</td><td>'+esc(x.tglLunas||'—')+'</td><td><span class="payment-student"><span class="payment-avatar">'+esc(initials)+'</span><b>'+esc(m.nama||'(dihapus)')+'</b></span></td><td>'+esc(m.jenjang||m.kelas||'—')+'</td><td>'+esc(m.program||'—')+'</td><td>'+esc(x.bulan)+'<small class="bill-deadline">Jatuh tempo '+esc(paymentDeadline(x)||'—')+'</small></td><td><b>'+rp(x.jumlah)+'</b></td><td><span class="payment-status '+(x.status==='Lunas'?'paid':status==='Terlambat'?'overdue':'unpaid')+'">'+esc(status)+'</span></td><td>'+receipt+'</td><td><details class="payment-row-menu"><summary aria-label="Aksi pembayaran">•••</summary><div><button class="sm" data-tp="'+x.id+'">'+(x.status==='Lunas'?'Tandai belum lunas':'Tandai lunas')+'</button>'+reminder+'<button class="sm danger" data-dp="'+x.id+'">Hapus</button></div></details></td></tr>'}).join('')||emptyTable(10,'Belum ada pembayaran','Tidak ada pembayaran pada periode atau filter ini.');
   drawDashboard();
   drawTeachers();
   drawSalary();
@@ -393,14 +434,22 @@ function syncTeacherMasterForm(){
   $("teacherMasterMapel").value=t.mapel||"";
   $("teacherMasterStatus").value=t.status||"Aktif";
   $("teacherMasterNote").value=t.catatan||"";
+  $("teacherMasterAvatar").value=t.avatar_style||"";
 }
+var teacherPage=1,teacherPageSize=4,teacherLastFilter="";
 function drawTeachers(){
   populateTeacherAccounts();
   var active=TEACHERS.filter(function(x){return x.status!=="Nonaktif"}).length;
   $("teacherMasterCount").textContent=active;
   var tq=($("teacherSearch").value||"").toLowerCase(),ts=$("teacherStatusFilter").value;var visibleTeachers=TEACHERS.filter(function(x){return (!ts||x.status===ts)&&(!tq||[x.nama,x.email,x.mapel,x.hp].join(" ").toLowerCase().includes(tq))});
-  $("teacherMasterBody").innerHTML=visibleTeachers.map(function(x,idx){var initials=(x.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();
-    return '<tr><td class="teacher-no">'+(idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+esc(initials)+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
+  var key=tq+"|"+ts;if(key!==teacherLastFilter){teacherPage=1;teacherLastFilter=key}
+  var pages=Math.max(1,Math.ceil(visibleTeachers.length/teacherPageSize));teacherPage=Math.max(1,Math.min(teacherPage,pages));var start=(teacherPage-1)*teacherPageSize;
+  $("teacherTotalCount").textContent=TEACHERS.length;$("teacherActiveCount").textContent=active;$("teacherInactiveCount").textContent=TEACHERS.length-active;$("teacherActiveCaption").textContent=(TEACHERS.length?Math.round(active/TEACHERS.length*100):0)+"% dari total guru";
+  $("teacherPageSummary").textContent=visibleTeachers.length?"Menampilkan "+(start+1)+"–"+Math.min(start+teacherPageSize,visibleTeachers.length)+" dari "+visibleTeachers.length+" guru":"Tidak ada guru yang sesuai filter.";
+  var nav=$("teacherPagination");nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement("button");b.type="button";b.textContent=label;b.disabled=disabled;if(page===teacherPage&&/^\d+$/.test(label))b.setAttribute("aria-current","page");b.onclick=function(){teacherPage=page;drawTeachers()};nav.append(b)}
+  pageButton("‹",teacherPage-1,teacherPage===1);for(var n=Math.max(1,teacherPage-2);n<=Math.min(pages,teacherPage+2);n++)pageButton(String(n),n,false);pageButton("›",teacherPage+1,teacherPage===pages);
+  $("teacherMasterBody").innerHTML=visibleTeachers.slice(start,start+teacherPageSize).map(function(x,idx){var initials=(x.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();
+    return '<tr><td class="teacher-no">'+(start+idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+(['male','female','hijab'].includes(x.avatar_style)?'<img src="./assets/teacher-avatar-'+x.avatar_style+'.svg" alt="">':esc(initials))+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
   }).join("")||emptyTable(6,"Belum ada data guru","Akun Guru yang tersedia akan tampil di sini.");
 }
 $("teacherAccountId").onchange=syncTeacherMasterForm;
@@ -411,6 +460,7 @@ $("teacherMasterForm").onsubmit=async function(e){
   if(!id){alert("Belum ada akun Guru.");return}
   var payload={id:id,nama:$("teacherMasterName").value.trim(),email:$("teacherMasterEmail").value.trim(),hp:$("teacherMasterHp").value.trim(),mapel:$("teacherMasterMapel").value.trim(),status:$("teacherMasterStatus").value,catatan:$("teacherMasterNote").value.trim()};
   if(!payload.nama){alert("Nama guru wajib diisi.");return}
+  if($("teacherMasterAvatar").value||TEACHERS.some(function(t){return t.id===id&&t.avatar_style}))payload.avatar_style=$("teacherMasterAvatar").value||null;
   var r=await window.sb.from("teacher_profiles").upsert(payload,{onConflict:"id"}).select().single();
   if(r.error){alert("Data guru belum bisa disimpan: "+r.error.message);return}
   var i=TEACHERS.findIndex(function(x){return x.id===id});
@@ -428,6 +478,8 @@ document.addEventListener("click",function(e){
 async function dbLoad(){
   showAdminLoading();
   if(!window.sb)throw new Error("Koneksi Supabase belum siap.");
+  var monthlySync=await window.sb.rpc("jenius_sync_monthly_records");
+  if(monthlySync.error)console.warn("Sinkronisasi bulanan belum aktif:",monthlySync.error.message);
   var a;
   try{
     a=await window.sb.from("students").select("*").order("created_at",{ascending:true});
@@ -447,7 +499,7 @@ async function dbLoad(){
   var at=await window.sb.from("teacher_attendance").select("*").order("tanggal",{ascending:false}).order("created_at",{ascending:false});
   if(at.error){console.warn("Rekap absensi belum tersedia:",at.error.message);ADMIN_ATT=[];if($("attendanceAdminSync"))$("attendanceAdminSync").textContent="Tabel absensi belum dibuat"}else{ADMIN_ATT=at.data||[];if($("attendanceAdminSync"))$("attendanceAdminSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas,ortu:x.ortu,hp:x.hp,biaya:Number(x.biaya||0)}});
-  P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
+  P=(b.data||[]).map(function(x){return {id:x.id,sid:x.student_id,bulan:x.bulan,jumlah:Number(x.jumlah||0),metode:x.metode||"",status:x.status||"Belum",dueDate:x.due_date,tglLunas:x.tanggal_bayar?String(x.tanggal_bayar).slice(0,10):undefined}});
   E=(c.data||[]).map(function(x){return {id:x.id,tgl:x.tanggal,kat:x.kategori||"",ket:x.keterangan||"",jumlah:Number(x.jumlah||0)}});
   INV=d.data||[];
   var sg=await window.sb.from("teacher_salaries").select("*").order("bulan",{ascending:false}).order("created_at",{ascending:false});
@@ -455,22 +507,31 @@ async function dbLoad(){
   var si=await window.sb.from("teacher_salary_items").select("*").order("created_at",{ascending:true});
   if(si.error){console.warn("Komponen gaji belum tersedia:",si.error.message);SALITEMS=[]}else SALITEMS=si.data||[];
   var ta=await window.sb.rpc("get_teacher_accounts");
-  if(ta.error){console.warn("Master data guru belum tersedia:",ta.error.message);TEACHERS=[];$("teacherMasterSync").textContent="Jalankan SQL teacher_profiles.sql di Supabase"}else{TEACHERS=ta.data||[];$("teacherMasterSync").textContent="Tersimpan online"}
+  if(ta.error){console.warn("Master data guru belum tersedia:",ta.error.message);TEACHERS=[];$("teacherMasterSync").textContent="Jalankan SQL teacher_profiles.sql di Supabase"}else{TEACHERS=ta.data||[];var avatars=await window.sb.from("teacher_profiles").select("id,avatar_style");if(!avatars.error)TEACHERS.forEach(function(t){var a=(avatars.data||[]).find(function(x){return x.id===t.id});if(a)t.avatar_style=a.avatar_style});$("teacherMasterSync").textContent="Tersimpan online"}
 }
 
 /* Admin receipts/export utilities. */
 function downloadExpenseReceipt(id){
-  var x=E.find(function(q){return q.id===id});
-  if(!x)return;
-  var no="EXP-"+String(x.id).replace(/-/g,"").slice(0,8).toUpperCase();
-  var html='<!doctype html><html><head><meta charset="utf-8"><title>Struk Pengeluaran '+no+'</title><style>body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:25px;color:#15436B}h1{margin:0 0 4px;font-size:24px}h2{text-align:center;margin:30px 0 20px}.box{border:1px solid #ccc;border-radius:10px;padding:18px}.row{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:10px 0}.total{font-size:20px;font-weight:bold}.foot{margin-top:50px;display:flex;justify-content:space-between;text-align:center}.sig{width:180px;border-top:1px solid #777;padding-top:8px}@media print{body{margin:0}}</style></head><body><h1>JENIUS EDU</h1><div>Dokumen Pengeluaran</div><h2>STRUK PENGELUARAN</h2><div class="box"><div class="row"><span>No. Transaksi</span><b>'+esc(no)+'</b></div><div class="row"><span>Tanggal</span><b>'+esc(x.tgl||"")+'</b></div><div class="row"><span>Kategori</span><b>'+esc(x.kat||"")+'</b></div><div class="row"><span>Keterangan</span><b>'+esc(x.ket||"")+'</b></div><div class="row total"><span>Total Pengeluaran</span><span>'+rp(x.jumlah)+'</span></div></div><div class="foot"><div><div style="height:55px"></div><div class="sig">Penerima / Pengelola</div></div><div><div style="height:55px"></div><div class="sig">Jenius Edu</div></div></div></body></html>';
-  var blob=new Blob([html],{type:"text/html;charset=utf-8"});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement("a");a.href=url;a.download="Struk_Pengeluaran_"+no+".html";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},1000);
+ var x=E.find(function(q){return q.id===id});if(!x)return;
+ var no='EXP-'+String(x.id).replace(/-/g,'').toUpperCase(),old=$('expenseReceiptModal');if(old)old.remove();
+ var modal=document.createElement('div');modal.id='expenseReceiptModal';modal.className='invoice-modal';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-label','Struk Pengeluaran');
+ modal.innerHTML='<div class="invoice-box professional-invoice"><button type="button" class="invoice-close-x" aria-label="Tutup struk">×</button><div class="invoice-brand"><div class="invoice-brand-left"><img src="./assets/jenius-edu-logo.png" alt="Logo Jenius Edu"><div><h1>JENIUS EDU</h1><small>Scientia Potentia Est</small></div></div><div class="invoice-title"><b>STRUK PENGELUARAN</b><span>'+esc(no)+'</span></div></div><div class="invoice-status-line"><span>BUKTI PENCATATAN PENGELUARAN</span><strong>TERCATAT</strong></div><div class="invoice-meta modern"><div><small>Tanggal Pengeluaran</small><b>'+esc(x.tgl||'—')+'</b></div><div><small>Kategori</small><b>'+esc(x.kat||'—')+'</b></div><div><small>No. Struk</small><b>'+esc(no)+'</b></div></div><div class="invoice-detail"><div><span>'+esc(x.ket||'Pengeluaran operasional')+'</span><small>'+esc(x.kat||'Jenius Edu')+'</small></div><b>'+rp(x.jumlah)+'</b></div><div class="invoice-grand"><span>Total Pengeluaran</span><strong>'+rp(x.jumlah)+'</strong></div><div class="invoice-foot"><div><b>Jenius Edu</b><small>Dokumen pencatatan pengeluaran internal. Simpan bukti transaksi dari penerima atau penyedia sebagai dokumen pendukung.</small></div><div class="invoice-stamp">TERCATAT<small>JENIUS EDU</small></div></div><div class="invoice-actions"><button type="button" class="expense-receipt-close">Tutup</button><button type="button" class="pri expense-receipt-print">Cetak / Simpan PDF</button><button type="button" class="pri expense-receipt-pdf">Download PDF</button></div></div>';
+ var previousFocus=document.activeElement;function close(){document.removeEventListener('keydown',keydown);modal.remove();if(previousFocus&&previousFocus.isConnected)previousFocus.focus()}
+ function keydown(e){if(e.key==='Escape')close();if(e.key==='Tab'){var buttons=Array.from(modal.querySelectorAll('button')),first=buttons[0],last=buttons[buttons.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}}
+ document.body.append(modal);document.addEventListener('keydown',keydown);modal.querySelector('.invoice-close-x').onclick=close;modal.querySelector('.expense-receipt-close').onclick=close;modal.onclick=function(e){if(e.target===modal)close()};modal.querySelector('.expense-receipt-print').onclick=function(){window.print()};modal.querySelector('.expense-receipt-pdf').onclick=function(){downloadExpenseReceiptPdf(x,no)};modal.querySelector('.invoice-close-x').focus();
 }
-function exportAdminExcel(){var students=S.map(function(x){return {ID:x.id,Nama:x.nama,Jenjang:x.jenjang,Kelas_Mapel:x.kelas,Orang_Tua:x.ortu,WhatsApp:x.hp,Biaya_Bulanan:x.biaya}});var payments=P.map(function(x){var m=stu(x.sid)||{};return {ID:x.id,Nama_Murid:m.nama||"",Bulan:x.bulan,Jumlah:x.jumlah,Metode:x.metode,Status:x.status,Tanggal_Lunas:x.tglLunas||""}});var expenses=E.map(function(x){return {ID:x.id,Tanggal:x.tgl,Kategori:x.kat,Keterangan:x.ket,Jumlah:x.jumlah}});var invoices=INV.map(function(x){var p=P.find(function(q){return q.id===x.payment_id})||{},m=stu(p.sid)||{};return {ID:x.id,Nomor_Invoice:x.nomor_invoice,Tanggal:x.tanggal_invoice,Nama_Murid:m.nama||"",Bulan:p.bulan||"",Total:x.total,Status:x.status}});downloadExcel("Jenius_Edu_Admin_"+todayISO+".xlsx",{"Murid":students,"Pembayaran":payments,"Pengeluaran":expenses,"Invoice":invoices});}
+function downloadExpenseReceiptPdf(x,no){
+ if(!window.jspdf||!window.jspdf.jsPDF){alert('Library PDF belum siap. Silakan gunakan Cetak / Simpan PDF.');return}
+ var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'}),left=20,right=190,y=24;
+ doc.setFont('helvetica','bold');doc.setTextColor(23,76,113);doc.setFontSize(21);doc.text('JENIUS EDU',left,y);y+=9;doc.setFontSize(13);doc.text('STRUK PENGELUARAN',left,y);y+=8;
+ doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(90,110,130);doc.text(no,left,y);y+=10;doc.setDrawColor(205,220,230);doc.line(left,y,right,y);y+=12;
+ [['Tanggal Pengeluaran',x.tgl],['Kategori',x.kat],['Status','TERCATAT']].forEach(function(pair){doc.setFont('helvetica','normal');doc.setTextColor(105,120,135);doc.text(pair[0],left,y);y+=6;doc.setFont('helvetica','bold');doc.setTextColor(35,65,85);var lines=doc.splitTextToSize(String(pair[1]||'-'),170);doc.text(lines,left,y);y+=lines.length*5+8});
+ doc.setFont('helvetica','normal');doc.text('Keterangan',left,y);y+=7;var lines=doc.splitTextToSize(String(x.ket||'Pengeluaran operasional'),170);lines.forEach(function(line){if(y>265){doc.addPage();y=25}doc.text(line,left,y);y+=5});y+=12;if(y>240){doc.addPage();y=25}
+ doc.setFillColor(240,248,244);doc.roundedRect(left,y-6,170,20,3,3,'F');doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(34,100,71);doc.text('TOTAL PENGELUARAN',left+5,y+6);doc.setFontSize(17);doc.text(rp(x.jumlah),right-5,y+6,{align:'right'});y+=30;
+ doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(100,115,130);doc.text('Dokumen pencatatan internal Jenius Edu. Simpan bukti transaksi asli sebagai dokumen pendukung.',left,y,{maxWidth:170});
+ doc.save('Struk-Jenius-Edu-'+no+'.pdf');
+}
 
-/* Admin invoice modal. */
 async function showInv(x){
   var m=stu(x.sid)||{},inv=INV.find(function(q){return q.payment_id===x.id}),no=(inv&&inv.nomor_invoice)||invoiceNo(x),tgl=x.tglLunas||todayISO;
   if(!inv){var r=await window.sb.from("invoices").insert({payment_id:x.id,nomor_invoice:no,tanggal_invoice:tgl,total:Number(x.jumlah||0),status:"LUNAS"}).select().single();if(r.error){alert("Invoice gagal disimpan: "+r.error.message);return}INV.push(r.data)}
@@ -552,26 +613,27 @@ function openTeacherProfile(id){
 $("teacherProfileBack").onclick=function(){$("teacherProfilePage").hidden=true;$("teacherMasterPage").hidden=false;activeTeacherProfileId=null};
 document.addEventListener("click",function(e){var b=e.target.closest("[data-teacher-profile]");if(b)openTeacherProfile(b.dataset.teacherProfile)});
 
+var reportTransactionType='';
 function financialReportData(){
-  var month=$("financialReportMonth").value||thisM;
-  var paid=P.filter(function(x){return x.bulan===month&&x.status==="Lunas"}),expenses=E.filter(function(x){return String(x.tgl||"").slice(0,7)===month});
-  var income=paid.reduce(function(s,x){return s+Number(x.jumlah||0)},0),expense=expenses.reduce(function(s,x){return s+Number(x.jumlah||0)},0);
-  var unpaid=P.filter(function(x){return x.bulan===month&&x.status!=="Lunas"}).reduce(function(s,x){return s+Number(x.jumlah||0)},0);
-  return {month:month,paid:paid,expenses:expenses,income:income,expense:expense,profit:income-expense,unpaid:unpaid}
+ var month=$('financialReportMonth').value||thisM,from=$('financialReportFrom').value||month;if(from>month){from=month;$('financialReportFrom').value=from}
+ var paid=P.filter(function(x){return x.bulan>=from&&x.bulan<=month&&x.status==='Lunas'}),expenses=E.filter(function(x){var m=String(x.tgl||'').slice(0,7);return m>=from&&m<=month});
+ var income=paid.reduce(function(n,p){return n+Number(p.jumlah||0)},0),expense=expenses.reduce(function(n,e){return n+Number(e.jumlah||0)},0),unpaid=P.filter(function(p){return p.bulan>=from&&p.bulan<=month&&p.status!=='Lunas'}).reduce(function(n,p){return n+Number(p.jumlah||0)},0);
+ return {month:month,from:from,paid:paid,expenses:expenses,income:income,expense:expense,profit:income-expense,unpaid:unpaid};
 }
 function drawFinancialReport(){
-  var d=financialReportData();
-  $("financialReportKpi").innerHTML='<div class="financial-kpi income"><span class="financial-kpi-icon">↑</span><div><small>Pendapatan</small><b>'+rp(d.income)+'</b></div></div><div class="financial-kpi expense"><span class="financial-kpi-icon">↓</span><div><small>Pengeluaran</small><b>'+rp(d.expense)+'</b></div></div><div class="financial-kpi profit"><span class="financial-kpi-icon">↗</span><div><small>Laba Bersih</small><b>'+rp(d.profit)+'</b></div></div>';
-  $("financialReportSummary").innerHTML='<table class="financial-summary-table"><thead><tr><th>Keterangan</th><th>Nominal</th></tr></thead><tbody><tr><td>Pendapatan</td><td>'+rp(d.income)+'</td></tr><tr><td>Pengeluaran</td><td>'+rp(d.expense)+'</td></tr><tr><td>Laba Bersih</td><td>'+rp(d.profit)+'</td></tr></tbody></table>';
-  var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});var sorted=Object.keys(cats).sort(function(x,y){return cats[y]-cats[x]});$("financialExpenseBreakdown").innerHTML=sorted.map(function(k){var pct=d.expense?Math.round(cats[k]/d.expense*100):0;return '<div class="expense-break"><div><span>'+esc(k)+'</span><b>'+rp(cats[k])+'</b></div><div><i style="width:'+pct+'%"></i></div><small>'+pct+'%</small></div>'}).join("");
-  var monthParts=d.month.split("-"),year=Number(monthParts[0]),month=Number(monthParts[1]),series=[];for(var i=5;i>=0;i--){var dt=new Date(year,month-1-i,1),key=dt.getFullYear()+"-"+String(dt.getMonth()+1).padStart(2,"0"),inc=P.filter(function(x){return x.bulan===key&&x.status==="Lunas"}).reduce(function(a,x){return a+Number(x.jumlah||0)},0);series.push({label:["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"][dt.getMonth()],value:inc})}var max=Math.max.apply(null,series.map(function(x){return x.value}).concat([1]));$("financialReportChart").innerHTML='<div class="report-chart-bars">'+series.map(function(x){var height=x.value?Math.max(8,Math.round(x.value/max*100)):2;return '<div class="report-chart-col"><div class="report-chart-value">'+(x.value?rp(x.value):"")+'</div><div class="report-chart-track"><i style="height:'+height+'%"></i></div><span>'+x.label+'</span></div>'}).join("")+'</div>';
-  var rows=[];d.paid.forEach(function(x){var m=stu(x.sid)||{};rows.push({date:x.bulan,type:"Pendapatan",desc:"Pembayaran "+(m.nama||"Murid"),inc:Number(x.jumlah||0),out:0})});d.expenses.forEach(function(x){rows.push({date:x.tgl,type:"Pengeluaran",desc:(x.kat||"")+" - "+(x.ket||""),inc:0,out:Number(x.jumlah||0)})});rows.sort(function(a,b){return String(b.date).localeCompare(String(a.date))});
-  $("financialReportBody").innerHTML=rows.map(function(x){return '<tr><td>'+esc(x.date||"-")+'</td><td><span class="finance-type '+(x.inc?"income":"expense")+'">'+x.type+'</span></td><td>'+esc(x.desc)+'</td><td class="ok">'+(x.inc?rp(x.inc):"-")+'</td><td class="no">'+(x.out?rp(x.out):"-")+'</td></tr>'}).join("")||'<tr><td colspan="5">Belum ada transaksi pada periode ini.</td></tr>';
+ var d=financialReportData(),series=financialMonthSeries(d.from,d.month,P,E);
+ $('financialReportKpi').innerHTML='<div class="financial-kpi income"><span class="financial-kpi-icon">↑</span><div><small>Total Pendapatan</small><b>'+rp(d.income)+'</b><small>Dari pembayaran lunas</small></div></div><div class="financial-kpi expense"><span class="financial-kpi-icon">↓</span><div><small>Total Pengeluaran</small><b>'+rp(d.expense)+'</b><small>Biaya operasional</small></div></div><div class="financial-kpi profit"><span class="financial-kpi-icon">↗</span><div><small>Laba Bersih</small><b>'+rp(d.profit)+'</b><small>Selisih pendapatan dan pengeluaran</small></div></div>';
+ $('financialReportSummary').innerHTML='<table class="financial-summary-table"><thead><tr><th>Bulan</th><th>Pendapatan</th><th>Pengeluaran</th><th>Laba Bersih</th></tr></thead><tbody>'+series.map(function(q){return '<tr><td>'+esc(q.label)+'</td><td>'+rp(q.inc)+'</td><td>'+rp(q.exp)+'</td><td class="'+(q.inc-q.exp>=0?'ok':'no')+'">'+rp(q.inc-q.exp)+'</td></tr>'}).join('')+'</tbody></table>';
+ drawFinancialLines(series);
+ var rows=[];d.paid.forEach(function(x){var m=stu(x.sid)||{};rows.push({id:x.id,date:x.tglLunas||x.bulan,kind:'income',type:'Pemasukan',category:'Pembayaran Murid',desc:'Pembayaran '+(m.nama||'Murid')+' ('+x.bulan+')',amount:Number(x.jumlah||0)})});d.expenses.forEach(function(x){rows.push({id:x.id,date:x.tgl,kind:'expense',type:'Pengeluaran',category:x.kat||'Lainnya',desc:x.ket||'—',amount:Number(x.jumlah||0)})});rows.sort(function(a,b){return String(a.date).localeCompare(String(b.date))||String(a.id).localeCompare(String(b.id))});var balance=0;rows.forEach(function(r){balance+=r.kind==='income'?r.amount:-r.amount;r.balance=balance});
+ $('financialReportBody').innerHTML=rows.filter(function(r){return !reportTransactionType||r.kind===reportTransactionType}).map(function(r,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(r.date)+'</td><td><span class="finance-type '+r.kind+'">'+(r.kind==='income'?'↑ ':'↓ ')+r.type+'</span></td><td>'+esc(r.category)+'</td><td>'+esc(r.desc)+'</td><td><b>'+rp(r.amount)+'</b></td><td>'+rp(r.balance)+'</td><td><button class="report-detail" '+(r.kind==='income'?'data-iv':'data-er')+'="'+esc(r.id)+'">Detail</button></td></tr>'}).join('')||emptyTable(8,'Belum ada transaksi','Tidak ada transaksi sesuai periode dan filter.');
 }
+var reportStart=new Date(now.getFullYear(),now.getMonth()-5,1);$('financialReportFrom').value=reportStart.getFullYear()+'-'+String(reportStart.getMonth()+1).padStart(2,'0');$('financialReportFrom').onchange=drawFinancialReport;
+document.querySelectorAll('[data-report-type]').forEach(function(b){b.onclick=function(){reportTransactionType=b.dataset.reportType;document.querySelectorAll('[data-report-type]').forEach(function(t){t.setAttribute('aria-pressed',String(t===b))});drawFinancialReport()}});
 $("financialReportMonth").value=thisM;$("financialReportMonth").onchange=drawFinancialReport;
 document.querySelector('[data-t="r"]').addEventListener("click",drawFinancialReport);
 $("financialReportCsv").onclick=function(){var d=financialReportData(),rows=[["Periode","Jenis","Keterangan","Masuk","Keluar"]];d.paid.forEach(function(x){var m=stu(x.sid)||{};rows.push([x.bulan,"Pendapatan","Pembayaran "+(m.nama||"Murid"),Number(x.jumlah||0),0])});d.expenses.forEach(function(x){rows.push([x.tgl,"Pengeluaran",(x.kat||"")+" - "+(x.ket||""),0,Number(x.jumlah||0)])});rows.push(["","TOTAL","",d.income,d.expense],["","LABA/RUGI","",d.profit,""]);var csv=rows.map(function(r){return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"'}).join(",")}).join("\n"),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),link=document.createElement("a");link.href=url;link.download="Laporan-Keuangan-Jenius-Edu-"+d.month+".csv";link.click();setTimeout(function(){URL.revokeObjectURL(url)},500)};
-$("financialReportPdf").onclick=function(){var d=financialReportData();if(!window.jspdf||!window.jspdf.jsPDF){alert("Library PDF belum siap.");return}var doc=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),y=20;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.setFontSize(20);doc.text("JENIUS EDU",20,y);y+=8;doc.setFontSize(14);doc.text("LAPORAN KEUANGAN",20,y);y+=7;doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,115,130);doc.text("Periode: "+d.month,20,y);y+=12;[["Pendapatan",d.income],["Pengeluaran",d.expense],["Laba / Rugi",d.profit],["Piutang",d.unpaid]].forEach(function(r){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(r[0],20,y);doc.setFont("helvetica","bold");doc.text(rp(r[1]),190,y,{align:"right"});y+=8});y+=3;doc.setDrawColor(210,220,230);doc.line(20,y,190,y);y+=9;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.text("RINCIAN PENGELUARAN",20,y);y+=8;var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});Object.keys(cats).forEach(function(k){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(k,20,y);doc.setFont("helvetica","bold");doc.text(rp(cats[k]),190,y,{align:"right"});y+=7});doc.save("Laporan-Keuangan-Jenius-Edu-"+d.month+".pdf")};
+$("financialReportPdf").onclick=function(){var d=financialReportData();if(!window.jspdf||!window.jspdf.jsPDF){alert("Library PDF belum siap.");return}var doc=new window.jspdf.jsPDF({unit:"mm",format:"a4"}),y=20;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.setFontSize(20);doc.text("JENIUS EDU",20,y);y+=8;doc.setFontSize(14);doc.text("LAPORAN KEUANGAN",20,y);y+=7;doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(100,115,130);doc.text("Periode: "+d.from+" sampai "+d.month,20,y);y+=12;[["Pendapatan",d.income],["Pengeluaran",d.expense],["Laba / Rugi",d.profit],["Piutang",d.unpaid]].forEach(function(r){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(r[0],20,y);doc.setFont("helvetica","bold");doc.text(rp(r[1]),190,y,{align:"right"});y+=8});y+=3;doc.setDrawColor(210,220,230);doc.line(20,y,190,y);y+=9;doc.setFont("helvetica","bold");doc.setTextColor(23,76,113);doc.text("RINCIAN PENGELUARAN",20,y);y+=8;var cats={};d.expenses.forEach(function(x){cats[x.kat||"Lainnya"]=(cats[x.kat||"Lainnya"]||0)+Number(x.jumlah||0)});Object.keys(cats).forEach(function(k){doc.setFont("helvetica","normal");doc.setTextColor(60,75,90);doc.text(k,20,y);doc.setFont("helvetica","bold");doc.text(rp(cats[k]),190,y,{align:"right"});y+=7});doc.save("Laporan-Keuangan-Jenius-Edu-"+d.month+".pdf")};
 
 async function loadAuditLog(){
   $("auditLogBody").innerHTML=tableSkeleton(5);
@@ -597,18 +659,23 @@ function auditActivityLabel(x){
   if(action==="LOGIN")return "Login ke sistem";
   return action||"-";
 }
+var auditPage=1,auditLastFilter="";
+$("auditMonth").value=thisM;$("auditMonth").onchange=drawAuditLog;
 function drawAuditLog(){
   var q=($("auditSearch").value||"").toLowerCase(),user=$("auditActionFilter").value;
   var from=$("auditDateFrom")&&$("auditDateFrom").value,to=$("auditDateTo")&&$("auditDateTo").value;
   var rows=AUDIT.filter(function(x){
     var who=x.user_email||x.role||"",day=String(x.created_at||"").slice(0,10);
     var search=[who,x.action,x.module,x.detail,auditActivityLabel(x)].join(" ").toLowerCase();
-    return (!user||who===user)&&(!q||search.includes(q))&&(!from||day>=from)&&(!to||day<=to);
+    return (!$("auditMonth").value||day.slice(0,7)===$("auditMonth").value)&&(!user||who===user)&&(!q||search.includes(q))&&(!from||day>=from)&&(!to||day<=to);
   });
-  $("auditLogBody").innerHTML=rows.map(function(x,idx){
+  var key=q+'|'+user+'|'+$('auditMonth').value;if(key!==auditLastFilter){auditPage=1;auditLastFilter=key}var pages=Math.max(1,Math.ceil(rows.length/5));auditPage=Math.max(1,Math.min(auditPage,pages));var start=(auditPage-1)*5;
+  $('auditPageSummary').textContent=rows.length?'Menampilkan '+(start+1)+'–'+Math.min(start+5,rows.length)+' dari '+rows.length+' aktivitas':'Tidak ada aktivitas sesuai filter.';
+  var nav=$('auditPagination');nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;if(page===auditPage&&/^\d+$/.test(label))b.setAttribute('aria-current','page');b.onclick=function(){auditPage=page;drawAuditLog()};nav.append(b)}pageButton('‹',auditPage-1,auditPage===1);for(var n=Math.max(1,auditPage-2);n<=Math.min(pages,auditPage+2);n++)pageButton(String(n),n,false);pageButton('›',auditPage+1,auditPage===pages);
+  $("auditLogBody").innerHTML=rows.slice(start,start+5).map(function(x,idx){
     var dt=x.created_at?new Date(x.created_at).toLocaleString("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"-";
     var who=x.user_email||x.role||"-";
-    return '<tr><td>'+(idx+1)+'</td><td>'+esc(dt)+'</td><td><b>'+esc(who)+'</b></td><td>'+esc(auditActivityLabel(x))+'</td><td>'+esc(x.module||"-")+'</td></tr>';
+    return '<tr><td>'+(start+idx+1)+'</td><td>'+esc(dt)+'</td><td><span class="audit-user-avatar" aria-hidden="true">'+esc(who.charAt(0).toUpperCase())+'</span><b>'+esc(who)+'</b></td><td>'+esc(auditActivityLabel(x))+'</td><td><span class="audit-module-badge">'+esc(x.module||"-")+'</span>'+'</td></tr>';
   }).join("")||emptyTable(5,"Belum ada aktivitas","Aktivitas baru atau hasil pencarian akan tampil di sini.");
 }
 $("refreshAuditLog").onclick=loadAuditLog;

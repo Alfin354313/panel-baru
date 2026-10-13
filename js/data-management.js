@@ -43,15 +43,13 @@
   if(history.error)throw new Error(history.error.message);
   el('dataOperationHistory').textContent=(history.data||[]).map(function(x){return new Date(x.created_at).toLocaleString('id-ID')+' · '+x.action+' · '+x.user_id}).join('\n')||'Belum ada aktivitas.';
   var box=el('dataArchives');box.replaceChildren();
-  if(!items.length){box.textContent='Belum ada arsip. Isi nama dan tahun, lalu klik Simpan salinan arsip. Tombol Unduh salinan akan muncul di sini.';return}
-  items.forEach(function(item){
-   var row=document.createElement('div'),text=document.createElement('span'),button=document.createElement('button');
-   row.className='data-archive-row';text.textContent=item.label+' · '+item.year+' · '+new Date(item.created_at).toLocaleString('id-ID');button.type='button';button.textContent='Unduh salinan';
-   button.onclick=function(){run(async function(){status('Menyiapkan arsip…');await download(await rpc('jenius_archive_download',{archive_id:item.id}),'Jenius-Arsip');status('Unduhan arsip disiapkan.');})};
-   row.append(text,button);box.append(row);
-  });
+  var table=document.createElement('table');table.className='data-archive-table';table.innerHTML='<thead><tr><th>No</th><th>Tanggal</th><th>Jenis</th><th>Nama Arsip</th><th>Tahun</th><th>Aksi</th></tr></thead>';var body=document.createElement('tbody');table.append(body);box.append(table);
+  if(!items.length){var row=document.createElement('tr'),cell=document.createElement('td');cell.colSpan=6;cell.textContent='Belum ada arsip tersimpan.';row.append(cell);body.append(row);return}
+  items.forEach(function(item,index){var row=document.createElement('tr');[index+1,new Date(item.created_at).toLocaleString('id-ID'),'Arsip Tahunan',item.label,item.year].forEach(function(value){var cell=document.createElement('td');cell.textContent=String(value==null?'—':value);row.append(cell)});var cell=document.createElement('td'),button=document.createElement('button');button.type='button';button.textContent='↓ Unduh';button.onclick=function(){run(async function(){status('Menyiapkan arsip…');await download(await rpc('jenius_archive_download',{archive_id:item.id}),'Jenius-Arsip');status('Unduhan arsip disiapkan.');})};cell.append(button);row.append(cell);body.append(row)});
+
  }
  el('dataBackup').onclick=function(){run(async function(){status('Mengambil seluruh data dari database…');var data=await rpc('jenius_backup');await download(data,'Jenius-Backup');status('Unduhan backup disiapkan. Tabel belum tersedia: '+(data.missing_tables.join(', ')||'tidak ada')+'. Simpan file di tempat aman.');})};
+ var zone=document.querySelector('#dataManagementPage .data-dropzone');zone.addEventListener('dragover',function(e){e.preventDefault();zone.classList.add('dragging')});zone.addEventListener('dragleave',function(){zone.classList.remove('dragging')});zone.addEventListener('drop',function(e){e.preventDefault();zone.classList.remove('dragging');if(busy||!e.dataTransfer.files.length)return;try{var dt=new DataTransfer();dt.items.add(e.dataTransfer.files[0]);el('dataFile').files=dt.files;el('dataFile').dispatchEvent(new Event('change'));}catch(err){status('Klik area file untuk memilih backup.')}});
  el('dataFile').onchange=function(){pending=null;el('dataRestoreSummary').textContent='';controls()};
  el('dataValidate').onclick=function(){run(async function(){
   pending=null;var file=el('dataFile').files[0];if(!file)throw new Error('Pilih file backup dahulu.');if(file.size>50*1024*1024)throw new Error('File melebihi 50 MB.');

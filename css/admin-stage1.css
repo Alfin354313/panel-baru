@@ -1,0 +1,437 @@
+/* Admin-only reference layout. Loaded after previous UI styles. */
+body.role-admin{background:linear-gradient(135deg,#e4f1ff,#f7fbff)!important}
+body.role-admin #dashboard[hidden]{display:none!important}
+body.role-admin #dashboard{display:flex!important;flex-direction:column;gap:16px!important;padding:12px 10px 20px}
+body.role-admin .stage1-summary{background:transparent!important;padding:0!important;border:0!important}
+body.role-admin .stage1-actions{display:flex;align-items:center;gap:12px}
+body.role-admin .admin-dashboard-welcome{padding:4px 0 18px!important}
+body.role-admin .admin-dashboard-welcome h2{font-size:1.7rem!important;letter-spacing:-.035em}
+body.role-admin .admin-dashboard-welcome p{display:block!important;margin-top:7px;font-size:.82rem}
+body.role-admin .admin-eyebrow{display:none!important}
+body.role-admin #dashboard .dashboard-kpi-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+body.role-admin #dashboard .dashboard-card{min-height:108px!important;padding:18px 14px 16px 74px!important;position:relative;border:1px solid #dfebf9!important;border-radius:14px!important;overflow:visible!important}
+body.role-admin #dashboard .dashboard-card .kpi-icon{position:absolute;top:16px;left:14px;width:46px;height:46px;display:grid;place-items:center;background:#e0efff;color:#1688ff}
+body.role-admin #dashboard .dashboard-card small{font-size:.76rem!important}
+body.role-admin #dashboard .dashboard-card b{font-size:1.5rem!important;overflow-wrap:anywhere}
+body.role-admin #dashboard .kpi-caption{font-size:.7rem!important;font-weight:400;line-height:1.4;margin-top:7px!important}
+body.role-admin #dashboard .kpi-expense{background:#fff6f8!important}
+body.role-admin #dashboard .kpi-expense b{color:#ef4451!important}
+body.role-admin #dashboard .kpi-expense .kpi-icon{background:#ffe2e7;color:#ef4451}
+body.role-admin #dashboard .kpi-income .kpi-icon,body.role-admin #dashboard .kpi-profit .kpi-icon{background:#dcf7ec;color:#009f69}
+body.role-admin .stage1-extra{margin-top:12px;color:#57738e;font-size:.76rem}
+body.role-admin .stage1-extra summary{cursor:pointer;padding:5px 0}
+body.role-admin .stage1-extra-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+body.role-admin .stage1-chart-row{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px}
+body.role-admin .stage1-lower{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(280px,1fr);gap:16px;align-items:start}
+body.role-admin .stage1-side{display:grid;gap:14px}
+body.role-admin #dashboard .dashboard-section{margin:0!important;border:1px solid #e0ebf6!important;border-radius:16px!important;padding:18px!important;min-width:0}
+body.role-admin #dashboard .dashboard-head h2{font-size:1.1rem!important}
+body.role-admin #dashboard .finance-chart{height:auto!important;border:0;background:transparent!important;padding:0}
+body.role-admin .finance-chart svg{display:block;width:100%;height:auto;min-height:180px}
+body.role-admin .finance-chart text{font:10px sans-serif;fill:#607a9d}
+body.role-admin .stage1-attendance{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+body.role-admin .stage1-attendance .attendance-compact-head{grid-column:1/-1;margin:0}
+body.role-admin .stage1-attendance .attendance-compact-head b{font-size:1.1rem;color:#092f68}
+body.role-admin .stage1-attendance .attendance-compact-head small{display:none}
+body.role-admin .stage1-ring{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:#eaf1f8;width:100%;max-width:170px}
+body.role-admin .stage1-ring>div{background:#fff;width:64%;height:64%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+body.role-admin .stage1-ring b{font-size:1.5rem;color:#092f68}
+body.role-admin .stage1-ring span{font-size:.75rem;color:#647da0}
+body.role-admin .stage1-attendance .attendance-compact-grid{display:flex!important;flex-direction:column;gap:10px}
+body.role-admin .stage1-attendance .attendance-compact-grid>div{display:flex!important;align-items:center;gap:7px;border:0!important;background:none!important;padding:4px 0!important;border-bottom:1px solid #edf3fa!important}
+body.role-admin .stage1-attendance .attendance-compact-grid b{margin-left:auto}
+body.role-admin .stage1-attendance .attendance-icon{width:12px;height:12px;font-size:0;border-radius:50%;background:#1688ff}
+body.role-admin .stage1-attendance .attendance-icon.izin{background:#ffa21a}
+body.role-admin .stage1-attendance .attendance-icon.sakit{background:#ef4451}
+body.role-admin .stage1-attendance .attendance-icon.absen{background:#8428f5}
+body.role-admin .stage1-link{border:0;background:none;color:#087bf1;padding:0;font-size:.72rem;white-space:nowrap}
+body.role-admin .stage1-feed{font-size:.8rem;line-height:1.5;color:#647d99}
+body.role-admin .stage1-payment{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #eaf1fa;flex-wrap:wrap}
+body.role-admin .stage1-payment>div{flex:1;min-width:70px}
+body.role-admin .stage1-payment small{display:block;margin-top:4px}
+body.role-admin .stage1-payment b,body.role-admin .stage1-payment strong{color:#092f68}
+body.role-admin .stage1-announcement{padding:14px;background:#f0f7ff;border-radius:12px;margin-top:8px}
+body.role-admin .stage1-announcement b{color:#092f68}
+body.role-admin .stage1-announcement p{margin:6px 0 0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
+body.role-admin .stage1-brand{display:flex;align-items:center;gap:10px;padding:0 5px 24px;color:white}
+body.role-admin .stage1-brand img{width:48px;height:48px}
+body.role-admin .stage1-brand b{font-size:1.1rem}
+body.role-admin .stage1-brand small{display:block;margin-top:5px;color:#bcd7ef;font-size:.72rem}
+body.role-admin #app>.admin-sidebar:before{display:none!important}
+@media(min-width:900px){body.role-admin #app{grid-template-columns:210px minmax(0,1fr)!important;max-width:1480px!important}body.role-admin #app>.admin-sidebar .tabs button{display:flex!important;align-items:center;gap:12px;min-height:48px!important}body.role-admin #app>.admin-sidebar .menu-icon{width:22px;height:22px;flex-shrink:0}body.role-admin #app>header{margin:0!important;border-radius:0 18px 18px 18px!important;padding:18px 24px!important}}
+@media(max-width:1150px){body.role-admin #dashboard .dashboard-card{padding:14px!important}body.role-admin #dashboard .dashboard-card .kpi-icon{position:static;width:34px;height:34px;margin-bottom:10px}body.role-admin .stage1-actions{gap:6px}body.role-admin .stage1-actions button{font-size:.75rem}body.role-admin .admin-dashboard-welcome h2{font-size:1.4rem!important}}
+@media(max-width:899px){body.role-admin #dashboard{padding:4px 0 12px}body.role-admin .stage1-brand{display:none}body.role-admin .stage1-chart-row,body.role-admin .stage1-lower{grid-template-columns:1fr}body.role-admin #dashboard .dashboard-kpi-grid,body.role-admin .stage1-extra-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.role-admin .admin-dashboard-welcome{flex-direction:column!important;align-items:flex-start!important;gap:12px}body.role-admin .admin-dashboard-welcome p{display:none!important}body.role-admin .stage1-actions{width:100%;justify-content:space-between}body.role-admin .stage1-actions .dashboard-filter{width:auto!important}body.role-admin .stage1-actions input{width:145px!important}body.role-admin #dashboard .dashboard-card b{font-size:1.3rem!important}body.role-admin #app #logoutBtn{display:inline-flex!important;padding:8px!important;min-width:0!important;font-size:.72rem!important}body.role-admin #app>header>div:last-child{flex-wrap:nowrap!important;gap:6px!important}body.role-admin #app{padding-bottom:calc(84px + env(safe-area-inset-bottom))!important}body.role-admin .stage1-attendance{grid-template-columns:minmax(120px,1fr) 1fr}body.role-admin #dashboard table{min-width:580px!important}body.role-admin .stage1-extra .dashboard-ratio-grid{grid-template-columns:1fr!important}}
+body.role-admin #app #dashboard>.stage1-summary{display:block!important;grid-template-areas:none!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid{grid-template-rows:auto!important;margin:0!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{display:block!important;height:auto!important;min-height:108px!important;padding:18px 14px 16px 74px!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card:before,body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card:after{display:none!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{left:14px!important;right:auto!important;top:18px!important;transform:none!important;width:46px!important;height:46px!important;min-width:0!important;padding:8px!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-caption{display:block!important;font-size:.7rem!important;line-height:1.4!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid small{font-size:.76rem!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid b{font-size:1.5rem!important;white-space:normal!important;line-height:1.2!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome{justify-content:space-between!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome>div:first-child{padding:0!important;margin:0!important;text-align:left!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome .dashboard-filter{position:static!important;transform:none!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-compact-grid{display:flex!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon{width:10px!important;height:10px!important;border-radius:50%!important;font-size:0!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.hadir{background:#1688ff!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.izin{background:#ffa21a!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.sakit{background:#ef4451!important}
+body.role-admin #app #dashboard .stage1-attendance .attendance-icon.absen{background:#8428f5!important}
+@media(max-width:1150px){body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{padding:14px!important}body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{position:static!important;width:34px!important;height:34px!important;margin-bottom:8px!important}body.role-admin #app #dashboard .dashboard-kpi-grid b{font-size:1.2rem!important}}
+@media(max-width:899px){body.role-admin #app #dashboard .dashboard-students{display:block!important}body.role-admin #app #dashboard .dashboard-students table{display:table!important}body.role-admin #app #dashboard .dashboard-students thead{display:table-header-group!important}body.role-admin #app #dashboard .dashboard-students tbody{display:table-row-group!important}body.role-admin #app #dashboard .dashboard-students tr{display:table-row!important}body.role-admin #app #dashboard .dashboard-students td,body.role-admin #app #dashboard .dashboard-students th{display:table-cell!important}body.role-admin #app #dashboard .stage1-extra{order:3!important}}
+
+/* Fill the available dashboard width; reset legacy grid/flex placement. */
+body.role-admin #app #dashboard{width:auto!important;max-width:none!important;min-width:0!important;align-items:stretch!important;justify-items:stretch!important;box-sizing:border-box!important}
+body.role-admin #app #dashboard>.stage1-summary,
+body.role-admin #app #dashboard>.stage1-chart-row,
+body.role-admin #app #dashboard>.stage1-lower{width:100%!important;max-width:none!important;min-width:0!important;align-self:stretch!important;box-sizing:border-box!important;grid-column:auto!important;grid-area:auto!important}
+body.role-admin #app #dashboard>.stage1-chart-row,
+body.role-admin #app #dashboard>.stage1-lower{display:grid!important;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr)!important;gap:16px!important}
+body.role-admin #app #dashboard .stage1-chart,
+body.role-admin #app #dashboard .stage1-attendance,
+body.role-admin #app #dashboard .dashboard-students,
+body.role-admin #app #dashboard .stage1-side,
+body.role-admin #app #dashboard .stage1-side>.dashboard-section{width:100%!important;max-width:none!important;min-width:0!important;justify-self:stretch!important;box-sizing:border-box!important;grid-area:auto!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome{display:flex!important;width:100%!important;justify-content:space-between!important;text-align:left!important;gap:16px!important}
+body.role-admin #app #dashboard .admin-dashboard-welcome h2{text-align:left!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;width:100%!important;max-width:none!important}
+body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{min-width:0!important;width:100%!important}
+body.role-admin #app #dashboard .dashboard-students .tw{width:100%!important;max-width:100%!important}
+body.role-admin #app #dashboard .dashboard-students table{width:100%!important;min-width:0!important}
+body.role-admin #app #dashboard .stage1-chart .finance-chart{width:100%!important;max-width:none!important}
+body.role-admin #app #dashboard .stage1-chart svg{width:100%!important;max-width:none!important}
+@media(max-width:1100px) and (min-width:900px){body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{padding:14px!important}body.role-admin #app #dashboard .dashboard-kpi-grid .kpi-icon{position:static!important;margin-bottom:8px!important}}
+@media(max-width:899px){
+ body.role-admin #app #dashboard{width:100%!important;margin:0!important}
+ body.role-admin #app #dashboard>.stage1-chart-row,body.role-admin #app #dashboard>.stage1-lower{grid-template-columns:minmax(0,1fr)!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.role-admin #app #dashboard .admin-dashboard-welcome{flex-direction:column!important;align-items:stretch!important}
+ body.role-admin #app #dashboard .dashboard-students table{min-width:580px!important}
+}
+
+/* Header inset and right-aligned period control. */
+@media(min-width:900px){
+ body.role-admin #app>header{margin:14px 16px 14px!important;width:auto!important;min-width:0!important;border-radius:14px!important;box-sizing:border-box!important}
+ body.role-admin #app #dashboard .admin-dashboard-welcome{box-sizing:border-box!important;padding:16px 18px!important}
+ body.role-admin #app #dashboard .stage1-actions{margin-left:auto!important;flex:0 0 auto!important;justify-content:flex-end!important;align-self:center!important;width:auto!important}
+ body.role-admin #app #dashboard .stage1-actions .dashboard-filter{position:static!important;margin:0!important;transform:none!important;right:auto!important;top:auto!important}
+}
+@media(max-width:899px){body.role-admin #app #dashboard .stage1-actions{justify-content:flex-end!important;margin-left:auto!important}}
+
+/* Search, notifications and account header. */
+body.role-admin #app>header.stage1-topbar{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:18px!important;overflow:visible!important}
+body.role-admin #app>header.stage1-topbar>img,body.role-admin #app>header.stage1-topbar>div[hidden],body.role-admin #app #exportAdminBtn{display:none!important}
+body.role-admin #app .stage1-search{position:relative;display:flex;align-items:center;gap:10px;flex:1;max-width:520px;min-width:0;padding:10px 14px;border:1px solid #d2e4f7;border-radius:12px;background:#f4f8ff}
+body.role-admin #app .stage1-search>svg{width:20px;height:20px;flex-shrink:0;fill:none;stroke:#446b92;stroke-width:1.8}
+body.role-admin #app .stage1-search input{margin:0!important;width:100%!important;min-width:0!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;font-size:14px;color:#123e66}
+body.role-admin #app .stage1-header-tools{display:flex!important;align-items:center!important;flex-wrap:nowrap!important;width:auto!important;margin:0!important;gap:14px!important}
+body.role-admin #app #adminBell svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.role-admin #app #adminBell{display:grid!important;place-items:center;width:40px;height:40px;border:1px solid #d7e6f6!important;border-radius:10px!important;background:white!important;color:#103864!important}
+body.role-admin #app .stage1-profile{position:relative}
+body.role-admin #app .stage1-profile-toggle{display:flex!important;align-items:center;gap:10px;border:0!important;background:transparent!important;color:#103864!important;padding:4px!important;box-shadow:none!important;text-align:left}
+body.role-admin #app .stage1-avatar{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:#e3f0ff;color:#164e82}
+body.role-admin #app .stage1-avatar svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+body.role-admin #app .stage1-profile-copy b{font-size:14px;display:block}
+body.role-admin #app .stage1-profile-copy small{display:block!important;margin-top:3px;color:#69809a;font-size:12px}
+body.role-admin #app .stage1-chevron{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;margin-left:12px}
+body.role-admin #app .stage1-profile-menu,body.role-admin #app .stage1-search-results{position:absolute;top:calc(100% + 10px);background:white;border:1px solid #d8e6f5;border-radius:12px;box-shadow:0 12px 30px #10386420;z-index:200;padding:6px}
+body.role-admin #app .stage1-profile-menu{right:0;min-width:170px}
+body.role-admin #app .stage1-search-results{left:0;right:0;max-height:320px;overflow:auto}
+body.role-admin #app .stage1-profile-menu[hidden],body.role-admin #app .stage1-search-results[hidden]{display:none!important}
+body.role-admin #app .stage1-profile-menu #logoutBtn{display:block!important;width:100%!important;padding:10px 12px!important;text-align:left;background:transparent!important;border:0!important;border-radius:8px!important;color:#de3844!important}
+body.role-admin #app .stage1-search-results button{display:block;width:100%;padding:10px;text-align:left;border:0;background:white;color:#123e66;border-radius:7px;box-shadow:none}
+body.role-admin #app .stage1-search-results button:hover{background:#edf5ff}
+body.role-admin #app .stage1-search-results p{padding:8px;margin:0;color:#647e99;font-size:13px}
+@media(max-width:899px){body.role-admin #app>header.stage1-topbar{gap:10px!important;padding:12px!important;flex-wrap:wrap!important}body.role-admin #app .stage1-search{max-width:none;min-width:120px;padding:10px;order:2;flex-basis:100%}body.role-admin #app .stage1-header-tools{order:1;margin-left:auto!important;gap:10px!important}body.role-admin #app .stage1-chevron{margin-left:0}body.role-admin #app .stage1-profile-copy small{display:block!important}body.role-admin #app>header.stage1-topbar:before{content:'Jenius Edu';font-size:17px;font-weight:700;color:#103864}}
+
+/* Keep one search container border, without an inner focus ring. */
+body.role-admin #app .stage1-search input,
+body.role-admin #app .stage1-search input:focus,
+body.role-admin #app .stage1-search input:focus-visible{outline:none!important;outline-offset:0!important;border:0!important;box-shadow:none!important}
+
+/* Data Murid reference screen. */
+body.role-admin #app #tm{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
+body.role-admin #tm .students-page-head{margin-bottom:4px!important}
+body.role-admin #tm .section-eyebrow,body.role-admin #tm .students-title-icon{display:none!important}
+body.role-admin #tm .students-title{font-size:26px!important;margin:0!important;color:#103864!important}
+body.role-admin #tm .students-subtitle{margin:4px 0 18px;color:#6a83a2;font-size:13px}
+body.role-admin #tm .students-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+body.role-admin #tm .students-metric{display:flex;align-items:center;gap:14px;padding:18px;background:#fff;border:1px solid #dceaf7;border-radius:14px;min-width:0}
+body.role-admin #tm .students-metric-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:#e4f1ff;color:#1688ff;font-size:27px;flex-shrink:0}
+body.role-admin #tm .students-metric small{display:block;color:#21486f;font-size:13px}
+body.role-admin #tm .students-metric b{display:block;color:#103864;font-size:26px;margin:3px 0}
+body.role-admin #tm .students-metric div>span{display:block;color:#708aa7;font-size:12px}
+body.role-admin #tm .students-metric.active{background:#f4fff9}
+body.role-admin #tm .students-metric.active b{color:#009a68}
+body.role-admin #tm .students-metric.active .students-metric-icon{background:#dcf8ed;color:#009a68}
+body.role-admin #tm .students-metric.inactive .students-metric-icon{background:#fff1de;color:#ef9221}
+body.role-admin #tm .students-metric.inactive b{color:#ef9221}
+body.role-admin #tm .students-list-panel{padding:18px;background:white;border:1px solid #dfeaf6;border-radius:16px;min-width:0}
+body.role-admin #tm .students-list-panel>h3{margin:0 0 14px;color:#103864;font-size:18px}
+body.role-admin #tm .students-tools{grid-template-columns:minmax(0,1fr) 190px!important}
+body.role-admin #tm .students-table-wrap{overflow-x:auto!important;width:100%!important}
+body.role-admin #tm .students-table{min-width:620px!important}
+body.role-admin #tm .students-table td{padding:16px 12px!important}
+body.role-admin #tm .students-list-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;color:#7187a2;font-size:12px}
+body.role-admin #tm #studentPagination{display:flex;gap:6px}
+body.role-admin #tm #studentPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:white;color:#245b91;min-width:32px}
+body.role-admin #tm #studentPagination button[aria-current]{background:#1082ff;border-color:#1082ff;color:white}
+body.role-admin #tm #studentPagination button:disabled{opacity:.4}
+@media(max-width:899px){body.role-admin #tm .students-summary{grid-template-columns:1fr;gap:10px}body.role-admin #tm .students-metric{padding:12px}body.role-admin #tm .students-tools{grid-template-columns:1fr!important}body.role-admin #tm .students-list-panel{padding:12px}body.role-admin #tm .students-title{font-size:22px!important}body.role-admin #tm .students-page-head{gap:10px;flex-wrap:wrap}}
+
+/* Data Guru uses the same reference layout as Data Murid. */
+/* Data Murid reference screen. */
+body.role-admin #app #teacherMasterPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
+body.role-admin #teacherMasterPage .teacher-page-head{margin-bottom:4px!important}
+body.role-admin #teacherMasterPage .section-eyebrow,body.role-admin #teacherMasterPage .teacher-title-icon{display:none!important}
+body.role-admin #teacherMasterPage .teacher-page-title{font-size:26px!important;margin:0!important;color:#103864!important}
+body.role-admin #teacherMasterPage .students-subtitle{margin:4px 0 18px;color:#6a83a2;font-size:13px}
+body.role-admin #teacherMasterPage .students-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+body.role-admin #teacherMasterPage .students-metric{display:flex;align-items:center;gap:14px;padding:18px;background:#fff;border:1px solid #dceaf7;border-radius:14px;min-width:0}
+body.role-admin #teacherMasterPage .students-metric-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:#e4f1ff;color:#1688ff;font-size:27px;flex-shrink:0}
+body.role-admin #teacherMasterPage .students-metric small{display:block;color:#21486f;font-size:13px}
+body.role-admin #teacherMasterPage .students-metric b{display:block;color:#103864;font-size:26px;margin:3px 0}
+body.role-admin #teacherMasterPage .students-metric div>span{display:block;color:#708aa7;font-size:12px}
+body.role-admin #teacherMasterPage .students-metric.active{background:#f4fff9}
+body.role-admin #teacherMasterPage .students-metric.active b{color:#009a68}
+body.role-admin #teacherMasterPage .students-metric.active .students-metric-icon{background:#dcf8ed;color:#009a68}
+body.role-admin #teacherMasterPage .students-metric.inactive .students-metric-icon{background:#fff1de;color:#ef9221}
+body.role-admin #teacherMasterPage .students-metric.inactive b{color:#ef9221}
+body.role-admin #teacherMasterPage .students-list-panel{padding:18px;background:white;border:1px solid #dfeaf6;border-radius:16px;min-width:0}
+body.role-admin #teacherMasterPage .students-list-panel>h3{margin:0 0 14px;color:#103864;font-size:18px}
+body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:minmax(0,1fr) 190px!important}
+body.role-admin #teacherMasterPage .teacher-master-table-wrap{overflow-x:auto!important;width:100%!important}
+body.role-admin #teacherMasterPage .teacher-master-table{min-width:620px!important}
+body.role-admin #teacherMasterPage .teacher-master-table td{padding:16px 12px!important}
+body.role-admin #teacherMasterPage .students-list-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;color:#7187a2;font-size:12px}
+body.role-admin #teacherMasterPage #teacherPagination{display:flex;gap:6px}
+body.role-admin #teacherMasterPage #teacherPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:white;color:#245b91;min-width:32px}
+body.role-admin #teacherMasterPage #teacherPagination button[aria-current]{background:#1082ff;border-color:#1082ff;color:white}
+body.role-admin #teacherMasterPage #teacherPagination button:disabled{opacity:.4}
+@media(max-width:899px){body.role-admin #teacherMasterPage .students-summary{grid-template-columns:1fr;gap:10px}body.role-admin #teacherMasterPage .students-metric{padding:12px}body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:1fr!important}body.role-admin #teacherMasterPage .students-list-panel{padding:12px}body.role-admin #teacherMasterPage .teacher-page-title{font-size:22px!important}body.role-admin #teacherMasterPage .teacher-page-head{gap:10px;flex-wrap:wrap}}
+
+body.role-admin #teacherMasterPage .teacher-search-row{display:grid!important;grid-template-columns:20px minmax(0,1fr) 190px!important;align-items:center;gap:10px;margin-bottom:14px}
+body.role-admin #teacherMasterPage .teacher-search-row input{width:100%!important;min-width:0!important;margin:0!important}
+body.role-admin #teacherMasterPage .teacher-action-menu{z-index:50}
+body.role-admin #teacherMasterPage .teacher-row-actions:focus-within .teacher-action-menu{display:grid}
+@media(max-width:600px){body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:20px minmax(0,1fr)!important}body.role-admin #teacherMasterPage #teacherStatusFilter{grid-column:1/-1!important;width:100%!important}}
+
+/* Separate teacher search and status; cancel legacy absolute positioning. */
+body.role-admin #app #teacherMasterPage .teacher-search-row{position:relative!important;display:grid!important;grid-template-columns:20px minmax(0,1fr) 190px!important;gap:16px!important;width:100%!important;max-width:none!important;height:auto!important;padding:0!important;border:0!important;background:transparent!important}
+body.role-admin #app #teacherMasterPage .teacher-search-icon{position:static!important;transform:none!important;grid-column:1!important;grid-row:1!important}
+body.role-admin #app #teacherMasterPage #teacherSearch{position:static!important;grid-column:2!important;grid-row:1!important;width:100%!important;min-width:0!important;height:42px!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+body.role-admin #app #teacherMasterPage #teacherStatusFilter{position:static!important;inset:auto!important;transform:none!important;grid-column:3!important;grid-row:1!important;width:100%!important;max-width:none!important;min-width:0!important;height:42px!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+@media(max-width:600px){body.role-admin #app #teacherMasterPage .teacher-search-row{grid-template-columns:20px minmax(0,1fr)!important;gap:12px!important}body.role-admin #app #teacherMasterPage #teacherStatusFilter{grid-column:1/-1!important;grid-row:2!important}}
+
+body.role-admin #app .teacher-avatar{width:40px!important;height:40px!important;overflow:hidden!important;flex-shrink:0!important}
+body.role-admin #app .teacher-avatar img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Salary directory reference. */
+body.role-admin #app #salaryPage{padding:16px!important;background:transparent!important;border:0!important;box-shadow:none!important;min-width:0!important}
+body.role-admin #salaryPage .section-eyebrow,body.role-admin #salaryPage .salary-title-icon{display:none!important}
+body.role-admin #salaryPage .salary-page-title{font-size:26px!important;margin:0!important;color:#103864!important}
+body.role-admin #salaryPage .salary-subtitle{color:#6a83a2;font-size:13px;margin:4px 0 18px}
+body.role-admin #salaryPage .salary-kpis{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-bottom:18px!important}
+body.role-admin #salaryPage .salary-kpi{border-radius:14px!important;padding:18px!important;border:1px solid #dceaf7!important;background:#fff!important;min-width:0!important}
+body.role-admin #salaryPage .salary-kpi.total{background:#f4fff9!important}
+body.role-admin #salaryPage .salary-kpi.unpaid{background:#fff5f7!important}
+body.role-admin #salaryPage .salary-table-v2{background:#fff!important;padding:18px!important;border:1px solid #dfeaf6!important;border-radius:16px!important}
+body.role-admin #salaryPage .salary-list-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+body.role-admin #salaryPage .salary-list-head h3{margin:0;color:#103864;font-size:18px}
+body.role-admin #salaryPage #salarySearch{width:260px;max-width:100%;margin:0;padding:10px 12px;border:1px solid #d2e3f5;border-radius:10px;background:#f8fbff}
+body.role-admin #salaryPage td{padding:14px 12px!important}
+body.role-admin #salaryPage .salary-detail{padding:6px 14px;border:1px solid #d4e5f7;border-radius:8px;background:#f3f8ff;color:#087bf1}
+body.role-admin #salaryPage .students-list-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:16px;font-size:12px;color:#7187a2}
+body.role-admin #salaryPage #salaryPagination{display:flex;gap:6px}
+body.role-admin #salaryPage #salaryPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:white;color:#245b91}
+body.role-admin #salaryPage #salaryPagination button[aria-current]{background:#1082ff;color:white}
+body.role-admin #salaryPage #salaryPagination button:disabled{opacity:.4}
+@media(max-width:899px){body.role-admin #salaryPage .salary-kpis{grid-template-columns:1fr!important}body.role-admin #salaryPage .salary-list-head{flex-wrap:wrap}body.role-admin #salaryPage #salarySearch{width:100%}body.role-admin #salaryPage .salary-head-actions{flex-wrap:wrap!important}}
+
+body.role-admin .monthly-reminder{padding:12px 16px;border:1px solid #f1d59b;background:#fff8e8;color:#845a17;border-radius:12px;line-height:1.6}
+body.role-admin .bill-deadline{display:block;margin-top:5px;color:#7a8ba2;font-size:11px}
+
+/* Payment reference screen. */
+body.role-admin #app #tp{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #tp .section-eyebrow,body.role-admin #tp .payments-title-icon{display:none!important}
+body.role-admin #tp .payments-title{margin:0!important;font-size:26px!important;color:#103864!important}
+body.role-admin #tp .payment-subtitle{margin:5px 0 18px;color:#6a83a2;font-size:13px}
+body.role-admin #tp .payment-kpis{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-bottom:18px}
+body.role-admin #tp .payment-kpi{padding:18px!important;border-radius:14px!important;border:1px solid #dceaf7!important;min-width:0}
+body.role-admin #tp .payment-list-panel{padding:18px;background:#fff;border:1px solid #dfeaf6;border-radius:16px;min-width:0}
+body.role-admin #tp .payment-list-panel h3{margin:0 0 14px;color:#103864;font-size:18px}
+body.role-admin #app #tp .payment-filter-row{display:grid!important;grid-template-columns:minmax(0,1fr) 190px!important;gap:16px!important;position:static!important;padding:0!important;margin-bottom:14px}
+body.role-admin #app #tp .payment-filter-row input,body.role-admin #app #tp .payment-filter-row select{position:static!important;inset:auto!important;transform:none!important;width:100%!important;min-width:0!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+body.role-admin #tp .payment-table-wrap{overflow:auto!important;width:100%!important}
+body.role-admin #tp .payment-table{width:100%!important;min-width:960px!important}
+body.role-admin #tp .payment-table td{padding:14px 10px!important}
+body.role-admin #tp .payment-receipt{border:1px solid #cde3fb;border-radius:8px;padding:6px 10px;background:#f0f7ff;color:#087bf1}
+body.role-admin #tp .payment-status.overdue{background:#ffe5e9;color:#cb2c40}
+body.role-admin #tp .payment-row-menu summary{cursor:pointer;color:#174e81;list-style:none;padding:8px}
+body.role-admin #tp .payment-row-menu>div{display:grid;gap:6px;padding:8px;background:#f4f8ff;border-radius:8px;min-width:130px}
+body.role-admin #tp .students-list-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;color:#7187a2;font-size:12px}
+body.role-admin #tp #paymentPagination{display:flex;gap:6px}
+body.role-admin #tp #paymentPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:#fff;color:#245b91}
+body.role-admin #tp #paymentPagination button[aria-current]{background:#1082ff;color:#fff}
+body.role-admin #tp #paymentPagination button:disabled{opacity:.4}
+@media(max-width:899px){body.role-admin #tp .payment-kpis{grid-template-columns:1fr!important}body.role-admin #app #tp .payment-filter-row{grid-template-columns:1fr!important}body.role-admin #tp .payments-head-actions{flex-wrap:wrap!important}}
+
+/* Expense overview: total, distribution donut and category bars. */
+body.role-admin #app #te{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #te .section-eyebrow,body.role-admin #te .expenses-title-icon{display:none!important}
+body.role-admin #te .expenses-title{margin:0!important;font-size:26px!important;color:#103864!important}
+body.role-admin #te .expense-subtitle{margin:5px 0 18px;color:#6a83a2;font-size:13px}
+body.role-admin #te .expense-overview{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(0,1.1fr) minmax(0,1.2fr);gap:14px;margin-bottom:18px;align-items:stretch}
+body.role-admin #app #te .expense-summary,body.role-admin #te .expense-chart-panel{margin:0!important;padding:18px!important;border:1px solid #dceaf7!important;border-radius:14px!important;background:#fff!important;min-width:0!important;width:auto!important;height:auto!important}
+body.role-admin #app #te .expense-summary{display:flex!important;align-items:center!important;gap:14px;background:#f0fcf7!important}
+body.role-admin #te .expense-summary b{display:block;font-size:24px!important;color:#00976b!important;overflow-wrap:anywhere}
+body.role-admin #te .expense-summary small{display:block;color:#637e9a;margin:5px 0;font-size:12px}
+body.role-admin #te .expense-chart-panel h3{margin:0 0 16px;color:#103864;font-size:15px}
+body.role-admin #te .expense-distribution{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+body.role-admin #te #expenseDonut{width:130px;height:130px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;background:#eaf1f8}
+body.role-admin #te #expenseDonut>div{width:70%;height:70%;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+body.role-admin #te #expenseDonutTotal{font-size:12px;color:#103864;overflow-wrap:anywhere;text-align:center}
+body.role-admin #te #expenseDonut small{font-size:12px;color:#647e9a}
+body.role-admin #te #expenseLegend{flex:1;min-width:100px}
+body.role-admin #te .expense-legend-row{display:flex;align-items:center;gap:7px;padding:6px 0;font-size:12px;color:#395d81}
+body.role-admin #te .expense-legend-row i{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+body.role-admin #te .expense-legend-row span{flex:1;overflow-wrap:anywhere}
+body.role-admin #te .expense-category-row{display:grid;grid-template-columns:minmax(0,.8fr) minmax(50px,1fr) auto;align-items:center;gap:10px;margin:14px 0;font-size:12px;color:#395d81}
+body.role-admin #te .expense-category-row span{overflow-wrap:anywhere}
+body.role-admin #te .expense-category-row b{font-size:12px;color:#103864}
+body.role-admin #te .expense-bar-track{height:10px;background:#edf4fc;border-radius:20px;overflow:hidden}
+body.role-admin #te .expense-bar-track i{display:block;height:100%;border-radius:20px}
+body.role-admin #te .expense-chart-empty{color:#6a83a2;font-size:13px}
+body.role-admin #te .expense-list-panel{padding:18px;background:#fff;border:1px solid #dfeaf6;border-radius:16px;min-width:0}
+body.role-admin #te .expense-list-panel h3{margin:0 0 14px;color:#103864;font-size:18px}
+body.role-admin #te .expense-table-wrap{overflow:auto!important;width:100%!important}
+body.role-admin #te .students-list-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:16px;color:#7187a2;font-size:12px}
+body.role-admin #te #expensePagination{display:flex;gap:6px}
+body.role-admin #te #expensePagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:#fff;color:#245b91}
+body.role-admin #te #expensePagination button[aria-current]{background:#1082ff;color:#fff}
+body.role-admin #te #expensePagination button:disabled{opacity:.4}
+@media(max-width:1100px){body.role-admin #te .expense-overview{grid-template-columns:1fr 1fr}body.role-admin #te .expense-summary{grid-column:1/-1}}
+@media(max-width:700px){body.role-admin #te .expense-overview{grid-template-columns:1fr}body.role-admin #te .expenses-head-actions{flex-wrap:wrap!important}body.role-admin #te .expense-summary{grid-column:auto}}
+
+/* Financial report reference: two lines, monthly summary, period transactions. */
+body.role-admin #app #financialReportPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #financialReportPage .financial-report-head{align-items:center!important;gap:14px!important}
+body.role-admin #financialReportPage .financial-report-head h2{font-size:26px!important;color:#103864!important}
+body.role-admin #financialReportPage .financial-report-head>div>small{display:none!important}
+body.role-admin #financialReportPage .financial-report-tools{gap:10px!important;flex-wrap:wrap!important}
+body.role-admin #financialReportPage .financial-period-label{width:auto!important;min-width:0!important}
+body.role-admin #financialReportPage .financial-kpis-v2{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important}
+body.role-admin #financialReportPage .financial-kpi{padding:18px!important;border-radius:14px!important;border:1px solid #dceaf7!important;min-width:0}
+body.role-admin #financialReportPage .financial-kpi.income{background:#f0fcf7!important}
+body.role-admin #financialReportPage .financial-kpi.expense{background:#fff5f7!important}
+body.role-admin #financialReportPage .financial-kpi.profit{background:#f1f7ff!important}
+body.role-admin #financialReportPage .financial-kpi small{display:block;margin:4px 0}
+body.role-admin #financialReportPage .financial-overview-v2{display:grid!important;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)!important;gap:14px!important;align-items:stretch!important;margin:16px 0!important}
+body.role-admin #financialReportPage .financial-chart-panel,body.role-admin #financialReportPage .financial-summary-panel,body.role-admin #financialReportPage .financial-transactions-v2{background:white!important;border:1px solid #dfeaf6!important;border-radius:14px!important;padding:16px!important;min-width:0!important}
+body.role-admin #financialReportPage h3{margin:0 0 12px!important;color:#103864!important;font-size:16px!important}
+body.role-admin #financialReportPage #financialReportChart{height:auto!important;background:transparent!important;padding:0!important;border:0!important}
+body.role-admin #financialReportPage #financialReportChart svg{display:block;width:100%;height:auto}
+body.role-admin #financialReportPage #financialReportChart text{font:11px Arial;fill:#65809f}
+body.role-admin #financialReportPage .report-line-legend{display:flex;justify-content:flex-end;gap:16px;font-size:12px;margin-bottom:8px;color:#1688ff}
+body.role-admin #financialReportPage .report-line-legend span:last-child{color:#668aba}
+body.role-admin #financialReportPage #financialReportSummary{overflow:auto}
+body.role-admin #financialReportPage .financial-summary-table{min-width:0!important;width:100%!important;font-size:11px!important}
+body.role-admin #financialReportPage .financial-summary-table th,body.role-admin #financialReportPage .financial-summary-table td{border:0!important;border-bottom:1px solid #eaf1f9!important;padding:8px 5px!important;white-space:nowrap}
+body.role-admin #financialReportPage .report-transactions-head{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:12px}
+body.role-admin #financialReportPage .report-transactions-head h3{margin:0!important}
+body.role-admin #financialReportPage .report-type-tabs{display:flex;gap:8px}
+body.role-admin #financialReportPage .report-type-tabs button{padding:6px 14px;border:0;border-radius:20px;background:#f0f6ff;color:#58799c;font-size:12px}
+body.role-admin #financialReportPage .report-type-tabs button[aria-pressed=true]{background:#1082ff;color:#fff}
+body.role-admin #financialReportPage .financial-transactions-v2 table{min-width:800px!important;width:100%}
+body.role-admin #financialReportPage .report-detail{padding:5px 10px;background:#f1f7ff;border:1px solid #d5e6f8;border-radius:7px;color:#087bf1}
+@media(max-width:1100px){body.role-admin #financialReportPage .financial-overview-v2{grid-template-columns:1fr!important}body.role-admin #financialReportPage .financial-report-head{flex-wrap:wrap!important}}
+@media(max-width:700px){body.role-admin #financialReportPage .financial-kpis-v2{grid-template-columns:1fr!important}body.role-admin #financialReportPage .financial-report-tools{width:100%!important}body.role-admin #financialReportPage .financial-period-label{flex:1!important}}
+
+/* Announcement reference: compose left, poster history right. */
+body.role-admin #app #parentAnnouncementsPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #parentAnnouncementsPage .admin-eyebrow{display:none!important}
+body.role-admin #parentAnnouncementsPage .admin-dashboard-welcome{padding:0 0 16px!important}
+body.role-admin #parentAnnouncementsPage .admin-dashboard-welcome h2{font-size:26px!important}
+body.role-admin #parentAnnouncementsPage .admin-dashboard-welcome p{display:block!important;font-size:13px!important}
+body.role-admin #parentAnnouncementsPage .announcement-workspace{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:16px!important;align-items:start!important}
+body.role-admin #parentAnnouncementsPage .announcement-workspace>.card{padding:18px!important;border:1px solid #dfeaf6!important;border-radius:14px!important;min-width:0!important}
+body.role-admin #parentAnnouncementsPage h3{font-size:18px!important;color:#103864!important}
+body.role-admin #parentAnnouncementsPage .announcement-compose>.announcement-caption,body.role-admin #parentAnnouncementsPage .announcement-history .announcement-caption{display:none!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementForm{display:flex!important;flex-direction:column!important;gap:14px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementForm label{font-size:13px!important;color:#214b75!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementBody{min-height:150px!important}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:145px;margin-top:8px;padding:18px;border:1px dashed #92bfff;border-radius:12px;background:#f6faff;color:#45779f;text-align:center}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone svg{width:28px;height:28px;fill:none;stroke:#1688ff;stroke-width:1.7;margin-bottom:5px}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone b{font-size:13px}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone>span,body.role-admin #parentAnnouncementsPage .announcement-dropzone small{font-size:12px}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone #parentAnnouncementImage{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0;cursor:pointer;min-height:0!important}
+body.role-admin #parentAnnouncementsPage .announcement-dropzone:focus-within,body.role-admin #parentAnnouncementsPage .announcement-dropzone.dragging{outline:2px solid #1688ff;outline-offset:2px;background:#eaf4ff}
+body.role-admin #parentAnnouncementsPage .announcement-submit button{width:100%!important;background:#1082ff!important;border-radius:10px!important;padding:12px!important}
+body.role-admin #parentAnnouncementsPage .announcement-email-option{background:transparent!important;padding:0!important;font-size:12px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item{display:grid!important;grid-template-columns:110px minmax(0,1fr)!important;gap:4px 14px!important;padding:12px!important;margin:0 0 12px!important;background:#fbfdff!important;border:1px solid #e1ebf8!important;border-radius:12px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item-head{grid-column:2!important;display:flex;align-items:start;gap:8px}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item-head b{flex:1;color:#103864;font-size:13px}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-delete{font-size:11px!important;padding:3px 6px!important;min-height:0!important;background:#fff2f3!important;color:#c53e50!important;border:0!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-date{grid-column:2!important;font-size:11px!important;color:#7087a2}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item>p{grid-column:2!important;margin:2px 0 6px!important;font-size:12px!important;line-height:1.5!important;overflow-wrap:anywhere}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster-link{grid-column:1!important;grid-row:1/5!important;width:110px!important;height:110px!important;margin:0!important;align-self:start!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster{width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;background:#edf5ff!important;border-radius:9px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-actions{grid-column:2!important;justify-content:flex-start!important;padding:0!important;margin:3px 0 0!important;border:0!important;gap:7px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-action{padding:6px 8px!important;font-size:11px!important;min-height:30px!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item:not(:has(.announcement-poster-link)){grid-template-columns:minmax(0,1fr)!important}
+body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item:not(:has(.announcement-poster-link))>*{grid-column:1!important}
+@media(max-width:1000px){body.role-admin #parentAnnouncementsPage .announcement-workspace{grid-template-columns:1fr!important}}
+@media(max-width:450px){body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-item{grid-template-columns:80px minmax(0,1fr)!important;gap:4px 10px!important}body.role-admin #parentAnnouncementsPage #parentAnnouncementList .announcement-poster-link{width:80px!important;height:90px!important}}
+
+/* Backup and archive reference layout, retaining JSON restore behavior. */
+body.role-admin #app #dataManagementPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;margin:0 12px!important;min-width:0!important}
+body.role-admin #dataManagementPage .data-page-head{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important}
+body.role-admin #dataManagementPage .data-page-head>div>small{display:none!important}
+body.role-admin #dataManagementPage .data-page-head h2{font-size:26px!important;color:#103864!important}
+body.role-admin #dataManagementPage .data-admin-badge{white-space:normal!important;max-width:480px!important;background:#e7f3ff!important;color:#315f8a!important;padding:12px!important;border-radius:12px!important;font-size:12px!important;line-height:1.5!important}
+body.role-admin #dataManagementPage .data-tools-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important;align-items:stretch!important}
+body.role-admin #dataManagementPage .data-tool{background:#fff!important;border:1px solid #dfeaf6!important;border-radius:14px!important;padding:18px!important;min-width:0!important;display:flex!important;flex-direction:column!important}
+body.role-admin #dataManagementPage .data-tool-label{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;font-size:27px!important;margin-bottom:12px!important;color:#1688ff;background:#e3f0ff;letter-spacing:0!important}
+body.role-admin #dataManagementPage .data-restore-icon{background:#dcf8ed;color:#009a68}
+body.role-admin #dataManagementPage .data-archive-icon{background:#ece5ff;color:#7c43dc}
+body.role-admin #dataManagementPage .data-tool h3{font-size:18px!important;color:#103864!important}
+body.role-admin #dataManagementPage .data-tool>p{font-size:13px!important;line-height:1.5!important;color:#6782a0!important}
+body.role-admin #dataManagementPage .data-tool-content{flex:1!important;min-height:140px!important}
+body.role-admin #dataManagementPage .data-tool>button{width:100%!important;border-radius:9px!important;min-height:42px!important;margin-top:10px!important}
+body.role-admin #dataManagementPage #dataArchiveCreate{background:#537bff!important;color:#fff!important;border:0!important}
+body.role-admin #dataManagementPage .data-dropzone{display:flex!important;position:relative;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:5px;min-height:120px;padding:15px;border:1px dashed #92bfff;border-radius:10px;background:#f6faff;color:#45779f;font-size:12px}
+body.role-admin #dataManagementPage .data-dropzone>span{font-size:24px;color:#1688ff}
+body.role-admin #dataManagementPage .data-dropzone #dataFile{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;opacity:0;cursor:pointer;margin:0!important}
+body.role-admin #dataManagementPage .data-dropzone:focus-within,body.role-admin #dataManagementPage .data-dropzone.dragging{outline:2px solid #1688ff;outline-offset:2px}
+body.role-admin #dataManagementPage .data-lists-grid{display:flex!important;flex-direction:column!important;gap:16px!important}
+body.role-admin #dataManagementPage .data-lists-grid>section{background:#fff!important;border:1px solid #dfeaf6!important;border-radius:14px!important;padding:16px!important;min-width:0!important}
+body.role-admin #dataManagementPage #dataArchives{overflow:auto!important;white-space:normal!important}
+body.role-admin #dataManagementPage .data-archive-table{width:100%!important;min-width:650px!important;border-collapse:collapse;font-size:12px}
+body.role-admin #dataManagementPage .data-archive-table th{background:#edf5fd!important;text-align:left;padding:10px!important}
+body.role-admin #dataManagementPage .data-archive-table td{padding:12px 10px!important;border-bottom:1px solid #eaf1f9!important}
+body.role-admin #dataManagementPage .data-archive-table button{padding:6px 12px;border:1px solid #d5e6fa;border-radius:8px;background:#eef6ff;color:#087bf1}
+@media(max-width:900px){body.role-admin #dataManagementPage .data-tools-grid{grid-template-columns:1fr!important}body.role-admin #dataManagementPage .data-page-head{flex-wrap:wrap!important}body.role-admin #dataManagementPage .data-tool-content{min-height:0!important}}
+
+/* Audit reference layout. */
+body.role-admin #app #auditLogPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #auditLogPage .audit-title-icon,body.role-admin #auditLogPage .audit-title-v2 small{display:none!important}
+body.role-admin #auditLogPage .audit-title-v2 h2{font-size:26px!important;color:#103864!important;margin:0!important}
+body.role-admin #auditLogPage .audit-subtitle{font-size:13px;color:#6a83a2;margin:5px 0 15px}
+body.role-admin #auditLogPage .audit-tools-v2{display:grid!important;grid-template-columns:minmax(0,1fr) 190px 190px!important;gap:12px!important;padding:14px!important;border:1px solid #dfeaf6;border-radius:14px 14px 0 0;background:#fff!important}
+body.role-admin #auditLogPage .audit-search-v2,body.role-admin #auditLogPage .audit-date-v2{position:static!important;min-width:0!important;width:100%!important}
+body.role-admin #auditLogPage #auditActionFilter,body.role-admin #auditLogPage #auditMonth{position:static!important;width:100%!important;min-width:0!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+body.role-admin #auditLogPage .audit-date-v2{padding:0!important;border:0!important;background:none!important}
+body.role-admin #auditLogPage .audit-date-v2 [hidden]{display:none!important}
+body.role-admin #auditLogPage #refreshAuditLog{background:#1082ff!important;color:#fff!important;border:0!important;border-radius:9px!important;padding:10px 16px!important}
+body.role-admin #auditLogPage .audit-table-wrap{background:#fff!important;padding:0 14px!important;border:1px solid #dfeaf6!important;border-top:0!important;border-bottom:0!important;border-radius:0!important;overflow:auto!important}
+body.role-admin #auditLogPage .audit-table-v2{width:100%!important;min-width:760px!important}
+body.role-admin #auditLogPage .audit-table-v2 td{padding:14px 10px!important;font-size:12px!important}
+body.role-admin #auditLogPage .audit-user-avatar{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e1efff;color:#1688ff;margin-right:8px}
+body.role-admin #auditLogPage .audit-module-badge{display:inline-block;padding:5px 9px;border-radius:7px;background:#eaf3ff;color:#245f99;font-size:12px}
+body.role-admin #auditLogPage .audit-list-footer{display:flex;justify-content:flex-end;align-items:center;gap:16px;flex-wrap:wrap;padding:14px;background:#fff;border:1px solid #dfeaf6;border-top:0;border-radius:0 0 14px 14px;color:#7187a2;font-size:12px}
+body.role-admin #auditLogPage #auditPagination{display:flex;gap:6px}
+body.role-admin #auditLogPage #auditPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:#fff;color:#245b91}
+body.role-admin #auditLogPage #auditPagination button[aria-current]{background:#1082ff;color:#fff}
+body.role-admin #auditLogPage #auditPagination button:disabled{opacity:.4}
+@media(max-width:800px){body.role-admin #auditLogPage .audit-tools-v2{grid-template-columns:1fr!important}}

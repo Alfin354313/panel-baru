@@ -10,7 +10,7 @@ function startEditAttendance(id){
   editingAttendanceId=id;
   $("attendanceStudent").value=x.student_id||"";
   $("attendanceDate").value=x.tanggal||"";
-  $("attendanceStatus").value=x.status||"Hadir";
+  $("attendanceStatus").value=x.status||"Hadir";syncAttendanceStatusIndicator();
   $("attendanceNote").value=x.catatan||"";
   $("attendanceSubmit").textContent="Simpan Perubahan";
   $("attendanceCancel").hidden=false;
@@ -20,7 +20,7 @@ function cancelEditAttendance(){
   editingAttendanceId=null;
   $("attendanceForm").reset();
   attendanceDateToday();
-  $("attendanceStatus").value="Hadir";
+  $("attendanceStatus").value="Hadir";syncAttendanceStatusIndicator();
   $("attendanceSubmit").textContent="Simpan Absensi";
   $("attendanceCancel").hidden=true;
 }
@@ -40,8 +40,8 @@ $("attendanceForm").onsubmit=async function(e){
 }
 
 /* Teacher learning-notes edit/form handlers. */
-function startEditTeacher(id){var x=TN.find(function(q){return q.id===id});if(!x)return;setTeacherFormOpen(true);editingTeacherId=id;$("teacherStudent").value=x.student_id||"";$("teacherDate").value=x.tanggal||"";$("teacherForm").materi.value=x.materi||"";$("teacherForm").metode.value=x.metode||"";$("teacherForm").catatan_kesulitan.value=x.catatan_kesulitan||"";$("teacherForm").rencana_lanjutan.value=x.rencana_lanjutan||"";$("teacherSubmit").textContent="Simpan Perubahan";$("teacherCancel").hidden=false;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.add("teacher-editing")});$("teacherForm").scrollIntoView({behavior:"smooth",block:"start"})}
-function cancelEditTeacher(){editingTeacherId=null;$("teacherForm").reset();teacherDateToday();$("teacherSubmit").textContent="Simpan Catatan";$("teacherCancel").hidden=true;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.remove("teacher-editing")})}
+function startEditTeacher(id){var x=TN.find(function(q){return q.id===id});if(!x)return;setTeacherFormOpen(true);editingTeacherId=id;$("teacherStudent").value=x.student_id||"";$("teacherDate").value=x.tanggal||"";$("teacherForm").materi.value=x.materi||"";$("teacherForm").metode.value=x.metode||"";$("teacherForm").catatan_kesulitan.value=x.catatan_kesulitan||"";$("teacherForm").rencana_lanjutan.value=x.rencana_lanjutan||"";$("teacherSubmit").textContent="Simpan Perubahan";$("teacherCancel").hidden=false;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.add("teacher-editing")});updateTeacherNoteCounters();$("teacherForm").scrollIntoView({behavior:"smooth",block:"start"})}
+function cancelEditTeacher(){editingTeacherId=null;$("teacherForm").reset();updateTeacherNoteCounters();teacherDateToday();$("teacherSubmit").textContent="Simpan Catatan";$("teacherCancel").hidden=true;document.querySelectorAll("#teacherForm textarea,#teacherForm select,#teacherForm input").forEach(function(el){el.classList.remove("teacher-editing")})}
 $("teacherCancel").onclick=cancelEditTeacher;
 $("teacherForm").onsubmit=async function(e){e.preventDefault();var o=fd(e.target);var payload={student_id:o.student_id,tanggal:o.tanggal,materi:o.materi,metode:o.metode,catatan_kesulitan:o.catatan_kesulitan||"",rencana_lanjutan:o.rencana_lanjutan||""};var r;if(editingTeacherId){r=await window.sb.from("teacher_notes").update(payload).eq("id",editingTeacherId).eq("teacher_id",currentUser.id).select().single()}else{r=await window.sb.from("teacher_notes").insert(Object.assign({teacher_id:currentUser.id},payload)).select().single()}if(r.error){alert((editingTeacherId?"Gagal memperbarui":"Gagal menyimpan")+" catatan: "+r.error.message);return}if(editingTeacherId){var i=TN.findIndex(function(x){return x.id===editingTeacherId});if(i>=0)TN[i]=r.data}else{TN.unshift(r.data)}var wasEdit=!!editingTeacherId;cancelEditTeacher();setTeacherFormOpen(false);drawTeacher();alert(wasEdit?"Catatan pembelajaran berhasil diperbarui.":"Catatan pembelajaran berhasil disimpan.")};
 
@@ -65,9 +65,12 @@ async function dbLoadTeacher(){
   var rr=await window.sb.from("teacher_reports").select("*").eq("teacher_id",teacherId).order("bulan",{ascending:false}).order("created_at",{ascending:false});
   if(rr.error){console.warn("Laporan guru belum tersedia:",rr.error.message);RPT=[];$("reportSync").textContent="Tabel laporan belum dibuat"}else{RPT=rr.data||[];$("reportSync").textContent="Tersimpan di Supabase"}
   S=(a.data||[]).map(function(x){return {id:x.id,nama:x.nama,jenjang:x.jenjang,kelas:x.kelas}});
-  TN=b.data||[];drawTeacher();drawReports()
+  TN=b.data||[];
+  var profile=await window.sb.from('teacher_profiles').select('*').eq('id',teacherId).maybeSingle();
+  if(!profile.error&&profile.data){$('teacherHeaderName').textContent=profile.data.nama||'Guru';var style=profile.data.avatar_style;if(['male','female','hijab'].includes(style))$('teacherHeaderAvatar').innerHTML='<img src="./assets/teacher-avatar-'+style+'.svg" alt="">';else $('teacherHeaderAvatar').textContent=String(profile.data.nama||'G').charAt(0)}
+  drawTeacher();drawReports()
 }
-function drawTeacher(){drawAttendance();var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;$("teacherNotesBody").innerHTML=TN.map(function(x){var m=stu(x.student_id)||{};return '<tr><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(x.materi||"")+'</td><td>'+esc(x.metode||"")+'</td><td>'+esc(x.catatan_kesulitan||"")+'</td><td>'+esc(x.rencana_lanjutan||"")+'</td><td><button class="sm" data-etn="'+x.id+'">Edit</button> <button class="sm" data-tn="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="7">Belum ada catatan pembelajaran.</td></tr>';
+function drawTeacher(){drawAttendance();var keep=$("teacherStudent").value;$("teacherStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep) $("teacherStudent").value=keep;drawTeacherNotesStage1();
 var unique={};TN.forEach(function(x){if(x.student_id)unique[x.student_id]=true});
 var currentMonth=thisM, today=todayISO;
 $("gStudents").textContent=Object.keys(unique).length;
@@ -79,18 +82,21 @@ $("teacherReminderCount").textContent=0;
 $("teacherBellDot").hidden=true;
 $("teacherReminderSummary").innerHTML='<div class="reminder-clear"><b>Semua selesai</b><small>Tidak ada reminder mengajar yang tertunda hari ini.</small></div>';
 var latest=TN.slice().sort(function(a,b){return String(b.tanggal||"").localeCompare(String(a.tanggal||""))}).slice(0,5);
-$("gLatestNotes").innerHTML=latest.map(function(x){var m=stu(x.student_id)||{};return '<div class="dashboard-alert"><div><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><br><small>'+esc(x.tanggal||"")+' · '+esc(x.materi||"")+'</small></div><span style="color:var(--muted)">'+esc(x.metode||"")+'</span></div>'}).join("")||'<p style="color:var(--muted);margin:0">Belum ada catatan pembelajaran.</p>';
+drawTeacherStage1();
 }
 function attendanceDateToday(){$("attendanceDate").value=todayISO}
 function drawAttendance(){
+  syncAttendanceStatusIndicator();
   var keep=$("attendanceStudent").value;
   $("attendanceStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';
   if(keep) $("attendanceStudent").value=keep;
-  $("attendanceBody").innerHTML=ATT.map(function(x){
+  var q=$('attendanceSearch').value.toLowerCase().trim(),month=$('attendanceHistoryMonth').value,status=$('attendanceHistoryStatus').value;
+  var rows=ATT.filter(function(x){var m=stu(x.student_id)||{};return (!currentUser||x.teacher_id===currentUser.id)&&(!month||String(x.tanggal).slice(0,7)===month)&&(!status||x.status===status)&&(!q||[m.nama,x.catatan].join(' ').toLowerCase().includes(q))}).slice().sort(function(a,b){return String(b.tanggal).localeCompare(String(a.tanggal))});
+  $("attendanceBody").innerHTML=rows.map(function(x,idx){
     var m=stu(x.student_id)||{};
-    var cls=x.status==="Hadir"?"ok":(x.status==="Tidak Hadir"?"no":"");
-    return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td class="'+cls+'">'+esc(x.status||"")+'</td><td>'+esc(x.catatan||"")+'</td><td><button class="sm" data-eatt="'+x.id+'">Edit</button> <button class="sm" data-datt="'+x.id+'">Hapus</button></td></tr>';
-  }).join("")||'<tr><td colspan="5">Belum ada data absensi.</td></tr>';
+    var cls=x.status==="Hadir"?"hadir":x.status==="Izin"?"izin":x.status==="Sakit"?"sakit":"absen";
+    return '<tr><td>'+(idx+1)+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td><span class="attendance-status '+cls+'">'+esc(x.status||"")+'</span></td><td>'+esc(x.catatan||"")+'</td><td><div class="attendance-row-actions"><button type="button" class="sm attendance-edit-icon" data-eatt="'+x.id+'" aria-label="Edit absensi" title="Edit absensi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-12 12-6 1 1-6Z"/><path d="m14 5 5 5"/></svg></button><details class="attendance-more"><summary aria-label="Aksi lainnya" title="Aksi lainnya"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></summary><button type="button" class="sm" data-datt="'+x.id+'">Hapus</button></details></div></td></tr>';
+  }).join("")||'<tr><td colspan="6">Belum ada absensi sesuai filter.</td></tr>';
 }
 /* Teacher attendance edit/form handlers moved to ./teacher.js */
 
@@ -99,55 +105,9 @@ function teacherDateToday(){$("teacherDate").value=new Date(new Date().getTime()
 /* Teacher report rendering, PDF export and sharing. */
 function reportMonthName(m){if(!m)return "";var p=String(m).split("-");var names=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];return names[Number(p[1])-1]+" "+p[0]}
 function reportStats(studentId,month){var ar=ATT.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month});var notes=TN.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month});var q={Hadir:0,Izin:0,Sakit:0,"Tidak Hadir":0};ar.forEach(function(x){if(q[x.status]!==undefined)q[x.status]++});return {attendance:ar,notes:notes,counts:q,total:ar.length}}
-function drawReports(){var keep=$("reportStudent").value;$("reportStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep)$("reportStudent").value=keep;if(!$("reportMonth").value)$("reportMonth").value=thisM;var rows=RPT.map(function(x){var m=stu(x.student_id)||{};var st=reportStats(x.student_id,x.bulan);var meetings=reportMeetingRows(x.student_id,x.bulan);return '<tr><td><b>'+esc(m.nama||"(murid tidak ditemukan)")+'</b><br><small>'+esc((m.jenjang||"")+" / "+(m.kelas||""))+'</small></td><td>'+esc(reportMonthName(x.bulan))+'</td><td>'+meetings.length+' pertemuan<br><b>'+st.counts.Hadir+' hadir</b> / '+st.total+' absensi</td><td>'+esc((x.pencapaian||"Belum diisi").slice(0,70))+'</td><td><button class="sm" data-ereport="'+x.id+'">📄 Lihat Laporan</button> <button class="sm" data-pdf-report="'+x.id+'">PDF</button> <button class="sm" data-share-report="'+x.id+'">WhatsApp</button> <button class="sm" data-parent-publish="'+x.id+'">Publikasikan ke Orang Tua</button> <button class="sm" data-parent-withdraw="'+x.id+'">Tarik dari Portal</button> <button class="sm" data-dreport="'+x.id+'">Hapus</button></td></tr>'}).join("")||'<tr><td colspan="5">Belum ada laporan bulanan.</td></tr>';$("teacherReportsBody").innerHTML=rows;refreshReportPreview()}
-function syncReportFields(){var sid=$("reportStudent").value,month=$("reportMonth").value,saved=RPT.find(function(x){return x.student_id===sid&&x.bulan===month});$("reportAchievement").value=saved?saved.pencapaian||"":"";$("reportNote").value=saved?saved.catatan||"":"";$("reportRecommendation").value=saved?saved.rekomendasi||"":"";$("reportSave").textContent=saved?"Simpan Perubahan":"Simpan Laporan";$("reportCancel").hidden=!saved}function reportMeetingRows(studentId,month){var byDate={};ATT.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month}).forEach(function(x){var k=String(x.tanggal||"");if(!byDate[k])byDate[k]={tanggal:k,status:"",catatanAbsensi:"",notes:[]};byDate[k].status=x.status||"";byDate[k].catatanAbsensi=x.catatan||""});TN.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month}).forEach(function(x){var k=String(x.tanggal||"");if(!byDate[k])byDate[k]={tanggal:k,status:"",catatanAbsensi:"",notes:[]};byDate[k].notes.push(x)});return Object.keys(byDate).sort().map(function(k){var r=byDate[k],n=r.notes||[];return {tanggal:r.tanggal,status:r.status||"Belum diisi",catatanAbsensi:r.catatanAbsensi||"",materi:n.map(function(x){return x.materi||""}).filter(Boolean).join(" / "),metode:n.map(function(x){return x.metode||""}).filter(Boolean).join(" / "),kesulitan:n.map(function(x){return x.catatan_kesulitan||""}).filter(Boolean).join(" / "),lanjutan:n.map(function(x){return x.rencana_lanjutan||""}).filter(Boolean).join(" / ")}})}
-function refreshReportPreview(){
-  var sid=$("reportStudent").value,month=$("reportMonth").value;
-  if(!sid||!month){
-    $("reportPreview").innerHTML='<p class="report-muted" style="margin:0">Pilih murid dan bulan untuk melihat laporan.</p>';
-    return
-  }
-  var m=stu(sid)||{},st=reportStats(sid,month),rows=reportMeetingRows(sid,month),saved=RPT.find(function(x){return x.student_id===sid&&x.bulan===month});
-  var attendRate=st.total?Math.round(st.counts.Hadir/st.total*100):0;
-  var achievement=$("reportAchievement").value.trim()||((saved&&saved.pencapaian)||"Belum diisi.");
-  var note=$("reportNote").value.trim()||((saved&&saved.catatan)||"Belum ada catatan tambahan.");
-  var rec=$("reportRecommendation").value.trim()||((saved&&saved.rekomendasi)||"Belum ada rekomendasi.");
-  var no="JE-RPT-"+String(month).replace("-","")+"-"+String(sid).slice(0,8).toUpperCase();
-  var meetingHtml=rows.map(function(x,i){
-    return '<tr><td>'+esc(String(i+1))+'</td><td>'+esc(x.tanggal)+'</td><td><b>'+esc(x.status)+'</b>'+(x.catatanAbsensi?'<br><small>'+esc(x.catatanAbsensi)+'</small>':'')+'</td><td>'+esc(x.materi||"-")+'</td><td>'+esc(x.metode||"-")+'</td><td>'+esc(x.kesulitan||"-")+'</td><td>'+esc(x.lanjutan||"-")+'</td></tr>'
-  }).join("")||'<tr><td colspan="7" style="text-align:center;color:var(--muted)">Belum ada data pertemuan pada bulan ini.</td></tr>';
-  $("reportPreview").innerHTML=
-    '<div class="report-invoice">'+
-      '<div class="report-invoice-head">'+
-        '<div><h1>JENIUS EDU</h1><small>Laporan Perkembangan Siswa</small></div>'+
-        '<div class="report-invoice-title"><b>LAPORAN</b><br><span>'+esc(no)+'</span></div>'+
-      '</div>'+
-      '<div class="report-invoice-meta">'+
-        '<div><small>Nama Siswa</small><br><b>'+esc(m.nama||"-")+'</b></div>'+
-        '<div><small>Periode Laporan</small><br><b>'+esc(reportMonthName(month))+'</b></div>'+
-        '<div><small>Jenjang / Kelas</small><br><b>'+esc((m.jenjang||"-")+" / "+(m.kelas||"-"))+'</b></div>'+
-        '<div><small>Status Laporan</small><br><span class="report-invoice-status">'+(saved?"TERSIMPAN":"DRAFT")+'</span></div>'+
-      '</div>'+
-      '<div class="report-invoice-section"><h3>Rekap Kehadiran</h3>'+
-        '<div class="report-invoice-kpis">'+
-          '<div class="report-invoice-kpi"><small>Kehadiran</small><b>'+attendRate+'%</b></div>'+
-          '<div class="report-invoice-kpi"><small>Pertemuan</small><b>'+rows.length+'</b></div>'+
-          '<div class="report-invoice-kpi"><small>Hadir</small><b>'+st.counts.Hadir+'</b></div>'+
-          '<div class="report-invoice-kpi"><small>Izin</small><b>'+st.counts.Izin+'</b></div>'+
-          '<div class="report-invoice-kpi"><small>Sakit / Tidak Hadir</small><b>'+String(st.counts.Sakit+st.counts["Tidak Hadir"])+'</b></div>'+
-        '</div>'+
-      '</div>'+
-      '<hr style="border:0;border-top:1px solid var(--line);margin:18px 0">'+
-      '<div class="report-invoice-section"><h3>Detail Pertemuan · Absensi + Catatan Mengajar</h3>'+
-        '<div class="tw"><table class="report-invoice-table"><thead><tr><th>No.</th><th>Tanggal</th><th>Absensi</th><th>Materi</th><th>Metode</th><th>Kesulitan</th><th>Rencana Lanjutan</th></tr></thead><tbody>'+meetingHtml+'</tbody></table></div>'+
-      '</div>'+
-      '<div class="report-invoice-section"><h3>Pencapaian / Perkembangan</h3><div class="report-invoice-note">'+esc(achievement)+'</div></div>'+
-      '<div class="report-invoice-section"><h3>Catatan Guru</h3><div class="report-invoice-note">'+esc(note)+'</div></div>'+
-      '<div class="report-invoice-section"><h3>Rekomendasi Bulan Berikutnya</h3><div class="report-invoice-note">'+esc(rec)+'</div></div>'+
-      '<div style="display:flex;justify-content:space-between;gap:10px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)"><b class="report-invoice-total">Jenius Edu</b><span class="report-muted">'+esc(reportMonthName(month))+'</span></div>'+
-      '<div class="report-invoice-footer">Dokumen laporan pembelajaran Jenius Edu · Data berasal dari absensi dan catatan mengajar guru.</div>'+
-    '</div>';
-}
+function drawReports(){var keep=$("reportStudent").value;$("reportStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';if(keep)$("reportStudent").value=keep;if(!$("reportMonth").value)$("reportMonth").value=thisM;drawReportHistoryStage1();refreshReportPreview()}
+function syncReportFields(){var sid=$("reportStudent").value,month=$("reportMonth").value,saved=RPT.find(function(x){return x.student_id===sid&&x.bulan===month});editingReportId=saved?saved.id:null;$("reportAchievement").value=saved?saved.pencapaian||"":"";$("reportNote").value=saved?saved.catatan||"":"";$("reportRecommendation").value=saved?saved.rekomendasi||"":"";$("reportSave").textContent=saved?"Simpan Perubahan":"Simpan Laporan";$("reportCancel").hidden=!saved}function reportMeetingRows(studentId,month){var byDate={};ATT.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month}).forEach(function(x){var k=String(x.tanggal||"");if(!byDate[k])byDate[k]={tanggal:k,status:"",catatanAbsensi:"",notes:[]};byDate[k].status=x.status||"";byDate[k].catatanAbsensi=x.catatan||""});TN.filter(function(x){return x.student_id===studentId&&String(x.tanggal||"").slice(0,7)===month}).forEach(function(x){var k=String(x.tanggal||"");if(!byDate[k])byDate[k]={tanggal:k,status:"",catatanAbsensi:"",notes:[]};byDate[k].notes.push(x)});return Object.keys(byDate).sort().map(function(k){var r=byDate[k],n=r.notes||[];return {tanggal:r.tanggal,status:r.status||"Belum diisi",catatanAbsensi:r.catatanAbsensi||"",materi:n.map(function(x){return x.materi||""}).filter(Boolean).join(" / "),metode:n.map(function(x){return x.metode||""}).filter(Boolean).join(" / "),kesulitan:n.map(function(x){return x.catatan_kesulitan||""}).filter(Boolean).join(" / "),lanjutan:n.map(function(x){return x.rencana_lanjutan||""}).filter(Boolean).join(" / ")}})}
+function refreshReportPreview(){refreshReportPreviewStage1()}
 function showReport(id){
   var x=RPT.find(function(q){return q.id===id});if(!x){alert("Laporan tidak ditemukan.");return}
   var m=stu(x.student_id)||{},st=reportStats(x.student_id,x.bulan),rows=reportMeetingRows(x.student_id,x.bulan);
@@ -193,7 +153,7 @@ $("reportStudent").onchange=function(){editingReportId=null;syncReportFields();r
 
 /* Teacher delegated actions: attendance, notes, and reports. */
 document.addEventListener("click",async function(e){
-  var t=e.target,id=t.dataset;
+  var t=e.target.closest("[data-eatt],[data-datt],[data-etn],[data-tn],[data-ereport],[data-pdf-report],[data-share-report],[data-dreport]")||e.target,id=t.dataset;
   if(id.eatt){startEditAttendance(id.eatt);return}
   if(id.datt&&confirm("Hapus data absensi ini?")){
     var ar=await window.sb.from("teacher_attendance").delete().eq("id",id.datt).eq("teacher_id",currentUser.id);
@@ -214,7 +174,7 @@ document.addEventListener("click",function(e){var b=e.target.closest("[data-quic
 $("teacherBell").onclick=function(e){e.stopPropagation();$("teacherNotificationPanel").hidden=!$("teacherNotificationPanel").hidden};document.addEventListener("click",function(e){if(!$("teacherNotificationPanel").hidden&&!$("teacherNotificationPanel").contains(e.target))$("teacherNotificationPanel").hidden=true});
 
 /* Parent-visible fields only: internal notes remain private. */
-(function(){var field=document.querySelector('#teacherForm [name="materi"]');if(!field)return;var hint=document.createElement('p');hint.id='parentMaterialHint';hint.textContent='Tanggal pertemuan dan materi yang disimpan akan tampil di Portal Orang Tua setelah fitur diaktifkan. Metode, kesulitan, dan rencana lanjutan tetap internal.';hint.style.cssText='font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0';field.after(hint);field.setAttribute('aria-describedby','parentMaterialHint');})();
+(function(){var field=document.querySelector('#teacherForm [name="materi"]');if(!field)return;var hint=document.createElement('p');hint.id='parentMaterialHint';var hintIcon=document.createElement('span');hintIcon.className='notes-info-icon';hintIcon.setAttribute('aria-hidden','true');hintIcon.textContent='!';hint.textContent='Tanggal pertemuan dan materi yang disimpan akan tampil di Portal Orang Tua setelah fitur diaktifkan. Metode, kesulitan, dan rencana lanjutan tetap internal.';hint.prepend(hintIcon);hint.style.cssText='font-size:12px;color:var(--muted);line-height:1.6;margin:8px 0';field.after(hint);field.setAttribute('aria-describedby','parentMaterialHint');})();
 
 function setTeacherFormOpen(open){$("teacherForm").hidden=!open;$("teacherFormToggle").setAttribute("aria-expanded",String(open));$("teacherFormToggle").textContent="+ Simpan Catatan";}
 $("teacherFormToggle").onclick=function(){setTeacherFormOpen($("teacherForm").hidden);};
@@ -224,3 +184,7 @@ $("attendanceFormToggle").onclick=function(){setAttendanceFormOpen($("attendance
 
 function setReportFormOpen(open){$("reportForm").hidden=!open;$("reportPreview").hidden=!open;$("reportFormToggle").setAttribute("aria-expanded",String(open));}
 $("reportFormToggle").onclick=function(){setReportFormOpen($("reportForm").hidden);};
+
+function syncAttendanceStatusIndicator(){var field=$("attendanceStatus");field.dataset.statusColor=field.value==="Hadir"?"hadir":field.value==="Sakit"?"sakit":field.value==="Izin"?"izin":"absen";}
+$("attendanceStatus").addEventListener("change",syncAttendanceStatusIndicator);
+syncAttendanceStatusIndicator();
