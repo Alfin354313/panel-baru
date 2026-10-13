@@ -406,13 +406,20 @@ function syncTeacherMasterForm(){
   $("teacherMasterStatus").value=t.status||"Aktif";
   $("teacherMasterNote").value=t.catatan||"";
 }
+var teacherPage=1,teacherPageSize=4,teacherLastFilter="";
 function drawTeachers(){
   populateTeacherAccounts();
   var active=TEACHERS.filter(function(x){return x.status!=="Nonaktif"}).length;
   $("teacherMasterCount").textContent=active;
   var tq=($("teacherSearch").value||"").toLowerCase(),ts=$("teacherStatusFilter").value;var visibleTeachers=TEACHERS.filter(function(x){return (!ts||x.status===ts)&&(!tq||[x.nama,x.email,x.mapel,x.hp].join(" ").toLowerCase().includes(tq))});
-  $("teacherMasterBody").innerHTML=visibleTeachers.map(function(x,idx){var initials=(x.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();
-    return '<tr><td class="teacher-no">'+(idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+esc(initials)+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
+  var key=tq+"|"+ts;if(key!==teacherLastFilter){teacherPage=1;teacherLastFilter=key}
+  var pages=Math.max(1,Math.ceil(visibleTeachers.length/teacherPageSize));teacherPage=Math.max(1,Math.min(teacherPage,pages));var start=(teacherPage-1)*teacherPageSize;
+  $("teacherTotalCount").textContent=TEACHERS.length;$("teacherActiveCount").textContent=active;$("teacherInactiveCount").textContent=TEACHERS.length-active;$("teacherActiveCaption").textContent=(TEACHERS.length?Math.round(active/TEACHERS.length*100):0)+"% dari total guru";
+  $("teacherPageSummary").textContent=visibleTeachers.length?"Menampilkan "+(start+1)+"–"+Math.min(start+teacherPageSize,visibleTeachers.length)+" dari "+visibleTeachers.length+" guru":"Tidak ada guru yang sesuai filter.";
+  var nav=$("teacherPagination");nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement("button");b.type="button";b.textContent=label;b.disabled=disabled;if(page===teacherPage&&/^\d+$/.test(label))b.setAttribute("aria-current","page");b.onclick=function(){teacherPage=page;drawTeachers()};nav.append(b)}
+  pageButton("‹",teacherPage-1,teacherPage===1);for(var n=Math.max(1,teacherPage-2);n<=Math.min(pages,teacherPage+2);n++)pageButton(String(n),n,false);pageButton("›",teacherPage+1,teacherPage===pages);
+  $("teacherMasterBody").innerHTML=visibleTeachers.slice(start,start+teacherPageSize).map(function(x,idx){var initials=(x.nama||"?").trim().split(/\\s+/).slice(0,2).map(function(v){return v.charAt(0)}).join("").toUpperCase();
+    return '<tr><td class="teacher-no">'+(start+idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+esc(initials)+'</span><b>'+esc(x.nama||"Belum diisi")+'</b></span></td><td>'+esc(x.mapel||"-")+'</td><td>'+esc(x.hp||x.email||"-")+'</td><td><span class="teacher-status '+(x.status==="Nonaktif"?"inactive":"active")+'">'+esc(x.status||"Aktif")+'</span></td><td><div class="teacher-row-actions"><button class="teacher-more" type="button" aria-label="Aksi guru">•••</button><div class="teacher-action-menu"><button data-teacher-profile="'+x.id+'">Detail</button><button data-etm="'+x.id+'">Edit</button></div></div></td></tr>';
   }).join("")||emptyTable(6,"Belum ada data guru","Akun Guru yang tersedia akan tampil di sini.");
 }
 $("teacherAccountId").onchange=syncTeacherMasterForm;

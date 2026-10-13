@@ -179,3 +179,40 @@ body.role-admin #tm #studentPagination button{padding:6px 10px;border:1px solid 
 body.role-admin #tm #studentPagination button[aria-current]{background:#1082ff;border-color:#1082ff;color:white}
 body.role-admin #tm #studentPagination button:disabled{opacity:.4}
 @media(max-width:899px){body.role-admin #tm .students-summary{grid-template-columns:1fr;gap:10px}body.role-admin #tm .students-metric{padding:12px}body.role-admin #tm .students-tools{grid-template-columns:1fr!important}body.role-admin #tm .students-list-panel{padding:12px}body.role-admin #tm .students-title{font-size:22px!important}body.role-admin #tm .students-page-head{gap:10px;flex-wrap:wrap}}
+
+/* Data Guru uses the same reference layout as Data Murid. */
+/* Data Murid reference screen. */
+body.role-admin #app #teacherMasterPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;max-width:none!important;min-width:0!important;box-sizing:border-box!important}
+body.role-admin #teacherMasterPage .teacher-page-head{margin-bottom:4px!important}
+body.role-admin #teacherMasterPage .section-eyebrow,body.role-admin #teacherMasterPage .teacher-title-icon{display:none!important}
+body.role-admin #teacherMasterPage .teacher-page-title{font-size:26px!important;margin:0!important;color:#103864!important}
+body.role-admin #teacherMasterPage .students-subtitle{margin:4px 0 18px;color:#6a83a2;font-size:13px}
+body.role-admin #teacherMasterPage .students-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+body.role-admin #teacherMasterPage .students-metric{display:flex;align-items:center;gap:14px;padding:18px;background:#fff;border:1px solid #dceaf7;border-radius:14px;min-width:0}
+body.role-admin #teacherMasterPage .students-metric-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:12px;background:#e4f1ff;color:#1688ff;font-size:27px;flex-shrink:0}
+body.role-admin #teacherMasterPage .students-metric small{display:block;color:#21486f;font-size:13px}
+body.role-admin #teacherMasterPage .students-metric b{display:block;color:#103864;font-size:26px;margin:3px 0}
+body.role-admin #teacherMasterPage .students-metric div>span{display:block;color:#708aa7;font-size:12px}
+body.role-admin #teacherMasterPage .students-metric.active{background:#f4fff9}
+body.role-admin #teacherMasterPage .students-metric.active b{color:#009a68}
+body.role-admin #teacherMasterPage .students-metric.active .students-metric-icon{background:#dcf8ed;color:#009a68}
+body.role-admin #teacherMasterPage .students-metric.inactive .students-metric-icon{background:#fff1de;color:#ef9221}
+body.role-admin #teacherMasterPage .students-metric.inactive b{color:#ef9221}
+body.role-admin #teacherMasterPage .students-list-panel{padding:18px;background:white;border:1px solid #dfeaf6;border-radius:16px;min-width:0}
+body.role-admin #teacherMasterPage .students-list-panel>h3{margin:0 0 14px;color:#103864;font-size:18px}
+body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:minmax(0,1fr) 190px!important}
+body.role-admin #teacherMasterPage .teacher-master-table-wrap{overflow-x:auto!important;width:100%!important}
+body.role-admin #teacherMasterPage .teacher-master-table{min-width:620px!important}
+body.role-admin #teacherMasterPage .teacher-master-table td{padding:16px 12px!important}
+body.role-admin #teacherMasterPage .students-list-footer{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px;color:#7187a2;font-size:12px}
+body.role-admin #teacherMasterPage #teacherPagination{display:flex;gap:6px}
+body.role-admin #teacherMasterPage #teacherPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:white;color:#245b91;min-width:32px}
+body.role-admin #teacherMasterPage #teacherPagination button[aria-current]{background:#1082ff;border-color:#1082ff;color:white}
+body.role-admin #teacherMasterPage #teacherPagination button:disabled{opacity:.4}
+@media(max-width:899px){body.role-admin #teacherMasterPage .students-summary{grid-template-columns:1fr;gap:10px}body.role-admin #teacherMasterPage .students-metric{padding:12px}body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:1fr!important}body.role-admin #teacherMasterPage .students-list-panel{padding:12px}body.role-admin #teacherMasterPage .teacher-page-title{font-size:22px!important}body.role-admin #teacherMasterPage .teacher-page-head{gap:10px;flex-wrap:wrap}}
+
+body.role-admin #teacherMasterPage .teacher-search-row{display:grid!important;grid-template-columns:20px minmax(0,1fr) 190px!important;align-items:center;gap:10px;margin-bottom:14px}
+body.role-admin #teacherMasterPage .teacher-search-row input{width:100%!important;min-width:0!important;margin:0!important}
+body.role-admin #teacherMasterPage .teacher-action-menu{z-index:50}
+body.role-admin #teacherMasterPage .teacher-row-actions:focus-within .teacher-action-menu{display:grid}
+@media(max-width:600px){body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:20px minmax(0,1fr)!important}body.role-admin #teacherMasterPage #teacherStatusFilter{grid-column:1/-1!important;width:100%!important}}

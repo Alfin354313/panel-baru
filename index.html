@@ -36,7 +36,7 @@
 #teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:18px!important}
 #teacherAttendancePage>.card:first-child,#teacherNotesPage>.card:first-child,#teacherReportPage>.card:first-child{margin-top:0!important}
 @media(max-width:650px){#teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:14px!important}}
-</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-students5">
+</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-teachers6">
 </head><body>
 
 
@@ -201,6 +201,9 @@
     <div><span class="section-eyebrow">DATA MASTER</span><h2 class="teacher-page-title"><span class="teacher-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="7" r="3" stroke="currentColor" stroke-width="2"/><path d="M3.5 19c0-4 2.2-6 5.5-6s5.5 2 5.5 6M17 10v6M14 13h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Data Guru</h2></div>
     <button id="openTeacherForm" type="button" class="pri">＋ Tambah Guru</button>
   </div>
+  <p class="students-subtitle">Kelola data pengajar bimbingan belajar Anda.</p>
+  <div class="students-summary"><div class="students-metric"><span class="students-metric-icon">♙</span><div><small>Total Guru</small><b id="teacherTotalCount">0</b><span>Pengajar terdaftar</span></div></div><div class="students-metric active"><span class="students-metric-icon">✓</span><div><small>Guru Aktif</small><b id="teacherActiveCount">0</b><span id="teacherActiveCaption">0% dari total guru</span></div></div><div class="students-metric inactive"><span class="students-metric-icon">♙</span><div><small>Guru Nonaktif</small><b id="teacherInactiveCount">0</b><span>Tidak aktif</span></div></div></div>
+  <section class="students-list-panel"><h3>Daftar Guru</h3>
   <div id="teacherFormPanel" class="teacher-form-panel" hidden>
     <h3>Tambah / Edit Guru</h3>
     <form id="teacherMasterForm" class="teacher-master-form">
@@ -216,7 +219,7 @@
   </div>
   <div class="teacher-search-row"><span class="teacher-search-icon" aria-hidden="true">⌕</span><input id="teacherSearch" type="search" placeholder="Cari guru..."><select id="teacherStatusFilter"><option value="">Semua status</option><option>Aktif</option><option>Nonaktif</option></select></div>
   <div class="tw teacher-master-table-wrap"><table class="teacher-master-table"><thead><tr><th>No</th><th>Nama Guru</th><th>Mata Pelajaran</th><th>Kontak</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="teacherMasterBody"></tbody></table></div>
-  <span id="teacherMasterCount" hidden>0</span>
+  <span id="teacherMasterCount" hidden>0</span><div class="students-list-footer"><span id="teacherPageSummary" role="status" aria-live="polite"></span><nav id="teacherPagination" aria-label="Halaman daftar guru"></nav></div></section>
 </div>
 <div id="dataManagementPage" class="card" hidden>
 <div class="data-page-head"><div><small>KEAMANAN DATA</small><h2>Backup &amp; Arsip</h2><p>Simpan cadangan, pulihkan data, dan susun arsip tahunan.</p></div><span class="data-admin-badge">Khusus Admin</span></div>
@@ -281,7 +284,7 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin-stage1.js?v=20261013-header3"></script>
-<script src="./js/admin.js?v=20261013-students5"></script>
+<script src="./js/admin.js?v=20261013-teachers6"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=20261008-report-toggle1"></script>
   <script src="./js/auth.js?v=20261008-parent-entry1"></script>
