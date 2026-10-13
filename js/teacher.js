@@ -10,7 +10,7 @@ function startEditAttendance(id){
   editingAttendanceId=id;
   $("attendanceStudent").value=x.student_id||"";
   $("attendanceDate").value=x.tanggal||"";
-  $("attendanceStatus").value=x.status||"Hadir";
+  $("attendanceStatus").value=x.status||"Hadir";syncAttendanceStatusIndicator();
   $("attendanceNote").value=x.catatan||"";
   $("attendanceSubmit").textContent="Simpan Perubahan";
   $("attendanceCancel").hidden=false;
@@ -20,7 +20,7 @@ function cancelEditAttendance(){
   editingAttendanceId=null;
   $("attendanceForm").reset();
   attendanceDateToday();
-  $("attendanceStatus").value="Hadir";
+  $("attendanceStatus").value="Hadir";syncAttendanceStatusIndicator();
   $("attendanceSubmit").textContent="Simpan Absensi";
   $("attendanceCancel").hidden=true;
 }
@@ -86,6 +86,7 @@ drawTeacherStage1();
 }
 function attendanceDateToday(){$("attendanceDate").value=todayISO}
 function drawAttendance(){
+  syncAttendanceStatusIndicator();
   var keep=$("attendanceStudent").value;
   $("attendanceStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';
   if(keep) $("attendanceStudent").value=keep;
@@ -229,3 +230,7 @@ $("attendanceFormToggle").onclick=function(){setAttendanceFormOpen($("attendance
 
 function setReportFormOpen(open){$("reportForm").hidden=!open;$("reportPreview").hidden=!open;$("reportFormToggle").setAttribute("aria-expanded",String(open));}
 $("reportFormToggle").onclick=function(){setReportFormOpen($("reportForm").hidden);};
+
+function syncAttendanceStatusIndicator(){var field=$("attendanceStatus");field.dataset.statusColor=field.value==="Hadir"?"hadir":field.value==="Sakit"?"sakit":field.value==="Izin"?"izin":"absen";}
+$("attendanceStatus").addEventListener("change",syncAttendanceStatusIndicator);
+syncAttendanceStatusIndicator();
