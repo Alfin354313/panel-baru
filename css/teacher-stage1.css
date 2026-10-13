@@ -33,3 +33,21 @@ body.role-guru #teacherApp .teacher-stage-account small{display:block;font-size:
 body.role-guru #teacherApp .teacher-account-menu{position:absolute;right:0;top:calc(100% + 10px);z-index:200;background:white;border:1px solid #d5e5f5;border-radius:10px;padding:8px;min-width:150px;box-shadow:0 10px 30px #10386420}
 body.role-guru #teacherApp .teacher-account-menu #teacherLogoutBtn{display:block!important;width:100%!important;color:#c43e4b!important;text-align:left;border:0!important;background:transparent!important}
 @media(max-width:899px){body.role-guru #teacherApp .teacher-head{flex-wrap:wrap!important;gap:10px!important;margin:0!important}body.role-guru #teacherApp .teacher-stage-search{order:2;flex-basis:100%;max-width:none}body.role-guru #teacherApp .teacher-stage-tools{flex-direction:row!important}body.role-guru #teacherApp .teacher-dashboard-panels{grid-template-columns:1fr!important}body.role-guru #teacherApp #teacherDashboardPage>.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.role-guru #teacherApp .teacher-stage-welcome{flex-wrap:wrap}body.role-guru #teacherApp .teacher-stage-welcome h2{font-size:22px}}
+
+/* Reference icon colors across the four teaching metrics. */
+body.role-guru #teacherApp #teacherDashboardPage .dashboard-card .kpi-icon{display:grid!important;place-items:center!important;width:42px!important;height:42px!important;border-radius:12px!important;padding:9px!important;position:static!important;margin:0 0 10px!important;transform:none!important}
+body.role-guru #teacherApp #teacherDashboardPage .kpi-students .kpi-icon{background:#e0efff!important;color:#1688ff!important}
+body.role-guru #teacherApp #teacherDashboardPage .kpi-notes .kpi-icon{background:#dcf7ec!important;color:#00a56c!important}
+body.role-guru #teacherApp #teacherDashboardPage .kpi-today .kpi-icon{background:#ffe5eb!important;color:#ef4765!important}
+body.role-guru #teacherApp #teacherDashboardPage .kpi-total .kpi-icon{background:#e5ecff!important;color:#426fff!important}
+body.role-guru #teacherApp #teacherDashboardPage .kpi-icon svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.role-guru #teacherApp .teacher-quick-actions .teacher-quick-icon{display:inline-grid;place-items:center;width:36px;height:36px;margin-right:10px;vertical-align:middle;border-radius:10px;background:#e0efff;color:#1688ff}
+body.role-guru #teacherApp .teacher-quick-actions .teacher-quick-icon svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+body.role-guru #teacherApp .teacher-quick-actions button:nth-child(2) .teacher-quick-icon{background:#dcf7ec;color:#00a56c}
+body.role-guru #teacherApp .teacher-quick-actions button:nth-child(3) .teacher-quick-icon{background:#ede5ff;color:#8548d9}
+body.role-guru #teacherApp .teacher-quick-actions small{margin-left:46px!important}
+body.role-guru #teacherApp .teacher-note-avatar.avatar-blue{background:#e0efff;color:#1688ff}
+body.role-guru #teacherApp .teacher-note-avatar.avatar-pink{background:#ffe5ed;color:#d9487d}
+body.role-guru #teacherApp .teacher-note-avatar.avatar-green{background:#dcf7ec;color:#079966}
+body.role-guru #teacherApp .teacher-note-avatar.avatar-purple{background:#eee5ff;color:#8548d9}
+body.role-guru #teacherApp .teacher-note-avatar.avatar-orange{background:#fff0dc;color:#d88920}
