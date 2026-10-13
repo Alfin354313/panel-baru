@@ -295,3 +295,16 @@ body.role-guru #teacherApp .report-stage-section{margin:14px 0!important}
 body.role-guru #teacherApp .report-stage-section h4{font-size:13px!important}
 @media(min-width:900px) and (max-width:1199px){body.role-guru #teacherApp .report-stage-student{grid-template-columns:42px 1fr}body.role-guru #teacherApp .report-stage-counts{grid-column:1/-1}}
 @media(max-width:499px){body.role-guru #teacherApp .report-stage-student{grid-template-columns:42px 1fr}body.role-guru #teacherApp .report-stage-counts{grid-column:1/-1}}
+
+/* Profile dropdown with a clear account identity and logout action. */
+body.role-guru #teacherApp .teacher-account-menu{min-width:235px;max-width:calc(100vw - 32px);padding:8px!important;border-radius:12px!important;top:calc(100% + 12px);box-shadow:0 12px 32px #12345620}
+body.role-guru #teacherApp .teacher-account-info{display:flex;align-items:center;gap:10px;padding:10px 8px 14px;border-bottom:1px solid #e4edf6;margin-bottom:6px}
+body.role-guru #teacherApp .teacher-account-info b{display:block;font:600 14px/1.4 Arial,sans-serif;color:#173e69}
+body.role-guru #teacherApp .teacher-account-info small{font:11px/1.5 Arial,sans-serif;color:#7d91ac;margin-top:3px}
+body.role-guru #teacherApp .teacher-account-avatar{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex:0 0 36px;border-radius:50%;background:#e4f1ff;color:#2477df;font-size:15px;overflow:hidden}
+body.role-guru #teacherApp .teacher-account-avatar img{width:100%;height:100%;object-fit:cover}
+body.role-guru #teacherApp .teacher-account-menu #teacherLogoutBtn{display:flex!important;align-items:center;gap:10px;width:100%!important;padding:11px 12px!important;border-radius:8px!important;background:#fff5f5!important;color:#d04450!important;font:600 13px/1.4 Arial,sans-serif!important;margin:0!important;text-align:left}
+body.role-guru #teacherApp .teacher-account-menu #teacherLogoutBtn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;pointer-events:none}
+body.role-guru #teacherApp .teacher-account-menu #teacherLogoutBtn:hover{background:#ffe7e9!important}
+body.role-guru #teacherApp .teacher-account-menu #teacherLogoutBtn:focus-visible{outline:2px solid #d04450;outline-offset:2px}
+body.role-guru #teacherApp .teacher-stage-account summary::-webkit-details-marker{display:none}
