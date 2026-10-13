@@ -36,7 +36,7 @@
 #teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:18px!important}
 #teacherAttendancePage>.card:first-child,#teacherNotesPage>.card:first-child,#teacherReportPage>.card:first-child{margin-top:0!important}
 @media(max-width:650px){#teacherAttendancePage,#teacherNotesPage,#teacherReportPage{padding-top:14px!important}}
-</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-search4">
+</style><link rel="stylesheet" href="./css/admin-stage1.css?v=20261013-students5">
 </head><body>
 
 
@@ -131,6 +131,9 @@
 
 <div id="tm" class="card admin-students-page" hidden>
   <div class="students-page-head"><div><span class="section-eyebrow">DATA MASTER</span><h2 class="students-title"><span class="students-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Data Murid</h2></div><button id="openStudentForm" type="button" class="pri">＋ Tambah Murid</button></div>
+  <p class="students-subtitle">Kelola data seluruh murid bimbingan belajar Anda.</p>
+  <div class="students-summary"><div class="students-metric"><span class="students-metric-icon">♙</span><div><small>Total Murid</small><b id="studentTotalCount">0</b><span>Murid terdaftar</span></div></div><div class="students-metric active"><span class="students-metric-icon">✓</span><div><small>Murid Aktif</small><b id="studentActiveCount">0</b><span id="studentActiveCaption">0% dari total murid</span></div></div><div class="students-metric inactive"><span class="students-metric-icon">♙</span><div><small>Murid Nonaktif</small><b id="studentInactiveCount">0</b><span>Tidak aktif</span></div></div></div>
+  <section class="students-list-panel"><h3>Daftar Murid</h3>
   <div id="studentFormPanel" class="student-form-panel" hidden>
   <h3 id="mmTitle">Tambah murid</h3>
   <form id="fm">
@@ -145,6 +148,7 @@
   </div>
   <div class="table-tools students-tools"><label class="student-search-box"><span>⌕</span><input id="studentSearch" type="search" placeholder="Cari murid..."></label><select id="studentLevelFilter"><option value="">Semua Kelas</option><option>SD</option><option>SMP</option><option>SMA</option></select></div>
   <div class="tw students-table-wrap"><table class="students-table"><thead><tr><th>No</th><th>Nama</th><th>Kelas</th><th>Program</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="bm"></tbody></table></div>
+  <div class="students-list-footer"><span id="studentPageSummary" role="status" aria-live="polite"></span><nav id="studentPagination" aria-label="Halaman daftar murid"></nav></div></section>
 </div>
 
 <div id="parentAnnouncementsPage" class="card" hidden><div class="admin-dashboard-welcome"><div><span class="admin-eyebrow">INFORMASI ORANG TUA</span><h2>Pengumuman</h2><p>Buat satu pengumuman untuk semua akun orang tua yang terhubung.</p></div></div></div><div id="studentProfilePage" class="card student-profile-page" hidden><div class="student-profile-head"><button id="studentProfileBack" type="button">← Kembali</button><div><small>PROFIL MURID</small><h2 id="studentProfileName">-</h2><span id="studentProfileMeta">-</span></div></div><section class="card" aria-labelledby="parentInviteTitle"><h3 id="parentInviteTitle">Undangan Orang Tua</h3><p>Uji coba satu murid. Kode berlaku 24 jam dan hanya dapat digunakan sekali.</p><button id="adminParentInviteGenerate" type="button">Buat kode undangan</button><p id="adminParentInviteStatus" role="status" aria-live="polite"></p><div id="adminParentInviteResult" hidden><label>Kode undangan<input id="adminParentInviteCode" readonly></label><button id="adminParentInviteCopy" type="button">Salin kode</button><p>Bagikan kode ini hanya kepada orang tua murid tersebut.</p><a href="/orang-tua.html" target="_blank" rel="noopener">Buka Portal Orang Tua ↗</a></div></section><div id="studentProfileSummary" class="student-profile-summary"></div><div class="student-profile-grid"><section><h3>Riwayat Pembayaran</h3><div id="studentProfilePayments"></div></section><section><h3>Rekap Absensi</h3><div id="studentProfileAttendance"></div></section><section><h3>Catatan Guru Terbaru</h3><div id="studentProfileNotes"></div></section><section><h3>Laporan Perkembangan</h3><div id="studentProfileReports"></div></section></div></div>
@@ -277,7 +281,7 @@
 </section></section></div></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>  <script src="./js/app.js?v=20261008-reference1"></script>
 <script src="./js/admin-stage1.js?v=20261013-header3"></script>
-<script src="./js/admin.js?v=20261008-announcements1"></script>
+<script src="./js/admin.js?v=20261013-students5"></script>
 <script src="./js/data-management.js?v=20261008-backup4"></script>
   <script src="./js/teacher.js?v=20261008-report-toggle1"></script>
   <script src="./js/auth.js?v=20261008-parent-entry1"></script>
