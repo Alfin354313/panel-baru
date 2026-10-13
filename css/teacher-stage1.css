@@ -184,3 +184,13 @@ body.role-guru #teacherApp .notes-student-avatar{display:inline-flex;align-items
 body.role-guru #teacherApp #teacherNotesBody tr:nth-child(even) .notes-student-avatar{background:#fce5ef;color:#bb5188}
 body.role-guru #teacherApp .notes-material{max-width:420px;white-space:normal!important;line-height:1.6}
 @media(max-width:899px){body.role-guru #teacherApp .notes-stage-heading{flex-wrap:wrap}body.role-guru #teacherApp #teacherForm{grid-template-columns:1fr!important}body.role-guru #teacherApp .notes-stage-filters{grid-template-columns:1fr}body.role-guru #teacherApp .notes-entry-card,body.role-guru #teacherApp .notes-history-card{padding:16px!important}}
+
+/* Compact spacing between teaching-note fields. */
+body.role-guru #teacherApp #teacherForm{gap:8px 12px!important;align-items:start!important}
+body.role-guru #teacherApp #teacherForm label{margin:0!important;gap:0!important}
+body.role-guru #teacherApp #teacherForm textarea{min-height:64px!important;height:64px}
+body.role-guru #teacherApp #teacherForm textarea[name=rencana_lanjutan]{min-height:54px!important;height:54px}
+body.role-guru #teacherApp #teacherForm input,body.role-guru #teacherApp #teacherForm select,body.role-guru #teacherApp #teacherForm textarea{margin-top:3px!important;padding:8px 10px!important}
+body.role-guru #teacherApp .notes-character-count{margin:1px 0 0!important;line-height:1.25!important}
+body.role-guru #teacherApp #parentMaterialHint{padding:6px 10px!important;margin-top:4px!important}
+body.role-guru #teacherApp .notes-entry-card{padding:16px!important}
