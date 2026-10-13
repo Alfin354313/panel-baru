@@ -152,3 +152,35 @@ body.role-guru #teacherApp #teacherMenu .teacher-nav-icon svg{width:20px;height:
 body.role-guru #teacherApp #teacherMenu .teacher-logo-mark{display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex:0 0 44px;overflow:hidden;border-radius:50%}
 body.role-guru #teacherApp #teacherMenu .teacher-logo-mark img{width:64px!important;height:64px!important;max-width:none!important;flex:0 0 64px!important}
 @media(max-width:899px){body.role-guru #teacherApp #teacherMenu .teacher-nav-icon{display:flex!important;width:20px;height:20px;margin:0 auto 2px!important}body.role-guru #teacherApp #teacherMenu .teacher-nav-icon svg{width:18px;height:18px}}
+
+/* Reference layout for teaching notes. */
+body.role-guru #teacherApp #teacherNotesPage{font-family:Arial,sans-serif!important}
+body.role-guru #teacherApp .notes-stage-heading{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 16px}
+body.role-guru #teacherApp .notes-stage-heading h2{font-size:21px;margin:0;color:#103864}
+body.role-guru #teacherApp .notes-stage-heading p{font-size:13px;color:#6a83a2;margin:6px 0 0}
+body.role-guru #teacherApp .notes-heading-icon{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:#e4f1ff;color:#087bfa}
+body.role-guru #teacherApp #teacherFormToggle{margin:0!important;border-radius:8px!important;min-height:40px!important;padding:10px 18px!important;font-size:13px!important}
+body.role-guru #teacherApp .notes-entry-card{padding:20px!important}
+body.role-guru #teacherApp #teacherForm{display:grid!important;grid-template-columns:1fr 1fr!important;gap:16px 18px!important;margin:0!important;background:white!important;padding:0!important;border:0!important}
+body.role-guru #teacherApp #teacherForm[hidden]{display:none!important}
+body.role-guru #teacherApp #teacherForm label{font-family:Arial,sans-serif!important;font-size:13px!important;font-weight:600!important;line-height:1.5;color:#234d78;min-width:0}
+body.role-guru #teacherApp #teacherForm input,body.role-guru #teacherApp #teacherForm select,body.role-guru #teacherApp #teacherForm textarea{font-family:Arial,sans-serif!important;font-size:13px!important;font-weight:400!important;width:100%!important;box-sizing:border-box!important;border:1px solid #d2e3f5!important;border-radius:7px!important;background:#fbfdff!important;padding:10px 12px!important;margin:5px 0 0!important;line-height:1.5!important}
+body.role-guru #teacherApp #teacherForm input,body.role-guru #teacherApp #teacherForm select{height:42px!important}
+body.role-guru #teacherApp #teacherForm textarea{min-height:80px!important;resize:vertical}
+body.role-guru #teacherApp #teacherForm textarea[name=rencana_lanjutan]{min-height:65px!important}
+body.role-guru #teacherApp .notes-character-count{display:block;text-align:right;font-size:11px;font-weight:400;color:#7c94b5;margin-top:3px}
+body.role-guru #teacherApp #parentMaterialHint{background:#e6f2ff;color:#547dab!important;border-radius:6px;padding:8px 12px;font-size:12px!important;line-height:1.5!important;margin:6px 0 0!important;font-weight:400}
+body.role-guru #teacherApp #teacherForm .teacher-form-actions{margin:0!important;justify-content:flex-start!important}
+body.role-guru #teacherApp #teacherSubmit{border-radius:7px!important;font-size:13px!important;padding:11px 18px!important;width:auto!important}
+body.role-guru #teacherApp .notes-history-card{padding:18px 20px!important;margin-top:16px!important}
+body.role-guru #teacherApp .notes-history-card h2{font-size:17px!important;margin:0 0 12px!important}
+body.role-guru #teacherApp .notes-stage-filters{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:12px;margin-bottom:14px}
+body.role-guru #teacherApp .notes-stage-filters input{min-width:0;width:100%;box-sizing:border-box;border:1px solid #d2e3f5;border-radius:7px;background:#fbfdff;padding:10px 12px;font:13px Arial,sans-serif}
+body.role-guru #teacherApp #teacherNotesHistory{max-height:420px;overflow:auto!important}
+body.role-guru #teacherApp #teacherNotesHistory table{min-width:650px!important;width:100%!important;font-size:13px}
+body.role-guru #teacherApp #teacherNotesHistory th{background:#e8f4ff!important;color:#234d78!important}
+body.role-guru #teacherApp .notes-student-name{display:flex;align-items:center;gap:9px;white-space:nowrap}
+body.role-guru #teacherApp .notes-student-avatar{display:inline-flex;align-items:center;justify-content:center;width:29px;height:29px;border-radius:50%;background:#d9ecff;color:#2871ba;font-weight:700;flex-shrink:0}
+body.role-guru #teacherApp #teacherNotesBody tr:nth-child(even) .notes-student-avatar{background:#fce5ef;color:#bb5188}
+body.role-guru #teacherApp .notes-material{max-width:420px;white-space:normal!important;line-height:1.6}
+@media(max-width:899px){body.role-guru #teacherApp .notes-stage-heading{flex-wrap:wrap}body.role-guru #teacherApp #teacherForm{grid-template-columns:1fr!important}body.role-guru #teacherApp .notes-stage-filters{grid-template-columns:1fr}body.role-guru #teacherApp .notes-entry-card,body.role-guru #teacherApp .notes-history-card{padding:16px!important}}
