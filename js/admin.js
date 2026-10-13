@@ -659,18 +659,23 @@ function auditActivityLabel(x){
   if(action==="LOGIN")return "Login ke sistem";
   return action||"-";
 }
+var auditPage=1,auditLastFilter="";
+$("auditMonth").value=thisM;$("auditMonth").onchange=drawAuditLog;
 function drawAuditLog(){
   var q=($("auditSearch").value||"").toLowerCase(),user=$("auditActionFilter").value;
   var from=$("auditDateFrom")&&$("auditDateFrom").value,to=$("auditDateTo")&&$("auditDateTo").value;
   var rows=AUDIT.filter(function(x){
     var who=x.user_email||x.role||"",day=String(x.created_at||"").slice(0,10);
     var search=[who,x.action,x.module,x.detail,auditActivityLabel(x)].join(" ").toLowerCase();
-    return (!user||who===user)&&(!q||search.includes(q))&&(!from||day>=from)&&(!to||day<=to);
+    return (!$("auditMonth").value||day.slice(0,7)===$("auditMonth").value)&&(!user||who===user)&&(!q||search.includes(q))&&(!from||day>=from)&&(!to||day<=to);
   });
-  $("auditLogBody").innerHTML=rows.map(function(x,idx){
+  var key=q+'|'+user+'|'+$('auditMonth').value;if(key!==auditLastFilter){auditPage=1;auditLastFilter=key}var pages=Math.max(1,Math.ceil(rows.length/5));auditPage=Math.max(1,Math.min(auditPage,pages));var start=(auditPage-1)*5;
+  $('auditPageSummary').textContent=rows.length?'Menampilkan '+(start+1)+'–'+Math.min(start+5,rows.length)+' dari '+rows.length+' aktivitas':'Tidak ada aktivitas sesuai filter.';
+  var nav=$('auditPagination');nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement('button');b.type='button';b.textContent=label;b.disabled=disabled;if(page===auditPage&&/^\d+$/.test(label))b.setAttribute('aria-current','page');b.onclick=function(){auditPage=page;drawAuditLog()};nav.append(b)}pageButton('‹',auditPage-1,auditPage===1);for(var n=Math.max(1,auditPage-2);n<=Math.min(pages,auditPage+2);n++)pageButton(String(n),n,false);pageButton('›',auditPage+1,auditPage===pages);
+  $("auditLogBody").innerHTML=rows.slice(start,start+5).map(function(x,idx){
     var dt=x.created_at?new Date(x.created_at).toLocaleString("id-ID",{day:"2-digit",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}):"-";
     var who=x.user_email||x.role||"-";
-    return '<tr><td>'+(idx+1)+'</td><td>'+esc(dt)+'</td><td><b>'+esc(who)+'</b></td><td>'+esc(auditActivityLabel(x))+'</td><td>'+esc(x.module||"-")+'</td></tr>';
+    return '<tr><td>'+(start+idx+1)+'</td><td>'+esc(dt)+'</td><td><span class="audit-user-avatar" aria-hidden="true">'+esc(who.charAt(0).toUpperCase())+'</span><b>'+esc(who)+'</b></td><td>'+esc(auditActivityLabel(x))+'</td><td><span class="audit-module-badge">'+esc(x.module||"-")+'</span>'+'</td></tr>';
   }).join("")||emptyTable(5,"Belum ada aktivitas","Aktivitas baru atau hasil pencarian akan tampil di sini.");
 }
 $("refreshAuditLog").onclick=loadAuditLog;

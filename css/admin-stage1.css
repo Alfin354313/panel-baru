@@ -412,3 +412,26 @@ body.role-admin #dataManagementPage .data-archive-table th{background:#edf5fd!im
 body.role-admin #dataManagementPage .data-archive-table td{padding:12px 10px!important;border-bottom:1px solid #eaf1f9!important}
 body.role-admin #dataManagementPage .data-archive-table button{padding:6px 12px;border:1px solid #d5e6fa;border-radius:8px;background:#eef6ff;color:#087bf1}
 @media(max-width:900px){body.role-admin #dataManagementPage .data-tools-grid{grid-template-columns:1fr!important}body.role-admin #dataManagementPage .data-page-head{flex-wrap:wrap!important}body.role-admin #dataManagementPage .data-tool-content{min-height:0!important}}
+
+/* Audit reference layout. */
+body.role-admin #app #auditLogPage{background:transparent!important;border:0!important;box-shadow:none!important;padding:16px!important;min-width:0!important}
+body.role-admin #auditLogPage .audit-title-icon,body.role-admin #auditLogPage .audit-title-v2 small{display:none!important}
+body.role-admin #auditLogPage .audit-title-v2 h2{font-size:26px!important;color:#103864!important;margin:0!important}
+body.role-admin #auditLogPage .audit-subtitle{font-size:13px;color:#6a83a2;margin:5px 0 15px}
+body.role-admin #auditLogPage .audit-tools-v2{display:grid!important;grid-template-columns:minmax(0,1fr) 190px 190px!important;gap:12px!important;padding:14px!important;border:1px solid #dfeaf6;border-radius:14px 14px 0 0;background:#fff!important}
+body.role-admin #auditLogPage .audit-search-v2,body.role-admin #auditLogPage .audit-date-v2{position:static!important;min-width:0!important;width:100%!important}
+body.role-admin #auditLogPage #auditActionFilter,body.role-admin #auditLogPage #auditMonth{position:static!important;width:100%!important;min-width:0!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+body.role-admin #auditLogPage .audit-date-v2{padding:0!important;border:0!important;background:none!important}
+body.role-admin #auditLogPage .audit-date-v2 [hidden]{display:none!important}
+body.role-admin #auditLogPage #refreshAuditLog{background:#1082ff!important;color:#fff!important;border:0!important;border-radius:9px!important;padding:10px 16px!important}
+body.role-admin #auditLogPage .audit-table-wrap{background:#fff!important;padding:0 14px!important;border:1px solid #dfeaf6!important;border-top:0!important;border-bottom:0!important;border-radius:0!important;overflow:auto!important}
+body.role-admin #auditLogPage .audit-table-v2{width:100%!important;min-width:760px!important}
+body.role-admin #auditLogPage .audit-table-v2 td{padding:14px 10px!important;font-size:12px!important}
+body.role-admin #auditLogPage .audit-user-avatar{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#e1efff;color:#1688ff;margin-right:8px}
+body.role-admin #auditLogPage .audit-module-badge{display:inline-block;padding:5px 9px;border-radius:7px;background:#eaf3ff;color:#245f99;font-size:12px}
+body.role-admin #auditLogPage .audit-list-footer{display:flex;justify-content:flex-end;align-items:center;gap:16px;flex-wrap:wrap;padding:14px;background:#fff;border:1px solid #dfeaf6;border-top:0;border-radius:0 0 14px 14px;color:#7187a2;font-size:12px}
+body.role-admin #auditLogPage #auditPagination{display:flex;gap:6px}
+body.role-admin #auditLogPage #auditPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:#fff;color:#245b91}
+body.role-admin #auditLogPage #auditPagination button[aria-current]{background:#1082ff;color:#fff}
+body.role-admin #auditLogPage #auditPagination button:disabled{opacity:.4}
+@media(max-width:800px){body.role-admin #auditLogPage .audit-tools-v2{grid-template-columns:1fr!important}}
