@@ -226,3 +226,25 @@ body.role-admin #app #teacherMasterPage #teacherStatusFilter{position:static!imp
 
 body.role-admin #app .teacher-avatar{width:40px!important;height:40px!important;overflow:hidden!important;flex-shrink:0!important}
 body.role-admin #app .teacher-avatar img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* Salary directory reference. */
+body.role-admin #app #salaryPage{padding:16px!important;background:transparent!important;border:0!important;box-shadow:none!important;min-width:0!important}
+body.role-admin #salaryPage .section-eyebrow,body.role-admin #salaryPage .salary-title-icon{display:none!important}
+body.role-admin #salaryPage .salary-page-title{font-size:26px!important;margin:0!important;color:#103864!important}
+body.role-admin #salaryPage .salary-subtitle{color:#6a83a2;font-size:13px;margin:4px 0 18px}
+body.role-admin #salaryPage .salary-kpis{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:14px!important;margin-bottom:18px!important}
+body.role-admin #salaryPage .salary-kpi{border-radius:14px!important;padding:18px!important;border:1px solid #dceaf7!important;background:#fff!important;min-width:0!important}
+body.role-admin #salaryPage .salary-kpi.total{background:#f4fff9!important}
+body.role-admin #salaryPage .salary-kpi.unpaid{background:#fff5f7!important}
+body.role-admin #salaryPage .salary-table-v2{background:#fff!important;padding:18px!important;border:1px solid #dfeaf6!important;border-radius:16px!important}
+body.role-admin #salaryPage .salary-list-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+body.role-admin #salaryPage .salary-list-head h3{margin:0;color:#103864;font-size:18px}
+body.role-admin #salaryPage #salarySearch{width:260px;max-width:100%;margin:0;padding:10px 12px;border:1px solid #d2e3f5;border-radius:10px;background:#f8fbff}
+body.role-admin #salaryPage td{padding:14px 12px!important}
+body.role-admin #salaryPage .salary-detail{padding:6px 14px;border:1px solid #d4e5f7;border-radius:8px;background:#f3f8ff;color:#087bf1}
+body.role-admin #salaryPage .students-list-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:16px;font-size:12px;color:#7187a2}
+body.role-admin #salaryPage #salaryPagination{display:flex;gap:6px}
+body.role-admin #salaryPage #salaryPagination button{padding:6px 10px;border:1px solid #d9e7f7;border-radius:7px;background:white;color:#245b91}
+body.role-admin #salaryPage #salaryPagination button[aria-current]{background:#1082ff;color:white}
+body.role-admin #salaryPage #salaryPagination button:disabled{opacity:.4}
+@media(max-width:899px){body.role-admin #salaryPage .salary-kpis{grid-template-columns:1fr!important}body.role-admin #salaryPage .salary-list-head{flex-wrap:wrap}body.role-admin #salaryPage #salarySearch{width:100%}body.role-admin #salaryPage .salary-head-actions{flex-wrap:wrap!important}}

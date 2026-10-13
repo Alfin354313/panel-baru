@@ -168,6 +168,8 @@ function updateSalaryPreview(){
   var total=meetings*rate+bonus+add-cut;
   $("salaryGrandTotal").textContent=rp(total);
 }
+var salaryPage=1,salaryLastFilter="";
+$("salarySearch").oninput=drawSalary;
 function drawSalary(){
   populateSalaryTeachers();
   var month=$("salaryMonth").value||thisM;
@@ -178,8 +180,13 @@ function drawSalary(){
   var total=monthRows.reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   var paid=monthRows.filter(function(x){return x.status==="Sudah Dibayar"}).reduce(function(a,x){return a+Number(x.total_gaji||0)},0);
   $("salaryTotal").textContent=rp(total);$("salaryPaid").textContent=rp(paid);$("salaryUnpaid").textContent=rp(total-paid);
-  $("salaryBody").innerHTML=monthRows.map(function(x,idx){
-    return '<tr><td>'+(idx+1)+'</td><td><b>'+esc(x.teacher_name||salaryTeacherLabel(x.teacher_id))+'</b></td><td>'+Number(x.jumlah_pertemuan||0)+'</td><td><b>'+rp(x.total_gaji)+'</b></td><td><span class="salary-state '+(x.status==="Sudah Dibayar"?"paid":"unpaid")+'">'+esc(x.status||"Belum Dibayar")+'</span></td><td><div class="salary-row-actions"><button class="salary-more" type="button">•••</button><div class="salary-action-menu"><button data-esal="'+x.id+'">Edit</button><button data-ssal="'+x.id+'">Slip Gaji</button><button data-psal="'+x.id+'">'+(x.status==="Sudah Dibayar"?"Tandai Belum":"Tandai Dibayar")+'</button><button data-dsal="'+x.id+'">Hapus</button></div></div></td></tr>';
+  var q=$("salarySearch").value.trim().toLowerCase(),key=month+"|"+q;if(key!==salaryLastFilter){salaryPage=1;salaryLastFilter=key}
+  var filtered=monthRows.filter(function(x){return !q||String(x.teacher_name||salaryTeacherLabel(x.teacher_id)).toLowerCase().includes(q)}),pages=Math.max(1,Math.ceil(filtered.length/4));salaryPage=Math.min(Math.max(1,salaryPage),pages);var start=(salaryPage-1)*4;
+  $("salaryPageSummary").textContent=filtered.length?"Menampilkan "+(start+1)+"–"+Math.min(start+4,filtered.length)+" dari "+filtered.length+" pembayaran":"Belum ada pembayaran sesuai filter.";
+  var nav=$("salaryPagination");nav.replaceChildren();function pageButton(label,page,disabled){var b=document.createElement("button");b.type="button";b.textContent=label;b.disabled=disabled;if(page===salaryPage&&/^\d+$/.test(label))b.setAttribute("aria-current","page");b.onclick=function(){salaryPage=page;drawSalary()};nav.append(b)}pageButton("‹",salaryPage-1,salaryPage===1);for(var n=Math.max(1,salaryPage-2);n<=Math.min(pages,salaryPage+2);n++)pageButton(String(n),n,false);pageButton("›",salaryPage+1,salaryPage===pages);
+  $("salaryBody").innerHTML=filtered.slice(start,start+4).map(function(x,idx){
+    var teacher=TEACHERS.find(function(t){return t.id===x.teacher_id})||{},avatar=['male','female','hijab'].includes(teacher.avatar_style)?'<img src="./assets/teacher-avatar-'+teacher.avatar_style+'.svg" alt="">':esc(String(x.teacher_name||salaryTeacherLabel(x.teacher_id)).charAt(0));
+    return '<tr><td>'+(start+idx+1)+'</td><td><span class="teacher-name-cell"><span class="teacher-avatar">'+avatar+'</span><b>'+esc(x.teacher_name||salaryTeacherLabel(x.teacher_id))+'</b></span></td><td>'+Number(x.jumlah_pertemuan||0)+'</td><td><b>'+rp(x.total_gaji)+'</b></td><td><span class="salary-state '+(x.status==="Sudah Dibayar"?"paid":"unpaid")+'">'+esc(x.status||"Belum Dibayar")+'</span></td><td><button class="salary-detail" type="button" data-ssal="'+x.id+'">Detail</button><div class="salary-row-actions"><button class="salary-more" type="button">•••</button><div class="salary-action-menu"><button data-esal="'+x.id+'">Edit</button><button data-ssal="'+x.id+'">Slip Gaji</button><button data-psal="'+x.id+'">'+(x.status==="Sudah Dibayar"?"Tandai Belum":"Tandai Dibayar")+'</button><button data-dsal="'+x.id+'">Hapus</button></div></div></td></tr>';
   }).join("")||'<tr><td colspan="6"><div class="salary-empty"><span>▤</span><b>Pilih periode untuk melihat rekap gaji</b><small>Belum ada data gaji guru pada periode ini.</small></div></td></tr>';
 }
 function resetSalaryForm(){
