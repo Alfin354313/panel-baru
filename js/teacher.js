@@ -89,11 +89,13 @@ function drawAttendance(){
   var keep=$("attendanceStudent").value;
   $("attendanceStudent").innerHTML=S.map(function(m){return '<option value="'+m.id+'">'+esc(m.nama)+' — '+esc(m.jenjang||"")+' '+esc(m.kelas||"")+'</option>'}).join("")||'<option value="">Belum ada murid</option>';
   if(keep) $("attendanceStudent").value=keep;
-  $("attendanceBody").innerHTML=ATT.map(function(x){
+  var q=$('attendanceSearch').value.toLowerCase().trim(),month=$('attendanceHistoryMonth').value,status=$('attendanceHistoryStatus').value;
+  var rows=ATT.filter(function(x){var m=stu(x.student_id)||{};return (!currentUser||x.teacher_id===currentUser.id)&&(!month||String(x.tanggal).slice(0,7)===month)&&(!status||x.status===status)&&(!q||[m.nama,x.catatan].join(' ').toLowerCase().includes(q))}).slice().sort(function(a,b){return String(b.tanggal).localeCompare(String(a.tanggal))});
+  $("attendanceBody").innerHTML=rows.map(function(x,idx){
     var m=stu(x.student_id)||{};
-    var cls=x.status==="Hadir"?"ok":(x.status==="Tidak Hadir"?"no":"");
-    return '<tr><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td class="'+cls+'">'+esc(x.status||"")+'</td><td>'+esc(x.catatan||"")+'</td><td><button class="sm" data-eatt="'+x.id+'">Edit</button> <button class="sm" data-datt="'+x.id+'">Hapus</button></td></tr>';
-  }).join("")||'<tr><td colspan="5">Belum ada data absensi.</td></tr>';
+    var cls=x.status==="Hadir"?"hadir":x.status==="Izin"?"izin":x.status==="Sakit"?"sakit":"absen";
+    return '<tr><td>'+(idx+1)+'</td><td>'+esc(x.tanggal||"")+'</td><td>'+esc(m.nama||"(murid tidak ditemukan)")+'</td><td><span class="attendance-status '+cls+'">'+esc(x.status||"")+'</span></td><td>'+esc(x.catatan||"")+'</td><td><button class="sm" data-eatt="'+x.id+'">Edit</button> <button class="sm" data-datt="'+x.id+'">Hapus</button></td></tr>';
+  }).join("")||'<tr><td colspan="6">Belum ada absensi sesuai filter.</td></tr>';
 }
 /* Teacher attendance edit/form handlers moved to ./teacher.js */
 

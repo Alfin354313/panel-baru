@@ -72,3 +72,31 @@ body.role-guru #teacherApp .teacher-stage-tools .sync-badge{width:auto!important
  body.role-guru #teacherApp #teacherMenu .teacher-sidebar-footer p{font-size:13px;line-height:1.5;color:#b5d0e7;margin:5px 0 0}
 }
 @media(max-width:899px){body.role-guru #teacherApp #teacherMenu .teacher-sidebar-footer{display:none!important}body.role-guru #teacherApp .teacher-head{gap:10px!important}body.role-guru #teacherApp .teacher-stage-search{flex-basis:100%!important;max-width:none!important}body.role-guru #teacherApp .teacher-stage-tools{margin-left:auto!important}body.role-guru #teacherApp .teacher-head:before{content:'Jenius Edu · Panel Guru';color:#103864;font-size:15px;font-weight:700}body.role-guru #teacherApp .teacher-stage-tools .sync-badge{display:none!important}}
+/* Attendance reference layout. */
+body.role-guru #teacherApp #teacherAttendancePage{padding:16px!important;margin:0!important;min-width:0!important}
+body.role-guru #teacherApp .attendance-stage-heading{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+body.role-guru #teacherApp .attendance-stage-heading h2{font-size:26px;margin:0;color:#103864}
+body.role-guru #teacherApp .attendance-stage-heading p{font-size:13px;color:#6a83a2;margin:5px 0}
+body.role-guru #teacherApp .attendance-stage-heading #attendanceFormToggle{margin:0!important;min-height:42px!important;border-radius:10px!important}
+body.role-guru #teacherApp .attendance-stage-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(230px,1fr);gap:16px;align-items:stretch}
+body.role-guru #teacherApp .attendance-entry-card,body.role-guru #teacherApp .attendance-stage-guide,body.role-guru #teacherApp .attendance-history-card{padding:18px!important;border:1px solid #dfeaf6!important;border-radius:14px!important;background:#fff!important;min-width:0!important;margin:0!important}
+body.role-guru #teacherApp .attendance-entry-card h2,body.role-guru #teacherApp .attendance-stage-guide h3,body.role-guru #teacherApp .attendance-history-card h2{font-size:18px!important;margin:0 0 14px!important;color:#103864!important}
+body.role-guru #teacherApp #attendanceForm{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;margin-top:0!important}
+body.role-guru #teacherApp #attendanceForm[hidden]{display:none!important}
+body.role-guru #teacherApp #attendanceForm label{font-size:13px;color:#315f86}
+body.role-guru #teacherApp #attendanceForm input,body.role-guru #teacherApp #attendanceForm select{min-height:42px!important;border:1px solid #d2e3f5!important;border-radius:9px!important;background:#f9fcff!important}
+body.role-guru #teacherApp .att-guide{position:relative;padding:12px 12px 12px 34px;margin:10px 0;border-radius:10px;background:#eafbf3;color:#147d59}
+body.role-guru #teacherApp .att-guide:before{content:'';position:absolute;left:14px;top:16px;width:10px;height:10px;border-radius:50%;background:currentColor}
+body.role-guru #teacherApp .att-guide b{display:block;font-size:13px}
+body.role-guru #teacherApp .att-guide small{display:block;margin-top:4px;font-size:12px;color:#6a83a2}
+body.role-guru #teacherApp .att-guide.izin,body.role-guru #teacherApp .attendance-status.izin{background:#fff4df;color:#d58c18}
+body.role-guru #teacherApp .att-guide.sakit,body.role-guru #teacherApp .attendance-status.sakit{background:#ffeaef;color:#d64867}
+body.role-guru #teacherApp .att-guide.absen,body.role-guru #teacherApp .attendance-status.absen{background:#f0e9ff;color:#874bd6}
+body.role-guru #teacherApp .attendance-history-card{margin-top:16px!important}
+body.role-guru #teacherApp .attendance-stage-filters{display:grid;grid-template-columns:minmax(0,1fr) 170px 170px;gap:12px;margin-bottom:14px}
+body.role-guru #teacherApp .attendance-stage-filters input,body.role-guru #teacherApp .attendance-stage-filters select{width:100%;min-width:0;margin:0;padding:10px 12px;border:1px solid #d2e3f5;border-radius:9px;background:white;box-sizing:border-box}
+body.role-guru #teacherApp .attendance-status{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:20px;font-size:12px;background:#eafbf3;color:#147d59;white-space:nowrap}
+body.role-guru #teacherApp .attendance-status:before{content:'';width:7px;height:7px;border-radius:50%;background:currentColor}
+body.role-guru #teacherApp #teacherAttendanceHistory{max-height:420px;overflow:auto!important}
+body.role-guru #teacherApp #teacherAttendanceHistory table{width:100%;min-width:700px}
+@media(max-width:899px){body.role-guru #teacherApp .attendance-stage-layout{grid-template-columns:1fr}body.role-guru #teacherApp .attendance-stage-heading{flex-wrap:wrap}body.role-guru #teacherApp .attendance-stage-filters{grid-template-columns:1fr}body.role-guru #teacherApp #attendanceForm{grid-template-columns:1fr!important}}
