@@ -216,3 +216,10 @@ body.role-admin #teacherMasterPage .teacher-search-row input{width:100%!importan
 body.role-admin #teacherMasterPage .teacher-action-menu{z-index:50}
 body.role-admin #teacherMasterPage .teacher-row-actions:focus-within .teacher-action-menu{display:grid}
 @media(max-width:600px){body.role-admin #teacherMasterPage .teacher-search-row{grid-template-columns:20px minmax(0,1fr)!important}body.role-admin #teacherMasterPage #teacherStatusFilter{grid-column:1/-1!important;width:100%!important}}
+
+/* Separate teacher search and status; cancel legacy absolute positioning. */
+body.role-admin #app #teacherMasterPage .teacher-search-row{position:relative!important;display:grid!important;grid-template-columns:20px minmax(0,1fr) 190px!important;gap:16px!important;width:100%!important;max-width:none!important;height:auto!important;padding:0!important;border:0!important;background:transparent!important}
+body.role-admin #app #teacherMasterPage .teacher-search-icon{position:static!important;transform:none!important;grid-column:1!important;grid-row:1!important}
+body.role-admin #app #teacherMasterPage #teacherSearch{position:static!important;grid-column:2!important;grid-row:1!important;width:100%!important;min-width:0!important;height:42px!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+body.role-admin #app #teacherMasterPage #teacherStatusFilter{position:static!important;inset:auto!important;transform:none!important;grid-column:3!important;grid-row:1!important;width:100%!important;max-width:none!important;min-width:0!important;height:42px!important;margin:0!important;padding:10px 12px!important;border:1px solid #d2e3f5!important;border-radius:10px!important;background:#fff!important;box-sizing:border-box!important}
+@media(max-width:600px){body.role-admin #app #teacherMasterPage .teacher-search-row{grid-template-columns:20px minmax(0,1fr)!important;gap:12px!important}body.role-admin #app #teacherMasterPage #teacherStatusFilter{grid-column:1/-1!important;grid-row:2!important}}
