@@ -2,7 +2,7 @@
 (function(){
 var dashboard=$('dashboard'),top=dashboard.querySelector('.dashboard-section'),welcome=top.querySelector('.admin-dashboard-welcome');
 top.classList.add('stage1-summary');welcome.querySelector('h2').textContent='Ringkasan Bimbel';
-var actions=document.createElement('div');actions.className='stage1-actions';actions.append(welcome.querySelector('.dashboard-filter'));var add=document.createElement('button');add.type='button';add.className='pri';add.textContent='+ Tambah Murid';add.onclick=function(){document.querySelector('[data-t="m"]').click();if($('studentFormPanel').hidden)$('openStudentForm').click();$('fm').elements.nama.focus();};actions.append(add);welcome.append(actions);
+var actions=document.createElement('div');actions.className='stage1-actions';actions.append(welcome.querySelector('.dashboard-filter'));welcome.append(actions);
 var extra=document.createElement('details');extra.className='stage1-extra';extra.innerHTML='<summary>Ringkasan tagihan & pembayaran</summary><div class="stage1-extra-grid"></div>';
 top.querySelectorAll('.kpi-receivable,.kpi-paid,.kpi-unpaid,.kpi-bills').forEach(function(c){extra.lastChild.append(c)});extra.append(top.querySelector('.dashboard-ratio-grid'));top.append(extra);
 var caption=document.createElement('span');caption.className='kpi-caption';caption.textContent='Selisih pendapatan dan pengeluaran';top.querySelector('.kpi-profit').append(caption);

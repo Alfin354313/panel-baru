@@ -109,3 +109,12 @@ body.role-admin #app #dashboard .stage1-chart svg{width:100%!important;max-width
  body.role-admin #app #dashboard .admin-dashboard-welcome{flex-direction:column!important;align-items:stretch!important}
  body.role-admin #app #dashboard .dashboard-students table{min-width:580px!important}
 }
+
+/* Header inset and right-aligned period control. */
+@media(min-width:900px){
+ body.role-admin #app>header{margin:14px 16px 14px!important;width:auto!important;min-width:0!important;border-radius:14px!important;box-sizing:border-box!important}
+ body.role-admin #app #dashboard .admin-dashboard-welcome{box-sizing:border-box!important;padding:16px 18px!important}
+ body.role-admin #app #dashboard .stage1-actions{margin-left:auto!important;flex:0 0 auto!important;justify-content:flex-end!important;align-self:center!important;width:auto!important}
+ body.role-admin #app #dashboard .stage1-actions .dashboard-filter{position:static!important;margin:0!important;transform:none!important;right:auto!important;top:auto!important}
+}
+@media(max-width:899px){body.role-admin #app #dashboard .stage1-actions{justify-content:flex-end!important;margin-left:auto!important}}
