@@ -144,3 +144,8 @@ body.role-admin #app .stage1-search-results button{display:block;width:100%;padd
 body.role-admin #app .stage1-search-results button:hover{background:#edf5ff}
 body.role-admin #app .stage1-search-results p{padding:8px;margin:0;color:#647e99;font-size:13px}
 @media(max-width:899px){body.role-admin #app>header.stage1-topbar{gap:10px!important;padding:12px!important;flex-wrap:wrap!important}body.role-admin #app .stage1-search{max-width:none;min-width:120px;padding:10px;order:2;flex-basis:100%}body.role-admin #app .stage1-header-tools{order:1;margin-left:auto!important;gap:10px!important}body.role-admin #app .stage1-chevron{margin-left:0}body.role-admin #app .stage1-profile-copy small{display:block!important}body.role-admin #app>header.stage1-topbar:before{content:'Jenius Edu';font-size:17px;font-weight:700;color:#103864}}
+
+/* Keep one search container border, without an inner focus ring. */
+body.role-admin #app .stage1-search input,
+body.role-admin #app .stage1-search input:focus,
+body.role-admin #app .stage1-search input:focus-visible{outline:none!important;outline-offset:0!important;border:0!important;box-shadow:none!important}
