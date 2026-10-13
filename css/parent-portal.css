@@ -179,3 +179,8 @@ body:has(#account:not([hidden])) main{max-width:1240px;padding:20px 24px 32px;ma
 #account .parent-expanded #announcements>article:has(img){display:grid}
 #account #progress .reportBlock:first-child h3{font-size:12px!important;color:#234d7f}
 @media(max-width:650px){#account #payments .row{display:grid;grid-template-columns:1fr auto;gap:9px}#account #payments .row>button{grid-column:1/-1;justify-content:center;width:100%;padding:8px}#account .parent-report-view{font-size:9px}#account .parent-monthly-report summary small{font-size:9px}}
+
+/* Stack each desktop column independently to remove gaps below shorter cards. */
+#account .parent-card-column{display:flex;flex-direction:column;gap:12px;min-width:0}
+#account #dashboard .parent-card-column>.card{padding:14px;margin:0;border:1px solid #e8f2fb;border-radius:12px;min-width:0;scroll-margin-top:20px}
+@media(max-width:650px){#account .parent-card-column{display:contents}#account #dashboard .parent-card-column>.card{padding:12px;border-radius:10px}#account #parentPayments{order:0}#account #parentAttendance{order:1}#account #parentLessons{order:2}#account #parentProgress{order:3}#account #parentReports{order:4}#account #parentAnnouncements{order:5}}
