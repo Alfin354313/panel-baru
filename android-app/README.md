@@ -1,4 +1,4 @@
-# Jenius Edu Android — 0.1.1 preview
+# Jenius Edu Android — 0.1.2 preview
 
 Aplikasi Android berbasis WebView untuk website produksi `https://panel-baru-jenius-edu.vercel.app`. Langsung membuka halaman login website, tanpa halaman pilihan panel maupun toolbar native tambahan. Pilihan Admin, Guru dan Orang Tua tersedia di login website. Memerlukan Android 8.0+ dan internet. Tidak menyertakan kredensial, service-role key, atau salinan data murid.
 
@@ -11,7 +11,7 @@ export ANDROID_SDK_ROOT=/lokasi/android-sdk
 ./build-preview.sh
 ```
 
-Dibutuhkan JDK 17, Python 3, zip, Android platform 35 dan build-tools 35.0.0. Hasil: `build/Jenius-Edu-0.1.1-preview.apk`. Skrip memverifikasi tanda tangan APK dan mencetak metadata paket. Simpan `build/preview.keystore` secara pribadi jika akan memperbarui APK percobaan ini; jangan masukkan kunci ke Git. Kunci ini khusus preview dengan password standar debug, bukan kunci distribusi produksi. APK final perlu kunci rilis milik pengelola.
+Dibutuhkan JDK 17, Python 3, zip, Android platform 35 dan build-tools 35.0.0. Hasil: `build/Jenius-Edu-0.1.2-preview.apk`. Skrip memverifikasi tanda tangan APK dan mencetak metadata paket. Simpan `build/preview.keystore` secara pribadi jika akan memperbarui APK percobaan ini; jangan masukkan kunci ke Git. Kunci ini khusus preview dengan password standar debug, bukan kunci distribusi produksi. APK final perlu kunci rilis milik pengelola.
 
 ## Perilaku
 
@@ -33,3 +33,5 @@ Dibutuhkan JDK 17, Python 3, zip, Android platform 35 dan build-tools 35.0.0. Ha
 6. Uji jaringan putus dan pemulihannya; verifikasi keyboard dan orientasi.
 
 APK preview belum diuji di perangkat atau emulator Android. Build dan verifikasi tanda tangan tidak membuktikan seluruh integrasi WebView berjalan di semua HP. Browser modern dan Android System WebView terbaru disarankan.
+
+Ikon 0.1.2 memakai adaptive icon dengan latar navy sesuai logo, untuk menghilangkan padding putih launcher. Bentuk tepi mengikuti mask launcher Android.

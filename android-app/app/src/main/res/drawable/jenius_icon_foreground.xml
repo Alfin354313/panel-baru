@@ -1,0 +1,3 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+ <item><bitmap android:src="@drawable/jenius_logo" android:gravity="fill" android:filter="true"/></item>
+</layer-list>
