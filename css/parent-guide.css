@@ -1,0 +1,30 @@
+#parentGuide{width:min(460px,calc(100vw - 24px));max-height:calc(100dvh - 24px);overflow-y:auto;border:1px solid #dbeafb;border-radius:20px;padding:22px;background:#fff;color:#123666;box-shadow:0 20px 60px #10386435;font-family:Arial,sans-serif}
+#parentGuide::backdrop{background:#10386466}
+#parentGuide .parent-guide-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+#parentGuide .parent-guide-top>span{font-size:10px;letter-spacing:1px;font-weight:700;color:#7092b5}
+#parentGuide button{cursor:pointer;font:600 13px/1.4 Arial,sans-serif;border-radius:9px;margin:0;min-height:40px}
+#parentGuide .parent-guide-skip{border:0;background:transparent;color:#6586aa;padding:6px 8px;min-height:32px}
+#parentGuide .parent-guide-picture{background:linear-gradient(135deg,#e8f5ff,#f0fbff);border:1px solid #e1effb;border-radius:14px;padding:16px;display:flex;align-items:center;gap:16px;min-height:160px;overflow:hidden}
+#parentGuide .parent-guide-picture>img{width:100%;height:160px;object-fit:contain}
+#parentGuide .parent-guide-symbol{display:grid;place-items:center;background:#d9edff;border-radius:18px;flex:0 0 68px;height:76px;color:#087bfa}
+#parentGuide svg{width:42px;height:42px;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;fill:none}
+#parentGuide .parent-guide-sample{flex:1;display:grid;gap:8px;min-width:0}
+#parentGuide .parent-guide-sample-row{display:flex;align-items:center;gap:8px;padding:9px;background:#fff;border:1px solid #e0ecf8;border-radius:8px;font-size:11px;line-height:1.4}
+#parentGuide .parent-guide-sample-row span{display:grid;place-items:center;flex:0 0 22px;height:22px;border-radius:50%;background:#e9f4ff;color:#087bfa;font-weight:700}
+#parentGuide .parent-guide-counter{font-size:11px;color:#087bfa;margin:17px 0 7px}
+#parentGuide h2{font-size:22px;line-height:1.35;margin:0 0 10px;letter-spacing:-.02em}
+#parentGuide #parentGuideBody{font-size:14px;color:#607e9f;line-height:1.7;margin:0;min-height:76px}
+#parentGuide .parent-guide-dots{display:flex;gap:6px;justify-content:center;margin:16px 0}
+#parentGuide .parent-guide-dots i{width:7px;height:7px;border-radius:50%;background:#d8e7f5}
+#parentGuide .parent-guide-dots i.active{width:20px;border-radius:8px;background:#087bfa}
+#parentGuide .parent-guide-actions{display:flex;gap:10px}
+#parentGuide .parent-guide-back{padding:10px 16px;border:1px solid #d9e8f7;background:white;color:#4e7095}
+#parentGuide .parent-guide-back:disabled{opacity:.4;cursor:default}
+#parentGuide .parent-guide-next{flex:1;padding:10px 14px;border:0;background:#087bfa;color:#fff}
+#parentGuide .parent-guide-note{display:block;text-align:center;font-size:10px;color:#8ba0b8;line-height:1.5;margin-top:12px}
+#account .parent-profile-menu .parent-guide-reopen{display:block;width:100%;padding:11px 10px;margin:0 0 10px;background:#edf6ff;color:#2168ab;border:0;font-size:12px;text-align:left;border-radius:8px}
+.parent-guide-highlight{outline:3px solid #4aa3ff!important;outline-offset:4px}
+@media(max-width:420px){#parentGuide{padding:16px;border-radius:16px}#parentGuide h2{font-size:20px}#parentGuide .parent-guide-picture{min-height:135px;padding:12px;gap:10px}#parentGuide .parent-guide-picture>img{height:135px}#parentGuide .parent-guide-symbol{flex-basis:48px;height:58px;border-radius:12px}#parentGuide svg{width:32px;height:32px}#parentGuide .parent-guide-sample-row{font-size:10px;padding:8px}#parentGuide #parentGuideBody{font-size:13px}}
+
+#portalAuthDialog .parent-install-help{display:block;width:100%;border:0;background:#edf6ff;color:#286aab;padding:10px;border-radius:8px;font-size:12px;margin:12px 0 0}
+@media(max-width:560px){.landing-nav [data-parent-install-guide]{font-size:10px;padding:7px 8px;min-height:34px}}
