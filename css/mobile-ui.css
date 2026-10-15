@@ -1,0 +1,205 @@
+/* Mobile reference layouts. All overrides are scoped below the desktop breakpoint. */
+.mobile-header-brand{display:none}
+@media(max-width:899px){
+ body.role-admin,body.role-guru{background:#edf7ff!important;overflow-x:clip}
+ body.role-admin #app,body.role-guru #teacherApp{width:100%!important;max-width:100%!important;padding:0 10px calc(90px + env(safe-area-inset-bottom))!important;margin:0!important;display:block!important;box-sizing:border-box}
+ body.role-guru #teacherApp>.card{display:block!important;padding:0!important;margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+ body.role-admin #app>header,body.role-guru #teacherApp .teacher-head{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:10px!important;padding:10px!important;margin:8px 0 12px!important;min-height:64px!important;height:auto!important;width:100%!important;box-sizing:border-box;border:1px solid #dceafa!important;border-radius:12px!important;background:#fff!important;position:relative!important;top:auto!important;overflow:visible!important}
+ body.role-admin #app>header:before,body.role-guru #teacherApp .teacher-head:before{display:none!important}
+ body.role-admin #app>header>.mobile-header-brand,body.role-guru #teacherApp .teacher-head>.mobile-header-brand{display:flex!important;align-items:center;gap:6px;flex:1;min-width:0;color:#103864}
+ .mobile-header-brand img{width:38px!important;height:38px!important;object-fit:contain}
+ .mobile-header-brand b{display:block;font:700 16px/1.3 Arial,sans-serif}
+ .mobile-header-brand small{display:block;font:11px/1.5 Arial,sans-serif;color:#6b89ad}
+ body.role-admin #app .stage1-header-tools,body.role-guru #teacherApp .teacher-stage-tools{gap:8px!important;margin-left:auto!important;flex:0 0 auto!important;width:auto!important;flex-direction:row!important}
+ body.role-admin #app .stage1-profile-copy,body.role-admin #app .stage1-chevron,body.role-guru #teacherApp .teacher-stage-account summary>span:not(#teacherHeaderAvatar),body.role-admin #app #syncStatus,body.role-guru #teacherApp #teacherSync{display:none!important}
+ body.role-admin #app .stage1-profile-toggle{padding:0!important;gap:0!important;min-height:36px!important}
+ body.role-admin #app .stage1-search,body.role-guru #teacherApp .teacher-stage-search{display:flex!important;order:3;flex:1 1 100%!important;width:100%!important;max-width:none!important;box-sizing:border-box;padding:8px 10px!important;min-height:38px!important;margin:0!important}
+ body.role-admin #app .stage1-search input,body.role-guru #teacherApp .teacher-stage-search input{font-size:14px!important;width:100%!important}
+ body.role-admin #app .stage1-profile-menu,body.role-guru #teacherApp .teacher-account-menu{right:0!important;min-width:220px!important;max-width:calc(100vw - 32px)!important;z-index:250!important}
+ body.role-admin #app>.admin-sidebar{display:flex!important;position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;padding:6px 6px calc(6px + env(safe-area-inset-bottom))!important;margin:0!important;background:#fff!important;border:0!important;border-top:1px solid #dceafa!important;border-radius:0!important;z-index:180!important;overflow:visible!important;gap:0!important;box-shadow:0 -4px 20px #164a7810}
+ body.role-admin #app>.admin-sidebar:before,body.role-admin #app>.admin-sidebar .stage1-brand,body.role-admin #app>.admin-sidebar .admin-sidebar-title,body.role-admin #app>.admin-sidebar .stage1-sidebar-footer{display:none!important}
+ body.role-admin #app>.admin-sidebar>.tabs{display:contents!important}
+ body.role-admin #app>.admin-sidebar .admin-menu-group{display:contents!important}
+ body.role-admin #app>.admin-sidebar .tabs button{display:none!important}
+ body.role-admin #app>.admin-sidebar .tabs button:is([data-t=d],[data-t=m],[data-t=p],[data-t=r]),body.role-admin #app>.admin-sidebar #mobileMoreMenu{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;flex:1 1 20%!important;width:20%!important;max-width:20%!important;height:52px!important;min-height:52px!important;padding:5px 2px!important;margin:0!important;gap:4px!important;position:static!important;transform:none!important;border:0!important;border-radius:8px!important;background:transparent!important;color:#728cad!important;font:10px/1.3 Arial,sans-serif!important}
+ body.role-admin #app>.admin-sidebar .tabs button span,body.role-admin #app>.admin-sidebar #mobileMoreMenu span{display:block!important;font-size:10px!important;white-space:nowrap!important}
+ body.role-admin #app>.admin-sidebar .menu-icon{width:22px!important;height:22px!important;position:static!important;margin:0!important}
+ body.role-admin #app>.admin-sidebar button.on{color:#087bfa!important;background:#f2f8ff!important}
+ body.role-admin #app>.admin-sidebar #mobileMorePanel{position:absolute!important;bottom:calc(100% + 8px)!important;right:10px!important;left:10px!important;top:auto!important;width:auto!important;max-height:65dvh!important;overflow-y:auto!important;background:#fff!important;border:1px solid #dceafa!important;border-radius:14px!important;box-shadow:0 8px 35px #17446d25;padding:12px!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+ body.role-admin #app>.admin-sidebar #mobileMorePanel[hidden]{display:none!important}
+ body.role-admin #app>.admin-sidebar #mobileMorePanel button{display:block!important;width:100%!important;max-width:none!important;min-height:44px!important;padding:12px!important;background:#f0f7ff!important;color:#214f80!important;border:1px solid #e2edfa!important;border-radius:8px!important;font-size:13px!important}
+ body.role-guru #teacherApp #teacherMenu{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;position:fixed!important;bottom:0!important;left:0!important;right:0!important;top:auto!important;width:100%!important;height:auto!important;min-height:0!important;padding:6px 6px calc(6px + env(safe-area-inset-bottom))!important;margin:0!important;background:#fff!important;z-index:180!important;border:0!important;border-top:1px solid #dceafa!important;gap:0!important;box-sizing:border-box!important}
+ body.role-guru #teacherApp #teacherMenu:before,body.role-guru #teacherApp #teacherMenu .teacher-side-brand,body.role-guru #teacherApp #teacherMenu .teacher-sidebar-footer{display:none!important}
+ body.role-guru #teacherApp #teacherMenu button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;width:100%!important;min-width:0!important;height:52px!important;padding:4px 2px!important;margin:0!important;gap:4px!important;border:0!important;background:transparent!important;color:#728cad!important;border-radius:8px!important}
+ body.role-guru #teacherApp #teacherMenu button.on{background:#f2f8ff!important;color:#087bfa!important}
+ body.role-guru #teacherApp #teacherMenu button span:last-child{font-size:10px!important;line-height:1.3!important;white-space:nowrap!important}
+ body.role-guru #teacherApp .teacher-page,body.role-guru #teacherApp #teacherDashboardPage,body.role-guru #teacherApp #teacherAttendancePage,body.role-guru #teacherApp #teacherNotesPage,body.role-guru #teacherApp #teacherReportPage{padding:0!important;margin:0 0 14px!important;min-width:0!important}
+ body.role-admin #app>div:not(.modal),body.role-admin #app>section{max-width:100%;box-sizing:border-box}
+ body.role-admin #app #dashboard{padding:0!important;gap:12px!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid,body.role-guru #teacherApp #teacherDashboardPage>.dashboard-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #app #dashboard .dashboard-card{min-height:100px!important;padding:12px 10px 12px 52px!important;border-radius:11px!important}
+ body.role-admin #app #dashboard .dashboard-card .kpi-icon{left:10px!important;top:14px!important;width:32px!important;height:36px!important}
+ body.role-admin #app #dashboard .dashboard-card b{font-size:20px!important;line-height:1.3!important}
+ body.role-admin #app #dashboard .dashboard-card small{font-size:11px!important}
+ body.role-admin #app #dashboard .kpi-caption{font-size:10px!important;margin-top:4px!important}
+ body.role-admin #app #dashboard>.stage1-chart-row,body.role-admin #app #dashboard>.stage1-lower,body.role-guru #teacherApp .teacher-dashboard-panels,body.role-guru #teacherApp .attendance-stage-layout,body.role-guru #teacherApp .report-stage-workspace{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ body.role-admin #app #dashboard .dashboard-section,body.role-guru #teacherApp .dashboard-section{padding:14px!important;border-radius:12px!important}
+ body.role-admin #app .admin-dashboard-welcome,body.role-guru #teacherApp .teacher-stage-welcome{flex-direction:row!important;align-items:center!important;flex-wrap:wrap!important;gap:10px!important;padding:0 0 12px!important;margin:0!important}
+ body.role-admin #app h2,body.role-guru #teacherApp h2{font-family:Arial,sans-serif!important;line-height:1.35!important}
+ body.role-admin #app .admin-dashboard-welcome h2,body.role-guru #teacherApp .teacher-stage-welcome h2{font-size:22px!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card{padding:12px!important;min-height:94px!important;display:grid!important;grid-template-columns:34px 1fr!important;gap:3px 8px!important;align-content:center}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card .kpi-icon{grid-column:1;grid-row:1/3;width:34px!important;height:38px!important;padding:7px!important;margin:0!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card small{grid-column:2;font-size:10px!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card b{grid-column:2;font-size:23px!important;line-height:1.2!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card .kpi-caption{display:none!important}
+ body.role-guru #teacherApp #attendanceForm,body.role-guru #teacherApp #teacherForm,body.role-guru #teacherApp #reportForm{grid-template-columns:minmax(0,1fr)!important;gap:10px!important}
+ body.role-guru #teacherApp #attendanceForm .full,body.role-guru #teacherApp #teacherForm .full,body.role-guru #teacherApp #reportForm .full{grid-column:1!important}
+ body.role-guru #teacherApp .attendance-entry-card,body.role-guru #teacherApp .notes-entry-card,body.role-guru #teacherApp .notes-history-card,body.role-guru #teacherApp .report-stage-history{padding:14px!important}
+ body.role-guru #teacherApp .attendance-stage-heading,body.role-guru #teacherApp .notes-stage-heading{gap:10px!important;margin-bottom:12px!important}
+ body.role-guru #teacherApp .attendance-stage-heading h2,body.role-guru #teacherApp .notes-stage-heading h2{font-size:20px!important}
+ body.role-guru #teacherApp .attendance-stage-filters,body.role-guru #teacherApp .notes-stage-filters{grid-template-columns:minmax(0,1fr)!important;gap:8px!important}
+ body.role-guru #teacherApp #reportForm .report-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.role-guru #teacherApp #reportSave{grid-column:1/-1!important}
+ body.role-guru #teacherApp #reportForm .report-actions button{white-space:normal!important;font-size:11px!important;padding:10px 6px!important}
+ body.role-admin #app :is(.students-tools,.salary-list-head,.payment-tools,.payments-tools,.expenses-tools,.financial-report-tools,.data-page-head){flex-wrap:wrap!important;min-width:0!important;gap:8px!important}
+ body.role-admin #app :is(#tm,#tp,#te,#teacherMasterPage,#salaryPage,#financialReportPage,#parentAnnouncementsPage,#auditLogPage,#dataManagementPage){padding:10px 0!important;margin:0!important;border-radius:12px!important;min-width:0!important;width:100%!important}
+ body.role-admin #app :is(.students-summary,.financial-kpis-v2){display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}
+ body.role-admin #app .students-metric{padding:10px 8px!important;min-width:0!important;gap:6px!important;flex-wrap:wrap!important}
+ body.role-admin #app .students-metric b{font-size:20px!important}
+ body.role-admin #app .students-metric small{font-size:10px!important}
+ body.role-admin #app .data-tools-grid,body.role-admin #app .announcement-workspace,body.role-admin #app .financial-overview-v2{grid-template-columns:minmax(0,1fr)!important}
+ body.role-admin #app input,body.role-admin #app select,body.role-admin #app textarea,body.role-guru #teacherApp input,body.role-guru #teacherApp select,body.role-guru #teacherApp textarea{max-width:100%!important;box-sizing:border-box!important;min-width:0!important}
+ body.role-admin #app :is(form,.card),body.role-guru #teacherApp :is(form,.card){min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+ body.role-admin #app .tw,body.role-guru #teacherApp .tw{max-width:100%!important;overflow-x:auto!important}
+ body.role-admin #app table.mobile-record-table,body.role-guru #teacherApp table.mobile-record-table{display:block!important;width:100%!important;min-width:0!important;border:0!important;table-layout:auto!important}
+ body.role-admin #app .mobile-record-table thead,body.role-guru #teacherApp .mobile-record-table thead{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)}
+ body.role-admin #app .mobile-record-table tbody,body.role-guru #teacherApp .mobile-record-table tbody{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;width:100%!important}
+ body.role-admin #app .mobile-record-table tbody tr,body.role-guru #teacherApp .mobile-record-table tbody tr{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px 12px!important;background:#fff!important;border:1px solid #deebfa!important;border-radius:10px!important;padding:12px!important;width:auto!important;min-width:0!important}
+ body.role-admin #app .mobile-record-table tbody td,body.role-guru #teacherApp .mobile-record-table tbody td{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:4px!important;border:0!important;padding:0!important;font-size:12px!important;white-space:normal!important;width:auto!important;min-width:0!important;max-width:100%!important;overflow-wrap:anywhere}
+ body.role-admin #app .mobile-record-table td[data-mobile-label]:before,body.role-guru #teacherApp .mobile-record-table td[data-mobile-label]:before{content:attr(data-mobile-label);font:10px/1.4 Arial,sans-serif;color:#718dad}
+ body.role-admin #app .mobile-record-table td[data-mobile-label=No],body.role-guru #teacherApp .mobile-record-table td[data-mobile-label=No]{display:none!important}
+ body.role-admin #app .mobile-record-table td:last-child,body.role-guru #teacherApp .mobile-record-table td:last-child,body.role-admin #app .mobile-record-table td[colspan],body.role-guru #teacherApp .mobile-record-table td[colspan]{grid-column:1/-1;display:flex!important;flex-direction:row!important;align-items:center!important;flex-wrap:wrap!important;gap:8px!important}
+ body.role-admin #app .mobile-record-table td:last-child:before,body.role-guru #teacherApp .mobile-record-table td:last-child:before{display:none}
+ body.role-admin #app .mobile-record-table td button,body.role-guru #teacherApp .mobile-record-table td button{min-height:34px!important}
+ body.role-admin #app .mobile-record-table td :is(.student-name,.teacher-name),body.role-guru #teacherApp .mobile-record-table td .notes-student-name{white-space:normal!important}
+ body.role-guru #teacherApp #teacherReportsHistory .mobile-record-table td.notes-material{white-space:normal!important;text-overflow:clip!important;overflow:visible!important}
+ body.role-admin #app .modal{max-width:calc(100vw - 20px)!important;max-height:85dvh!important;overflow:auto!important}
+}
+
+#mobileAdminNav{display:none}
+@media(max-width:899px){
+ body.role-admin #app>aside.tabs.top-menu.admin-sidebar{display:none!important}
+ body.role-admin #app>#mobileAdminNav{position:fixed!important;inset:auto 0 0!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:0!important;width:100%!important;padding:5px 6px calc(5px + env(safe-area-inset-bottom))!important;background:#fff!important;border-top:1px solid #dceafa;z-index:180;box-sizing:border-box;box-shadow:0 -4px 20px #164a7810}
+ body.role-admin #app #mobileAdminNav>button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:4px;position:static!important;inset:auto!important;transform:none!important;width:100%!important;max-width:100%!important;min-width:0!important;height:52px!important;min-height:52px!important;margin:0!important;padding:4px 0!important;background:transparent!important;border:0!important;border-radius:8px;color:#728cad;font:10px/1.3 Arial,sans-serif;box-sizing:border-box}
+ body.role-admin #app #mobileAdminNav>button span{display:block!important;font-size:10px!important;white-space:nowrap}
+ body.role-admin #app #mobileAdminNav>button .menu-icon{display:block!important;width:22px!important;height:22px!important;fill:none;stroke:currentColor;stroke-width:1.8;margin:0!important}
+ body.role-admin #app #mobileAdminNav>button.on{color:#087bfa!important;background:#f0f7ff!important}
+ body.role-admin #app #mobileAdminNav>#mobileMorePanel{position:absolute!important;inset:auto 10px calc(100% + 8px)!important;display:grid!important;grid-template-columns:1fr 1fr;gap:8px;width:auto!important;max-height:65dvh;overflow-y:auto;padding:12px!important;margin:0!important;background:#fff!important;border:1px solid #dceafa;border-radius:14px;box-shadow:0 8px 35px #17446d25}
+ body.role-admin #app #mobileAdminNav>#mobileMorePanel[hidden]{display:none!important}
+ body.role-admin #app #mobileAdminNav #mobileMorePanel button{display:block!important;position:static!important;width:100%!important;padding:12px!important;margin:0!important;min-height:44px;background:#f0f7ff!important;color:#214f80;border:1px solid #e2edfa;border-radius:8px;font-size:13px}
+ body.role-admin #app #dashboard .admin-dashboard-welcome{display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;padding:6px 0 12px!important;flex-wrap:wrap!important}
+ body.role-admin #app #dashboard .admin-dashboard-welcome h2{font-size:20px!important;margin:0!important}
+ body.role-admin #app #dashboard .stage1-actions{margin:0 0 0 auto!important;align-self:center!important}
+ body.role-admin #app #dashboard .stage1-actions input{width:137px!important;min-height:36px!important;padding:7px 8px!important;font-size:11px!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{display:grid!important;grid-template-columns:32px minmax(0,1fr)!important;align-content:center;gap:4px 8px!important;padding:12px 10px!important;min-height:100px!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-icon{position:static!important;grid-column:1;grid-row:1/3;width:32px!important;height:36px!important;margin:0!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card small,body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card b{grid-column:2;font-size:11px!important;min-width:0!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card b{font-size:18px!important;overflow-wrap:anywhere}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{grid-column:1/-1;font-size:10px!important;margin-top:1px!important}
+ body.role-admin #app>header:after{display:none!important}
+}
+/* Full-width KPI values avoid narrow inherited grid tracks on small phones. */
+@media(max-width:899px){
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:5px!important;padding:12px!important;min-height:126px!important;grid-template-columns:none!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card>*{grid-column:auto!important;grid-row:auto!important;position:static!important;inset:auto!important;transform:none!important;max-width:100%!important;box-sizing:border-box!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-icon{flex:0 0 32px!important;width:32px!important;height:32px!important;margin:0!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card small{width:100%!important;max-width:100%!important;font-size:10px!important;line-height:1.4!important;white-space:normal!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card b{width:100%!important;max-width:none!important;font-size:clamp(15px,4.4vw,19px)!important;line-height:1.3!important;margin:0!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;letter-spacing:-.04em!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{margin:0!important;line-height:1.4!important;width:100%!important;white-space:normal!important}
+ body.role-admin #app .mobile-record-table td[data-mobile-label]:before,body.role-guru #teacherApp .mobile-record-table td[data-mobile-label]:before{margin:0 0 2px!important;line-height:1.5!important}
+ body.role-admin #app .mobile-record-table tbody tr,body.role-guru #teacherApp .mobile-record-table tbody tr{row-gap:12px!important}
+ body.role-admin #app .mobile-record-table tbody td,body.role-guru #teacherApp .mobile-record-table tbody td{line-height:1.5!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child,body.role-guru #teacherApp .mobile-record-table tbody td:last-child{border-top:1px solid #edf3fa!important;padding-top:8px!important}
+}
+@media(max-width:899px){
+ body.role-admin #app #financialReportPage .financial-kpis-v2{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #app #financialReportPage .financial-kpi{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;padding:12px!important;min-height:122px!important;overflow:visible!important}
+ body.role-admin #app #financialReportPage .financial-kpi.profit{grid-column:1/-1!important;min-height:100px!important}
+ body.role-admin #app #financialReportPage .financial-kpi>*{position:static!important;inset:auto!important;transform:none!important;width:auto!important;max-width:100%!important;min-width:0!important;margin:0!important}
+ body.role-admin #app #financialReportPage .financial-kpi :is(b,strong){font-size:clamp(15px,4.4vw,20px)!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important;line-height:1.4!important}
+ body.role-admin #app #financialReportPage .financial-kpi :is(small,p){font-size:11px!important;line-height:1.5!important;white-space:normal!important}
+ body.role-admin #app #financialReportPage .financial-kpi :is(svg,.financial-kpi-icon){width:32px!important;height:32px!important;flex-shrink:0!important}
+ body.role-admin #app #financialReportPage .financial-report-tools{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important;gap:8px!important}
+ body.role-admin #app #financialReportPage .financial-period-label{width:100%!important;min-width:0!important}
+ body.role-admin #app #financialReportPage .financial-report-tools input{width:100%!important}
+ body.role-admin #app #financialReportPage .financial-report-tools button{width:100%!important;min-height:38px!important;padding:8px!important;font-size:12px!important}
+ body.role-admin #app #financialReportPage #financialReportChart svg{min-height:190px!important}
+ body.role-admin #app .mobile-record-table tbody tr{row-gap:8px!important;padding:10px!important}
+ body.role-admin #app .mobile-record-table tbody td{gap:3px!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child{padding-top:5px!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child button{min-height:30px!important;margin:0!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child details{margin:0!important}
+}
+/* Compact student cards with a predictable reading order. */
+@media(max-width:899px){
+ body.role-admin #app #tm .mobile-record-table tbody tr{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px 12px!important;padding:12px!important}
+ body.role-admin #app #tm .mobile-record-table tbody td{height:auto!important;min-height:0!important;position:static!important;overflow:visible!important;line-height:1.5!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(2){grid-column:1/-1!important;grid-row:1!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;font-size:14px!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(2):before{display:none!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(3){grid-column:1!important;grid-row:2!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(4){grid-column:2!important;grid-row:2!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(5){grid-column:1!important;grid-row:3!important;justify-content:center!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(5):before{display:none!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(6){grid-column:2!important;grid-row:3!important;justify-content:flex-end!important;align-items:center!important;padding:0!important;border:0!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(6) summary{display:flex!important;align-items:center!important;justify-content:center!important;min-width:34px!important;min-height:32px!important;border-radius:7px;background:#f0f7ff}
+}
+
+.teacher-mobile-status-guide summary{cursor:pointer;font-size:16px;font-weight:700;color:#103864}
+@media(max-width:899px){
+ body.role-guru #teacherApp .teacher-stage-account summary>span:nth-child(2){display:block!important;max-width:78px}
+ body.role-guru #teacherApp .teacher-stage-account summary>span:nth-child(2) b{display:block;font:600 11px/1.4 Arial,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ body.role-guru #teacherApp .teacher-stage-account summary>span:nth-child(2) small{display:none!important}
+ body.role-guru #teacherApp .teacher-stage-account summary{gap:5px!important}
+ body.role-guru #teacherApp #teacherHeaderAvatar{width:30px!important;height:30px!important}
+ body.role-guru #teacherApp #teacherBell{width:32px!important;height:32px!important;min-width:32px!important;padding:5px!important}
+ body.role-guru #teacherApp .mobile-header-brand b{font-size:14px!important}
+ body.role-guru #teacherApp .mobile-header-brand img{width:33px!important;height:33px!important}
+ body.role-guru #teacherApp .teacher-stage-welcome{display:grid!important;grid-template-columns:minmax(0,1fr) 132px!important;gap:8px!important;padding:3px 0 12px!important}
+ body.role-guru #teacherApp .teacher-stage-welcome h2{font-size:20px!important}
+ body.role-guru #teacherApp .teacher-stage-welcome p{font-size:11px!important;line-height:1.5}
+ body.role-guru #teacherApp .teacher-stage-welcome label{font-size:10px!important}
+ body.role-guru #teacherApp #teacherDashboardMonth{width:100%!important;min-width:0!important;padding:8px 6px!important;font-size:11px!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card{grid-template-columns:34px minmax(0,1fr)!important;min-height:96px!important;gap:4px 8px!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card>*{position:static!important;inset:auto!important;transform:none!important;max-width:100%!important;margin:0!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card small{max-width:none!important;line-height:1.5!important;white-space:normal!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card b{width:100%!important;white-space:nowrap!important;font-size:24px!important}
+ body.role-guru #teacherApp .teacher-quick-actions button{padding:12px!important;min-height:62px!important;font-size:14px!important}
+ body.role-guru #teacherApp .teacher-quick-actions small{margin:4px 0 0 46px!important;font-size:11px!important}
+ body.role-guru #teacherApp #teacherActivityMode{width:auto!important;max-width:130px!important;min-height:32px}
+ body.role-guru #teacherApp .attendance-stage-heading,body.role-guru #teacherApp .notes-stage-heading{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:8px!important}
+ body.role-guru #teacherApp .attendance-stage-heading p,body.role-guru #teacherApp .notes-stage-heading p{font-size:12px!important;line-height:1.5!important}
+ body.role-guru #teacherApp :is(#attendanceFormToggle,#teacherFormToggle,#reportFormToggle){font-size:12px!important;padding:8px 12px!important;min-height:34px!important;align-self:flex-end}
+ body.role-guru #teacherApp #attendanceForm label,body.role-guru #teacherApp #teacherForm label,body.role-guru #teacherApp #reportForm label{font-size:12px!important;margin:0!important;gap:0!important}
+ body.role-guru #teacherApp #attendanceForm input,body.role-guru #teacherApp #attendanceForm select,body.role-guru #teacherApp #teacherForm input,body.role-guru #teacherApp #teacherForm select{height:40px!important;min-height:40px!important;margin-top:4px!important}
+ body.role-guru #teacherApp #teacherForm textarea,body.role-guru #teacherApp #reportForm textarea{font-size:13px!important;min-height:70px!important;line-height:1.5!important}
+ body.role-guru #teacherApp #attendanceSubmit,body.role-guru #teacherApp #teacherSubmit,body.role-guru #teacherApp #reportSave{width:100%!important;min-height:42px!important;border-radius:8px!important}
+ body.role-guru #teacherApp .attendance-stage-guide{padding:12px!important}
+ body.role-guru #teacherApp .teacher-mobile-status-guide summary{font-size:14px;min-height:28px}
+ body.role-guru #teacherApp .att-guide{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px 9px 28px!important;margin:6px 0!important}
+ body.role-guru #teacherApp .att-guide b{font-size:11px!important;white-space:nowrap}
+ body.role-guru #teacherApp .att-guide small{font-size:10px!important;margin:0!important;line-height:1.4!important}
+ body.role-guru #teacherApp .att-guide:before{left:10px!important;top:14px!important}
+ body.role-guru #teacherApp .report-history-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) 34px!important;max-width:100%!important;width:100%!important}
+ body.role-guru #teacherApp #reportHistorySearch,body.role-guru #teacherApp #reportHistoryMonth{grid-column:1/-1!important}
+ body.role-guru #teacherApp #reportHistoryStatus{grid-column:1!important}
+ body.role-guru #teacherApp #reportHistoryFilter{grid-column:2!important;grid-row:3!important}
+ body.role-guru #teacherApp .mobile-record-table tbody tr{padding:10px!important;gap:8px 10px!important}
+ body.role-guru #teacherApp #gLatestNotes .tw{max-height:300px;overflow:auto!important}
+ body.role-guru #teacherApp .report-stage-student{grid-template-columns:36px minmax(0,1fr)!important;gap:8px!important}
+ body.role-guru #teacherApp .report-stage-counts{grid-column:1/-1!important;width:100%!important;box-sizing:border-box}
+ body.role-guru #teacherApp .report-stage-brand img{width:36px!important;height:36px!important}
+ body.role-guru #teacherApp .report-stage-brand{font-size:12px!important;gap:6px!important}
+ body.role-guru #teacherApp .report-stage-brand small{font-size:9px!important}
+ body.role-guru #teacherApp .report-stage-paper{padding:10px!important}
+ body.role-guru #teacherApp .report-stage-section p{font-size:12px!important}
+}
