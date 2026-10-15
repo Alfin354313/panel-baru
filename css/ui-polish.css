@@ -1,0 +1,52 @@
+/* Consistent type and feedback, scoped to authenticated interfaces. */
+body.role-admin #app,body.role-guru #teacherApp,#account{font-family:Arial,sans-serif!important;--ui-title:22px;--ui-section:17px;--ui-body:13px;--ui-caption:11px}
+body.role-admin #app :is(input,select,textarea,button),body.role-guru #teacherApp :is(input,select,textarea,button),#account :is(input,select,textarea,button){font-family:inherit!important}
+body.role-admin #app :is(h2,h3),body.role-guru #teacherApp :is(h2,h3),#account :is(h2,h3){letter-spacing:-.015em;line-height:1.4!important}
+body.role-admin #app :is(p,small,label),body.role-guru #teacherApp :is(p,small,label),#account :is(p,small,label){line-height:1.5!important}
+body.role-admin #app label,body.role-guru #teacherApp label{font-size:13px!important;font-weight:600}
+body.role-admin #app button,body.role-guru #teacherApp button,#account button{line-height:1.4!important}
+body.role-admin #app :is(input,select,textarea):focus-visible,body.role-guru #teacherApp :is(input,select,textarea):focus-visible{outline:2px solid #74b3f5;outline-offset:2px}
+.jenius-toast-region{position:fixed;top:16px;right:16px;z-index:10000;display:grid;gap:8px;max-width:min(390px,calc(100vw - 24px));pointer-events:none}
+.jenius-toast{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:12px;border:1px solid #bbe6d4;background:#f0fcf6;color:#166948;box-shadow:0 8px 28px #1038641a;font:13px/1.5 Arial,sans-serif;pointer-events:auto;overflow-wrap:anywhere}
+.jenius-toast:before{content:'✓';display:grid;place-items:center;width:23px;height:23px;flex:0 0 23px;border-radius:50%;background:#dbf4e8;color:#078657;font-weight:700}
+.jenius-toast.is-error{background:#fff5f5;border-color:#f1c5c9;color:#a33442}
+.jenius-toast.is-error:before{content:'!';background:#ffe3e6;color:#bd3347}
+.jenius-toast span{flex:1;min-width:0}
+.jenius-toast button{border:0;background:transparent;color:inherit;padding:4px;width:28px;height:28px;font:20px/1 Arial,sans-serif;cursor:pointer;margin:0}
+.jenius-save-spinner{display:inline-block;width:13px;height:13px;margin-right:8px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;vertical-align:middle;animation:jenius-save-spin .7s linear infinite}
+@keyframes jenius-save-spin{to{transform:rotate(360deg)}}
+.mobile-detail-toggle{display:none!important}
+@media(max-width:899px){
+ body.role-admin #app h2,body.role-guru #teacherApp h2{font-size:20px!important}
+ body.role-admin #app h3,body.role-guru #teacherApp h3{font-size:16px!important}
+ body.role-admin #app .mobile-record-table tbody tr:not(.mobile-details-open) td.mobile-secondary-field,body.role-guru #teacherApp .mobile-record-table tbody tr:not(.mobile-details-open) td.mobile-secondary-field{display:none!important}
+ body.role-admin #app .mobile-record-table .mobile-detail-toggle,body.role-guru #teacherApp .mobile-record-table .mobile-detail-toggle{display:inline-flex!important;align-items:center;justify-content:center;padding:7px 11px!important;min-height:32px!important;border:1px solid #d8e8fa;background:#eff7ff;color:#2168ad;border-radius:7px;font-size:11px!important;margin:0!important}
+ body.role-admin #app .mobile-record-table tr.mobile-details-open td.mobile-secondary-field,body.role-guru #teacherApp .mobile-record-table tr.mobile-details-open td.mobile-secondary-field{display:flex!important;grid-column:1/-1!important;padding-top:6px!important;border-top:1px solid #edf3fa!important}
+ body.role-admin #app #tm .mobile-record-table tr.mobile-details-open td:nth-child(4){grid-row:4!important}
+ body.role-admin #app .mobile-record-table td:last-child,body.role-guru #teacherApp .mobile-record-table td:last-child{justify-content:flex-start!important}
+ .jenius-toast-region{top:10px;left:12px;right:12px;max-width:none}
+}
+@media(prefers-reduced-motion:reduce){.jenius-save-spinner{animation:none}}
+/* Welcoming empty states, graph readability, and parent content hierarchy. */
+.jenius-empty-state{padding:20px 14px!important;text-align:center!important;border:1px dashed #d6e6f7!important;border-radius:10px;background:#f7fbff!important;color:#59799f!important;font:13px/1.6 Arial,sans-serif!important}
+.jenius-empty-state:before{content:'▤';display:block;margin:0 auto 8px;width:36px;height:36px;line-height:36px;border-radius:10px;background:#e6f2ff;color:#3382cb;font-size:23px}
+.jenius-empty-state:after{content:attr(data-empty-hint);display:block;font:11px/1.5 Arial,sans-serif;color:#7f97b4;margin-top:5px}
+.jenius-chart-tooltip{position:fixed;z-index:10001;max-width:min(300px,calc(100vw - 24px));padding:10px 12px;background:#103864;color:#fff;border-radius:9px;box-shadow:0 8px 25px #12386430;font:12px/1.6 Arial,sans-serif;pointer-events:none;white-space:normal}
+.jenius-chart-tooltip[hidden]{display:none!important}
+:is(#dashboardChart,#financialReportChart,#teacherActivityChart) :is(circle,rect)[aria-label]{cursor:pointer;outline-offset:3px}
+:is(#dashboardChart,#financialReportChart) circle[aria-label]{r:5px}
+:is(#dashboardChart,#financialReportChart,#teacherActivityChart) [aria-label]:focus-visible{outline:2px solid #0d79dc}
+#account .student-welcome b{letter-spacing:-.02em}
+#account .parent-hero-art{box-shadow:0 0 25px #cbe8ff35}
+#account .home-summary>div:last-child{border-color:#cae4ff!important;background:linear-gradient(120deg,#fff,#f1f8ff)!important}
+#account #summaryAchievement{font-size:12px;line-height:1.6}
+#account #progress .reportBlock:first-child{padding:12px!important;border-radius:10px;background:#edf9f2;border:1px solid #ddf0e4}
+#account #progress .reportBlock:first-child h3{color:#218563!important}
+#account #parentReports .parent-report-view{font-weight:600}
+#account .parent-section-heading h2{line-height:1.5!important}
+#account #lessonMaterials .reportBlock{transition:background .15s ease}
+#account #lessonMaterials .reportBlock:hover{background:#f0f7ff}
+@media(max-width:899px){
+ body.role-admin #app .mobile-record-table td.jenius-empty-state,body.role-guru #teacherApp .mobile-record-table td.jenius-empty-state{display:block!important;grid-column:1/-1!important;padding:18px 12px!important}
+ :is(#dashboardChart,#financialReportChart,#teacherActivityChart) svg text{font-size:12px!important}
+}

@@ -1,0 +1,15 @@
+/* Empty states and accessible chart details use existing rendered data only. */
+(function(){
+ 'use strict';
+ var emptyTargets=['payments','attendance','lessonMaterials','progress','monthlyReports','announcements','receipts','bm','bp','be','teacherMasterBody','salaryBody','auditLogBody','attendanceBody','teacherNotesBody','teacherReportsBody'];
+ function decorateEmpty(target){var node=target.tagName==='TBODY'?(target.rows.length===1&&target.rows[0].cells.length===1&&target.rows[0].cells[0].colSpan>1?target.rows[0].cells[0]:null):target;
+ if(!node)return;var text=node.textContent.trim(),empty=/^(Belum ada|Guru belum|Tidak ada)/i.test(text)&&!node.querySelector('button,a,input,article');node.classList.toggle('jenius-empty-state',empty);if(empty)node.dataset.emptyHint=/sesuai filter/i.test(text)?'Coba ubah pencarian atau periode.':/laporan|perkembangan/i.test(text)?'Informasi akan muncul setelah guru membagikannya.':/materi/i.test(text)?'Materi akan muncul setelah pertemuan dicatat.':'Catatan akan tampil setelah data tersedia.';
+ }
+ emptyTargets.forEach(function(id){var target=document.getElementById(id);if(!target)return;decorateEmpty(target);new MutationObserver(function(){decorateEmpty(target)}).observe(target,{childList:true,subtree:true,characterData:true})});
+ var tip=document.createElement('div');tip.className='jenius-chart-tooltip';tip.id='jeniusChartTooltip';tip.setAttribute('role','status');tip.hidden=true;document.body.append(tip);
+ var active=null;function hide(){tip.hidden=true;if(active)active.removeAttribute('aria-describedby');active=null}
+ function show(mark){var title=mark&&mark.querySelector('title');if(!title)return;hide();active=mark;tip.textContent=title.textContent;tip.hidden=false;mark.setAttribute('aria-describedby',tip.id);var box=mark.getBoundingClientRect(),width=tip.offsetWidth;tip.style.left=Math.max(12,Math.min(window.innerWidth-width-12,box.left+box.width/2-width/2))+'px';tip.style.top=Math.max(12,Math.min(window.innerHeight-tip.offsetHeight-12,box.top-tip.offsetHeight-10))+'px'}
+ var selector='#dashboardChart,#financialReportChart,#teacherActivityChart';
+ document.querySelectorAll(selector).forEach(function(chart){function enhance(){chart.querySelectorAll('circle,rect').forEach(function(mark){var title=mark.querySelector('title');if(title){mark.setAttribute('tabindex','0');mark.setAttribute('aria-label',title.textContent)}})}enhance();new MutationObserver(enhance).observe(chart,{childList:true});chart.addEventListener('pointerdown',function(e){var mark=e.target.closest('circle,rect');if(mark)show(mark)});chart.addEventListener('pointerover',function(e){var mark=e.target.closest('circle,rect');if(mark)show(mark)});chart.addEventListener('focusin',function(e){show(e.target)});chart.addEventListener('pointerleave',hide);chart.addEventListener('focusout',hide)});
+ document.addEventListener('pointerdown',function(e){if(!e.target.closest(selector))hide()});document.addEventListener('keydown',function(e){if(e.key==='Escape')hide()});window.addEventListener('scroll',hide,true);window.addEventListener('resize',hide);
+})();
