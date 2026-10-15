@@ -153,3 +153,53 @@
  body.role-admin #app #tm .mobile-record-table tbody td:nth-child(6){grid-column:2!important;grid-row:3!important;justify-content:flex-end!important;align-items:center!important;padding:0!important;border:0!important}
  body.role-admin #app #tm .mobile-record-table tbody td:nth-child(6) summary{display:flex!important;align-items:center!important;justify-content:center!important;min-width:34px!important;min-height:32px!important;border-radius:7px;background:#f0f7ff}
 }
+
+.teacher-mobile-status-guide summary{cursor:pointer;font-size:16px;font-weight:700;color:#103864}
+@media(max-width:899px){
+ body.role-guru #teacherApp .teacher-stage-account summary>span:nth-child(2){display:block!important;max-width:78px}
+ body.role-guru #teacherApp .teacher-stage-account summary>span:nth-child(2) b{display:block;font:600 11px/1.4 Arial,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ body.role-guru #teacherApp .teacher-stage-account summary>span:nth-child(2) small{display:none!important}
+ body.role-guru #teacherApp .teacher-stage-account summary{gap:5px!important}
+ body.role-guru #teacherApp #teacherHeaderAvatar{width:30px!important;height:30px!important}
+ body.role-guru #teacherApp #teacherBell{width:32px!important;height:32px!important;min-width:32px!important;padding:5px!important}
+ body.role-guru #teacherApp .mobile-header-brand b{font-size:14px!important}
+ body.role-guru #teacherApp .mobile-header-brand img{width:33px!important;height:33px!important}
+ body.role-guru #teacherApp .teacher-stage-welcome{display:grid!important;grid-template-columns:minmax(0,1fr) 132px!important;gap:8px!important;padding:3px 0 12px!important}
+ body.role-guru #teacherApp .teacher-stage-welcome h2{font-size:20px!important}
+ body.role-guru #teacherApp .teacher-stage-welcome p{font-size:11px!important;line-height:1.5}
+ body.role-guru #teacherApp .teacher-stage-welcome label{font-size:10px!important}
+ body.role-guru #teacherApp #teacherDashboardMonth{width:100%!important;min-width:0!important;padding:8px 6px!important;font-size:11px!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card{grid-template-columns:34px minmax(0,1fr)!important;min-height:96px!important;gap:4px 8px!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card>*{position:static!important;inset:auto!important;transform:none!important;max-width:100%!important;margin:0!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card small{max-width:none!important;line-height:1.5!important;white-space:normal!important}
+ body.role-guru #teacherApp #teacherDashboardPage .dashboard-card b{width:100%!important;white-space:nowrap!important;font-size:24px!important}
+ body.role-guru #teacherApp .teacher-quick-actions button{padding:12px!important;min-height:62px!important;font-size:14px!important}
+ body.role-guru #teacherApp .teacher-quick-actions small{margin:4px 0 0 46px!important;font-size:11px!important}
+ body.role-guru #teacherApp #teacherActivityMode{width:auto!important;max-width:130px!important;min-height:32px}
+ body.role-guru #teacherApp .attendance-stage-heading,body.role-guru #teacherApp .notes-stage-heading{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:8px!important}
+ body.role-guru #teacherApp .attendance-stage-heading p,body.role-guru #teacherApp .notes-stage-heading p{font-size:12px!important;line-height:1.5!important}
+ body.role-guru #teacherApp :is(#attendanceFormToggle,#teacherFormToggle,#reportFormToggle){font-size:12px!important;padding:8px 12px!important;min-height:34px!important;align-self:flex-end}
+ body.role-guru #teacherApp #attendanceForm label,body.role-guru #teacherApp #teacherForm label,body.role-guru #teacherApp #reportForm label{font-size:12px!important;margin:0!important;gap:0!important}
+ body.role-guru #teacherApp #attendanceForm input,body.role-guru #teacherApp #attendanceForm select,body.role-guru #teacherApp #teacherForm input,body.role-guru #teacherApp #teacherForm select{height:40px!important;min-height:40px!important;margin-top:4px!important}
+ body.role-guru #teacherApp #teacherForm textarea,body.role-guru #teacherApp #reportForm textarea{font-size:13px!important;min-height:70px!important;line-height:1.5!important}
+ body.role-guru #teacherApp #attendanceSubmit,body.role-guru #teacherApp #teacherSubmit,body.role-guru #teacherApp #reportSave{width:100%!important;min-height:42px!important;border-radius:8px!important}
+ body.role-guru #teacherApp .attendance-stage-guide{padding:12px!important}
+ body.role-guru #teacherApp .teacher-mobile-status-guide summary{font-size:14px;min-height:28px}
+ body.role-guru #teacherApp .att-guide{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px 9px 28px!important;margin:6px 0!important}
+ body.role-guru #teacherApp .att-guide b{font-size:11px!important;white-space:nowrap}
+ body.role-guru #teacherApp .att-guide small{font-size:10px!important;margin:0!important;line-height:1.4!important}
+ body.role-guru #teacherApp .att-guide:before{left:10px!important;top:14px!important}
+ body.role-guru #teacherApp .report-history-toolbar{display:grid!important;grid-template-columns:minmax(0,1fr) 34px!important;max-width:100%!important;width:100%!important}
+ body.role-guru #teacherApp #reportHistorySearch,body.role-guru #teacherApp #reportHistoryMonth{grid-column:1/-1!important}
+ body.role-guru #teacherApp #reportHistoryStatus{grid-column:1!important}
+ body.role-guru #teacherApp #reportHistoryFilter{grid-column:2!important;grid-row:3!important}
+ body.role-guru #teacherApp .mobile-record-table tbody tr{padding:10px!important;gap:8px 10px!important}
+ body.role-guru #teacherApp #gLatestNotes .tw{max-height:300px;overflow:auto!important}
+ body.role-guru #teacherApp .report-stage-student{grid-template-columns:36px minmax(0,1fr)!important;gap:8px!important}
+ body.role-guru #teacherApp .report-stage-counts{grid-column:1/-1!important;width:100%!important;box-sizing:border-box}
+ body.role-guru #teacherApp .report-stage-brand img{width:36px!important;height:36px!important}
+ body.role-guru #teacherApp .report-stage-brand{font-size:12px!important;gap:6px!important}
+ body.role-guru #teacherApp .report-stage-brand small{font-size:9px!important}
+ body.role-guru #teacherApp .report-stage-paper{padding:10px!important}
+ body.role-guru #teacherApp .report-stage-section p{font-size:12px!important}
+}
