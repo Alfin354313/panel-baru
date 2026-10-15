@@ -108,3 +108,16 @@
  body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{grid-column:1/-1;font-size:10px!important;margin-top:1px!important}
  body.role-admin #app>header:after{display:none!important}
 }
+/* Full-width KPI values avoid narrow inherited grid tracks on small phones. */
+@media(max-width:899px){
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:5px!important;padding:12px!important;min-height:126px!important;grid-template-columns:none!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card>*{grid-column:auto!important;grid-row:auto!important;position:static!important;inset:auto!important;transform:none!important;max-width:100%!important;box-sizing:border-box!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-icon{flex:0 0 32px!important;width:32px!important;height:32px!important;margin:0!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card small{width:100%!important;max-width:100%!important;font-size:10px!important;line-height:1.4!important;white-space:normal!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card b{width:100%!important;max-width:none!important;font-size:clamp(15px,4.4vw,19px)!important;line-height:1.3!important;margin:0!important;white-space:nowrap!important;word-break:normal!important;overflow-wrap:normal!important;letter-spacing:-.04em!important}
+ body.role-admin #app #dashboard .dashboard-kpi-grid>.dashboard-card .kpi-caption{margin:0!important;line-height:1.4!important;width:100%!important;white-space:normal!important}
+ body.role-admin #app .mobile-record-table td[data-mobile-label]:before,body.role-guru #teacherApp .mobile-record-table td[data-mobile-label]:before{margin:0 0 2px!important;line-height:1.5!important}
+ body.role-admin #app .mobile-record-table tbody tr,body.role-guru #teacherApp .mobile-record-table tbody tr{row-gap:12px!important}
+ body.role-admin #app .mobile-record-table tbody td,body.role-guru #teacherApp .mobile-record-table tbody td{line-height:1.5!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child,body.role-guru #teacherApp .mobile-record-table tbody td:last-child{border-top:1px solid #edf3fa!important;padding-top:8px!important}
+}
