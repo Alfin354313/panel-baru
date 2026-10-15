@@ -27,3 +27,26 @@ body.role-admin #app :is(input,select,textarea):focus-visible,body.role-guru #te
  .jenius-toast-region{top:10px;left:12px;right:12px;max-width:none}
 }
 @media(prefers-reduced-motion:reduce){.jenius-save-spinner{animation:none}}
+/* Welcoming empty states, graph readability, and parent content hierarchy. */
+.jenius-empty-state{padding:20px 14px!important;text-align:center!important;border:1px dashed #d6e6f7!important;border-radius:10px;background:#f7fbff!important;color:#59799f!important;font:13px/1.6 Arial,sans-serif!important}
+.jenius-empty-state:before{content:'▤';display:block;margin:0 auto 8px;width:36px;height:36px;line-height:36px;border-radius:10px;background:#e6f2ff;color:#3382cb;font-size:23px}
+.jenius-empty-state:after{content:attr(data-empty-hint);display:block;font:11px/1.5 Arial,sans-serif;color:#7f97b4;margin-top:5px}
+.jenius-chart-tooltip{position:fixed;z-index:10001;max-width:min(300px,calc(100vw - 24px));padding:10px 12px;background:#103864;color:#fff;border-radius:9px;box-shadow:0 8px 25px #12386430;font:12px/1.6 Arial,sans-serif;pointer-events:none;white-space:normal}
+.jenius-chart-tooltip[hidden]{display:none!important}
+:is(#dashboardChart,#financialReportChart,#teacherActivityChart) :is(circle,rect)[aria-label]{cursor:pointer;outline-offset:3px}
+:is(#dashboardChart,#financialReportChart) circle[aria-label]{r:5px}
+:is(#dashboardChart,#financialReportChart,#teacherActivityChart) [aria-label]:focus-visible{outline:2px solid #0d79dc}
+#account .student-welcome b{letter-spacing:-.02em}
+#account .parent-hero-art{box-shadow:0 0 25px #cbe8ff35}
+#account .home-summary>div:last-child{border-color:#cae4ff!important;background:linear-gradient(120deg,#fff,#f1f8ff)!important}
+#account #summaryAchievement{font-size:12px;line-height:1.6}
+#account #progress .reportBlock:first-child{padding:12px!important;border-radius:10px;background:#edf9f2;border:1px solid #ddf0e4}
+#account #progress .reportBlock:first-child h3{color:#218563!important}
+#account #parentReports .parent-report-view{font-weight:600}
+#account .parent-section-heading h2{line-height:1.5!important}
+#account #lessonMaterials .reportBlock{transition:background .15s ease}
+#account #lessonMaterials .reportBlock:hover{background:#f0f7ff}
+@media(max-width:899px){
+ body.role-admin #app .mobile-record-table td.jenius-empty-state,body.role-guru #teacherApp .mobile-record-table td.jenius-empty-state{display:block!important;grid-column:1/-1!important;padding:18px 12px!important}
+ :is(#dashboardChart,#financialReportChart,#teacherActivityChart) svg text{font-size:12px!important}
+}
