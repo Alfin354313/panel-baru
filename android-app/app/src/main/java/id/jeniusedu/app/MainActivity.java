@@ -19,37 +19,27 @@ public final class MainActivity extends Activity {
  private FrameLayout root; private LinearLayout page; private WebView web;
  private final ArrayList<WebView> popups=new ArrayList<>();
  private ValueCallback<Uri[]> chooser; private byte[] pendingBytes;
- private String supportScript="", selectedRole="", lastUrl=ORIGIN+"/";
+ private String supportScript="", lastUrl=ORIGIN+"/";
  private ProgressBar progress;
  private int dp(int n){return Math.round(n*getResources().getDisplayMetrics().density);}
  private TextView text(String value,int size,int color){TextView t=new TextView(this);t.setText(value);t.setTextSize(size);t.setTextColor(color);return t;}
  @Override public void onCreate(Bundle state){super.onCreate(state);root=new FrameLayout(this);root.setBackgroundColor(Color.rgb(237,247,255));setContentView(root);
   if(Build.VERSION.SDK_INT>=30){getWindow().setDecorFitsSystemWindows(false);root.setOnApplyWindowInsetsListener((v,insets)->{android.graphics.Insets i=insets.getInsets(WindowInsets.Type.systemBars()|WindowInsets.Type.ime());v.setPadding(i.left,i.top,i.right,i.bottom);return insets;});}
   try(InputStream in=getAssets().open("web-support.js")){ByteArrayOutputStream out=new ByteArrayOutputStream();byte[] buf=new byte[4096];int n;while((n=in.read(buf))!=-1)out.write(buf,0,n);supportScript=out.toString("UTF-8");}catch(IOException ignored){}
-  if(state!=null&&state.getString("role")!=null){selectedRole=state.getString("role");openPortal(selectedRole);if(state.getString("url")!=null&&trusted(Uri.parse(state.getString("url"))))web.loadUrl(state.getString("url"));}else showHome();
+  openPortal();
+  if(state!=null&&state.getString("url")!=null&&trusted(Uri.parse(state.getString("url"))))web.loadUrl(state.getString("url"));
  }
- private void showHome(){closeAllWeb();root.removeAllViews();ScrollView scroll=new ScrollView(this);LinearLayout box=new LinearLayout(this);box.setOrientation(1);box.setGravity(Gravity.CENTER_HORIZONTAL);box.setPadding(dp(28),dp(40),dp(28),dp(30));scroll.addView(box);root.addView(scroll);
-  ImageView logo=new ImageView(this);logo.setImageResource(R.drawable.jenius_logo);box.addView(logo,new LinearLayout.LayoutParams(dp(110),dp(110)));
-  TextView title=text("Jenius Edu",30,Color.rgb(16,56,100));title.setTypeface(null,1);box.addView(title);
-  TextView subtitle=text("Belajar, tumbuh, dan berkembang.",15,Color.rgb(100,130,160));subtitle.setPadding(0,dp(10),0,dp(28));box.addView(subtitle);
-  TextView heading=text("Masuk ke panel Anda",18,Color.rgb(16,56,100));heading.setPadding(0,0,0,dp(14));box.addView(heading);
-  String[] roles={"admin","guru","parent"},labels={"Panel Pengelola","Panel Guru","Portal Orang Tua"};
-  for(int i=0;i<roles.length;i++){final String role=roles[i];Button b=new Button(this);b.setText(labels[i]);b.setAllCaps(false);b.setTextColor(Color.WHITE);b.setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.rgb(8,123,250)));LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,dp(58));lp.bottomMargin=dp(12);box.addView(b,lp);b.setOnClickListener(v->openPortal(role));}
-  TextView note=text("Versi percobaan 0.1.0\nMemerlukan koneksi internet.\nGunakan akun yang sudah terdaftar.",12,Color.rgb(106,134,165));note.setGravity(Gravity.CENTER);note.setPadding(0,dp(20),0,0);box.addView(note);
- }
- private void openPortal(String role){selectedRole=role;root.removeAllViews();page=new LinearLayout(this);page.setOrientation(1);root.addView(page,new FrameLayout.LayoutParams(-1,-1));LinearLayout bar=new LinearLayout(this);bar.setGravity(Gravity.CENTER_VERTICAL);bar.setPadding(dp(6),0,dp(6),0);bar.setBackgroundColor(Color.WHITE);
-  Button home=new Button(this);home.setText("⌂");home.setContentDescription("Pilihan panel");bar.addView(home,new LinearLayout.LayoutParams(dp(48),dp(44)));home.setOnClickListener(v->new AlertDialog.Builder(this).setTitle("Kembali ke pilihan panel?").setMessage("Sesi login tetap tersimpan. Gunakan menu Keluar di website untuk mengakhiri sesi.").setPositiveButton("Kembali",(d,w)->showHome()).setNegativeButton("Batal",null).show());
-  TextView label=text(role.equals("parent")?"Portal Orang Tua":role.equals("guru")?"Panel Guru":"Panel Pengelola",14,Color.rgb(16,56,100));bar.addView(label,new LinearLayout.LayoutParams(0,-2,1));Button reload=new Button(this);reload.setText("↻");reload.setContentDescription("Muat ulang");bar.addView(reload,new LinearLayout.LayoutParams(dp(48),dp(44)));reload.setOnClickListener(v->{if(web!=null)web.reload();});page.addView(bar);
-  progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);progress.setMax(100);page.addView(progress,new LinearLayout.LayoutParams(-1,dp(3)));
-  web=new WebView(this);configure(web);page.addView(web,new LinearLayout.LayoutParams(-1,0,1));web.loadUrl(ORIGIN+(role.equals("parent")?"/orang-tua.html":"/"));
+ private void openPortal(){root.removeAllViews();page=new LinearLayout(this);page.setOrientation(1);root.addView(page,new FrameLayout.LayoutParams(-1,-1));
+  progress=new ProgressBar(this,null,android.R.attr.progressBarStyleHorizontal);progress.setMax(100);page.addView(progress,new LinearLayout.LayoutParams(-1,dp(2)));
+  web=new WebView(this);configure(web);page.addView(web,new LinearLayout.LayoutParams(-1,0,1));web.loadUrl(ORIGIN+"/");
  }
  private boolean trusted(Uri uri){return uri!=null&&"https".equals(uri.getScheme())&&"panel-baru-jenius-edu.vercel.app".equals(uri.getHost());}
  private void configure(WebView view){WebSettings s=view.getSettings();s.setJavaScriptEnabled(true);s.setDomStorageEnabled(true);s.setAllowFileAccess(false);s.setAllowContentAccess(true);s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);s.setSupportMultipleWindows(true);s.setJavaScriptCanOpenWindowsAutomatically(true);s.setLoadWithOverviewMode(true);s.setUseWideViewPort(true);s.setBuiltInZoomControls(false);view.setBackgroundColor(Color.WHITE);CookieManager.getInstance().setAcceptCookie(true);CookieManager.getInstance().setAcceptThirdPartyCookies(view,false);
   view.setWebViewClient(new WebViewClient(){
    @Override public boolean shouldOverrideUrlLoading(WebView v,WebResourceRequest request){return route(v,request.getUrl(),request.isForMainFrame());}
-   @Override public void onPageFinished(WebView v,String url){if(trusted(Uri.parse(url))||("about:blank".equals(url)&&popups.contains(v))){v.evaluateJavascript(supportScript,null);if(v==web&&selectedRole.equals("guru"))v.evaluateJavascript("(function(){var b=document.getElementById('guruModeBtnV5');if(b)b.click()})()",null);}if(v==web&&trusted(Uri.parse(url)))lastUrl=url;CookieManager.getInstance().flush();}
+   @Override public void onPageFinished(WebView v,String url){if(trusted(Uri.parse(url))||("about:blank".equals(url)&&popups.contains(v))){v.evaluateJavascript(supportScript,null);}if(v==web&&trusted(Uri.parse(url)))lastUrl=url;CookieManager.getInstance().flush();}
    @Override public void onReceivedSslError(WebView v,SslErrorHandler handler,SslError error){handler.cancel();Toast.makeText(MainActivity.this,"Koneksi aman belum tersedia. Coba lagi nanti.",Toast.LENGTH_LONG).show();}
-   @Override public void onReceivedError(WebView v,WebResourceRequest request,WebResourceError error){if(request.isForMainFrame()&&v==web){progress.setVisibility(View.GONE);new AlertDialog.Builder(MainActivity.this).setTitle("Belum dapat terhubung").setMessage("Periksa internet Anda, lalu coba muat ulang.").setPositiveButton("Coba lagi",(d,w)->v.loadUrl(lastUrl)).setNegativeButton("Pilihan panel",(d,w)->showHome()).show();}}
+   @Override public void onReceivedError(WebView v,WebResourceRequest request,WebResourceError error){if(request.isForMainFrame()&&v==web){progress.setVisibility(View.GONE);new AlertDialog.Builder(MainActivity.this).setTitle("Belum dapat terhubung").setMessage("Periksa internet Anda, lalu coba muat ulang.").setPositiveButton("Coba lagi",(d,w)->v.loadUrl(lastUrl)).setNegativeButton("Tutup",(d,w)->finish()).show();}}
   });
   view.setWebChromeClient(new WebChromeClient(){
    @Override public void onProgressChanged(WebView v,int value){if(progress!=null){progress.setProgress(value);progress.setVisibility(value==100?View.GONE:View.VISIBLE);}if(value==100&&(trusted(Uri.parse(v.getUrl()==null?"":v.getUrl()))||popups.contains(v)))v.evaluateJavascript(supportScript,null);}
@@ -70,8 +60,8 @@ public final class MainActivity extends Activity {
  @Override protected void onActivityResult(int request,int result,Intent intent){super.onActivityResult(request,result,intent);if(request==FILE_PICK&&chooser!=null){Uri[] picked=WebChromeClient.FileChooserParams.parseResult(result,intent);if(picked!=null){for(Uri item:picked){if(item==null||!"content".equals(item.getScheme())){picked=null;break;}}}chooser.onReceiveValue(picked);chooser=null;}if(request==FILE_SAVE){byte[] bytes=pendingBytes;pendingBytes=null;if(result==RESULT_OK&&intent!=null&&intent.getData()!=null&&bytes!=null){try(OutputStream out=getContentResolver().openOutputStream(intent.getData())){if(out==null)throw new IOException();out.write(bytes);Toast.makeText(this,"Berkas berhasil disimpan.",Toast.LENGTH_SHORT).show();}catch(IOException e){Toast.makeText(this,"Berkas gagal disimpan.",Toast.LENGTH_LONG).show();}}}}
  private void closePopup(WebView child){if(child==null)return;root.removeView(child);popups.remove(child);child.destroy();}
  private void closeAllWeb(){for(WebView child:new ArrayList<>(popups))closePopup(child);if(web!=null){web.destroy();web=null;}}
- @Override public void onBackPressed(){if(!popups.isEmpty()){closePopup(popups.get(popups.size()-1));return;}if(web!=null){if(web.canGoBack())web.goBack();else showHome();}else super.onBackPressed();}
- @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);if(web!=null){state.putString("role",selectedRole);state.putString("url",lastUrl);}}
+ @Override public void onBackPressed(){if(!popups.isEmpty()){closePopup(popups.get(popups.size()-1));return;}if(web!=null){if(web.canGoBack())web.goBack();else super.onBackPressed();}else super.onBackPressed();}
+ @Override protected void onSaveInstanceState(Bundle state){super.onSaveInstanceState(state);if(web!=null){state.putString("url",lastUrl);}}
  @Override protected void onPause(){super.onPause();CookieManager.getInstance().flush();}
  @Override protected void onDestroy(){if(chooser!=null)chooser.onReceiveValue(null);pendingBytes=null;closeAllWeb();super.onDestroy();}
 }

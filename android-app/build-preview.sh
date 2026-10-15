@@ -18,6 +18,6 @@ mapfile -t class_files < <(find build/classes -name '*.class')
 if [[ ! -f build/preview.keystore ]]; then
  keytool -genkeypair -keystore build/preview.keystore -storepass android -keypass android -alias androiddebugkey -dname 'CN=Jenius Edu Preview,O=Jenius Edu,C=ID' -keyalg RSA -keysize 2048 -validity 3650 -noprompt
 fi
-"$build_tools/apksigner" sign --ks build/preview.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias androiddebugkey --out build/Jenius-Edu-0.1.0-preview.apk build/aligned.apk
-"$build_tools/apksigner" verify --verbose build/Jenius-Edu-0.1.0-preview.apk
-"$build_tools/aapt2" dump badging build/Jenius-Edu-0.1.0-preview.apk
+"$build_tools/apksigner" sign --ks build/preview.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias androiddebugkey --out build/Jenius-Edu-0.1.1-preview.apk build/aligned.apk
+"$build_tools/apksigner" verify --verbose build/Jenius-Edu-0.1.1-preview.apk
+"$build_tools/aapt2" dump badging build/Jenius-Edu-0.1.1-preview.apk
