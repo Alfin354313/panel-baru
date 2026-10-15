@@ -121,3 +121,22 @@
  body.role-admin #app .mobile-record-table tbody td,body.role-guru #teacherApp .mobile-record-table tbody td{line-height:1.5!important}
  body.role-admin #app .mobile-record-table tbody td:last-child,body.role-guru #teacherApp .mobile-record-table tbody td:last-child{border-top:1px solid #edf3fa!important;padding-top:8px!important}
 }
+@media(max-width:899px){
+ body.role-admin #app #financialReportPage .financial-kpis-v2{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.role-admin #app #financialReportPage .financial-kpi{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:6px!important;padding:12px!important;min-height:122px!important;overflow:visible!important}
+ body.role-admin #app #financialReportPage .financial-kpi.profit{grid-column:1/-1!important;min-height:100px!important}
+ body.role-admin #app #financialReportPage .financial-kpi>*{position:static!important;inset:auto!important;transform:none!important;width:auto!important;max-width:100%!important;min-width:0!important;margin:0!important}
+ body.role-admin #app #financialReportPage .financial-kpi :is(b,strong){font-size:clamp(15px,4.4vw,20px)!important;white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important;line-height:1.4!important}
+ body.role-admin #app #financialReportPage .financial-kpi :is(small,p){font-size:11px!important;line-height:1.5!important;white-space:normal!important}
+ body.role-admin #app #financialReportPage .financial-kpi :is(svg,.financial-kpi-icon){width:32px!important;height:32px!important;flex-shrink:0!important}
+ body.role-admin #app #financialReportPage .financial-report-tools{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important;gap:8px!important}
+ body.role-admin #app #financialReportPage .financial-period-label{width:100%!important;min-width:0!important}
+ body.role-admin #app #financialReportPage .financial-report-tools input{width:100%!important}
+ body.role-admin #app #financialReportPage .financial-report-tools button{width:100%!important;min-height:38px!important;padding:8px!important;font-size:12px!important}
+ body.role-admin #app #financialReportPage #financialReportChart svg{min-height:190px!important}
+ body.role-admin #app .mobile-record-table tbody tr{row-gap:8px!important;padding:10px!important}
+ body.role-admin #app .mobile-record-table tbody td{gap:3px!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child{padding-top:5px!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child button{min-height:30px!important;margin:0!important}
+ body.role-admin #app .mobile-record-table tbody td:last-child details{margin:0!important}
+}
