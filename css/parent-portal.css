@@ -184,3 +184,18 @@ body:has(#account:not([hidden])) main{max-width:1240px;padding:20px 24px 32px;ma
 #account .parent-card-column{display:flex;flex-direction:column;gap:12px;min-width:0}
 #account #dashboard .parent-card-column>.card{padding:14px;margin:0;border:1px solid #e8f2fb;border-radius:12px;min-width:0;scroll-margin-top:20px}
 @media(max-width:650px){#account .parent-card-column{display:contents}#account #dashboard .parent-card-column>.card{padding:12px;border-radius:10px}#account #parentPayments{order:0}#account #parentAttendance{order:1}#account #parentLessons{order:2}#account #parentProgress{order:3}#account #parentReports{order:4}#account #parentAnnouncements{order:5}}
+
+@media(max-width:650px){
+ #account #dashboard:not([hidden]){display:flex;flex-direction:column}
+ #account #dashboard>.student-hero{order:0}
+ #account #dashboard>.home-summary{order:1}
+ #account #dashboard>.dashboard-nav{order:2}
+ #account #dashboard>.parent-reference-grid{order:3}
+ #account .parent-bottom-nav a:first-child{color:#6e89b2;font-weight:400}
+ #account .parent-bottom-nav a.active{color:#087bfa;font-weight:700}
+ #account .parent-bottom-nav a{min-height:42px;justify-content:center}
+ #account .parent-reference-grid>.parent-card-column>.card{scroll-margin-top:12px}
+ #account .dashboard-nav{scroll-snap-type:x proximity;scrollbar-width:thin}
+ #account .dashboard-nav a{scroll-snap-align:start;min-height:60px}
+ #account input,#account select{font-size:16px}
+}
