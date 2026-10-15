@@ -140,3 +140,16 @@
  body.role-admin #app .mobile-record-table tbody td:last-child button{min-height:30px!important;margin:0!important}
  body.role-admin #app .mobile-record-table tbody td:last-child details{margin:0!important}
 }
+/* Compact student cards with a predictable reading order. */
+@media(max-width:899px){
+ body.role-admin #app #tm .mobile-record-table tbody tr{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px 12px!important;padding:12px!important}
+ body.role-admin #app #tm .mobile-record-table tbody td{height:auto!important;min-height:0!important;position:static!important;overflow:visible!important;line-height:1.5!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(2){grid-column:1/-1!important;grid-row:1!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;font-size:14px!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(2):before{display:none!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(3){grid-column:1!important;grid-row:2!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(4){grid-column:2!important;grid-row:2!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(5){grid-column:1!important;grid-row:3!important;justify-content:center!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(5):before{display:none!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(6){grid-column:2!important;grid-row:3!important;justify-content:flex-end!important;align-items:center!important;padding:0!important;border:0!important}
+ body.role-admin #app #tm .mobile-record-table tbody td:nth-child(6) summary{display:flex!important;align-items:center!important;justify-content:center!important;min-width:34px!important;min-height:32px!important;border-radius:7px;background:#f0f7ff}
+}
