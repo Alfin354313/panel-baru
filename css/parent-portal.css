@@ -199,3 +199,48 @@ body:has(#account:not([hidden])) main{max-width:1240px;padding:20px 24px 32px;ma
  #account .dashboard-nav a{scroll-snap-align:start;min-height:60px}
  #account input,#account select{font-size:16px}
 }
+
+.parent-mobile-logout{display:none}
+@media(max-width:650px){
+ #account .accountBar{gap:8px;padding:10px 8px}
+ #account .account-actions{gap:8px}
+ #account .account-actions>#logout{display:none!important}
+ #account .parent-profile-menu .parent-mobile-logout{display:flex;align-items:center;gap:8px;width:100%;margin:12px 0 0;padding:11px;background:#fff0f2;color:#cf4654;font-size:12px;border-radius:8px}
+ #account .parent-profile-menu #accountEmail{display:block;font-size:12px;color:#53759b;padding-bottom:10px;border-bottom:1px solid #e3edf8}
+ #account .parent-profile-menu{max-width:calc(100vw - 30px);min-width:220px}
+ #account .home-summary>div[role=button]{cursor:pointer}
+ #account[data-mobile-view]:not([data-mobile-view=home]) #dashboard>.student-hero,
+ #account[data-mobile-view]:not([data-mobile-view=home]) #dashboard>.home-summary,
+ #account[data-mobile-view]:not([data-mobile-view=home]) #dashboard>.dashboard-nav{display:none!important}
+ #account[data-mobile-view=learn] .parent-reference-grid .parent-card-column>.card:is(#parentPayments,#parentAttendance,#parentAnnouncements){display:none!important}
+ #account[data-mobile-view=payment] .parent-reference-grid .parent-card-column>.card:not(#parentPayments){display:none!important}
+ #account[data-mobile-view=news] .parent-reference-grid .parent-card-column>.card:not(#parentAnnouncements){display:none!important}
+ #account #parentLessons{order:2}#account #parentReports{order:3}#account #parentProgress{order:4}
+ #account .dashboard-nav a{min-width:72px;font-size:10px;padding:10px 8px;flex-shrink:0}
+ #account .parent-summary-content strong{white-space:nowrap;overflow-wrap:normal;word-break:normal}
+ #account .parent-summary-content span{line-height:1.5}
+ #account .student-hero{min-height:175px}
+ #account .student-welcome{max-width:64%}
+ #account .parent-hero-art{width:48%;height:115px;right:-18px}
+ #account #parentAttendance #attendance{max-height:135px}
+ #account .parent-attendance-chart{padding:2px 0;margin:10px 0 0;gap:20px}
+ #account #lessonMaterials .reportBlock{display:grid;grid-template-columns:1fr;gap:3px;padding:10px 12px}
+ #account #lessonMaterials h3{font-size:11px;color:#718dad}
+ #account #lessonMaterials p{font-size:13px;line-height:1.5}
+ #account .parent-monthly-report summary{flex-wrap:wrap;gap:8px}
+ #account .parent-monthly-report summary>span:nth-child(2){flex:1;min-width:160px}
+ #account .parent-report-view{margin-left:40px;min-height:34px;display:flex;align-items:center;justify-content:center;flex:1;font-size:11px}
+ #account #dashboard #monthlyReports .parent-report-download{width:calc(100% - 40px);margin:8px 0 0 40px;min-height:36px;font-size:12px}
+ #account #progress .reportBlock:nth-child(2){padding:12px!important;background:#eaf6ff}
+ #account #announcements .reportBlock:has(img){display:flex;flex-direction:column;gap:8px}
+ #account #announcements .reportBlock:has(img)>a{width:100%}
+ #account #announcements .reportBlock:has(img)>a img{width:100%;height:145px;object-fit:contain!important;background:#f4f9ff}
+ #account #announcements .reportBlock:has(img)>.reportBlock{width:100%}
+ #account #announcements h3{font-size:14px!important}
+ #account #announcements p{font-size:12px!important}
+ #account .parent-email-preference{display:flex!important;flex-direction:column;align-items:stretch!important}
+ #account .parent-email-preference label{font-size:11px;line-height:1.5}
+ #account #dashboard .parent-email-preference #refresh{width:100%;min-height:38px;font-size:12px}
+ #account .parent-bottom-nav{padding-top:6px;padding-bottom:max(7px,env(safe-area-inset-bottom))}
+ #account .parent-bottom-nav svg{width:22px;height:22px}
+}
